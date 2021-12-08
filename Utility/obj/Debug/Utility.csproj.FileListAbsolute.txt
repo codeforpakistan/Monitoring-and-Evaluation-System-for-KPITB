@@ -1,0 +1,6 @@
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\Utility\bin\Debug\Utility.dll
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\Utility\bin\Debug\Utility.pdb
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\Utility\obj\Debug\Utility.csproj.CoreCompileInputs.cache
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\Utility\obj\Debug\Utility.dll
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\Utility\obj\Debug\Utility.pdb
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\Utility\obj\Debug\Utility.csproj.AssemblyReference.cache

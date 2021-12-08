@@ -1,0 +1,6 @@
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\ModelLayer\bin\Debug\ModelLayer.dll
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\ModelLayer\bin\Debug\ModelLayer.pdb
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\ModelLayer\obj\Debug\ModelLayer.csproj.AssemblyReference.cache
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\ModelLayer\obj\Debug\ModelLayer.csproj.CoreCompileInputs.cache
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\ModelLayer\obj\Debug\ModelLayer.dll
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\ModelLayer\obj\Debug\ModelLayer.pdb

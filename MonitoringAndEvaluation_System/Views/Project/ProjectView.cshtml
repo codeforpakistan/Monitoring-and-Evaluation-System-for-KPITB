@@ -1,0 +1,92 @@
+﻿@model List<ModelLayer.MainViewModel.GetAllProjectVM>
+@{
+    ViewBag.Title = "Projects List";
+}
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <!-- START card-->
+        <div class="card card-default" id="cardDemo14">
+            <div class="card-header">Project List</div>
+            <div class="card-body">
+                <div class="card">
+                    <div class="card-body">
+                        <div>@Html.ActionLink("Add New Project", "ProjectCreate", null, new { @class = "btn btn-primary" })</div>
+                        <hr />
+                        <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                       ID
+                                    </th>
+                                    <th>
+                                        Project Name
+                                    </th>
+                                    <th>
+                                        Category
+                                    </th>
+                                    <th>
+                                        Project Type
+                                    </th>
+                                    <th>
+                                        Planned Budget
+                                    </th>
+                                    <th>
+                                        Released Budget
+                                    </th>
+                                    <th>
+                                        Location
+                                    </th>
+                                    <th>
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            @Html.HiddenFor(m => item.ProjectID)
+                                            <td>
+                                                @item.ID
+                                            </td>
+                                            <td>
+                                                @item.Name
+                                            </td>
+                                            <td>
+                                                @item.categoryName
+                                            </td>
+                                            <td>
+                                                @item.ProjectTypeName
+                                            </td>
+                                            <td>
+                                                @item.PlannedBudget
+                                            </td>
+                                            <td>
+                                                @item.ApprovedBudget
+                                            </td>
+                                           
+                                            <td>
+                                                @item.CityName
+                                            </td>                     
+                                            <td>
+                                                @Html.ActionLink("Edit", "ProjectEdit", new { ProjectID = item.ProjectID }, new { @class = "mb-1 btn btn-warning" })
+                                                @*@Html.ActionLink("Detail", "UserDetail", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-primary" })*@
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END card-->

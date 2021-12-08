@@ -1,0 +1,378 @@
+﻿
+@{
+    ViewBag.Title = "FinanceCreate";
+}
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <!-- START card-->
+        <div class="card card-default" id="cardDemo14">
+            <div class="card-header">Project Cost</div>
+            <div class="card-body">
+                <div role="tabpanel">
+                    <!-- Nav tabs-->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" href="#home" aria-controls="home" role="tab" data-toggle="tab">Released Budget</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Expenditure Budget</a>
+                        </li>
+                        
+                    </ul>
+                    <!-- Tab panes-->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home" role="tabpanel">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <form method="post" action="#" data-parsley-validate="" novalidate="">
+                                        <!-- START card-->
+                                        <div class="card card-default">
+                                            <div class="card-header">
+                                                <div class="card-title">Released Budget Entry</div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <label for="sel1">Select Project </label>
+                                                            <select class="form-control" id="sel1">
+                                                                <option>Durshal1</option>
+                                                                <option>Durshal2</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label for="sel1">Select Sub Project</label>
+                                                            <select class="form-control" id="sel1">
+                                                                <option>Sub project 1</option>
+                                                                <option>Sub project 2</option>
+                                                                <option>Sub project 2</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label for="sel1">Select Cycle/Batch</label>
+                                                            <select class="form-control" id="sel1">
+                                                                <option>Peshawar</option>
+                                                                <option>Bannu</option>
+                                                                <option>Mardan</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <label class="col-form-label">Released Date *</label>
+                                                            <input class="form-control" id="id-ReleasedDate" type="date" name="ReleasedDate" required>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-form-label">Released Budget *</label>
+                                                            <input class="form-control" id="id-ReleasedBuget" type="number" name="ReleasedBuget" placeholder="Released Budget in KPR" required>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-form-label">Remarks</label>
+                                                            <input class="form-control" id="id-Remarks" type="number" name="Remarks" placeholder="Optional" required>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="required">* Required fields</div>
+                                                    <hr />
+                                                    <div class="float-right">
+                                                        <button class="btn btn-primary" type="submit">Save</button>
+                                                    </div>
+                                                    <br />
+                                                    <br />
+                                                    <div class="card card-default">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 ">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
+                                                                            <thead>
+                                                                                <tr>
+
+                                                                                    <th>
+                                                                                        ID
+                                                                                    </th>
+                                                                                    <th class="col-lg-3">
+                                                                                        Project Name
+                                                                                    </th>
+                                                                                    <th class="col-lg-3">
+                                                                                        Released Budget
+                                                                                    </th>
+                                                                                    <th class="col-lg-3">
+                                                                                        Released Date
+                                                                                    </th>
+                                                                                    <th class="col-lg-5">
+                                                                                        Remarks
+                                                                                    </th>
+
+                                                                                    <th>
+                                                                                        Action
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        1
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        Durshal
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        2M
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        15/11/2021
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        This is the Issues Field
+                                                                                    </td>
+
+                                                                                    <td>
+
+                                                                                        @Html.ActionLink("Edit", "Edit", new { }, new { @class = "mb-1 btn btn-warning" })
+
+                                                                                    </td>
+
+                                                                                </tr>
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- END card-->
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" id="profile" role="tabpanel">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <form method="post" action="#" data-parsley-validate="" novalidate="">
+                                        <!-- START card-->
+                                        <div class="card card-default">
+                                            <div class="card-header">
+                                                <div class="card-title">Expenditure Budget Form</div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label for="sel1">Select Project </label>
+                                                            <select class="form-control" id="sel1">
+                                                                <option>Durshal1</option>
+                                                                <option>Durshal2</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label for="sel1">Select Sub Project</label>
+                                                            <select class="form-control" id="sel1">
+                                                                <option>Sub project 1</option>
+                                                                <option>Sub project 2</option>
+                                                                <option>Sub project 2</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label for="sel1">Select Cycle/Batch</label>
+                                                            <select class="form-control" id="sel1">
+                                                                <option>Peshawar</option>
+                                                                <option>Bannu</option>
+                                                                <option>Mardan</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label class="col-form-label">Expenditure Date *</label>
+                                                            <input class="form-control" id="id-ExpenditureDate" type="date" name="ExpenditureDate" required>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+
+                                                        <div class="col-lg-3">
+                                                        <label class="col-form-label">Expenditure Name *</label>
+                                                        <input class="form-control" id="id-ExpenditureName" type="text" name="ExpenditureName" placeholder="Enter Expenditure Name" required>
+                                                       </div>
+                                                        <div class="col-lg-3">
+                                                            <label class="col-form-label">Expenditure Budget *</label>
+                                                            <input class="form-control" id="id-ExpenditureBuget" type="number" name="ExpenditureBuget" placeholder="Enter Expenditure Budget in KPR" required>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <label class="col-form-label">Remarks</label>
+                                                            <input class="form-control" id="id-Remarks" type="text" name="Remarks" placeholder="Optional">
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="required">* Required fields</div>
+                                                    <hr />
+                                                    <div class="float-right">
+                                                        <button class="btn btn-primary" type="submit">Save</button>
+                                                    </div>
+                                                    <br />
+                                                    <br />
+                                                    <div class="card card-default">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 ">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
+                                                                            <thead>
+                                                                                <tr>
+
+                                                                                    <th>
+                                                                                        ID
+                                                                                    </th>
+                                                                                    <th class="col-lg-3">
+                                                                                        Project Name
+                                                                                    </th>
+                                                                                    <th class="col-lg-3">
+                                                                                        Expenditure Budget
+                                                                                    </th>
+                                                                                    <th class="col-lg-3">
+                                                                                        Expenditure Date
+                                                                                    </th>
+                                                                                    <th class="col-lg-5">
+                                                                                        Remarks
+                                                                                    </th>
+
+                                                                                    <th>
+                                                                                        Action
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        1
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        Durshal
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        2M
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        15/11/2021
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        This is the Issues Field
+                                                                                    </td>
+
+                                                                                    <td>
+
+                                                                                        @Html.ActionLink("Edit", "Edit", new { }, new { @class = "mb-1 btn btn-warning" })
+
+                                                                                    </td>
+
+                                                                                </tr>
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- END card-->
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="messages" role="tabpanel">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div>@Html.ActionLink("Add New Project", "ProjectCreate", null, new { @class = "btn btn-primary" })</div>
+                                    <hr />
+                                    <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
+                                        <thead>
+                                            <tr>
+
+                                                <th>
+                                                    Project ID
+                                                </th>
+                                                <th>
+                                                    Project Name
+                                                </th>
+                                                <th>
+                                                    Category
+                                                </th>
+                                                <th>
+                                                    Project Type
+                                                </th>
+                                                <th>
+                                                    HR-Recruitment
+                                                </th>
+                                                <th>
+                                                    Location
+                                                </th>
+                                                <th>
+                                                    Status
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td>
+                                                    1
+                                                </td>
+                                                <td>
+                                                    Durshal
+                                                </td>
+                                                <td>
+                                                    Umberalla
+                                                </td>
+                                                <td>
+                                                    ADO
+                                                </td>
+                                                <td>
+                                                    4
+                                                </td>
+                                                <td>
+                                                    Peshawar
+                                                </td>
+                                                <td>
+                                                    Completed
+                                                </td>
+                                                <td>
+
+                                                    @Html.ActionLink("Details", "Details", new { }, new { @class = "mb-1 btn btn-info" })
+
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="settings" role="tabpanel">Sed commodo tellus ut mi tristique pharetra.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END card-->
+    </div>
+</div>
+<!-- END row-->

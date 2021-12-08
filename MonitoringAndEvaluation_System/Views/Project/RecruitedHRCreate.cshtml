@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "Add New HR";
+}
+
+<!-- START row-->
+<div class="row">
+    <div class="col-xl-12">
+        <form method="post" action="#" data-parsley-validate="" novalidate="">
+            <!-- START card-->
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">Add New HR Form</div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Project </label>
+                                <select class="form-control" id="sel1">
+                                    <option>Durshal1</option>
+                                    <option>Durshal2</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Sub Project</label>
+                                <select class="form-control" id="sel1">
+                                    <option>Sub project 1</option>
+                                    <option>Sub project 2</option>
+                                    <option>Sub project 2</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Cycle/Batch</label>
+                                <select class="form-control" id="sel1">
+                                    <option>Peshawar</option>
+                                    <option>Bannu</option>
+                                    <option>Mardan</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="col-form-label">No of Recruited -HR *</label>
+                                <input class="form-control" id="idRecruitedHR" type="number" name="idRecruitedHR" required placeholder="Enter No of Recruited -HR">
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">HR Date *</label>
+                                <input class="form-control" id="idYear" type="date" name="Year" required>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Remarks *</label>
+                                <input class="form-control" id="idRemarks" type="text" name="Remarks" required placeholder="Remarks Optional">
+                            </div>
+                        </div>
+
+                        <br />
+                       
+                        <div class="required">* Required fields</div>
+                        <hr />
+                        <div class="float-right">
+                            <button class="btn btn-primary" type="submit">Save</button>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="card card-default">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th>
+                                                            ID
+                                                        </th>
+                                                        <th class="col-lg-2">
+                                                            Planned-HR
+                                                        </th>
+                                                        <th class="col-lg-2">
+                                                            Recruited-HR
+                                                        </th>
+                                                        <th class="col-lg-2">
+                                                            Recruited %
+                                                        </th>
+                                                        <th class="col-lg-5">
+                                                            Remarks
+                                                        </th>
+                                                        <th>
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>
+                                                            1
+                                                        </td>
+                                                        <td>
+                                                            20
+                                                        </td>
+                                                        <td>
+                                                            15
+                                                        </td>
+                                                        <td>
+                                                            75%
+                                                        </td>
+                                                        <td>
+                                                            This is the Remarks
+                                                        </td>
+                                                        <td>
+
+                                                            @Html.ActionLink("Edit", "Edit", new { }, new { @class = "mb-1 btn btn-warning" })
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- END card-->
+        </form>
+    </div>
+</div>
+
+

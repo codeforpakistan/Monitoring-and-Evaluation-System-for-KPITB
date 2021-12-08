@@ -1,0 +1,16 @@
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\BusinessLayer.dll
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\BusinessLayer.pdb
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\Dapper.dll
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\DatabaseLayer.dll
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\ModelLayer.dll
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\DatabaseLayer.pdb
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\DatabaseLayer.dll.config
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\ModelLayer.pdb
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\Dapper.xml
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\obj\Debug\BusinessLayer.csproj.AssemblyReference.cache
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\obj\Debug\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\obj\Debug\BusinessLayer.csproj.CopyComplete
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\obj\Debug\BusinessLayer.dll
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\obj\Debug\BusinessLayer.pdb
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\Utility.dll
+D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\Utility.pdb

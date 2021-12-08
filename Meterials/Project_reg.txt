@@ -1,0 +1,160 @@
+<div class="wrapper">
+    <!-- Page content-->
+    <div class="content-wrapper">
+        <div class="content-heading">New Project Registration</div>
+        <div class="card card-default">
+            <div class="card-header">Basic Form</div>
+            <div class="card-body">
+                @using (Html.BeginForm("NewCompany", "Company", FormMethod.Post, new { @id = "example-form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div>
+                        <h4>
+                            Project Info
+                            <br>
+                            <small>Enter Project Details</small>
+                        </h4>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="name">Project Type *</label>
+                                    <select class="custom-select custom-select-sm">
+                                        <option selected="">Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="surname">Project Category*</label>
+                                    <select class="custom-select custom-select-sm">
+                                        <option selected="">Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="email">Project Manager *</label>
+                                    <select class="custom-select custom-select-sm">
+                                        <option selected="">Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="address">Location *</label>
+                                    <select class="custom-select custom-select-sm">
+                                        <option selected="">Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="address">Project Name *</label>
+                                    <input class="form-control" id="ProjectName" name="ProjectName" type="text" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="address">Procritment % *</label>
+                                    <input class="form-control" id="Procritment" name="Procritment" type="text" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="address">HR-Recoritment *</label>
+                                    <input class="form-control" id="HRRecoritment" name="HRRecoritment" type="text" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="address">HR-Planned *</label>
+                                    <input class="form-control" id="HRPlanned" name="HR-Planned" type="text" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="HRRecoritmentNo">HR-Recoritment No *</label>
+                                    <input class="form-control" id="HRRecoritmentNo" name="HRRecoritmentNo" type="text" required>
+                                </div>
+                            </div>
+                            <p>(*) Mandatory</p>
+                        </fieldset>
+                        <h4>
+                            Project Cost
+                            <br>
+                            <small>Enter Project Cost</small>
+                        </h4>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="PlannedBudget">Planned Budget *</label>
+                                    <input class="form-control required" id="PlannedBudget" name="PlannedBudget" type="number">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="ApprovedBudget">Approved Budget *</label>
+                                    <input class="form-control required" id="ApprovedBudget" name="ApprovedBudget" type="number">
+                                </div>
+                            </div>
+                            <p>(*) Mandatory</p>
+                        </fieldset>
+
+                        <h4>
+                            Project Schedule
+                            <br>
+                            <small>Enter Project Schedule</small>
+                        </h4>
+                        <fieldset>
+                            <label for="pdate">Planned Date *</label>
+                            <input class="form-control required" id="pdate" name="pdate" type="date">
+                            <label for="sDate">Start Date *</label>
+                            <input class="form-control required" id="sDate" name="sDate" type="date">
+                            <label for="eDate">End Date *</label>
+                            <input class="form-control required" id="eDate" name="eDate" type="date">
+
+
+                        </fieldset>
+                        <h4>
+                            Stackholders
+                            <br>
+                            <small>Assign Stackholder</small>
+                        </h4>
+                        <fieldset>
+                            <table class="table table-striped " id="bootgrid-selection" style="height: 100px; width:100%; display: block; overflow-y:auto;">
+                                <thead>
+                                    <tr>
+                                        <th data-column-id="id" data-type="numeric" data-identifier="true">ID</th>
+                                        <th data-column-id="sender">Name</th>
+                                        <th data-column-id="received" data-order="desc">Designation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>10238</td>
+                                        <td>eduardo@pingpong.com</td>
+                                        <td>14.10.2013</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10243</td>
+                                        <td>eduardo@pingpong.com</td>
+                                        <td>19.10.2013</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10248</td>
+                                        <td>eduardo@pingpong.com</td>
+                                        <td>24.10.2013</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10253</td>
+                                        <td>eduardo@pingpong.com</td>
+                                        <td>29.10.2013</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <input type="submit" value="Submit Registration" class="btn btn-outline-success" />
+                        </fieldset>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

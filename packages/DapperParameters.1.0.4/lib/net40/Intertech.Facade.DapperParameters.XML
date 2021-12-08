@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Intertech.Facade.DapperParameters</name>
+    </assembly>
+    <members>
+        <member name="T:Intertech.Facade.DapperParameters.DapperParameters">
+            <summary>
+            Implementation of IDapperParameters interface.
+            </summary>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.DapperParameters.#ctor">
+            <summary>
+            Constructor. Creates DynamicParameters without a template.  Call CreateParmsWithTemplate
+            to use templates.
+            </summary>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.DapperParameters.CreateParmsWithTemplate(System.Object)">
+            <summary>
+            Alternative way to create the DynamicParameters, template is passed into the constructor.
+            </summary>
+            <param name="template"></param>
+        </member>
+        <member name="P:Intertech.Facade.DapperParameters.DapperParameters.DynamicParameters">
+            <summary>
+            Dapper DynamicParameters which will be passed to the Execute or Query command.
+            </summary>
+        </member>
+        <member name="P:Intertech.Facade.DapperParameters.DapperParameters.ParameterNames">
+            <summary>
+            Matches DynamicParameters ParameterNames getter.
+            </summary>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.DapperParameters.Add(System.String,System.Object,System.Nullable{System.Data.DbType},System.Nullable{System.Data.ParameterDirection},System.Nullable{System.Int32})">
+            <summary>
+            Matches DynamicParameters Add method so backwards compatibility is easier.
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="dbType"></param>
+            <param name="direction"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.DapperParameters.AddDynamicParams(System.Object)">
+            <summary>
+            Matches DynamicParameters AddDynamicParams method.
+            </summary>
+            <param name="param"></param>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.DapperParameters.AddInputParameter(System.String,System.Object,System.Nullable{System.Data.DbType},System.Nullable{System.Int32})">
+            <summary>
+            Helper method that adds the stored procedure input parameter for you.
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="dbType"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.DapperParameters.AddInputParameter``1(System.String,``0,System.Nullable{System.Data.DbType},System.Nullable{System.Int32})">
+            <summary>
+            Helper method that adds the stored procedure input parameter for you. You can
+            specify a type for strong typing...required in some unit tests.
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="dbType"></param>
+            <param name="size"></param>
+            <typeparam name="T">The type of the value</typeparam>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.DapperParameters.AddOutputParameter(System.String,System.Nullable{System.Data.DbType},System.Nullable{System.Int32})">
+            <summary>
+            Helper method that adds the stored procedure output parameter for you.
+            </summary>
+            <param name="name"></param>
+            <param name="dbType"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.DapperParameters.AddReturnValue(System.String,System.Nullable{System.Data.DbType},System.Nullable{System.Int32})">
+            <summary>
+            Helper method that adds the stored procedure return value parameter for you.
+            </summary>
+            <param name="name"></param>
+            <param name="dbType"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.DapperParameters.Get``1(System.String)">
+            <summary>
+            Matches DynamicParameters Get method.
+            The means to use to pull an output or return value from the stored procedure call.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Intertech.Facade.DapperParameters.IDapperParameters">
+            <summary>
+            Interface for Dappers DynamicParameters class to facilitate unit testing.
+            </summary>
+        </member>
+        <member name="P:Intertech.Facade.DapperParameters.IDapperParameters.DynamicParameters">
+            <summary>
+            Dapper DynamicParameters which will be passed to the Execute or Query command.
+            </summary>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.IDapperParameters.CreateParmsWithTemplate(System.Object)">
+            <summary>
+            Alternative way to create the DynamicParameters, template is passed into the constructor.
+            By default, it's created without a template.
+            </summary>
+            <param name="template"></param>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.IDapperParameters.Add(System.String,System.Object,System.Nullable{System.Data.DbType},System.Nullable{System.Data.ParameterDirection},System.Nullable{System.Int32})">
+            <summary>
+            Matches DynamicParameters Add method so backwards compatibility is easier.
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="dbType"></param>
+            <param name="direction"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.IDapperParameters.AddDynamicParams(System.Object)">
+            <summary>
+            Matches DynamicParameters AddDynamicParams method.
+            </summary>
+            <param name="param"></param>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.IDapperParameters.Get``1(System.String)">
+            <summary>
+            Matches DynamicParameters Get method.
+            The means to use to pull an output or return value from the stored procedure call.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Intertech.Facade.DapperParameters.IDapperParameters.ParameterNames">
+            <summary>
+            Matches DynamicParameters ParameterNames getter.
+            </summary>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.IDapperParameters.AddInputParameter(System.String,System.Object,System.Nullable{System.Data.DbType},System.Nullable{System.Int32})">
+            <summary>
+            Helper method that adds the stored procedure input parameter for you.
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="dbType"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.IDapperParameters.AddInputParameter``1(System.String,``0,System.Nullable{System.Data.DbType},System.Nullable{System.Int32})">
+            <summary>
+            Helper method that adds the stored procedure input parameter for you. You can
+            specify a type for strong typing...required in some unit tests.
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="dbType"></param>
+            <param name="size"></param>
+            <typeparam name="T">The type of the value</typeparam>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.IDapperParameters.AddOutputParameter(System.String,System.Nullable{System.Data.DbType},System.Nullable{System.Int32})">
+            <summary>
+            Helper method that adds the stored procedure output parameter for you.
+            </summary>
+            <param name="name"></param>
+            <param name="dbType"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:Intertech.Facade.DapperParameters.IDapperParameters.AddReturnValue(System.String,System.Nullable{System.Data.DbType},System.Nullable{System.Int32})">
+            <summary>
+            Helper method that adds the stored procedure return value parameter for you.
+            </summary>
+            <param name="name"></param>
+            <param name="dbType"></param>
+            <param name="size"></param>
+        </member>
+    </members>
+</doc>

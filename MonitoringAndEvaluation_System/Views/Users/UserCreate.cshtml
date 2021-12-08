@@ -1,0 +1,136 @@
+﻿@model ModelLayer.MainViewModel.CreateUserVM
+
+@{
+    ViewBag.Title = "Create User";
+}
+
+
+
+
+
+<!-- START card-->
+<div class="card card-default">
+    <div class="card-header">User Registration</div>
+    <div class="card-body">
+        @using (Html.BeginForm("UserCreate", "Users", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+
+            <fieldset>
+                <div class="form-group row">
+                    <label class="col-md-1 col-form-label"></label>
+                    <div class="col-md-8 offset-1">
+                        <div class="form-row ">
+                            <div class="col-lg-5 ">
+                                <label for="validationServer01">Full Name</label>
+                                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @placeholder = "Full Name" })
+                                @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "parsley-required" })
+                            </div>
+
+                            <div class="col-lg-5">
+                                <label for="">Email Address</label>
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "example@gmail.com" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "parsley-required" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-5">
+                                <label for="validationServer03">Password</label>
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "***" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-5">
+                                <label for="validationServer03">Confirm Password</label>
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", @placeholder = "***" })
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "parsley-required" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-5">
+                                <label for="validationServer04">CNIC No</label>
+                                @Html.TextBoxFor(model => model.CNICNo, new { @class = "form-control", @placeholder = "Enter CNIC No" })
+                                @Html.ValidationMessageFor(m => m.CNICNo, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-5">
+                                <label for="validationServer05">Contact No</label>
+                                @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control", @placeholder = "Contact No" })
+                                @Html.ValidationMessageFor(m => m.ContactNo, "", new { @class = "parsley-required" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-5">
+                                <label for="validationServer04">Select Role</label>
+                                @Html.DropDownListFor(m => m.Role_ID, new SelectList(Model.comboRoles, "RoleID", "RoleName"), "Please Select Role", new { @class = "select2 form-control ", @placeholder = "Select Role" })
+                                @Html.ValidationMessageFor(m => m.Role_ID, "", new { @class = "parsley-required" })
+                            </div>
+                            @*<div class="col-lg-5">
+                                      <label for="validationServer04">Profile Picture</label>
+                                      <input class="form-control " id="@Model.Photo" name="@Model.Photo" type="file" placeholder="" >
+                                      <div class="invalid-feedback">Please Upload User image.</div>
+                                  </div>*@
+
+                        <div class="col-lg-10">
+                            <label for="validationServer05">Address</label>
+
+                            <div class="invalid-feedback">Please Enter Address.</div>
+                            @Html.TextAreaFor(model => model.Address, new { @class = "form-control", @placeholder = "Address" })
+                            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "parsley-required" })
+                        </div>
+                        </div>
+                        <br />
+                        <button class="btn btn-primary" type="submit" id="btnSubmit">Submit</button>
+                        <!--Popup Msg-->
+                        @{ 
+                            if (TempData["Message"] != null)
+                            {
+                                <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
+                                <strong>Well done!</strong>You successfully read this important alert message.
+                                </div>
+                               }
+                           }
+                    </div>
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
+<!-- END card-->
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#divMessage").alert(2000).slideUp(500);
+        });
+
+        //$('#btnSubmit').click(function (){
+        //    if($("#Role_ID").val() == '')
+        //    {
+        //        Alert("Please enter Course Name");
+        //            return validate = false;
+        //    }
+        //    debugger;
+        //    if ($('#Role_ID').val() == '') {
+        //        $('#Role_ID').text('Please Select Role jQuery');
+        //        $('#Role_ID').show();
+        //        $('#Role_ID').focus();
+        //        return true;
+        //    }
+
+
+
+        });
+
+
+            //$("#ConfirmPassword").on('change', function () {
+            //    debugger;
+            //    alert('ok2);
+            //    if ($('#Password').val() == ConfirmPassword) {
+            //        return true;
+            //        $('#ConfirmPassword').text('Password is not Match.');
+            //        $('#ConfirmPassword').show();
+            //        $('#ConfirmPassword').focus();
+            //    }
+            //});
+
+    </script>
+}

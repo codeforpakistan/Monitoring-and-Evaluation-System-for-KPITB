@@ -19,7 +19,20 @@ namespace DatabaseLayer
     public class ProjectManagementDL
     {
         #region GetCombo
+        //ComboProject
+        public static List<ComboProject> getComboProjectDL()
+        {
+            List<ComboProject> ComboProjectLst = new List<ComboProject>();
 
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                ComboProjectLst = conn.Query<ComboProject>("sp_GetProject", commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return ComboProjectLst;
+            }
+        }
         //FundingSource
         public static List<ComboFundingSource> getFudingSourceDL()
         {
@@ -299,8 +312,109 @@ namespace DatabaseLayer
         }
         #endregion
 
+        #region RecruitedHR
+        //RecruitedHRCreate
+        public static StatusModel recruitedCreateDL(CreateRecruitedHRVM m)
+            {
+                StatusModel status = new StatusModel();
+                IDbConnection Con = null;
+                try
+                {
+                    Con = new SqlConnection(Common.ConnectionString);
+                    Con.Open();
+                    DynamicParameters ObjParm = new DynamicParameters();
+                        
+                        ObjParm.Add("@Project_ID", m.Project_ID);
+                        ObjParm.Add("@SubProject_ID", m.SubProject_ID);
+                        ObjParm.Add("@Batch_ID", m.Batch_ID);
+                        ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
+                        ObjParm.Add("@RecruitedHR", m.RecruitedHR);
+                        ObjParm.Add("@RecruitedHRDate", m.RecruitedHRDate);
+                        ObjParm.Add("@Remarks", m.Remarks);
+                        ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                        ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                       Con.Execute("sp_recruiteHRCreate", ObjParm, commandType: CommandType.StoredProcedure);
+
+                       status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                       status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                }
+                catch (Exception ex)
+                {
+                }
+                finally
+                {
+                    Con.Close();
+                }
+            return status;
+        }
+
+        //GetALLRecruitedHR
+        public static List<GetAllRecruitedHRVM> getRecruitedHRDL()
+        {
+            List<GetAllRecruitedHRVM> getAllRecruitedHRVMLst = new List<GetAllRecruitedHRVM>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                getAllRecruitedHRVMLst = conn.Query<GetAllRecruitedHRVM>("sp_GetAllRecruitedHR", commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return getAllRecruitedHRVMLst;
+            }
+        }
+
+        //GetSingleRecruitedHR
+        public static EditRecruitedHRVM getSignleRecruitedHRDL(int RecruitedHRID)
+        {
+            EditRecruitedHRVM model = new EditRecruitedHRVM();
+            using (IDbConnection Con = new SqlConnection(Common.ConnectionString))
+            {
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@RecruitedHRID", RecruitedHRID);
+                model = Con.Query<EditRecruitedHRVM>("sp_GetSingleRecruitedHR", ObjParm, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                Con.Close();
+                Con.Dispose();
+            }
+            return model;
+        }
+        //UserEdit
+        public static StatusModel recruitedEditDL(EditRecruitedHRVM m)
+        {
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@RecruitedHRID", m.RecruitedHRID);
+                ObjParm.Add("@Project_ID", m.Project_ID);
+                ObjParm.Add("@SubProject_ID", m.SubProject_ID);
+                ObjParm.Add("@Batch_ID", m.Batch_ID);
+                ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
+                ObjParm.Add("@RecruitedHR", m.RecruitedHR);
+                ObjParm.Add("@RecruitedHRDate", m.RecruitedHRDate);
+                ObjParm.Add("@Remarks", m.Remarks);
+
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_recruiteHREdit", ObjParm, commandType: CommandType.StoredProcedure);
+
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return status;
+        }
+        #endregion
 
 
-       
     }
 }

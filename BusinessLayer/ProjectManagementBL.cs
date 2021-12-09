@@ -16,6 +16,11 @@ namespace BusinessLayer
     public class ProjectManagementBL
     {
         #region GetCombo
+        //Get Project
+        public List<ComboProject> getComboProjectBL()
+        {
+            return ProjectManagementDL.getComboProjectDL();
+        }
         //Get Category
         public List<ComboCategory> getCategoryBL()
         {
@@ -51,7 +56,6 @@ namespace BusinessLayer
 
 
         #endregion
-
         #region ProjectView
         //GetAllProject
         public List<GetAllProjectVM> getAllProjectBL()
@@ -64,6 +68,31 @@ namespace BusinessLayer
             return ProjectManagementDL.getFudingSourceDL();
         }
 
+        #endregion
+
+        #region RecruitedCreate
+        public StatusModel recruitedCreateBL(CreateRecruitedHRVM m)
+        {
+            return ProjectManagementDL.recruitedCreateDL(m);
+        }
+        #endregion
+        #region RecruitedView
+        //GetAllProject
+        public List<GetAllRecruitedHRVM> getAllRecruitedHRBL()
+        {
+            return ProjectManagementDL.getRecruitedHRDL();
+        }
+        //GetSingleRecruitedHR For Edit
+        public EditRecruitedHRVM getSignleRecruitedHRBL(int RecruitedHR)
+        {
+            EditRecruitedHRVM m = ProjectManagementDL.getSignleRecruitedHRDL(RecruitedHR);
+            return m;
+        }
+        //RecruitedHREdit
+        public StatusModel recruitedHREditBL(EditRecruitedHRVM m)
+        {
+            return ProjectManagementDL.recruitedEditDL(m);
+        }
         #endregion
     }
 }

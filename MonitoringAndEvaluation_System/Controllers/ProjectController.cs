@@ -130,10 +130,91 @@ namespace MonitoringAndEvaluation_System.Controllers
             List<GetAllProjectVM> lst = new ProjectManagementBL().getAllProjectBL();
             return View(lst);
         }
+        [HttpGet]
         public ActionResult RecruitedHRCreate()
         {
-            return View();
+            CreateRecruitedHRVM recruitedHRVM = new CreateRecruitedHRVM();
+            ComboProject(recruitedHRVM);
+            getAllRecruitedHR();
+            return View(recruitedHRVM);
+            
         }
+        [HttpPost]
+        public ActionResult RecruitedHRCreate(CreateRecruitedHRVM recruitedHRVM)
+        {
+            try
+            {
+                if (ModelState.IsValid == false)
+                {
+                    return View(recruitedHRVM);
+                }
+
+                recruitedHRVM.CreatedByUser_ID=Convert.ToInt32(Session["LoginUserID"]);
+                StatusModel status = new ProjectManagementBL().recruitedCreateBL(recruitedHRVM);
+                if (status.status)
+                {
+                    TempData["Message"] = "Record Saved Successfully.";
+                }
+                else
+                {
+                    TempData["Message"] = status.statusDetail;
+                }
+            }
+            catch (Exception ex1)
+            {
+                TempData["Message"] = "Exeption: " + ex1.Message;
+            }
+            getProject();
+            return RedirectToAction("RecruitedHRCreate");
+        }
+
+        [HttpGet]
+        public ActionResult RecruitedHREdit(int RecruitedHRID)
+        {
+            EditRecruitedHRVM getRecruitedHR = new EditRecruitedHRVM();
+            try
+            {
+
+                getRecruitedHR = new ProjectManagementBL().getSignleRecruitedHRBL(RecruitedHRID);
+                getProject();
+                getRecruitedHR.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
+            }
+            catch (Exception)
+            {
+            }
+            
+            return View(getRecruitedHR);
+        }
+        [HttpPost]
+        public ActionResult RecruitedHREdit(EditRecruitedHRVM editRecruitedHRVM)
+        {
+            try
+            {
+                if (ModelState.IsValid == false)
+                {
+                    return View(editRecruitedHRVM);
+                }
+                getProject();
+                editRecruitedHRVM.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
+                editRecruitedHRVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+                StatusModel status = new ProjectManagementBL().recruitedHREditBL(editRecruitedHRVM);
+                if (status.status)
+                {
+                    TempData["Message"] = "Record Updeted Successfully.";
+                }
+                else
+                {
+                    TempData["Message"] = status.statusDetail;
+                }
+            }
+            catch (Exception ex1)
+            {
+                TempData["Message"] = "Exeption: " + ex1.Message;
+            }
+            getProject();
+            return RedirectToAction("RecruitedHRCreate");
+        }
+
         public ActionResult ProcurementCreate()
         {
             return View();
@@ -160,6 +241,22 @@ namespace MonitoringAndEvaluation_System.Controllers
             projectVM.comboRiskStatus = ObjProjectMngBL.getRiskStatusBL();
             projectVM.comboFundingSource = ObjProjectMngBL.getFudingSourceBL();
         }
+        public void ComboProject(CreateRecruitedHRVM recruitedHRVM)
+        {
+           
+            //Get ProjectType list
+            recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL();
+            
+        }
+        private void getAllRecruitedHR()
+        {
+            ViewBag.LstAllRecruitedHR = new ProjectManagementBL().getAllRecruitedHRBL();
+        }
+        private void getProject()
+        {
+            ViewBag.LstAllProject = new ProjectManagementBL().getComboProjectBL();
+        }
+
         #endregion
     }
 }

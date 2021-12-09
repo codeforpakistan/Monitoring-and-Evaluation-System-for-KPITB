@@ -48,7 +48,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
 
 
-       [HttpGet]
+        [HttpGet]
         public ActionResult RoleEdit(int RoleID)
         {
             EditRoleVM getRole = new EditRoleVM();

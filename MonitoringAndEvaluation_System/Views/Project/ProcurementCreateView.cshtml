@@ -1,18 +1,18 @@
-﻿@model ModelLayer.MainViewModel.CreateRecruitedHRVM
+﻿@model ModelLayer.MainViewModel.CreateProcurementVM
 @{
     ViewBag.Title = "Add New HR";
-    List<ModelLayer.MainViewModel.GetAllRecruitedHRVM> _LstAllRecruitedHR = (List<ModelLayer.MainViewModel.GetAllRecruitedHRVM>)ViewBag.LstAllRecruitedHR;
+    List<ModelLayer.MainViewModel.GetAllProcurementVM> _LstAllProcurement = (List<ModelLayer.MainViewModel.GetAllProcurementVM>)ViewBag.LstAllProcurement;
 }
 
 <!-- START row-->
 <div class="row">
     <div class="col-xl-12">
-        @using (Html.BeginForm("RecruitedHRCreate", "Project", FormMethod.Post, new { @class = "form-horizontal" }))
+        @using (Html.BeginForm("ProcurementCreateView", "Project", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             <!-- START card-->
             <div class="card card-default">
                 <div class="card-header">
-                    <div class="card-title">Add New Recruited-HR</div>
+                    <div class="card-title">Add New Procurement</div>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
@@ -42,16 +42,15 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label class="col-form-label">No of Recruited -HR *</label>
-                                @Html.TextBoxFor(model => model.RecruitedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.RecruitedHR, "", new { @class = "parsley-required" })
+                                <label class="col-form-label">No of Procurement *</label>
+                                @Html.TextBoxFor(model => model.AchievedProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" })
+                                @Html.ValidationMessageFor(m => m.AchievedProcurement, "", new { @class = "parsley-required" })
 
                             </div>
                             <div class="col-lg-4">
-                                <label class="col-form-label">HR Date *</label>
-                                <input class="form-control" id="RecruitedHRDate" type="text" name="RecruitedHRDate">
-                                @*@Html.TextBoxFor(model => model.RecruitedHRDate, new { @class = "form-control", type = "text", @id = "RecruitedHRDate" })*@
-                                @Html.ValidationMessageFor(m => m.RecruitedHRDate, "", new { @class = "parsley-required" })
+                                <label class="col-form-label">Procurement Date *</label>
+                                @Html.TextBoxFor(model => model.ProcurementDate, new { @class = "form-control", @id = "ProcurementDate", @placeholder = "Enter No of Recruited -HR" })
+                                @Html.ValidationMessageFor(m => m.ProcurementDate, "", new { @class = "parsley-required" })
 
                             </div>
                             <div class="col-lg-4">
@@ -83,16 +82,16 @@
                                                         <th>
                                                             ID
                                                         </th>
-                                                        <th>
-                                                            Planned-HR
+                                                        <th class="col-lg-3">
+                                                            Planned Procurement
                                                         </th>
-                                                        <th>
-                                                            Recruited-HR
+                                                        <th class="col-lg-3">
+                                                            Achieved Procurement
                                                         </th>
-                                                        <th>
-                                                            Recruited %
+                                                        <th class="col-lg-3">
+                                                            Procurement %
                                                         </th>
-                                                        <th class="col-lg-4">
+                                                        <th class="col-lg-5">
                                                             Remarks
                                                         </th>
                                                         <th>
@@ -102,28 +101,28 @@
                                                 </thead>
                                                 <tbody>
                                                     @{
-                                                        foreach (var item in _LstAllRecruitedHR)
+                                                        foreach (var item in _LstAllProcurement)
                                                         {
                                                             <tr>
-                                                                @Html.HiddenFor(m => item.RecruitedHRID)
+                                                                @Html.HiddenFor(m => item.AchievedProcurementID)
                                                                 <td>
                                                                     @item.ID
                                                                 </td>
                                                                 <td>
-                                                                    @item.PlannedHR
+                                                                    @item.PlannedProcurement
                                                                 </td>
                                                                 <td>
-                                                                    @item.RecruitedHR
+                                                                    @item.AchievedProcurement
                                                                 </td>
 
                                                                 <td>
-                                                                    @item.RecruitedHRPercent
+                                                                    @item.ProcurementPercent
                                                                 </td>
                                                                 <td>
                                                                     @item.Remarks
                                                                 </td>
                                                                 <td>
-                                                                    @Html.ActionLink("Edit", "RecruitedHREdit", new { RecruitedHRID = item.RecruitedHRID }, new { @class = "mb-1 btn btn-warning" })
+                                                                    @Html.ActionLink("Edit", "ProcurementEdit", new { AchievedProcurementID = item.AchievedProcurementID }, new { @class = "mb-1 btn btn-warning" })
                                                                 </td>
                                                             </tr>
                                                         }
@@ -136,13 +135,10 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
             <!-- END card-->
-
         }
     </div>
 </div>
@@ -152,12 +148,10 @@
 <script>
     $(document).ready(function () {
         $(function () {
-            $('#RecruitedHRDate').datepicker({
+            $('#ProcurementDate').datepicker({
                 format: "dd/mm/yyyy"
             });
         });
     });
 </script>
-
-
 

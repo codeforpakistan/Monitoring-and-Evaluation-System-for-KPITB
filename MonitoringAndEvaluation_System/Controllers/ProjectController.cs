@@ -232,29 +232,29 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpPost]
         public ActionResult FinanceCreateView(CreateViewFinanceVM financeVM)
         {
-            try
-            {
-                if (ModelState.IsValid == false)
-                {
-                    return View(financeVM);
-                }
+            //try
+            //{
+            //    if (ModelState.IsValid == false)
+            //    {
+            //        return View(financeVM);
+            //    }
 
-                financeVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
-                StatusModel status = new ProjectManagementBL().financeCreateViewBL(financeVM);
-                if (status.status)
-                {
-                    TempData["Message"] = "Record Saved Successfully.";
-                }
-                else
-                {
-                    TempData["Message"] = status.statusDetail;
-                }
-            }
-            catch (Exception ex1)
-            {
-                TempData["Message"] = "Exeption: " + ex1.Message;
-            }
-            getProject();
+            //    financeVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+            //    StatusModel status = new ProjectManagementBL().financeCreateViewBL(financeVM);
+            //    if (status.status)
+            //    {
+            //        TempData["Message"] = "Record Saved Successfully.";
+            //    }
+            //    else
+            //    {
+            //        TempData["Message"] = status.statusDetail;
+            //    }
+            //}
+            //catch (Exception ex1)
+            //{
+            //    TempData["Message"] = "Exeption: " + ex1.Message;
+            //}
+            //getProject();
             return RedirectToAction("FinanceCreateView");
         }
 
@@ -305,11 +305,90 @@ namespace MonitoringAndEvaluation_System.Controllers
         //    return RedirectToAction("RecruitedHRCreate");
         //}
         #endregion
-        public ActionResult ProcurementCreate()
+        [HttpGet]
+        public ActionResult ProcurementCreateView()
         {
-            return View();
+            CreateProcurementVM procurementVM = new CreateProcurementVM();
+            ComboProjectProc(procurementVM);
+            getProject();
+            getAllProcurement();
+            return View(procurementVM);
         }
+        [HttpPost]
+        public ActionResult ProcurementCreateView(CreateProcurementVM procurementVM)
+        {
+            try
+            {
+                if (ModelState.IsValid == false)
+                {
+                    return View(procurementVM);
+                }
 
+                procurementVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+                StatusModel status = new ProjectManagementBL().procurementCreateBL(procurementVM);
+                if (status.status)
+                {
+                    TempData["Message"] = "Record Saved Successfully.";
+                }
+                else
+                {
+                    TempData["Message"] = status.statusDetail;
+                }
+            }
+            catch (Exception ex1)
+            {
+                TempData["Message"] = "Exeption: " + ex1.Message;
+            }
+            getProject();
+            return RedirectToAction("ProcurementCreateView");
+        }
+        [HttpGet]
+        public ActionResult ProcurementEdit(int AchievedProcurementID)
+        {
+            EditProcurementVM getProcurement = new EditProcurementVM();
+
+            try
+            {
+
+                getProcurement = new ProjectManagementBL().getSignleProcurementBL(AchievedProcurementID);
+                getProject();
+                getProcurement.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
+            }
+            catch (Exception)
+            {
+            }
+
+            return View(getProcurement);
+        }
+        [HttpPost]
+        public ActionResult ProcurementEdit(EditProcurementVM editProcurementVM)
+        {
+            try
+            {
+                if (ModelState.IsValid == false)
+                {
+                    return View(editProcurementVM);
+                }
+                getProject();
+                editProcurementVM.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
+                editProcurementVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+                StatusModel status = new ProjectManagementBL().procurementEditBL(editProcurementVM);
+                if (status.status)
+                {
+                    TempData["Message"] = "Record Updeted Successfully.";
+                }
+                else
+                {
+                    TempData["Message"] = status.statusDetail;
+                }
+            }
+            catch (Exception ex1)
+            {
+                TempData["Message"] = "Exeption: " + ex1.Message;
+            }
+            getProject();
+            return RedirectToAction("ProcurementCreateView");
+        }
         public ActionResult NO()
         {
             return View();
@@ -336,11 +415,25 @@ namespace MonitoringAndEvaluation_System.Controllers
            
             //Get ProjectType list
             recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL();
-            
+            recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL();
+
+        }
+        public void ComboProjectProc(CreateProcurementVM procurementVM)
+        {
+
+            //Get ProjectType list
+            procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL();
+           
+           
+
         }
         private void getAllRecruitedHR()
         {
             ViewBag.LstAllRecruitedHR = new ProjectManagementBL().getAllRecruitedHRBL();
+        }
+        private void getAllProcurement()
+        {
+            ViewBag.LstAllProcurement = new ProjectManagementBL().getAllProcurementBL();
         }
         private void getAllFinance()
         {

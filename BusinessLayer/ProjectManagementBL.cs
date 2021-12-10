@@ -76,7 +76,7 @@ namespace BusinessLayer
         }
         #endregion
         #region RecruitedView
-        //GetAllProject
+        //GetAllRecruitedHR
         public List<GetAllRecruitedHRVM> getAllRecruitedHRBL()
         {
             return ProjectManagementDL.getRecruitedHRDL();
@@ -98,6 +98,29 @@ namespace BusinessLayer
         public StatusModel financeCreateViewBL(CreateViewFinanceVM m ,string postType)
         {
             return ProjectManagementDL.releasedCreateViewDL(m);
+        }
+        #endregion
+        #region Procurement
+        //ProcurementCreate
+        public StatusModel procurementCreateBL(CreateProcurementVM m)
+        {
+            return ProjectManagementDL.procurementCreateDL(m);
+        }
+        //GetAllProcurement
+        public List<GetAllProcurementVM> getAllProcurementBL()
+        {
+            return ProjectManagementDL.getProcurementDL();
+        }
+        //GetSingalProcurement
+        public EditProcurementVM getSignleProcurementBL(int AchievedProcurementID)
+        {
+            EditProcurementVM m = ProjectManagementDL.getSignleProcurementDL(AchievedProcurementID);
+            return m;
+        }
+        //ProcurementEdit
+        public StatusModel procurementEditBL(EditProcurementVM m)
+        {
+            return ProjectManagementDL.procurementEditDL(m);
         }
         #endregion
     }

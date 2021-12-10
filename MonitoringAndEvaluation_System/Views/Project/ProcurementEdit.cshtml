@@ -1,9 +1,8 @@
-﻿@model ModelLayer.MainViewModel.EditRecruitedHRVM
+﻿@model ModelLayer.MainViewModel.EditProcurementVM
 @{
-    ViewBag.Title = "Edit Recruited HR";
+    ViewBag.Title = "Edit Procurement";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="row">
     <div class="col-xl-12">
         <!-- START card-->
@@ -13,9 +12,9 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    @using (Html.BeginForm("RecruitedHREdit", "Project", FormMethod.Post, new { @class = "form-horizontal" }))
+                    @using (Html.BeginForm("ProcurementEdit", "Project", FormMethod.Post, new { @class = "form-horizontal" }))
                     {
-                        @Html.HiddenFor(m => m.RecruitedHRID)
+                        @Html.HiddenFor(m => m.AchievedProcurementID)
                         <div class="row">
                             <div class="col-lg-4">
                                 <label for="sel1">Select Project </label>
@@ -42,15 +41,15 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label class="col-form-label">No of Recruited -HR *</label>
-                                @Html.TextBoxFor(model => model.RecruitedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.RecruitedHR, "", new { @class = "parsley-required" })
+                                <label class="col-form-label">No of Procurement *</label>
+                                @Html.TextBoxFor(model => model.AchievedProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" })
+                                @Html.ValidationMessageFor(m => m.AchievedProcurement, "", new { @class = "parsley-required" })
 
                             </div>
                             <div class="col-lg-4">
-                                <label class="col-form-label">HR Date *</label>
-                                @Html.TextBoxFor(model => model.RecruitedHRDate, new { @class = "form-control", @id="RecruitedHRDate", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.RecruitedHRDate, "", new { @class = "parsley-required" })
+                                <label class="col-form-label">Procurement Date *</label>
+                                @Html.TextBoxFor(model => model.ProcurementDate, new { @class = "form-control",@id= "ProcurementDate", @placeholder = "Enter No of Recruited -HR" })
+                                @Html.ValidationMessageFor(m => m.ProcurementDate, "", new { @class = "parsley-required" })
 
                             </div>
                             <div class="col-lg-4">
@@ -89,7 +88,7 @@
 <script>
     $(document).ready(function () {
         $(function () {
-            $('#RecruitedHRDate').datepicker({
+            $('#ProcurementDate').datepicker({
                 format: "dd/mm/yyyy"
             });
         });

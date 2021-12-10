@@ -474,6 +474,63 @@ namespace ModelLayer
             public List<ComboProject> comboProjects { get; set; }
         }
         #endregion
+        #region Procurement
+        public partial class CreateProcurementVM
+        {
+            public CreateProcurementVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            public int AchievedProcurementID { get; set; }
+            public int AchievedProcurement { get; set; }
+            public double ProcurementPercent { get; set; }
+            public System.DateTime ProcurementDate{ get; set; }
+            public string Remarks { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        public partial class EditProcurementVM
+        {
+            public EditProcurementVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            public int AchievedProcurementID { get; set; }
+            public int AchievedProcurement { get; set; }
+            public double ProcurementPercent { get; set; }
+            public System.DateTime ProcurementDate { get; set; }
+            public string Remarks { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        public partial class GetAllProcurementVM
+        {
+            public GetAllProcurementVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public int PlannedProcurement { get; set; }
+            public int AchievedProcurementID { get; set; }
+            public int AchievedProcurement { get; set; }
+            public double ProcurementPercent { get; set; }
+            public System.DateTime ProcurementDate{ get; set; }
+            public string Remarks { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        #endregion
     }
 
 }

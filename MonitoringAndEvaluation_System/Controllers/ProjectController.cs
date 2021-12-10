@@ -15,6 +15,8 @@ namespace MonitoringAndEvaluation_System.Controllers
     {
         // GET: Project
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
+        #region Project
+
         [HttpGet]
         public ActionResult ProjectCreate()
         {
@@ -130,6 +132,8 @@ namespace MonitoringAndEvaluation_System.Controllers
             List<GetAllProjectVM> lst = new ProjectManagementBL().getAllProjectBL();
             return View(lst);
         }
+        #endregion
+        #region RecruitedHR
         [HttpGet]
         public ActionResult RecruitedHRCreate()
         {
@@ -214,7 +218,93 @@ namespace MonitoringAndEvaluation_System.Controllers
             getProject();
             return RedirectToAction("RecruitedHRCreate");
         }
+        #endregion
+        #region Finance
+        [HttpGet]
+        public ActionResult FinanceCreateView()
+        {
+            CreateViewFinanceVM financeVM = new CreateViewFinanceVM();
+            //ComboProject(financeVM);
+            //getAllRecruitedHR();
+            return View(financeVM);
 
+        }
+        [HttpPost]
+        public ActionResult FinanceCreateView(CreateViewFinanceVM financeVM)
+        {
+            try
+            {
+                if (ModelState.IsValid == false)
+                {
+                    return View(financeVM);
+                }
+
+                financeVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+                StatusModel status = new ProjectManagementBL().financeCreateViewBL(financeVM);
+                if (status.status)
+                {
+                    TempData["Message"] = "Record Saved Successfully.";
+                }
+                else
+                {
+                    TempData["Message"] = status.statusDetail;
+                }
+            }
+            catch (Exception ex1)
+            {
+                TempData["Message"] = "Exeption: " + ex1.Message;
+            }
+            getProject();
+            return RedirectToAction("FinanceCreateView");
+        }
+
+        //[HttpGet]
+        //public ActionResult RecruitedHREdit(int RecruitedHRID)
+        //{
+        //    EditRecruitedHRVM getRecruitedHR = new EditRecruitedHRVM();
+        //    try
+        //    {
+
+        //        getRecruitedHR = new ProjectManagementBL().getSignleRecruitedHRBL(RecruitedHRID);
+        //        getProject();
+        //        getRecruitedHR.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
+        //    }
+        //    catch (Exception)
+        //    {
+        //    }
+
+        //    return View(getRecruitedHR);
+        //}
+        //[HttpPost]
+        //public ActionResult RecruitedHREdit(EditRecruitedHRVM editRecruitedHRVM)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid == false)
+        //        {
+        //            return View(editRecruitedHRVM);
+        //        }
+        //        getProject();
+        //        editRecruitedHRVM.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
+        //        editRecruitedHRVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+        //        StatusModel status = new ProjectManagementBL().recruitedHREditBL(editRecruitedHRVM);
+        //        if (status.status)
+        //        {
+        //            TempData["Message"] = "Record Updeted Successfully.";
+        //        }
+        //        else
+        //        {
+        //            TempData["Message"] = status.statusDetail;
+        //        }
+        //    }
+        //    catch (Exception ex1)
+        //    {
+        //        TempData["Message"] = "Exeption: " + ex1.Message;
+        //    }
+        //    getProject();
+        //    return RedirectToAction("RecruitedHRCreate");
+        //}
+        #endregion
         public ActionResult ProcurementCreate()
         {
             return View();
@@ -251,6 +341,10 @@ namespace MonitoringAndEvaluation_System.Controllers
         private void getAllRecruitedHR()
         {
             ViewBag.LstAllRecruitedHR = new ProjectManagementBL().getAllRecruitedHRBL();
+        }
+        private void getAllFinance()
+        {
+            ViewBag.LstAllFinance = new ProjectManagementBL().getAllRecruitedHRBL();
         }
         private void getProject()
         {

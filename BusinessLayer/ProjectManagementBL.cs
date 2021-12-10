@@ -69,7 +69,6 @@ namespace BusinessLayer
         }
 
         #endregion
-
         #region RecruitedCreate
         public StatusModel recruitedCreateBL(CreateRecruitedHRVM m)
         {
@@ -92,6 +91,13 @@ namespace BusinessLayer
         public StatusModel recruitedHREditBL(EditRecruitedHRVM m)
         {
             return ProjectManagementDL.recruitedEditDL(m);
+        }
+        #endregion
+        #region Finance
+        //FinaniceCreateView
+        public StatusModel financeCreateViewBL(CreateViewFinanceVM m ,string postType)
+        {
+            return ProjectManagementDL.releasedCreateViewDL(m);
         }
         #endregion
     }

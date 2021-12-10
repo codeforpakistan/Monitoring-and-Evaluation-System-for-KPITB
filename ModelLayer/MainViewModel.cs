@@ -423,7 +423,57 @@ namespace ModelLayer
             public string Remarks { get; set; }
             public System.DateTime RecruitedHRDate { get; set; }
         }
-            #endregion
+        #endregion
+        #region Finance
+        public partial class CreateViewFinanceVM
+        {
+            public CreateViewFinanceVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            //Common Filed
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            //ReleasedBudget
+            public int ReleasedBudgetID { get; set; }
+            public System.DateTime ReleasedDate { get; set; }
+            public long ReleasedBudget { get; set; }
+            public string Remarks { get; set; }
+            //Expenditure
+            public int ExpenditureBudgetID { get; set; } 
+            public System.DateTime ExpenditureDate { get; set; }
+            public long ExpenditureBudget { get; set; }
+           
+            public List<ComboProject> comboProjects { get; set; }
         }
+        public partial class GetAllFinanceVM
+        {
+            public GetAllFinanceVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            //Common Filed
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            //ReleasedBudget
+            public int ReleasedBudgetID { get; set; }
+            public System.DateTime ReleasedDate { get; set; }
+            public long ReleasedBudget { get; set; }
+            public string Remarks { get; set; }
+            //Expenditure
+            public int ExpenditureBudgetID { get; set; }
+            public System.DateTime ExpenditureDate { get; set; }
+            public long ExpenditureBudget { get; set; }
+
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        #endregion
+    }
 
 }

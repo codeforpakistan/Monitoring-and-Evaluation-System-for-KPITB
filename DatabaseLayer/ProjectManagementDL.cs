@@ -294,7 +294,6 @@ namespace DatabaseLayer
             #endregion
             return status;
         }
-        
         #region GetAllProject
         //Project
         public static List<GetAllProjectVM> getProjectDL()
@@ -414,7 +413,91 @@ namespace DatabaseLayer
             return status;
         }
         #endregion
+        #region Finance
+        //RecruitedHRCreate
+        public static StatusModel releasedCreateViewDL(CreateViewFinanceVM m)
+        {
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
 
+                ObjParm.Add("@Project_ID", m.Project_ID);
+                ObjParm.Add("@SubProject_ID", m.SubProject_ID);
+                ObjParm.Add("@Batch_ID", m.Batch_ID);
+                ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
+                ObjParm.Add("@ReleasedBudget", m.ReleasedBudget);
+                ObjParm.Add("@ReleasedDate", m.ReleasedDate);
+                ObjParm.Add("@Remarks", m.Remarks);
+
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_recruiteHRCreate", ObjParm, commandType: CommandType.StoredProcedure);
+
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return status;
+        }
+        public static StatusModel expenditureCreateViewDL(CreateViewFinanceVM m)
+        {
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+
+                ObjParm.Add("@Project_ID", m.Project_ID);
+                ObjParm.Add("@SubProject_ID", m.SubProject_ID);
+                ObjParm.Add("@Batch_ID", m.Batch_ID);
+                ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
+                ObjParm.Add("@ReleasedBudget", m.ReleasedBudget);
+                ObjParm.Add("@ReleasedDate", m.ReleasedDate);
+                ObjParm.Add("@Remarks", m.Remarks);
+
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_recruiteHRCreate", ObjParm, commandType: CommandType.StoredProcedure);
+
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return status;
+        }
+        //GetALLFinance
+        public static List<GetAllFinanceVM> getFinanceDL()
+        {
+            List<GetAllFinanceVM> getAllFinanceVMLst = new List<GetAllFinanceVM>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                getAllFinanceVMLst = conn.Query<GetAllFinanceVM>("sp_GetAllRecruitedHR", commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return getAllFinanceVMLst;
+            }
+        }
+        #endregion
 
     }
 }

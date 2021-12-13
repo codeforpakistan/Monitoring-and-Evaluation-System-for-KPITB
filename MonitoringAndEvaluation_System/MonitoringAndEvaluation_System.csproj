@@ -399,6 +399,9 @@
     <Content Include="Views\Role\RoleEdit.cshtml" />
     <Content Include="Views\Users\UserEdit.cshtml" />
     <Content Include="Views\Project\NO.cshtml" />
+    <Content Include="Views\Project\RecruitedHREdit.cshtml" />
+    <Content Include="Views\Project\ProcurementCreateView.cshtml" />
+    <Content Include="Views\Project\ProcurementEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

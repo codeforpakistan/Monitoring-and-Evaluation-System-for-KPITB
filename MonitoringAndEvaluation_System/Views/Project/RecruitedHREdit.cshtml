@@ -1,0 +1,97 @@
+﻿@model ModelLayer.MainViewModel.EditRecruitedHRVM
+@{
+    ViewBag.Title = "Edit Recruited HR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <!-- START card-->
+        <div class="card card-default">
+            <div class="card-header">
+                <div class="card-title">Edit Recruited HR</div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    @using (Html.BeginForm("RecruitedHREdit", "Project", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        @Html.HiddenFor(m => m.RecruitedHRID)
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Project </label>
+                                @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), "Please Select Project", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
+                                @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Sub Project</label>
+                                <select class="form-control" id="sel1">
+                                    <option>Sub project 1</option>
+                                    <option>Sub project 2</option>
+                                    <option>Sub project 2</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Cycle/Batch</label>
+                                <select class="form-control" id="sel1">
+                                    <option>Peshawar</option>
+                                    <option>Bannu</option>
+                                    <option>Mardan</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="col-form-label">No of Recruited -HR *</label>
+                                @Html.TextBoxFor(model => model.RecruitedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Recruited -HR" })
+                                @Html.ValidationMessageFor(m => m.RecruitedHR, "", new { @class = "parsley-required" })
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">HR Date *</label>
+                                @Html.TextBoxFor(model => model.RecruitedHRDate, new { @class = "form-control", @id="RecruitedHRDate", @placeholder = "Enter No of Recruited -HR" })
+                                @Html.ValidationMessageFor(m => m.RecruitedHRDate, "", new { @class = "parsley-required" })
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Remarks *</label>
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
+                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
+
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="required">* Required fields</div>
+                        <!--Popup Msg-->
+
+                        @*if (TempData["Message"] != null)
+                            {
+                                <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
+                                    <strong>@TempData["Message"]</strong>
+                                </div>
+                            }*@
+                        <hr />
+                        <div class="float-right">
+                            <button class="btn btn-primary" type="submit">Update</button>
+                        </div>
+                        <br />
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- END card-->
+    </div>
+</div>
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
+}
+<script>
+    $(document).ready(function () {
+        $(function () {
+            $('#RecruitedHRDate').datepicker({
+                format: "dd/mm/yyyy"
+            });
+        });
+    });
+</script>

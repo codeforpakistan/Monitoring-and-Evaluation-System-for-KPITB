@@ -374,7 +374,161 @@ namespace ModelLayer
             public String CostPerBeneficiary { get; set; }
         }
         #endregion
+        #region RecruitedHR
+        public partial class CreateRecruitedHRVM
+        {
+            public CreateRecruitedHRVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            public int RecruitedHRID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+           
+            public int RecruitedHR { get; set; }
+            public double RecruitedHRPercent { get; set; }
+            public System.DateTime RecruitedHRDate { get; set; }
+            public string Remarks { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        public partial class EditRecruitedHRVM
+        {
+            public EditRecruitedHRVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            public int RecruitedHRID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
 
+            public int RecruitedHR { get; set; }
+            public double RecruitedHRPercent { get; set; }
+            public System.DateTime RecruitedHRDate { get; set; }
+            public string Remarks { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        public partial class GetAllRecruitedHRVM
+        {
+            public int RecruitedHRID { get; set; }
+            public int ID { get; set; }
+            public int PlannedHR { get; set; }
+            public int RecruitedHR { get; set; }
+            public double RecruitedHRPercent { get; set; }
+            public string Remarks { get; set; }
+            public System.DateTime RecruitedHRDate { get; set; }
+        }
+        #endregion
+        #region Finance
+        public partial class CreateViewFinanceVM
+        {
+            public CreateViewFinanceVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            //Common Filed
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            //ReleasedBudget
+            public int ReleasedBudgetID { get; set; }
+            public System.DateTime ReleasedDate { get; set; }
+            public long ReleasedBudget { get; set; }
+            public string Remarks { get; set; }
+            //Expenditure
+            public int ExpenditureBudgetID { get; set; } 
+            public System.DateTime ExpenditureDate { get; set; }
+            public long ExpenditureBudget { get; set; }
+           
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        public partial class GetAllFinanceVM
+        {
+            public GetAllFinanceVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            //Common Filed
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            //ReleasedBudget
+            public int ReleasedBudgetID { get; set; }
+            public System.DateTime ReleasedDate { get; set; }
+            public long ReleasedBudget { get; set; }
+            public string Remarks { get; set; }
+            //Expenditure
+            public int ExpenditureBudgetID { get; set; }
+            public System.DateTime ExpenditureDate { get; set; }
+            public long ExpenditureBudget { get; set; }
+
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        #endregion
+        #region Procurement
+        public partial class CreateProcurementVM
+        {
+            public CreateProcurementVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            public int AchievedProcurementID { get; set; }
+            public int AchievedProcurement { get; set; }
+            public double ProcurementPercent { get; set; }
+            public System.DateTime ProcurementDate{ get; set; }
+            public string Remarks { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        public partial class EditProcurementVM
+        {
+            public EditProcurementVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            public int AchievedProcurementID { get; set; }
+            public int AchievedProcurement { get; set; }
+            public double ProcurementPercent { get; set; }
+            public System.DateTime ProcurementDate { get; set; }
+            public string Remarks { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        public partial class GetAllProcurementVM
+        {
+            public GetAllProcurementVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public int PlannedProcurement { get; set; }
+            public int AchievedProcurementID { get; set; }
+            public int AchievedProcurement { get; set; }
+            public double ProcurementPercent { get; set; }
+            public System.DateTime ProcurementDate{ get; set; }
+            public string Remarks { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        #endregion
     }
 
 }

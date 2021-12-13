@@ -16,6 +16,11 @@ namespace BusinessLayer
     public class ProjectManagementBL
     {
         #region GetCombo
+        //Get Project
+        public List<ComboProject> getComboProjectBL()
+        {
+            return ProjectManagementDL.getComboProjectDL();
+        }
         //Get Category
         public List<ComboCategory> getCategoryBL()
         {
@@ -51,7 +56,6 @@ namespace BusinessLayer
 
 
         #endregion
-
         #region ProjectView
         //GetAllProject
         public List<GetAllProjectVM> getAllProjectBL()
@@ -64,6 +68,60 @@ namespace BusinessLayer
             return ProjectManagementDL.getFudingSourceDL();
         }
 
+        #endregion
+        #region RecruitedCreate
+        public StatusModel recruitedCreateBL(CreateRecruitedHRVM m)
+        {
+            return ProjectManagementDL.recruitedCreateDL(m);
+        }
+        #endregion
+        #region RecruitedView
+        //GetAllRecruitedHR
+        public List<GetAllRecruitedHRVM> getAllRecruitedHRBL()
+        {
+            return ProjectManagementDL.getRecruitedHRDL();
+        }
+        //GetSingleRecruitedHR For Edit
+        public EditRecruitedHRVM getSignleRecruitedHRBL(int RecruitedHR)
+        {
+            EditRecruitedHRVM m = ProjectManagementDL.getSignleRecruitedHRDL(RecruitedHR);
+            return m;
+        }
+        //RecruitedHREdit
+        public StatusModel recruitedHREditBL(EditRecruitedHRVM m)
+        {
+            return ProjectManagementDL.recruitedEditDL(m);
+        }
+        #endregion
+        #region Finance
+        //FinaniceCreateView
+        public StatusModel financeCreateViewBL(CreateViewFinanceVM m ,string postType)
+        {
+            return ProjectManagementDL.releasedCreateViewDL(m);
+        }
+        #endregion
+        #region Procurement
+        //ProcurementCreate
+        public StatusModel procurementCreateBL(CreateProcurementVM m)
+        {
+            return ProjectManagementDL.procurementCreateDL(m);
+        }
+        //GetAllProcurement
+        public List<GetAllProcurementVM> getAllProcurementBL()
+        {
+            return ProjectManagementDL.getProcurementDL();
+        }
+        //GetSingalProcurement
+        public EditProcurementVM getSignleProcurementBL(int AchievedProcurementID)
+        {
+            EditProcurementVM m = ProjectManagementDL.getSignleProcurementDL(AchievedProcurementID);
+            return m;
+        }
+        //ProcurementEdit
+        public StatusModel procurementEditBL(EditProcurementVM m)
+        {
+            return ProjectManagementDL.procurementEditDL(m);
+        }
         #endregion
     }
 }

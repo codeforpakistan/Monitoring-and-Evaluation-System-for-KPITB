@@ -62,6 +62,14 @@ namespace ModelLayer
             public string FundingSourceName { get; set; }
         }
         #endregion
+        #region Project
+        public partial class ComboProject
+        {
+            public int ProjectID { get; set; }
+            public int User_ID { get; set; }
+            public string ProjectName { get; set; }
+        }
+        #endregion
 
 
     }

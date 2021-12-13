@@ -17,27 +17,23 @@ namespace MonitoringAndEvaluation_System.Controllers
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
         [HttpGet]
         public ActionResult ProjectCreate()
+        
         {
             CreateProjectVM projectVM = new CreateProjectVM();
-
-
 
             Combo(projectVM);
             return View(projectVM);
         }
         [HttpPost]
-        public ActionResult ProjectCreate(CreateProjectVM ProjectVM , FormCollection formCollection)
+        public ActionResult ProjectCreate(CreateProjectVM ProjectVM, HttpPostedFileBase fileInput)
         {
             try
             {
-                //if (ModelState.IsValid == false)
-                //{
-                //    return View(ProjectVM);
-                //}
 
                 #region SingleValues
-                ProjectVM.Category_ID = Convert.ToInt32( Request.Form["txtCategory_ID"]);
-                ProjectVM.ProjectType_ID = Convert.ToInt32( Request.Form["txtProjectType_ID"]);
+
+                ProjectVM.Category_ID = Convert.ToInt32(Request.Form["txtCategory_ID"]);
+                ProjectVM.ProjectType_ID = Convert.ToInt32(Request.Form["txtProjectType_ID"]);
                 ProjectVM.DigitalPolicy_ID = Convert.ToInt32( Request.Form["txtDigitalPolicy_ID"]);
                 ProjectVM.City_ID = Convert.ToInt32(Request.Form["txtCity_ID"]);
                 ProjectVM.ProjectName = Convert.ToString(Request.Form["txtProjectName"]);
@@ -101,26 +97,35 @@ namespace MonitoringAndEvaluation_System.Controllers
                     }
                 }
                 ProjectVM.AssignStackholderList = _lstStackholder;
-                    #endregion
-                
+                #endregion
 
+               // ModelState.Remove("RiskStatus_ID");
+                //if (ModelState.IsValid == false)
+                //{
+                //    Combo(ProjectVM);
+                //   return View(ProjectVM);
+                //}
                 StatusModel status = ObjProjectMngBL.projectCreateBL(ProjectVM);
                 if (status.status)
                 {
                     TempData["Message"] = status.statusDetail;
-                    ModelState.AddModelError("OK",status.statusDetail);
+                    TempData.Keep("Message");
+                    //ModelState.AddModelError("OK",status.statusDetail);
                 }
                 else
                 {
                     TempData["Message"] = status.statusDetail;
+                    return Json("false");
                 }
 
             }
             catch (Exception ex1)
             {
+                return Json("false");
             }
-            //return View("ProjectView", new ProjectManagementBL().getAllProjectBL());
-            return View("~/Views/Project/ProjectView.cshtml", new ProjectManagementBL().getAllProjectBL());
+            return Json("true");
+            //return View("ProjectView");
+            //return View("~/Views/Project/ProjectView.cshtml", new ProjectManagementBL().getAllProjectBL());
         }
 
         [HttpGet]

@@ -29,7 +29,6 @@ namespace MonitoringAndEvaluation_System.Controllers
             List<NavParentMenu> ParentLst = new List<NavParentMenu>(); //Parent
             List<NavChildMenu> ChildLst = new List<NavChildMenu>(); //Child
             List<NavSubChild> SubChildLst = new List<NavSubChild>(); //SubChild
-
             try
             {
 

@@ -3,7 +3,15 @@
     ViewBag.Title = "Projects List";
 }
 
-
+<!--PopupMsg-->
+@{       
+    if (TempData["Message"] != null)
+    {
+       <div class="alert alert-success alert-dismissible show" id="_show" role="alert">
+           <strong>Project Created Successfully </strong> 
+       </div>
+     }
+    }
 <div class="row">
     <div class="col-xl-12">
         <!-- START card-->
@@ -14,12 +22,13 @@
                     <div class="card-body">
                         <div>@Html.ActionLink("Add New Project", "ProjectCreate", null, new { @class = "btn btn-primary" })</div>
                         <hr />
-                        <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
+                        @*<table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">*@
+                        <table class="table table-striped my-4 w-100" id="datatable2">
                             <thead>
                                 <tr>
 
                                     <th>
-                                       ID
+                                        ID
                                     </th>
                                     <th>
                                         Project Name
@@ -68,10 +77,10 @@
                                             <td>
                                                 @item.ApprovedBudget
                                             </td>
-                                           
+
                                             <td>
                                                 @item.CityName
-                                            </td>                     
+                                            </td>
                                             <td>
                                                 @Html.ActionLink("Edit", "ProjectEdit", new { ProjectID = item.ProjectID }, new { @class = "mb-1 btn btn-warning" })
                                                 @*@Html.ActionLink("Detail", "UserDetail", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-primary" })*@
@@ -80,7 +89,7 @@
                                     }
                                 }
 
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -90,3 +99,16 @@
     </div>
 </div>
 <!-- END card-->
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            //PopupTimeOut
+            $('#alert').removeClass('d-none')
+            setTimeout(function () {
+                $('.alert').fadeOut('close')
+            }, 2000)
+
+        });
+    </script>
+}

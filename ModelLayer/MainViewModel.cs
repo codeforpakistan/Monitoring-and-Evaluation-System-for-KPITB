@@ -214,19 +214,17 @@ namespace ModelLayer
 
             public int ProjectID { get; set; }
 
-            [Required(ErrorMessage = "Please Select Category")]
             [Display(Name = "Category")]
-            [Range(0, int.MaxValue, ErrorMessage = "Please Select")]
+            [Range(1, int.MaxValue, ErrorMessage = "Please Select")]
             public int Category_ID { get; set; }
-            [Required(ErrorMessage = "Please Select Project Type")]
-            [Range(0, int.MaxValue, ErrorMessage = "Please Select")]
+            [Range(1, int.MaxValue, ErrorMessage = "Please Select")]
             public int ProjectType_ID { get; set; }
-            [Required(ErrorMessage = "Please Select Select Digital Policy")]
-            [Range(0, int.MaxValue, ErrorMessage = "Please Select")]
+            //[Required(ErrorMessage = "Please Select Select Digital Policy")]
+            [Range(1, int.MaxValue, ErrorMessage = "Please Select")]
             public int DigitalPolicy_ID { get; set; }
 
-            [Required(ErrorMessage = "Please Select Select Location")]
-            [Range(0, int.MaxValue, ErrorMessage = "Please Select")]
+            //[Required(ErrorMessage = "Please Select Select Location")]
+            [Range(1, int.MaxValue, ErrorMessage = "Please Select")]
             public int City_ID { get; set; }
 
             public int User_ID { get; set; }
@@ -241,39 +239,39 @@ namespace ModelLayer
             [Display(Name = "Approved Budget")]
             public long ApprovedBudget { get; set; }
 
-            [Required(ErrorMessage = "Please Select Funding Source")]
+            //[Required(ErrorMessage = "Please Select Funding Source")]
             [Display(Name = "Funding Source")]
             public string Funding_Source { get; set; }
 
             public List<string> Funding_SourceArray { get; set; }
 
-            [Required(ErrorMessage = "Please Enter Planned HR")]
+            //[Required(ErrorMessage = "Please Enter Planned HR")]
             [Display(Name = "Planned-HR")]
-            [Range(0, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
             public int PlannedHR { get; set; }
 
-            [Required(ErrorMessage = "Please Enter Planned Procurement")]
+            //[Required(ErrorMessage = "Please Enter Planned Procurement")]
             [Display(Name = "Planned Procurement")]
-            [Range(0, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
             public int PlannedProcurement { get; set; }
 
-            [Required(ErrorMessage = "Please Enter No of Male")]
-            [Range(0, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            //[Required(ErrorMessage = "Please Enter No of Male")]
+            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
             [Display(Name = "No of Male")]
             public int MaleBeneficiary { get; set; }
 
-            [Required(ErrorMessage = "Please Enter No of Female")]
-            [Range(0, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            //[Required(ErrorMessage = "Please Enter No of Female")]
+            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
             [Display(Name = "No of Female")]
             public int FemaleBeneficiary { get; set; }
 
-            [Required(ErrorMessage = "Please Enter Total No of Beneficiary")]
-            [Range(0, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            //[Required(ErrorMessage = "Please Enter Total No of Beneficiary")]
+            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
             [Display(Name = "Total Beneficiary")]
             public int TotalBeneficiary { get; set; }
 
-            [Required(ErrorMessage = "Please Enter Cost per Beneficiary")]
-            [Range(0, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            //[Required(ErrorMessage = "Please Enter Cost per Beneficiary")]
+            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
             [Display(Name = "Cost Per Beneficiary")]
             public int CostPerBeneficiary { get; set; }
 
@@ -284,13 +282,13 @@ namespace ModelLayer
             //Procurent
             public string AchievedProcurement_ID { get; set; }
 
-            [Required(ErrorMessage = "Please Enter Achieved Procurement")]
-            [Range(0, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            //[Required(ErrorMessage = "Please Enter Achieved Procurement")]
+            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
             [Display(Name = "Achieved Procurement")]
             public int AchievedProcurement { get; set; }
 
-            [Required(ErrorMessage = "Please Enter Achieved Procurement %")]
-            [Range(0, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            //[Required(ErrorMessage = "Please Enter Achieved Procurement %")]
+            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
             [Display(Name = "Procurement %")]
             public double ProcurementPercent { get; set; }
 
@@ -304,7 +302,7 @@ namespace ModelLayer
             public int RecruitedHR_ID { get; set; }
 
             ////[Required(ErrorMessage = "Please Enter Recruited HR")]
-            [Range(0, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
             public int RecruitedHR { get; set; }
 
             public double RecruitedHRPercent { get; set; }

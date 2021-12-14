@@ -17,6 +17,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             CreateRoleVM roleVM = new CreateRoleVM();
             getAllRoles();
+            TempData["Message"] = null;
             return View(roleVM);
         }
         [HttpPost]

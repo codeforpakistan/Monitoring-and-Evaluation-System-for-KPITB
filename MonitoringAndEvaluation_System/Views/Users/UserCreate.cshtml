@@ -58,8 +58,8 @@
                         </div>
                         <div class="form-row">
                             <div class="col-lg-5">
-                                <label for="validationServer04">Select Role</label>
-                                @Html.DropDownListFor(m => m.Role_ID, new SelectList(Model.comboRoles, "RoleID", "RoleName"), "Please Select Role", new { @class = "select2 form-control ", @placeholder = "Select Role" })
+                                <label for="validationServer04">Title</label>
+                                @Html.DropDownListFor(m => m.Role_ID, new SelectList(Model.comboRoles, "RoleID", "RoleName"), "Please Select UserTitle", new { @class = "select2 form-control ", @placeholder = "Select Role" })
                                 @Html.ValidationMessageFor(m => m.Role_ID, "", new { @class = "parsley-required" })
                             </div>
                             @*<div class="col-lg-5">

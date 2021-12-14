@@ -1,18 +1,18 @@
-﻿@model ModelLayer.MainViewModel.CreateRecruitedHRVM
+﻿@model ModelLayer.MainViewModel.CreateIssueVM
 @{
-    ViewBag.Title = "Add New HR";
-    List<ModelLayer.MainViewModel.GetAllRecruitedHRVM> _LstAllRecruitedHR = (List<ModelLayer.MainViewModel.GetAllRecruitedHRVM>)ViewBag.LstAllRecruitedHR;
+    ViewBag.Title = "Add New Issue";
+    List<ModelLayer.MainViewModel.GetAllIssue> _LstAllIssues = (List<ModelLayer.MainViewModel.GetAllIssue>)ViewBag.LstAllIssues;
 }
 
 <!-- START row-->
 <div class="row">
     <div class="col-xl-12">
-        @using (Html.BeginForm("RecruitedHRCreate", "Project", FormMethod.Post, new { @class = "form-horizontal" }))
+        @using (Html.BeginForm("IssueCreateView", "Issues", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             <!-- START card-->
             <div class="card card-default">
                 <div class="card-header">
-                    <div class="card-title">Add New Recruited-HR</div>
+                    <div class="card-title">Project Issue Form</div>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
@@ -41,30 +41,34 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-lg-4">
-                                <label class="col-form-label">No of Recruited -HR *</label>
-                                @Html.TextBoxFor(model => model.RecruitedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.RecruitedHR, "", new { @class = "parsley-required" })
-
-                            </div>
-                            <div class="col-lg-4">
-                                <label class="col-form-label">HR Date *</label>
+                            <div class="col-lg-6">
+                                <label class="col-form-label">Issue Description *</label>
+                                @Html.TextBoxFor(model => model.IssueDescription, new { @class = "form-control", @placeholder = "Enter Issue Details" })
+                                @Html.ValidationMessageFor(m => m.IssueDescription, "", new { @class = "parsley-required" })
                                 
-
-                                @Html.TextBoxFor(model => model.RecruitedHRDate, new { @class = "form-control" ,@id= "RecruitedHRDate" })
-                                @Html.ValidationMessageFor(m => m.RecruitedHRDate, "", new { @class = "parsley-required" })
-
                             </div>
-                            <div class="col-lg-4">
-                                <label class="col-form-label">Remarks *</label>
-                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
-                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
-
+                            <div class="col-lg-6">
+                                <label class="col-form-label">Issue Date *</label>
+                                @Html.TextBoxFor(model => model.IssueDate, new { @class = "form-control", @type = "date", @placeholder = "dd/mm/yyyy" })
+                                @Html.ValidationMessageFor(m => m.IssueDate, "", new { @class = "parsley-required" })
                             </div>
                         </div>
 
                         <br />
+                        <div class="row">
 
+                            <div class="col-lg-6">
+                                <label class="col-form-label">Status/ActionTaken *</label>
+                                @Html.TextBoxFor(model => model.ActionTaken, new { @class = "form-control", @placeholder = "Enter Status/ActionTaken" })
+                                @Html.ValidationMessageFor(m => m.ActionTaken, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="col-form-label">Solution/Remarks *</label>
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Enter Solution/Remarks" })
+                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
+                            </div>
+                        </div>
+                        <br />
                         <div class="required">* Required fields</div>
                         <hr />
                         <div class="float-right">
@@ -74,10 +78,10 @@
                         <br />
                         <div class="card card-default">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 ">
                                     <div class="card">
                                         <div class="card-body">
-                                            <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
+                                            <table class="table table-striped my-4 w-100  table-hover" id="datatable2">
                                                 <thead>
                                                     <tr>
 
@@ -85,16 +89,17 @@
                                                             ID
                                                         </th>
                                                         <th>
-                                                            Planned-HR
+                                                            Issue Description
                                                         </th>
                                                         <th>
-                                                            Recruited-HR
+                                                            Issue Date
+                                                        </th>
+                                                        
+                                                        <th>
+                                                            Action Taken
                                                         </th>
                                                         <th>
-                                                            Recruited %
-                                                        </th>
-                                                        <th class="col-lg-4">
-                                                            Remarks
+                                                            Solution/Remarks
                                                         </th>
                                                         <th>
                                                             Action
@@ -103,34 +108,36 @@
                                                 </thead>
                                                 <tbody>
                                                     @{
-                                                        foreach (var item in _LstAllRecruitedHR)
+                                                        foreach (var item in _LstAllIssues)
                                                         {
                                                             <tr>
-                                                                @Html.HiddenFor(m => item.RecruitedHRID)
+                                                                @Html.HiddenFor(m => item.IssuesID)
                                                                 <td>
                                                                     @item.ID
                                                                 </td>
                                                                 <td>
-                                                                    @item.PlannedHR
+                                                                    @item.IssueDescription
                                                                 </td>
                                                                 <td>
-                                                                    @item.RecruitedHR
+                                                                    @item.IssueDate
                                                                 </td>
-
                                                                 <td>
-                                                                    @item.RecruitedHRPercent
+                                                                    @item.ActionTaken
                                                                 </td>
                                                                 <td>
                                                                     @item.Remarks
                                                                 </td>
+                                                                
                                                                 <td>
-                                                                    @Html.ActionLink("Edit", "RecruitedHREdit", new { RecruitedHRID = item.RecruitedHRID }, new { @class = "mb-1 btn btn-warning" })
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                    }
 
-                                                </tbody>
+                                                                    @Html.ActionLink("Edit", "IssueEdit", new { IssuesID = item.IssuesID }, new { @class = "mb-1 btn btn-warning" })
+
+                                                                </td>
+
+                                                            </tr>
+                                                            }
+                                                     }
+                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -143,10 +150,7 @@
                 </div>
             </div>
             <!-- END card-->
-
         }
-    </div>
+        </div>
 </div>
-
-
 

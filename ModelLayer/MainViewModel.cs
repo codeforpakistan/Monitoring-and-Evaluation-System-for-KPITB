@@ -391,7 +391,10 @@ namespace ModelLayer
            
             public int RecruitedHR { get; set; }
             public double RecruitedHRPercent { get; set; }
-            public System.DateTime RecruitedHRDate { get; set; }
+            [Required(ErrorMessage = "Enter the issued date.")]
+            [DataType(DataType.Date)]
+            //[DisplayFormat(DataFormatString ="{0:d}")]
+            public DateTime RecruitedHRDate { get; set; }
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }
         }
@@ -529,6 +532,64 @@ namespace ModelLayer
             public System.DateTime ProcurementDate{ get; set; }
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }
+        }
+        #endregion
+        #region Issues
+        //CreateIssue
+         public partial class CreateIssueVM
+        {
+            public CreateIssueVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public string IssueDescription { get; set; }
+            public DateTime IssueDate { get; set; }
+            public string ActionTaken { get; set; }
+            public string Solution { get; set; }
+            public string Remarks { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        //EditIssue
+        public partial class EditIssueVM
+        {
+            public EditIssueVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            public int IssuesID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public string IssueDescription { get; set; }
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+            [Display(Name = "Issue Date")]
+            public System.DateTime IssueDate { get; set; }
+            public string ActionTaken { get; set; }
+            public string Solution { get; set; }
+            public string Remarks { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        //GetAllIssue
+        public partial class GetAllIssue
+        {
+            public int IssuesID { get; set; }
+            public int ID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public string IssueDescription { get; set; }
+            public DateTime IssueDate { get; set; }
+            public string ActionTaken { get; set; }
+            public string Solution { get; set; }
+            public string Remarks { get; set; }
+           
         }
         #endregion
     }

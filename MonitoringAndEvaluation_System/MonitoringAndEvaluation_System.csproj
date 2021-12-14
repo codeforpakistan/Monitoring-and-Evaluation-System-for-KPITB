@@ -389,7 +389,6 @@
     <Content Include="Views\Users\UserCreate.cshtml" />
     <Content Include="Views\Users\UserView.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
-    <Content Include="Views\Issues\IssuesCreate.cshtml" />
     <Content Include="Views\Finance\FinanceCreate.cshtml" />
     <Content Include="Views\Shared\SideBar.cshtml" />
     <Content Include="Views\Project\RecruitedHRCreate.cshtml" />
@@ -403,6 +402,8 @@
     <Content Include="Views\Project\RecruitedHREdit.cshtml" />
     <Content Include="Views\Project\ProcurementCreateView.cshtml" />
     <Content Include="Views\Project\ProcurementEdit.cshtml" />
+    <Content Include="Views\Issues\IssueCreateView.cshtml" />
+    <Content Include="Views\Issues\IssueEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

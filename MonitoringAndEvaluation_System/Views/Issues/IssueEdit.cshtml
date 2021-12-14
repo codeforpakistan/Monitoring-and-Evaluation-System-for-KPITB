@@ -1,22 +1,22 @@
-﻿@model ModelLayer.MainViewModel.EditRecruitedHRVM
+﻿@model ModelLayer.MainViewModel.EditIssueVM
 @{
-    ViewBag.Title = "Edit Recruited HR";
+    ViewBag.Title = "Edit Issues";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<!-- START row-->
 <div class="row">
     <div class="col-xl-12">
-        <!-- START card-->
-        <div class="card card-default">
-            <div class="card-header">
-                <div class="card-title">Edit Recruited HR</div>
-            </div>
-            <div class="card-body">
-                <div class="form-group">
-                    @using (Html.BeginForm("RecruitedHREdit", "Project", FormMethod.Post, new { @class = "form-horizontal" }))
-                    {
-                        @Html.HiddenFor(m => m.RecruitedHRID)
+        @using (Html.BeginForm("IssueEdit", "Issues", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <!-- START card-->
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">Project Issue Form</div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
                         <div class="row">
+                            @Html.HiddenFor(m => m.IssuesID)
                             <div class="col-lg-4">
                                 <label for="sel1">Select Project </label>
                                 @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), "Please Select Project", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
@@ -41,55 +41,56 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-lg-4">
-                                <label class="col-form-label">No of Recruited -HR *</label>
-                                @Html.TextBoxFor(model => model.RecruitedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.RecruitedHR, "", new { @class = "parsley-required" })
+                            <div class="col-lg-6">
+                                <label class="col-form-label">Issue Description *</label>
+                                @Html.TextBoxFor(model => model.IssueDescription, new { @class = "form-control", @placeholder = "Enter Issue Details" })
+                                @Html.ValidationMessageFor(m => m.IssueDescription, "", new { @class = "parsley-required" })
 
                             </div>
-                            <div class="col-lg-4">
-                                <label class="col-form-label">HR Date *</label>
-                                @Html.TextBoxFor(model => model.RecruitedHRDate, new { id = "RecruitedHRDate", @class = "datepicker form-control", @placeholder = "dd/mm/yyyy", @Value = @Model.RecruitedHRDate.ToShortDateString() })
-                                @Html.ValidationMessageFor(m => m.RecruitedHRDate, "", new { @class = "parsley-required" })
-
-                            </div>
-                            <div class="col-lg-4">
-                                <label class="col-form-label">Remarks *</label>
-                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
-                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
-
+                            <div class="col-lg-6">
+                                <label class="col-form-label">Issue Date *</label>
+                                @Html.TextBoxFor(model => model.IssueDate, "", new { id = "IssueDate", @class = "datepicker form-control", @placeholder = "dd/mm/yyyy", @Value = @Model.IssueDate.ToShortDateString() })
+                                @*@Html.TextBoxFor(model => model.IssueDate, new { @class = "form-control", @type = "date", @placeholder = "dd/mm/yyyy" })*@
+                                @Html.ValidationMessageFor(m => m.IssueDate, "", new { @class = "parsley-required" })
                             </div>
                         </div>
 
                         <br />
-                        <div class="required">* Required fields</div>
-                        <!--Popup Msg-->
+                        <div class="row">
 
-                        @*if (TempData["Message"] != null)
-                            {
-                                <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
-                                    <strong>@TempData["Message"]</strong>
-                                </div>
-                            }*@
+                            <div class="col-lg-6">
+                                <label class="col-form-label">Status/ActionTaken *</label>
+                                @Html.TextBoxFor(model => model.ActionTaken, new { @class = "form-control", @placeholder = "Enter Status/ActionTaken" })
+                                @Html.ValidationMessageFor(m => m.ActionTaken, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="col-form-label">Solution/Remarks *</label>
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Enter Solution/Remarks" })
+                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="required">* Required fields</div>
                         <hr />
                         <div class="float-right">
                             <button class="btn btn-primary" type="submit">Update</button>
                         </div>
-                        <br />
-                    }
+                    </div>
+
                 </div>
             </div>
-        </div>
-        <!-- END card-->
+            <!-- END card-->
+        }
     </div>
 </div>
+
 @section Styles{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
 }
 <script>
     $(document).ready(function () {
         $(function () {
-            $('#RecruitedHRDate').datepicker({
+            $('#IssueDate').datepicker({
                 format: "dd/mm/yyyy"
             });
         });

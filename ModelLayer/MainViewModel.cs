@@ -189,6 +189,18 @@ namespace ModelLayer
             public StatusModel statusModel { get; set; }
         }
 
+        public class RolePermissionTempVM
+        {
+            public int NavParent_ID  { get; set; }
+            public bool ParentIsVisible { get; set; }
+            public int NavChild_ID { get; set; }
+            public bool ChildIsVisible { get; set; }
+            public int NavSubChild_ID { get; set; }
+            public bool SubChildIsVisible { get; set; }
+        }
+
+
+
         public class RolePermissionWithRolVM
         {
             public int RoleID { get; set; }

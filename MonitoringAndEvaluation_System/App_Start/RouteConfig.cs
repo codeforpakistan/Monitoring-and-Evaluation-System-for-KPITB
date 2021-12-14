@@ -16,7 +16,7 @@ namespace MonitoringAndEvaluation_System
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Users", action = "Login", id = UrlParameter.Optional }
+                defaults: new { controller = "Dashboard", action = "Admin", id = UrlParameter.Optional }
             );
         }
     }

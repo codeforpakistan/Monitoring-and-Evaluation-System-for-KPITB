@@ -73,7 +73,7 @@
                                         {
                                             <div class="col-lg-4">
                                                 <!-- START card-->
-                                                <div class="card card-default" id="cardDemo2">
+                                                <div class="card card-default  child-@child.ChildMenuID" id="cardDemo2">
 
                                                     <div class="card-header i-@child.ChildMenuID">
                                                         <!--CheckBox-->
@@ -89,9 +89,9 @@
                                                                     <input type="checkbox" class="chkPage p-@Parent.ParentMenuID" id="i-@child.ChildMenuID" />
                                                                     <span class="fa fa-check"></span>
                                                                 }
-
-                                                                <input type="hidden" class="IsChecked i-@child.ChildMenuID" name="LstRolePermission[@child.ChildMenuID].IsChecked" value="@child.IsChecked" />
-                                                                <input type="hidden" name="LstRolePermission[@child.ChildMenuID].ChildMenuID" value="@child.ChildMenuID" />
+                                                                <!--Hidden-->
+                                                                <input type="checkbox" class="IsChecked i-@child.ChildMenuID" name="LstRolePermission[@child.ChildMenuID].IsChecked" value="@child.IsChecked" />
+                                                                <input type="text" name="LstRolePermission[@child.ChildMenuID].ChildMenuID" value="@child.ChildMenuID" />
                                                             </label>
                                                         </div>
                                                         <!--Title-->
@@ -126,7 +126,8 @@
                                                                                                         <label>
                                                                                                             <input type="checkbox" class="chkp i-@subChild.SubChildMenuID" checked="checked" />
                                                                                                         </label>
-                                                                                                        <input type="hidden" class="chkOp i-@subChild.SubChildMenuID" name="LstRolePermission[@subChild.SubChildMenuID].HasSubChild" value="true" />
+                                                                                                        <!--Hidden-->
+                                                                                                        <input type="checkbox" class="chkOp i-@subChild.SubChildMenuID" name="LstRolePermission[@subChild.SubChildMenuID].HasSubChild" value="true" />
                                                                                                         <span class="fa fa-check"></span>
                                                                                                     }
                                                                                                     else
@@ -134,13 +135,15 @@
                                                                                                         <label>
                                                                                                             <input type="checkbox" class="chkp i-@subChild.SubChildMenuID" />
                                                                                                         </label>
-                                                                                                        <input type="hidden" class="chkOp i-@subChild.SubChildMenuID" name="LstRolePermission[@subChild.SubChildMenuID].HasSubChild" value="false" />
+                                                                                                        <!--Hidden-->
+                                                                                                        <input type="checkbox" class="chkOp i-@subChild.SubChildMenuID" name="LstRolePermission[@subChild.SubChildMenuID].HasSubChild" value="false" />
                                                                                                         <span class="fa fa-check"></span>
                                                                                                     }
                                                                                                 </label>
                                                                                             </div>
-                                                                                            <input type="hidden" class="IsChecked i-@subChild.SubChildMenuID" name="RolePermissionVM[@subChild.SubChildMenuID].IsChecked" value="LstRolePermission[@subChild.SubChildMenuID].IsChecked" />
-                                                                                            <input type="hidden" name="RolePermissionVM[@subChild.SubChildMenuID].SubChildMenuID" value="@subChild.SubChildMenuID" />
+                                                                                            <!--Hidden-->
+                                                                                            <input type="checkbox" class="IsChecked i-@subChild.SubChildMenuID" name="RolePermissionVM[@subChild.SubChildMenuID].IsChecked" value="LstRolePermission[@subChild.SubChildMenuID].IsChecked" />
+                                                                                            <input type="text" name="RolePermissionVM[@subChild.SubChildMenuID].SubChildMenuID" value="@subChild.SubChildMenuID" />
                                                                                         </td>
                                                                                         <td>@subChild.SubChildName</td>
                                                                                     </tr>
@@ -184,59 +187,66 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#1').addClass('active open');
-                $('#1 div.collapsible-body').attr('style', 'display: block;');
-                $('#2').addClass('active');
-                $('#2 a').addClass('active');
+                //$('#1').addClass('active open');
+                //$('#1 div.collapsible-body').attr('style', 'display: block;');
+                //$('#2').addClass('active');
+                //$('#2 a').addClass('active');
 
-                $('input[type="checkbox"]').click(function (e) {
-
+                $('input[type="checkbox"]').click(function (e)
+                {
+                    debugger;
                     var $this = $(this),
                         $thisClass = $this.attr('class'),
                         $thisVal = $this.is(':checked'),
                         $thisID = $this.attr('id');
 
-                    if ($thisClass == "chkbox") {
-
+                    if ($thisClass == "chkbox")   //PARENT
+                    {
                         $('div.child-' + $thisID).find('input[type="checkbox"]')
                             .attr('checked', 'checked')
                             .prop('checked', $thisVal);
 
                         $('div.child-' + $thisID).find('input.chkOp').attr('value', $thisVal);
-
                         $('div.child-' + $thisID).find('input.IsChecked').attr('value', $thisVal);
 
-                    } else if ($this.hasClass("chkPage")) {
+                    }
+                    else if ($this.hasClass("chkPage"))   //CHILD
+                    {
                         $('input[type="checkbox"].' + $thisID).attr('checked', 'checked').prop('checked', $thisVal);
-                        $('input[type="hidden"].' + $thisID).attr('value', $thisVal);
-                        var $arr = $thisClass.toString().split(' ');
-                        // chkPage id >>> 2 classes
+                        //Hidden
+                          $('input[type="text"].' + $thisID).attr('value', $thisVal);
+                          var $arr = $thisClass.toString().split(' ');
+                          // chkPage id >>> 2 classes
 
-                        $thisClass = $arr[1];
-                        if ($thisVal) {
-                            $('.' + $arr[1]).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
-                            $('.' + $arr[1].replace('p', 'H')).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+                          $thisClass = $arr[1];
+                          if ($thisVal) {
+                              $('.' + $arr[1]).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+                              $('.' + $arr[1].replace('p', 'H')).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
 
-                        } else {
-
-                            //var selectedSiblings = $('.' + $arr[1]).find('input.chkPage:checked').length;
-                            var selectedSiblings = ($('input.' + $arr[1] + ':checked').length);
-
-                            if (selectedSiblings == 0) {
-                                $('.' + $arr[1]).find('input.chkbox').removeAttr('checked').prop('checked', $thisVal);
-                                $('.' + $arr[1].replace('p', 'H')).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
-
-                            }
-                        }
-                    } else if ($this.hasClass("chkp")) {
+                          } else
+                          {
+                              //var selectedSiblings = $('.' + $arr[1]).find('input.chkPage:checked').length;
+                              var selectedSiblings = ($('input.' + $arr[1] + ':checked').length);
+                              if (selectedSiblings == 0)
+                              {
+                                  $('.' + $arr[1]).find('input.chkbox').removeAttr('checked').prop('checked', $thisVal);
+                                  $('.' + $arr[1].replace('p', 'H')).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+                              }
+                          }
+                    }
+                    else if ($this.hasClass("chkp"))  //SUBCHILD
+                    {
                         var $arr = $thisClass.toString().split(' ');
                         $thisClass = 'chkp.' + $arr[1];
                         var selectedSiblings = ($('input.' + $thisClass + ':checked').length);
-                        if ($thisVal && selectedSiblings == 1) {
+                        if ($thisVal && selectedSiblings == 1)
+                        {
                             $('td.' + $arr[1]).find('input.chkPage').attr('checked', 'checked').prop('checked', $thisVal);
                             $('td.' + $arr[1]).find('input.IsChecked').attr('value', $thisVal);
                             $this.closest('td').find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
-                        } else if (!$thisVal && selectedSiblings == 0) {
+                        }
+                        else if (!$thisVal && selectedSiblings == 0)
+                        {
                             $this.parents('td').siblings().find('input.chkPage').attr('checked', 'checked').prop('checked', $thisVal);
                             $this.parents('td').siblings().find('input.IsChecked').attr('value', $thisVal);
                             if ($this.find('input.chkPage:checked').length == 0)

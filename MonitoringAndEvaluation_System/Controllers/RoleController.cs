@@ -9,7 +9,7 @@ using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
 {
-    public class RoleController : Controller
+    public class RoleController : BaseController
     {
 
         [HttpGet]

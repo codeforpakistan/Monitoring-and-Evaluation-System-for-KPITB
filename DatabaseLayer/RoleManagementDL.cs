@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using static ModelLayer.MainViewModel;
 
 namespace DatabaseLayer
@@ -19,18 +20,63 @@ namespace DatabaseLayer
             IDbConnection Con = null;
             try
             {
-                Con = new SqlConnection(Common.ConnectionString);
-                Con.Open();
-                DynamicParameters ObjParm = new DynamicParameters();
-                ObjParm.Add("@RoleName", m.RoleName);
-                
-                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
 
-                Con.Execute("sp_roleCreate", ObjParm, commandType: CommandType.StoredProcedure);
+                using (TransactionScope transactionScope = new TransactionScope())
+                {
 
-                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
-                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                    Con = new SqlConnection(Common.ConnectionString);
+                    Con.Open();
+                    DynamicParameters ObjParm = new DynamicParameters();
+                    ObjParm.Add("@RoleName", m.RoleName);
+
+                    ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                    ObjParm.Add("@RoleID", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                    Con.Execute("sp_roleCreate", ObjParm, commandType: CommandType.StoredProcedure);
+
+                    status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                    status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                    m .RoleID = Convert.ToInt32(ObjParm.Get<int>("@RoleID"));
+
+                    Con.Close();
+
+
+                    #region AssignToRoleMap
+
+                    SqlConnection conn = null;
+                    SqlCommand cmd = null;
+                    conn = new SqlConnection(Common.ConnectionString);
+                    cmd = new SqlCommand("sp_RoleIdInsertAfterRoleCreationMulti", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    List<RolePermissionTempVM> _lst = new List<RolePermissionTempVM>();
+                    for (int i = 0; i < getRolePermissionDL().Count; i++)
+                    {
+                        RolePermissionTempVM mm = new RolePermissionTempVM();
+                        mm.NavParent_ID = getRolePermissionDL()[i].ParentMenuID;
+                        mm.ParentIsVisible = getRolePermissionDL()[i].HasParent;
+                        mm.NavChild_ID = getRolePermissionDL()[i].ChildMenuID;
+                        mm.ChildIsVisible = getRolePermissionDL()[i].HasChild;
+                        mm.NavSubChild_ID = getRolePermissionDL()[i].SubChildMenuID;
+                        mm.SubChildIsVisible = getRolePermissionDL()[i].HasSubChild;
+                        _lst.Add(mm);
+                    }
+
+
+                    DataTable dt = Utility.Conversion.ConvertListToDataTable(_lst);
+                    cmd.Parameters.AddWithValue("@Role_ID", m.RoleID);
+                    cmd.Parameters.AddWithValue("@TempTblRoleMap", dt).SqlDbType = SqlDbType.Structured;
+
+                    conn.Open();
+                    int isInserted = cmd.ExecuteNonQuery();
+                    conn.Close();
+
+                    #endregion
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+                }
+
             }
             catch (Exception ex)
             {

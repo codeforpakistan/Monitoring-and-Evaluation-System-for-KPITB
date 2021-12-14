@@ -9,7 +9,7 @@ using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
         UserManagementBL ObjuserMngBL = new UserManagementBL();
         // GET: Dashboard
@@ -32,7 +32,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             try
             {
 
-                LoginReturnDataVM loginUserDataModel = (LoginReturnDataVM)Session["LoginUserData"];
+                LoginReturnDataVM loginUserDataModel = (LoginReturnDataVM)Session["LoginUser"];// Session["LoginUserData"];
                 //ClsUsers user = (ClsUsers)HttpContext.Current.Session["LoginUserData"];
                
                 ParentLst = ObjuserMngBL.getParentMenuBL(loginUserDataModel.RoleID); //Parent

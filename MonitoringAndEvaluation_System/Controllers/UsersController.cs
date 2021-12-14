@@ -7,17 +7,19 @@ using System.Linq;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using static ModelLayer.MainModel;
 using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         // GET: Users
         UserManagementBL ObjUserMngBL = new UserManagementBL();
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Login()
         {
             LoginVM loginVM = new LoginVM();
@@ -25,6 +27,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Login(LoginVM model)
         {
             try
@@ -35,26 +38,21 @@ namespace MonitoringAndEvaluation_System.Controllers
                     return View(model);
                 }
 
-                LoginReturnDataVM loginUserDataModel = null;  //Initilize List
-                if (Session["LoginUserData"] == null)
+                LoginReturnDataVM loginUserDataModel =  ObjUserMngBL.userLoginBL(model);  //Get UserLogin Data
+                if (loginUserDataModel != null)
                 {
-                    loginUserDataModel = ObjUserMngBL.userLoginBL(model);  //Get UserLogin Data
-                    Session["LoginUserData"] = loginUserDataModel;
-                    Session["LoginUserID"]  = loginUserDataModel.UserID;
-                    Session["LoginRoleID"] = loginUserDataModel.RoleID;
-                    
+                    Session["LoginUser"] = loginUserDataModel;
+                    Session["UserID"] = loginUserDataModel.UserID;
+                    Session["RoleID"] = loginUserDataModel.RoleID;
+                    Session["Email"] = loginUserDataModel.Email;
+                    FormsAuthentication.SetAuthCookie(loginUserDataModel.FullName, false);
+                    ModelState.AddModelError(string.Empty, "User Created Successfully");
+                    return RedirectToAction("Admin", "Dashboard");
                 }
                 else
                 {
-                    loginUserDataModel = (LoginReturnDataVM)Session["LoginUserData"];
-                    Session["LoginUserID"] = loginUserDataModel.UserID;
-                    Session["LoginRoleID"] = loginUserDataModel.RoleID;
-                }
-
-                if (loginUserDataModel != null )
-                {
-                    //Save to Session 
-                    return RedirectToAction("Admin", "Dashboard");
+                    ModelState.AddModelError(string.Empty, "Invalid Credentials");
+                    return View(model);
                 }
             }
             catch (Exception ex1)

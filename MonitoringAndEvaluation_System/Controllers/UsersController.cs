@@ -63,6 +63,14 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         }
 
+        [HttpGet]
+        public ActionResult LogOff()
+        {
+            FormsAuthentication.SignOut();
+            Session.Clear();
+            Session.Abandon();
+            return RedirectToAction("Login", "Users");
+        }
 
         [HttpGet]
         public ActionResult UserCreate()

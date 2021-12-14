@@ -89,11 +89,12 @@ namespace ModelLayer
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
-            public string IssuesQuarter { get; set; }
-            public System.DateTime IssuesDate { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public string IssueDescription { get; set; }
+            public DateTime IssuesDate { get; set; }
             public string ActionTaken { get; set; }
             public string Solution { get; set; }
-            public int User_ID { get; set; }
+            public string Remarks { get; set; }
         }
         public partial class ProjectType
         {

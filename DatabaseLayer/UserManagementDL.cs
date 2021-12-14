@@ -119,7 +119,7 @@ namespace DatabaseLayer
                         ObjParm.Add("@Email", m.Email);
                         ObjParm.Add("@ContactNo", m.ContactNo);
                         ObjParm.Add("@Password", m.Password);
-                        //ObjParm.Add("@CNICNo", m.CNICNo);
+                        ObjParm.Add("@CNICNo", m.CNICNo);
                         //ObjParm.Add("@Photo", m.Photo);
                         ObjParm.Add("@ADDRESS", m.Address);
                         

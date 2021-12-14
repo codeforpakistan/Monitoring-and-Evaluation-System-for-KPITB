@@ -95,7 +95,7 @@
                                             </div>
                                             <div class="col-lg-4 ">
                                                 <label class="col-form-label">Total Beneficiary *</label>
-                                                @Html.TextBoxFor(model => model.TotalBeneficiary, new { @class = "form-control", @type = "number", @placeholder = "Total Beneficiary" })
+                                                @Html.TextBoxFor(model => model.TotalBeneficiary, new { @class = "form-control", @type = "number", @placeholder = "Total Beneficiary", @readonly = "readonly" })
                                                 @Html.ValidationMessageFor(m => m.TotalBeneficiary, "", new { @class = "parsley-required", @id = "spanTotalBeneficiary" })
                                                 @*<input class="form-control" id="idtotalcpb" type="number" name="idtotalcpb" placeholder="Total Beneficiary" readonly>*@
                                             </div>
@@ -379,7 +379,16 @@
 
         $(document).ready(function () {
          
-             
+
+            $("#MaleBeneficiary,#FemaleBeneficiary").on('change', function () {
+                debugger;
+
+                var _MaleBeneficiary = $('#MaleBeneficiary').val();
+                var _FemaleBeneficiary = $('#FemaleBeneficiary').val();
+                var _TotalBeneficiary = 0;
+                _TotalBeneficiary = parseInt(_MaleBeneficiary) + parseInt(_FemaleBeneficiary);
+                $('#TotalBeneficiary').val(_TotalBeneficiary);
+            });
                   
  
 

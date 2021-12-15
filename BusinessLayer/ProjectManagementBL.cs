@@ -93,13 +93,6 @@ namespace BusinessLayer
             return ProjectManagementDL.recruitedEditDL(m);
         }
         #endregion
-        #region Finance
-        //FinaniceCreateView
-        public StatusModel financeCreateViewBL(CreateViewFinanceVM m ,string postType)
-        {
-            return ProjectManagementDL.releasedCreateViewDL(m);
-        }
-        #endregion
         #region Procurement
         //ProcurementCreate
         public StatusModel procurementCreateBL(CreateProcurementVM m)

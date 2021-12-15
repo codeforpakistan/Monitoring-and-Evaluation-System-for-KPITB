@@ -1,18 +1,16 @@
-﻿@model ModelLayer.MainViewModel.CreateProcurementVM
-@{
-    ViewBag.Title = "Add New HR";
-    List<ModelLayer.MainViewModel.GetAllProcurementVM> _LstAllProcurement = (List<ModelLayer.MainViewModel.GetAllProcurementVM>)ViewBag.LstAllProcurement;
-}
+﻿@model ModelLayer.MainViewModel.CreateViewReleasedBudgetVM
+ @{
+     ViewBag.Title = "Released Budget";
+     List<ModelLayer.MainViewModel.GetAllReleasedBudgetVM> _LstAllReleasedBudget = (List<ModelLayer.MainViewModel.GetAllReleasedBudgetVM>)ViewBag.LstAllReleasedBudget;
+  }
 
-<!-- START row-->
-<div class="row">
-    <div class="col-xl-12">
-        @using (Html.BeginForm("ProcurementCreateView", "Project", FormMethod.Post, new { @class = "form-horizontal" }))
-        {
-            <!-- START card-->
-            <div class="card card-default">
+<div class="col-xl-12">
+    @using (Html.BeginForm("ReleasedBudgetCreateView", "Finance", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+       <!-- START card-->
+       <div class="card card-default">
                 <div class="card-header">
-                    <div class="card-title">Add New Procurement</div>
+                    <div class="card-title">Add Released Budget</div>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
@@ -38,31 +36,28 @@
                                     <option>Mardan</option>
                                 </select>
                             </div>
-
                         </div>
+                        <br />
                         <div class="row">
                             <div class="col-lg-4">
-                                <label class="col-form-label">No of Procurement *</label>
-                                @Html.TextBoxFor(model => model.AchievedProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" })
-                                @Html.ValidationMessageFor(m => m.AchievedProcurement, "", new { @class = "parsley-required" })
+                                <label class="col-form-label">Released Budget *</label>
+                                @Html.TextBoxFor(model => model.ReleasedBudget, new { @class = "form-control", @type = "number", @placeholder = "Released Budget in KPR" })
+                                @Html.ValidationMessageFor(m => m.ReleasedBudget, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Released Date *</label>
+                                @Html.TextBoxFor(model => model.ReleasedDate, new { @class = "form-control", @type = "date", @id = "ReleasedDate", @placeholder = "dd/mm/yyyy" })
+                                @Html.ValidationMessageFor(m => m.ReleasedDate, "", new { @class = "parsley-required" })
 
                             </div>
                             <div class="col-lg-4">
-                                <label class="col-form-label">Procurement Date *</label>
-                                @Html.TextBoxFor(model => model.ProcurementDate, new { @class = "form-control",@type="date", @id = "ProcurementDate", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.ProcurementDate, "", new { @class = "parsley-required" })
-
-                            </div>
-                            <div class="col-lg-4">
-                                <label class="col-form-label">Remarks *</label>
+                                <label class="col-form-label">Remarks </label>
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
                                 @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
 
                             </div>
                         </div>
-
                         <br />
-
                         <div class="required">* Required fields</div>
                         <hr />
                         <div class="float-right">
@@ -72,7 +67,7 @@
                         <br />
                         <div class="card card-default">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 ">
                                     <div class="card">
                                         <div class="card-body">
                                             <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
@@ -82,18 +77,25 @@
                                                         <th>
                                                             ID
                                                         </th>
-                                                        <th class="col-lg-3">
-                                                            Planned Procurement
+                                                        <th>
+                                                            Project Name
                                                         </th>
-                                                        <th class="col-lg-3">
-                                                            Achieved Procurement
+                                                        <th>
+                                                            SubProject Name
                                                         </th>
-                                                        <th class="col-lg-3">
-                                                            Procurement %
+                                                        <th>
+                                                            Batch Name
                                                         </th>
-                                                        <th class="col-lg-5">
+                                                        <th>
+                                                            Released Budget
+                                                        </th>
+                                                        <th>
+                                                            Released Date
+                                                        </th>
+                                                        <th>
                                                             Remarks
                                                         </th>
+
                                                         <th>
                                                             Action
                                                         </th>
@@ -101,33 +103,41 @@
                                                 </thead>
                                                 <tbody>
                                                     @{
-                                                        foreach (var item in _LstAllProcurement)
+                                                        foreach (var item in _LstAllReleasedBudget)
                                                         {
                                                             <tr>
-                                                                @Html.HiddenFor(m => item.AchievedProcurementID)
+                                                                @Html.HiddenFor(m => item.ReleasedBudgetID)
                                                                 <td>
                                                                     @item.ID
                                                                 </td>
-                                                                <td>
-                                                                    @item.PlannedProcurement
-                                                                </td>
-                                                                <td>
-                                                                    @item.AchievedProcurement
-                                                                </td>
 
                                                                 <td>
-                                                                    @item.ProcurementPercent
+                                                                    @item.ProjectName
+                                                                </td>
+                                                                <td>
+                                                                    @item.SubProjectName
+                                                                </td>
+                                                                <td>
+                                                                    @item.BatchName
+                                                                </td>
+                                                                <td>
+                                                                    @item.ReleasedBudget
+                                                                </td>
+                                                                <td>
+                                                                    @item.ReleasedDate
                                                                 </td>
                                                                 <td>
                                                                     @item.Remarks
                                                                 </td>
                                                                 <td>
-                                                                    @Html.ActionLink("Edit", "ProcurementEdit", new { AchievedProcurementID = item.AchievedProcurementID }, new { @class = "mb-1 btn btn-warning" })
+
+                                                                    @Html.ActionLink("Edit", "ReleasedBudgetEdit", new { ReleasedBudgetID = item.ReleasedBudgetID }, new { @class = "mb-1 btn btn-warning" })
+
                                                                 </td>
+
                                                             </tr>
                                                         }
                                                     }
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -135,23 +145,12 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
             </div>
-            <!-- END card-->
-        }
+       <!-- END card-->
+    }
     </div>
-</div>
-@section Styles{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
-}
-<script>
-    $(document).ready(function () {
-        $(function () {
-            $('#ProcurementDate').datepicker({
-                format: "dd/mm/yyyy"
-            });
-        });
-    });
-</script>
 

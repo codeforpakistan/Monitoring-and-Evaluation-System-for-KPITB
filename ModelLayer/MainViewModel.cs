@@ -371,7 +371,7 @@ namespace ModelLayer
             public int DigitalPolicy_ID { get; set; }
             public int City_ID { get; set; }
             public int User_ID { get; set; }
-            public string Name { get; set; }
+            public string ProjectName { get; set; }
             public string categoryName{ get; set; }
             public string ProjectTypeName { get; set; }
             public string CityName { get; set; }
@@ -438,13 +438,15 @@ namespace ModelLayer
         }
         #endregion
         #region Finance
-        public partial class CreateViewFinanceVM
+        public partial class CreateViewReleasedBudgetVM
         {
-            public CreateViewFinanceVM()
+            public CreateViewReleasedBudgetVM()
             {
                 comboProjects = new List<ComboProject>();
             }
             //Common Filed
+            [Display(Name = "Project")]
+            [Range(1, int.MaxValue, ErrorMessage = "Please Select Project")]
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
@@ -455,20 +457,17 @@ namespace ModelLayer
             public System.DateTime ReleasedDate { get; set; }
             public long ReleasedBudget { get; set; }
             public string Remarks { get; set; }
-            //Expenditure
-            public int ExpenditureBudgetID { get; set; } 
-            public System.DateTime ExpenditureDate { get; set; }
-            public long ExpenditureBudget { get; set; }
-           
             public List<ComboProject> comboProjects { get; set; }
         }
-        public partial class GetAllFinanceVM
+        public partial class EditReleasedBudgetVM
         {
-            public GetAllFinanceVM()
+            public EditReleasedBudgetVM()
             {
                 comboProjects = new List<ComboProject>();
             }
             //Common Filed
+            [Display(Name = "Project")]
+            [Range(1, int.MaxValue, ErrorMessage = "Please Select Project")]
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
@@ -479,12 +478,63 @@ namespace ModelLayer
             public System.DateTime ReleasedDate { get; set; }
             public long ReleasedBudget { get; set; }
             public string Remarks { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+        }
+        public partial class GetAllReleasedBudgetVM
+        {
+            
+            //Common Filed
+            public int Project_ID { get; set; }
+            public int ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            //ReleasedBudget
+            public string ProjectName { get; set; }
+            public string SubProjectName { get; set; }
+            public string BatchName { get; set; }
+            public int ReleasedBudgetID { get; set; }
+            public System.DateTime ReleasedDate { get; set; }
+            public long ReleasedBudget { get; set; }
+            public string Remarks { get; set; }
+            
+        }
+        public partial class CreateViewExpenditureBudgetVM
+        {
+            public CreateViewExpenditureBudgetVM()
+            {
+                comboProjects = new List<ComboProject>();
+            }
+            //Common Filed
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
             //Expenditure
             public int ExpenditureBudgetID { get; set; }
             public System.DateTime ExpenditureDate { get; set; }
+            public string ExpenditureName { get; set; }
             public long ExpenditureBudget { get; set; }
-
+            public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }
+        }
+        public partial class GetAllExpenditureBudgetVM
+        {
+           
+            //Common Filed
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            //Expenditure
+            public string ExpenditureName { get; set; }
+            public int ExpenditureBudgetID { get; set; }
+            public System.DateTime ExpenditureDate { get; set; }
+            public long ExpenditureBudget { get; set; }
+            public string Remarks { get; set; }
+
         }
         #endregion
         #region Procurement

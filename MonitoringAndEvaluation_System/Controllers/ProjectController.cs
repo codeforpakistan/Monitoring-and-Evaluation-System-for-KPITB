@@ -11,7 +11,7 @@ using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
 {
-    public class ProjectController : Controller
+    public class ProjectController : BaseController
     {
         // GET: Project
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
@@ -56,7 +56,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.PlannedProcurement = Convert.ToInt32(Request.Form["txtPlannedProcurement"]);
                 ProjectVM.AchievedProcurement = Convert.ToInt32(Request.Form["txtAchievedProcurement"]);
                 ProjectVM.ProcurementPercent = Convert.ToDouble(Request.Form["txtProcurementPercent"]);
-                ProjectVM.User_ID = Convert.ToInt32(Session["LoginUserID"]);
+                ProjectVM.User_ID = LoginUserID;//Convert.ToInt32(Session["LoginUserID"]);
                 #endregion
                 #region FundingArray
                 string aaa = Convert.ToString(Request.Form["FundingSourceArray"]);
@@ -74,7 +74,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                         string[] ItemArray = _RiskRows[i].Split('|');
                         m.RiskName = Convert.ToString(ItemArray[1]);
                         m.RiskStatus_ID = Convert.ToInt32(ItemArray[2]);
-                        m.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+                        m.CreatedByUser_ID = LoginUserID;
                         _lstRisk.Add(m);
                     }
                 }
@@ -94,7 +94,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                         mm.StackholderDepartment = Convert.ToString(ItemArray[2]);
                         mm.StackholderContact = Convert.ToString(ItemArray[3]);
                         mm.StackholderEmail = Convert.ToString(ItemArray[4]);
-                        mm.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+                        mm.CreatedByUser_ID = LoginUserID;
                         _lstStackholder.Add(mm);
                     }
                 }
@@ -224,92 +224,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             return RedirectToAction("RecruitedHRCreate");
         }
         #endregion
-        #region Finance
-        [HttpGet]
-        public ActionResult FinanceCreateView()
-        {
-            CreateViewFinanceVM financeVM = new CreateViewFinanceVM();
-            //ComboProject(financeVM);
-            //getAllRecruitedHR();
-            return View(financeVM);
-
-        }
-        [HttpPost]
-        public ActionResult FinanceCreateView(CreateViewFinanceVM financeVM)
-        {
-            //try
-            //{
-            //    if (ModelState.IsValid == false)
-            //    {
-            //        return View(financeVM);
-            //    }
-
-            //    financeVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
-            //    StatusModel status = new ProjectManagementBL().financeCreateViewBL(financeVM);
-            //    if (status.status)
-            //    {
-            //        TempData["Message"] = "Record Saved Successfully.";
-            //    }
-            //    else
-            //    {
-            //        TempData["Message"] = status.statusDetail;
-            //    }
-            //}
-            //catch (Exception ex1)
-            //{
-            //    TempData["Message"] = "Exeption: " + ex1.Message;
-            //}
-            //getProject();
-            return RedirectToAction("FinanceCreateView");
-        }
-
-        //[HttpGet]
-        //public ActionResult RecruitedHREdit(int RecruitedHRID)
-        //{
-        //    EditRecruitedHRVM getRecruitedHR = new EditRecruitedHRVM();
-        //    try
-        //    {
-
-        //        getRecruitedHR = new ProjectManagementBL().getSignleRecruitedHRBL(RecruitedHRID);
-        //        getProject();
-        //        getRecruitedHR.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
-        //    }
-        //    catch (Exception)
-        //    {
-        //    }
-
-        //    return View(getRecruitedHR);
-        //}
-        //[HttpPost]
-        //public ActionResult RecruitedHREdit(EditRecruitedHRVM editRecruitedHRVM)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid == false)
-        //        {
-        //            return View(editRecruitedHRVM);
-        //        }
-        //        getProject();
-        //        editRecruitedHRVM.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
-        //        editRecruitedHRVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
-        //        StatusModel status = new ProjectManagementBL().recruitedHREditBL(editRecruitedHRVM);
-        //        if (status.status)
-        //        {
-        //            TempData["Message"] = "Record Updeted Successfully.";
-        //        }
-        //        else
-        //        {
-        //            TempData["Message"] = status.statusDetail;
-        //        }
-        //    }
-        //    catch (Exception ex1)
-        //    {
-        //        TempData["Message"] = "Exeption: " + ex1.Message;
-        //    }
-        //    getProject();
-        //    return RedirectToAction("RecruitedHRCreate");
-        //}
-        #endregion
+       
         [HttpGet]
         public ActionResult ProcurementCreateView()
         {

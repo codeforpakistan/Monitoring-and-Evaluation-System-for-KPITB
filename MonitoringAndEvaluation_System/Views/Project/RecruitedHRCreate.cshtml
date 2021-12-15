@@ -48,15 +48,13 @@
 
                             </div>
                             <div class="col-lg-4">
-                                <label class="col-form-label">HR Date *</label>
-                                
-
-                                @Html.TextBoxFor(model => model.RecruitedHRDate, new { @class = "form-control" ,@id= "RecruitedHRDate" })
+                                <label class="col-form-label">HR Date *</label> 
+                                @Html.TextBoxFor(model => model.RecruitedHRDate, new { @class = "form-control", @type="date" ,@id= "RecruitedHRDate" })
                                 @Html.ValidationMessageFor(m => m.RecruitedHRDate, "", new { @class = "parsley-required" })
 
                             </div>
                             <div class="col-lg-4">
-                                <label class="col-form-label">Remarks *</label>
+                                <label class="col-form-label">Remarks </label>
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
                                 @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
 

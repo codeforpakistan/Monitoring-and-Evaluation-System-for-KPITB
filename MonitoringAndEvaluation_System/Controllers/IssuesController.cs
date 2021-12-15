@@ -9,7 +9,7 @@ using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
 {
-    public class IssuesController : Controller
+    public class IssuesController : BaseController
     {
         // GET: Issues
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();

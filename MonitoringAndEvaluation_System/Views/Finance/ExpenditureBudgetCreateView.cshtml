@@ -1,0 +1,143 @@
+﻿@model ModelLayer.MainViewModel.CreateViewExpenditureBudgetVM
+@{ViewBag.Title = "Expenditure Budget";
+}
+
+<div class="col-xl-12">
+    @using (Html.BeginForm("ExpenditureBudgetCreateView", "Finance", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <!-- START card-->
+        <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">Add Expensive Budget </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <label for="sel1">Select Project </label>
+                                @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), "Please Select Project", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
+                                @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="sel1">Select Sub Project</label>
+                                <select class="form-control" id="sel1">
+                                    <option>Sub project 1</option>
+                                    <option>Sub project 2</option>
+                                    <option>Sub project 2</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="sel1">Select Cycle/Batch</label>
+                                <select class="form-control" id="sel1">
+                                    <option>Peshawar</option>
+                                    <option>Bannu</option>
+                                    <option>Mardan</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="col-form-label">Expensive Date *</label>
+                                @Html.TextBoxFor(model => model.ExpenditureDate, new { @class = "form-control", @type = "date", @id = "ReleasedDate", @placeholder = "dd/mm/yyyy" })
+                                @Html.ValidationMessageFor(m => m.ExpenditureDate, "", new { @class = "parsley-required" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-lg-3">
+                                <label class="col-form-label">Item Name *</label>
+                                @Html.TextBoxFor(model => model.ExpenditureName, new { @class = "form-control", @placeholder = "Enter Item Name" })
+                                @Html.ValidationMessageFor(m => m.ExpenditureName, "", new { @class = "parsley-required" })
+                               
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="col-form-label">Amount *</label>
+                                @Html.TextBoxFor(model => model.ExpenditureBudget, new { @class = "form-control", @type = "number", @placeholder = "Enter Expensive Amount KPR" })
+                                @Html.ValidationMessageFor(m => m.ExpenditureBudget, "", new { @class = "parsley-required" })
+                                
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="col-form-label">Remarks</label>
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
+                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="required">* Required fields</div>
+                        <hr />
+                        <div class="float-right">
+                            <button class="btn btn-primary" type="submit">Save</button>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="card card-default">
+                            <div class="row">
+                                <div class="col-lg-12 ">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th>
+                                                            ID
+                                                        </th>
+                                                        <th class="col-lg-3">
+                                                            Project Name
+                                                        </th>
+                                                        <th class="col-lg-3">
+                                                            Expenditure Budget
+                                                        </th>
+                                                        <th class="col-lg-3">
+                                                            Expenditure Date
+                                                        </th>
+                                                        <th class="col-lg-5">
+                                                            Remarks
+                                                        </th>
+
+                                                        <th>
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>
+                                                            1
+                                                        </td>
+                                                        <td>
+                                                            Durshal
+                                                        </td>
+                                                        <td>
+                                                            2M
+                                                        </td>
+                                                        <td>
+                                                            15/11/2021
+                                                        </td>
+                                                        <td>
+                                                            This is the Issues Field
+                                                        </td>
+
+                                                        <td>
+
+                                                            @Html.ActionLink("Edit", "Edit", new { }, new { @class = "mb-1 btn btn-warning" })
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        <!-- END card-->
+    }
+    </div>

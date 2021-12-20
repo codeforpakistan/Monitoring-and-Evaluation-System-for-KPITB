@@ -103,7 +103,7 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         private void getProjectEdit(EditIssueVM issuesEditVM)
         {
-            issuesEditVM.comboProjects = ObjProjectMngBL.getComboProjectBL();
+            issuesEditVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
         }
 
 
@@ -111,7 +111,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         public void getProject(CreateIssueVM issuesVM)
         {
             //Get ProjectType list
-            issuesVM.comboProjects = ObjProjectMngBL.getComboProjectBL();
+            issuesVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
         }
         
         private void getAllIssue()

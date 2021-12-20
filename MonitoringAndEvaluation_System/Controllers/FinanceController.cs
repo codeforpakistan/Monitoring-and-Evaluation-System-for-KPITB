@@ -98,12 +98,12 @@ namespace MonitoringAndEvaluation_System.Controllers
         public void ComboProject(CreateViewReleasedBudgetVM releasedVM)
         {
             //Get ProjectType list
-            releasedVM.comboProjects = ObjProjectMngBL.getComboProjectBL();
+            releasedVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID,LoginUserID);
         }
         public void ComboProject2(CreateViewExpenditureBudgetVM expenditureVM)
         {
             //Get ProjectType list
-            expenditureVM.comboProjects = ObjProjectMngBL.getComboProjectBL();
+            expenditureVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
         }
     }
 }

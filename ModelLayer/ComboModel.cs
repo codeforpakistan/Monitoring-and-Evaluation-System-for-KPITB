@@ -66,8 +66,17 @@ namespace ModelLayer
         public partial class ComboProject
         {
             public int ProjectID { get; set; }
-            public int User_ID { get; set; }
             public string ProjectName { get; set; }
+        }
+        public partial class ComboSubProject
+        {
+            public int SubProjectID { get; set; }
+            public string SubProjectName { get; set; }
+        }
+        public partial class ComboBatch
+        {
+            public int BatchID { get; set; }
+            public string BatchName { get; set; }
         }
         #endregion
 

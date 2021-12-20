@@ -7,7 +7,6 @@
 @section Styles{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 }
 
@@ -132,16 +131,16 @@
                                     <div class="row">
                                         <div class="col-lg-4 ">
                                             <label class="col-form-label">Planned Date *</label>
-                                            <input class="form-control" id="PlannedDate" type="text" name="PlannedDate">
+                                            <input class="form-control Select-date" id="PlannedDate" type="text" name="PlannedDate">
 
                                         </div>
                                         <div class="col-lg-4 ">
                                             <label class="col-form-label">Start Date *</label>
-                                            <input class="form-control" id="StartDate" type="text" name="StartDate">
+                                            <input class="form-control Select-date" id="StartDate" type="text" name="StartDate">
                                         </div>
                                         <div class="col-lg-4 ">
                                             <label class="col-form-label">End Date *</label>
-                                            <input class="form-control" id="EndDate" type="text" name="EndDate">
+                                            <input class="form-control Select-date" id="EndDate" type="text" name="EndDate">
                                         </div>
                                     </div>
 
@@ -378,7 +377,20 @@
     <script>
 
         $(document).ready(function () {
-         
+
+            $('.AutoDropDown').select2();
+
+
+            $('.Select-date').daterangepicker({
+                locale: {
+                    //  format: 'MM/DD/YYYY'
+                    format: 'DD/MM/YYYY'
+                },
+                singleDatePicker: true
+            });
+
+
+
 
             $("#MaleBeneficiary,#FemaleBeneficiary").on('change', function () {
                 debugger;
@@ -392,11 +404,11 @@
                   
  
 
-            $(function () {
-                $('#PlannedDate, #StartDate, #EndDate ').datepicker({
-                    format: "dd/mm/yyyy"
-                });
-            });
+            //$(function () {
+            //    $('#PlannedDate, #StartDate, #EndDate ').datepicker({
+            //        format: "dd/mm/yyyy"
+            //    });
+            //});
 
             $("#RecruitedHR,#PlannedHR").on('change', function () {
                 debugger;

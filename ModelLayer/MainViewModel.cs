@@ -392,21 +392,33 @@ namespace ModelLayer
             public CreateRecruitedHRVM()
             {
                 comboProjects = new List<ComboProject>();
+                comboSubProjects = new List<ComboSubProject>();
+                comboBatch = new List<ComboBatch>();
             }
             public int RecruitedHRID { get; set; }
+
+            [Range(1, int.MaxValue, ErrorMessage = "Please Select Project")]
             public int Project_ID { get; set; }
+            [Required(ErrorMessage = "Please Select SubProject")]
             public int SubProject_ID { get; set; }
+            [Required(ErrorMessage = "Please Select Batch")]
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
-           
+            [Range(1, int.MaxValue, ErrorMessage = "Please Select Batch")]
             public int RecruitedHR { get; set; }
-            public double RecruitedHRPercent { get; set; }
-            [Required(ErrorMessage = "Enter the issued date.")]
-            [DataType(DataType.Date)]
-            //[DisplayFormat(DataFormatString ="{0:d}")]
-            public DateTime RecruitedHRDate { get; set; }
+ 
+            [Required(ErrorMessage = "Enter From Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime RecruitedFromHRDate { get; set; }
+
+            [Required(ErrorMessage = "Enter To Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime RecruitedToHRDate { get; set; }
+
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }
+            public List<ComboSubProject> comboSubProjects { get; set; }
+            public List<ComboBatch> comboBatch { get; set; }
         }
         public partial class EditRecruitedHRVM
         {

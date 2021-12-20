@@ -15,11 +15,35 @@ namespace BusinessLayer
 {
     public class ProjectManagementBL
     {
+
+        #region CustomFuncation
+
+        //Get SubProject
+        public int checkUmberlaBL(int ProjectID)
+        {
+            return ProjectManagementDL.checkUmberlaDL(ProjectID);
+        }
+        //Get SubProject
+        public int checkBatchIsZeroBL(int SubProjectID)
+        {
+            return ProjectManagementDL.checkBatchIsZeroDL(SubProjectID);
+        }
+        #endregion
         #region GetCombo
         //Get Project
-        public List<ComboProject> getComboProjectBL()
+        public List<ComboProject> getComboProjectBL(int LoginRoleID, int LoginUserID)
         {
-            return ProjectManagementDL.getComboProjectDL();
+            return ProjectManagementDL.getComboProjectDL(LoginRoleID, LoginUserID);
+        }
+        //Get SubProject
+        public List<ComboSubProject> getComboSubProjectBL(int Project_ID,int Role_ID)
+        {
+            return ProjectManagementDL.getComboSubProjectDL(Project_ID, Role_ID);
+        }
+        //Get Batch
+        public List<ComboBatch> getComboBatchBL(int SubProject_ID, int Role_ID)
+        {
+            return ProjectManagementDL.getComboBatchDL(SubProject_ID, Role_ID);
         }
         //Get Category
         public List<ComboCategory> getCategoryBL()

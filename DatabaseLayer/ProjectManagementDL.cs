@@ -18,21 +18,108 @@ namespace DatabaseLayer
 {
     public class ProjectManagementDL
     {
+
+        #region CustomFuncation
+        public static int checkUmberlaDL(int ProjectID)
+        {
+            try
+            {
+            int value = 0; 
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@ProjectID", ProjectID);
+                value = conn.Query<int>("sp_CheckUmberla", ObjParm, commandType: CommandType.StoredProcedure).First(); ;
+                conn.Close();
+                conn.Dispose();
+                return Convert.ToInt32(value);
+            }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public static int checkBatchIsZeroDL(int SubProjectID)
+        {
+            try
+            {
+                int value = 0;
+                using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+                {
+                    conn.Open();
+                    DynamicParameters ObjParm = new DynamicParameters();
+                    ObjParm.Add("@SubProject_ID", SubProjectID);
+                    value = conn.Query<int>("sp_CheckUmberla", ObjParm, commandType: CommandType.StoredProcedure).First(); ;
+                    conn.Close();
+                    conn.Dispose();
+                    return Convert.ToInt32(value);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        #endregion
         #region GetCombo
         //ComboProject
-        public static List<ComboProject> getComboProjectDL()
+        public static List<ComboProject> getComboProjectDL(int LoginRoleID, int LoginUserID)
         {
             List<ComboProject> ComboProjectLst = new List<ComboProject>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
-                ComboProjectLst = conn.Query<ComboProject>("sp_GetProject", commandType: CommandType.StoredProcedure).ToList();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@LoginRoleID", LoginRoleID);
+                ObjParm.Add("@LoginUserID", LoginUserID);
+                ComboProjectLst = conn.Query<ComboProject>("sp_GetProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return ComboProjectLst;
             }
         }
+        //ComboSubProject
+        public static List<ComboSubProject> getComboSubProjectDL(int Project_ID, int Role_ID)
+        {
+            List<ComboSubProject> ComboLst = new List<ComboSubProject>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@Project_ID", Project_ID);
+                ObjParm.Add("@Role_ID", Role_ID);
+                ComboLst = conn.Query<ComboSubProject>("sp_GetSubProjectBaseOnProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return ComboLst;
+            }
+        }
+        //ComboBatch
+        public static List<ComboBatch> getComboBatchDL(int SubProject_ID, int Role_ID)
+        {
+            List<ComboBatch> ComboLst = new List<ComboBatch>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@SubProject_ID", SubProject_ID);
+                ObjParm.Add("@Role_ID", Role_ID);
+                ComboLst = conn.Query<ComboBatch>("sp_GetBatchBaseOnSubProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return ComboLst;
+            }
+        }
+
         //FundingSource
         public static List<ComboFundingSource> getFudingSourceDL()
         {
@@ -328,7 +415,8 @@ namespace DatabaseLayer
                         ObjParm.Add("@Batch_ID", m.Batch_ID);
                         ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
                         ObjParm.Add("@RecruitedHR", m.RecruitedHR);
-                        ObjParm.Add("@RecruitedHRDate", m.RecruitedHRDate);
+                        ObjParm.Add("@RecruitedFromHRDate", m.RecruitedFromHRDate);
+                        ObjParm.Add("@RecruitedToHRDate", m.RecruitedToHRDate);
                         ObjParm.Add("@Remarks", m.Remarks);
                         ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                         ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);

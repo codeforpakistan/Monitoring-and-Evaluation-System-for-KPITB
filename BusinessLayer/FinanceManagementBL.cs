@@ -23,9 +23,9 @@ namespace BusinessLayer
             return FinanceManagementDL.expenditureCreateViewDL(m);
         }
         //GetAllReleasedBudget
-        public List<GetAllReleasedBudgetVM> getAllReleasedBudgetBL()
+        public List<GetAllReleasedBudgetVM> getAllReleasedBudgetBL(int LoginRoleID, int LoginUserID)
         {
-            return FinanceManagementDL.getAllReleasedBudgetDL();
+            return FinanceManagementDL.getAllReleasedBudgetDL(LoginRoleID, LoginUserID);
         }
         //GetSingalProcurement
         public EditProcurementVM getSignleProcurementBL(int AchievedProcurementID)

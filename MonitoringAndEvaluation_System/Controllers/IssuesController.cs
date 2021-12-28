@@ -33,7 +33,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                     return View(issueVM);
                 }
 
-                issueVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+                issueVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new IssuesManagementBL().issueCreateBL(issueVM);
                 if (status.status)
                 {

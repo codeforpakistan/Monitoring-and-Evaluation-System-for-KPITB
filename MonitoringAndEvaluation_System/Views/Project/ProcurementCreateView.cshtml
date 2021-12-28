@@ -7,62 +7,71 @@
 <!-- START row-->
 <div class="row">
     <div class="col-xl-12">
-        @using (Html.BeginForm("ProcurementCreateView", "Project", FormMethod.Post, new { @class = "form-horizontal" }))
-        {
-            <!-- START card-->
-            <div class="card card-default">
-                <div class="card-header">
-                    <div class="card-title">Add New Procurement</div>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <label for="sel1">Select Project </label>
-                                @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), "Please Select Project", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
-                                @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
-                            </div>
-                            <div class="col-lg-4">
-                                <label for="sel1">Select Sub Project</label>
-                                <select class="form-control" id="sel1">
-                                    <option>Sub project 1</option>
-                                    <option>Sub project 2</option>
-                                    <option>Sub project 2</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-4">
-                                <label for="sel1">Select Cycle/Batch</label>
-                                <select class="form-control" id="sel1">
-                                    <option>Peshawar</option>
-                                    <option>Bannu</option>
-                                    <option>Mardan</option>
-                                </select>
-                            </div>
 
+        <!-- START card-->
+        <div class="card card-default">
+            <div class="card-header">
+                <div class="card-title">Add New Procurement</div>
+            </div>
+            <div class="card-body">
+                <!--Foum-->
+                @using (Html.BeginForm("ProcurementCreateView", "Project", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                <div class="form-group">
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label for="sel1">Select Project </label>
+                            @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
+                            @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                         </div>
+                        <div class="col-lg-4">
+                            <label for="sel1">Select Sub Project</label>
+                            @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
+                            @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Select Cycle/Batch</label>
+                            @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
+                             @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="sel2" class="col-form-label">Headers</label>
+                            <select class="form-control" id="select2-4" multiple="multiple">
+                                <option value="AK">Furniture</option>
+                                <option value="HI">Electronics</option>
+                                <option value="HI">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
                         <div class="row">
                             <div class="col-lg-4">
                                 <label class="col-form-label">No of Procurement *</label>
-                                @Html.TextBoxFor(model => model.AchievedProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" })
-                                @Html.ValidationMessageFor(m => m.AchievedProcurement, "", new { @class = "parsley-required" })
+                                @Html.TextBoxFor(model => model.NoOfProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" })
+                                @Html.ValidationMessageFor(m => m.NoOfProcurement, "", new { @class = "parsley-required" })
 
                             </div>
                             <div class="col-lg-4">
-                                <label class="col-form-label">Procurement Date *</label>
-                                @Html.TextBoxFor(model => model.ProcurementDate, new { @class = "form-control",@type="date", @id = "ProcurementDate", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.ProcurementDate, "", new { @class = "parsley-required" })
-
+                                <label class="col-form-label">Procurement From Date *</label>
+                                @Html.TextBoxFor(model => model.ProcurementFromHRDate, new { @class = "form-control", @type = "date", @id = "ProcurementFromHRDate", @placeholder = "Enter No of Recruited -HR" })
+                                @Html.ValidationMessageFor(m => m.ProcurementFromHRDate, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Procurement To Date *</label>
+                                @Html.TextBoxFor(model => model.ProcurementToHRDate, new { @class = "form-control", @type = "date", @id = "ProcurementToHRDate", @placeholder = "Enter No of Recruited -HR" })
+                                @Html.ValidationMessageFor(m => m.ProcurementToHRDate, "", new { @class = "parsley-required" })
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Remarks *</label>
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
                                 @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
-
                             </div>
                         </div>
-
                         <br />
-
                         <div class="required">* Required fields</div>
                         <hr />
                         <div class="float-right">
@@ -70,88 +79,202 @@
                         </div>
                         <br />
                         <br />
-                        <div class="card card-default">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
-                                                <thead>
-                                                    <tr>
+                    </div>
+                    }
 
-                                                        <th>
-                                                            ID
-                                                        </th>
-                                                        <th class="col-lg-3">
-                                                            Planned Procurement
-                                                        </th>
-                                                        <th class="col-lg-3">
-                                                            Achieved Procurement
-                                                        </th>
-                                                        <th class="col-lg-3">
-                                                            Procurement %
-                                                        </th>
-                                                        <th class="col-lg-5">
-                                                            Remarks
-                                                        </th>
-                                                        <th>
-                                                            Action
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @{
-                                                        foreach (var item in _LstAllProcurement)
-                                                        {
-                                                            <tr>
-                                                                @Html.HiddenFor(m => item.AchievedProcurementID)
-                                                                <td>
-                                                                    @item.ID
-                                                                </td>
-                                                                <td>
-                                                                    @item.PlannedProcurement
-                                                                </td>
-                                                                <td>
-                                                                    @item.AchievedProcurement
-                                                                </td>
+                    <!--Table-->
+                    <div class="card card-default">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
+                                            <thead>
+                                                <tr>
 
-                                                                <td>
-                                                                    @item.ProcurementPercent
-                                                                </td>
-                                                                <td>
-                                                                    @item.Remarks
-                                                                </td>
-                                                                <td>
-                                                                    @Html.ActionLink("Edit", "ProcurementEdit", new { AchievedProcurementID = item.AchievedProcurementID }, new { @class = "mb-1 btn btn-warning" })
-                                                                </td>
-                                                            </tr>
-                                                        }
+                                                    <th>
+                                                        ID
+                                                    </th>
+                                                    <th class="col-lg-3">
+                                                        Planned Procurement
+                                                    </th>
+                                                    <th class="col-lg-3">
+                                                        Achieved Procurement
+                                                    </th>
+                                                    <th class="col-lg-3">
+                                                        Procurement %
+                                                    </th>
+                                                    <th class="col-lg-5">
+                                                        Remarks
+                                                    </th>
+                                                    <th>
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    foreach (var item in _LstAllProcurement)
+                                                    {
+                                                        <tr>
+                                                            @Html.HiddenFor(m => item.AchievedProcurementID)
+                                                            <td>
+                                                                @item.ID
+                                                            </td>
+                                                            <td>
+                                                                @item.PlannedProcurement
+                                                            </td>
+                                                            <td>
+                                                                @item.AchievedProcurement
+                                                            </td>
+
+                                                            <td>
+                                                                @item.ProcurementPercent
+                                                            </td>
+                                                            <td>
+                                                                @item.Remarks
+                                                            </td>
+                                                            <td>
+                                                                @Html.ActionLink("Edit", "ProcurementEdit", new { AchievedProcurementID = item.AchievedProcurementID }, new { @class = "mb-1 btn btn-warning" })
+                                                            </td>
+                                                        </tr>
                                                     }
+                                                }
 
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- END card-->
-        }
+        </div>
+        <!-- END card-->
+
     </div>
 </div>
 @section Styles{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
 }
-<script>
-    $(document).ready(function () {
-        $(function () {
-            $('#ProcurementDate').datepicker({
-                format: "dd/mm/yyyy"
-            });
+@section Scripts{
+    <script>
+        $(document).ready(function ()
+        {
+
         });
-    });
-</script>
+
+        $("#ProcurementFromHRDate").on('change', function () {
+            debugger
+            DateCompare();
+        });
+        $("#ProcurementToHRDate").on('change', function () {
+            debugger
+            DateCompare();
+        });
+        function DateCompare() {
+            var _ProcurementFromHRDate = $('#ProcurementFromHRDate').val();
+            var _ProcurementToHRDate = $('#ProcurementToHRDate').val();
+
+            if (_ProcurementToHRDate != '') {
+                if (_ProcurementFromHRDate > _ProcurementToHRDate)
+                {
+
+                    $("#spanProcurementFromHRDate").text("From-HRDate should not be greater then  To-HRDate")
+                    return false;
+                }
+                else
+                {
+                    $("#spanProcurementFromHRDate").text("")
+                    return false;
+                }
+            }
+        }
+        $("#Project_ID").on('change', function () {
+                var _Project_ID = $(this).find("option:selected").val();
+                $.ajax({
+                     type: 'POST',
+                     url: '@Url.Action("ProjectCheckUmbrella")',
+                     dataType: 'json',
+                    data: { ProjectID: _Project_ID },  // Same Parameter with Action
+                    success: function (Value) {
+                        debugger;
+                        if (Value != 1)  // Non-Umbrella
+                        {
+                            $("#SubProject_ID").prop("disabled", true);
+                            $("#Batch_ID").prop("disabled", true);
+
+                            $("#SubProject_ID").empty();
+                            $("#Batch_ID").empty();
+
+                            $("#SubProject_ID").append('<option value="' + 0 + '">' +
+                                "Please Select SubProject" + '</option>');
+                            $("#Batch_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Batch" + '</option>');
+
+                        } else {
+                                      $.ajax({
+                                      //url: "/ManageStock/GetProductNameCombo" + Category_ID,
+                                       type: 'POST',
+                                       url: '@Url.Action("ClickProjectCombo")',
+                                       dataType: 'json',
+                                       data: { Project_ID: _Project_ID },  // Same Parameter with Action
+                                       success: function (SubProjectLst)
+                                       {
+                                           $("#SubProject_ID").prop("disabled", false);
+                                           $("#Batch_ID").prop("disabled", false);
+                                           debugger;
+                                           $("#SubProject_ID").empty();
+                                           $.each(SubProjectLst, function (i, Njaeeb)
+                                           {
+                                               $("#SubProject_ID").append('<option value="' + Njaeeb.SubProjectID + '">' +
+                                                   Njaeeb.SubProjectName + '</option>');
+                                            });
+                                        },
+                                        error: function (ex)
+                                        {
+                                           alert('Failed to Retrieve Sub-Project Data:  ' + ex);
+                                        }
+                                  });
+                        }
+                 },
+                 error: function (ex) {
+                     console.log('Failed to Retrieve Sub-Project Data:  ' + ex);
+                 }
+                });//Ajax_End
+            });
+
+
+
+
+        $("#SubProject_ID").on('change', function () {
+            var _SubProject_ID = $(this).find("option:selected").val();
+
+                $.ajax({
+                     type: 'POST',
+                     url: '@Url.Action("ClickSubProjectCombo")',
+                     dataType: 'json',
+                    data: { SubProject_ID: _SubProject_ID },  // Same Parameter with Action
+                    success: function (BatchLst) {
+                        debugger;
+                        $("#Batch_ID").empty();
+                        if (BatchLst == 0) {
+                            $("#Batch_ID").prop("disabled", true);
+                            $("#Batch_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Batch" + '</option>');
+                        } else {
+                            $("#Batch_ID").prop("disabled", false);
+                            $.each(BatchLst, function (i, Aqib) {
+                                $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
+                                    Aqib.BatchName + '</option>');
+                            });
+                        }
+                 },
+                 error: function (ex) {
+                     console.log('Failed to Retrieve Batch Data:  ' + ex);
+                 }
+                });//Ajax_End
+            });
+    </script>
+}
 

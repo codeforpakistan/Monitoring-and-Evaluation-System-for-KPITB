@@ -142,8 +142,17 @@ namespace MonitoringAndEvaluation_System.Controllers
 
 
         [HttpPost]
-        public ActionResult RolePermissions(RolePermissionWithRolVM permissionWithRolVM)
+        public ActionResult RolePermissions(RolePermissionWithRolVM permissionWithRolVM, FormCollection icollections)
         {
+            //string[] deletedrows = Convert.ToString(icollections["RolePermissionVM"]).Split(',');
+            string[] D1 = Convert.ToString(icollections["LstRolePermission[1].ChildMenuID"]).Split(',');
+            string[] D2 = Convert.ToString(icollections["LstRolePermission[2].IsChecked"]).Split(',');
+            string[] D3 = Convert.ToString(icollections["LstRolePermission[1002].SubChildMenuID"]).Split(',');
+            string[] D4 = Convert.ToString(icollections["LstRolePermission[2].IsChecked"]).Split(',');
+            string[] D5 = Convert.ToString(icollections["LstRolePermission[innerloop].HasSubChild"]).Split(',');
+            //LstRolePermission = null
+
+
             try
             {
                 #region StatusCode

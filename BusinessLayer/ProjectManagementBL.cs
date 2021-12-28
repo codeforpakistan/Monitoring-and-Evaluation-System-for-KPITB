@@ -82,9 +82,9 @@ namespace BusinessLayer
         #endregion
         #region ProjectView
         //GetAllProject
-        public List<GetAllProjectVM> getAllProjectBL()
+        public List<GetAllProjectVM> getAllProjectBL(int LoginRoleID, int LoginUserID)
         {
-            return ProjectManagementDL.getProjectDL();
+            return ProjectManagementDL.getProjectDL(LoginRoleID,LoginUserID);
         }
 
         public List<ComboFundingSource> getFudingSourceBL()
@@ -124,9 +124,9 @@ namespace BusinessLayer
             return ProjectManagementDL.procurementCreateDL(m);
         }
         //GetAllProcurement
-        public List<GetAllProcurementVM> getAllProcurementBL()
+        public List<GetAllProcurementVM> getAllProcurementBL(int LoginRoleID, int LoginUserID)
         {
-            return ProjectManagementDL.getProcurementDL();
+            return ProjectManagementDL.getProcurementDL(LoginRoleID, LoginUserID);
         }
         //GetSingalProcurement
         public EditProcurementVM getSignleProcurementBL(int AchievedProcurementID)

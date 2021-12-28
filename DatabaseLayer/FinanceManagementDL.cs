@@ -29,7 +29,8 @@ namespace DatabaseLayer
                 ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
                 ObjParm.Add("@ReleasedBudget", m.ReleasedBudget);
-                ObjParm.Add("@ReleasedDate", m.ReleasedDate);
+                ObjParm.Add("@ReleasedFromDate", m.ReleasedDate);
+                ObjParm.Add("@ReleasedToDate", m.ReleasedDate);
                 ObjParm.Add("@Remarks", m.Remarks);
 
                 ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
@@ -84,14 +85,17 @@ namespace DatabaseLayer
             return status;
         }
         //GetALLFinance
-        public static List<GetAllReleasedBudgetVM> getAllReleasedBudgetDL()
+        public static List<GetAllReleasedBudgetVM> getAllReleasedBudgetDL(int LoginRoleID, int LoginUserID)
         {
             List<GetAllReleasedBudgetVM> getAllReleasedBudgetVMLst = new List<GetAllReleasedBudgetVM>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
-                getAllReleasedBudgetVMLst = conn.Query<GetAllReleasedBudgetVM>("sp_GetAllReleasedBudget", commandType: CommandType.StoredProcedure).ToList();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@LoginRoleID", LoginRoleID);
+                ObjParm.Add("@LoginUserID", LoginUserID);
+                getAllReleasedBudgetVMLst = conn.Query<GetAllReleasedBudgetVM>("sp_GetAllReleasedBudget", ObjParm,commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return getAllReleasedBudgetVMLst;

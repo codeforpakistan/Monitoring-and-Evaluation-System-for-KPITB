@@ -134,7 +134,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult ProjectView()
         {
             @ViewBag.MainTitle = "Project List";
-            List<GetAllProjectVM> lst = new ProjectManagementBL().getAllProjectBL();
+            List<GetAllProjectVM> lst = new ProjectManagementBL().getAllProjectBL(LoginRoleID,LoginUserID);
             return View(lst);
         }
         #endregion
@@ -246,7 +246,6 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             CreateProcurementVM procurementVM = new CreateProcurementVM();
             ComboProjectProc(procurementVM);
-            getProject();
             getAllProcurement();
             return View(procurementVM);
         }
@@ -260,7 +259,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                     return View(procurementVM);
                 }
 
-                procurementVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+                procurementVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new ProjectManagementBL().procurementCreateBL(procurementVM);
                 if (status.status)
                 {
@@ -275,8 +274,8 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 TempData["Message"] = "Exeption: " + ex1.Message;
             }
-            getProject();
             return RedirectToAction("ProcurementCreateView");
+            //return View();
         }
         [HttpGet]
         public ActionResult ProcurementEdit(int AchievedProcurementID)
@@ -357,9 +356,12 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         public void ComboProjectProc(CreateProcurementVM procurementVM)
         {
-
             //Get ProjectType list
             procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
+            procurementVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            procurementVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
 
         }
         private void getAllRecruitedHR()
@@ -368,7 +370,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         private void getAllProcurement()
         {
-            ViewBag.LstAllProcurement = new ProjectManagementBL().getAllProcurementBL();
+            ViewBag.LstAllProcurement = new ProjectManagementBL().getAllProcurementBL(LoginRoleID,LoginUserID);
         }
         private void getAllFinance()
         {

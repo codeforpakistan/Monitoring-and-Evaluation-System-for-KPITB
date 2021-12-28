@@ -19,33 +19,26 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label for="sel1">Select Project </label>
-                                @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), "Please Select Project", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
+                                @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
                                 @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                             </div>
                             <div class="col-lg-4">
                                 <label for="sel1">Select Sub Project</label>
-                                <select class="form-control" id="sel1">
-                                    <option>Sub project 1</option>
-                                    <option>Sub project 2</option>
-                                    <option>Sub project 2</option>
-                                </select>
+                                @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
+                                @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
                             </div>
                             <div class="col-lg-4">
                                 <label for="sel1">Select Cycle/Batch</label>
-                                <select class="form-control" id="sel1">
-                                    <option>Peshawar</option>
-                                    <option>Bannu</option>
-                                    <option>Mardan</option>
-                                </select>
+                                @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
+                                @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <label class="col-form-label">Issue Description *</label>
                                 @Html.TextBoxFor(model => model.IssueDescription, new { @class = "form-control", @placeholder = "Enter Issue Details" })
                                 @Html.ValidationMessageFor(m => m.IssueDescription, "", new { @class = "parsley-required" })
-                                
+
                             </div>
                             <div class="col-lg-6">
                                 <label class="col-form-label">Issue Date *</label>
@@ -94,7 +87,7 @@
                                                         <th>
                                                             Issue Date
                                                         </th>
-                                                        
+
                                                         <th>
                                                             Action Taken
                                                         </th>
@@ -127,7 +120,7 @@
                                                                 <td>
                                                                     @item.Remarks
                                                                 </td>
-                                                                
+
                                                                 <td>
 
                                                                     @Html.ActionLink("Edit", "IssueEdit", new { IssuesID = item.IssuesID }, new { @class = "mb-1 btn btn-warning" })
@@ -135,9 +128,9 @@
                                                                 </td>
 
                                                             </tr>
-                                                            }
-                                                     }
-                                                 </tbody>
+                                                        }
+                                                    }
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -151,6 +144,128 @@
             </div>
             <!-- END card-->
         }
-        </div>
+    </div>
 </div>
 
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function ()
+        {
+
+        });
+
+        $("#RecruitedFromHRDate").on('change', function () {
+            debugger
+            DateCompare();
+        });
+
+        $("#RecruitedToHRDate").on('change', function () {
+            debugger
+            DateCompare();
+        });
+
+        function DateCompare() {
+            var _RecruitedToHRDate = $('#RecruitedToHRDate').val();
+
+            var _RecruitedFromHRDate = $('#RecruitedFromHRDate').val();
+            if (_RecruitedToHRDate != '') {
+                if (_RecruitedFromHRDate > _RecruitedToHRDate)
+                {
+
+                    $("#spanRecruitedFromHRDate").text("From-HRDate should not be greater then  To-HRDate")
+                    return false;
+                }
+                else
+                {
+                    $("#spanRecruitedFromHRDate").text("")
+                    return false;
+                }
+            }
+        }
+
+            $("#Project_ID").on('change', function () {
+                var _Project_ID = $(this).find("option:selected").val();
+                $.ajax({
+                     type: 'POST',
+                     url: '@Url.Action("ProjectCheckUmbrella","Project")',
+                     dataType: 'json',
+                    data: { ProjectID: _Project_ID },  // Same Parameter with Action
+                    success: function (Value) {
+                        debugger;
+                        if (Value != 1)  // Non-Umbrella
+                        {
+                            $("#SubProject_ID").prop("disabled", true);
+                            $("#Batch_ID").prop("disabled", true);
+
+                            $("#SubProject_ID").empty();
+                            $("#Batch_ID").empty();
+
+                            $("#SubProject_ID").append('<option value="' + 0 + '">' +
+                                "Please Select SubProject" + '</option>');
+                            $("#Batch_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Batch" + '</option>');
+
+                        } else {
+                                      $.ajax({
+                                      //url: "/ManageStock/GetProductNameCombo" + Category_ID,
+                                       type: 'POST',
+                                       url: '@Url.Action("ClickProjectCombo","Project")',
+                                       dataType: 'json',
+                                       data: { Project_ID: _Project_ID },  // Same Parameter with Action
+                                       success: function (SubProjectLst)
+                                       {
+                                           $("#SubProject_ID").prop("disabled", false);
+                                           $("#Batch_ID").prop("disabled", false);
+                                           debugger;
+                                           $("#SubProject_ID").empty();
+                                           $.each(SubProjectLst, function (i, Njaeeb)
+                                           {
+                                               $("#SubProject_ID").append('<option value="' + Njaeeb.SubProjectID + '">' +
+                                                   Njaeeb.SubProjectName + '</option>');
+                                            });
+                                        },
+                                        error: function (ex)
+                                        {
+                                           alert('Failed to Retrieve Sub-Project Data:  ' + ex);
+                                        }
+                                  });
+                        }
+                 },
+                 error: function (ex) {
+                     console.log('Failed to Retrieve Sub-Project Data:  ' + ex);
+                 }
+                });//Ajax_End
+            });
+
+        $("#SubProject_ID").on('change', function () {
+            var _SubProject_ID = $(this).find("option:selected").val();
+
+                $.ajax({
+                     type: 'POST',
+                     url: '@Url.Action("ClickSubProjectCombo","Project")',
+                     dataType: 'json',
+                    data: { SubProject_ID: _SubProject_ID },  // Same Parameter with Action
+                    success: function (BatchLst) {
+                        debugger;
+                        $("#Batch_ID").empty();
+                        if (BatchLst == 0) {
+                            $("#Batch_ID").prop("disabled", true);
+                            $("#Batch_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Batch" + '</option>');
+                        } else {
+                            $("#Batch_ID").prop("disabled", false);
+                            $.each(BatchLst, function (i, Aqib) {
+                                $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
+                                    Aqib.BatchName + '</option>');
+                            });
+                        }
+                 },
+                 error: function (ex) {
+                     console.log('Failed to Retrieve Batch Data:  ' + ex);
+                 }
+                });//Ajax_End
+            });
+    </script>
+}

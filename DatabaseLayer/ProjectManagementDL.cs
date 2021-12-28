@@ -383,14 +383,17 @@ namespace DatabaseLayer
         }
         #region GetAllProject
         //Project
-        public static List<GetAllProjectVM> getProjectDL()
+        public static List<GetAllProjectVM> getProjectDL(int LoginRoleID, int LoginUserID)
         {
             List<GetAllProjectVM> getAllProjectLst = new List<GetAllProjectVM>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
-                getAllProjectLst = conn.Query<GetAllProjectVM>("sp_GetAllProject", commandType: CommandType.StoredProcedure).ToList();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@LoginRoleID", LoginRoleID);
+                ObjParm.Add("@LoginUserID", LoginUserID);
+                getAllProjectLst = conn.Query<GetAllProjectVM>("sp_GetAllProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return getAllProjectLst;
@@ -481,7 +484,7 @@ namespace DatabaseLayer
                 ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
                 ObjParm.Add("@RecruitedHR", m.RecruitedHR);
-                ObjParm.Add("@RecruitedHRDate", m.RecruitedHRDate);
+                //ObjParm.Add("@RecruitedHRDate", m.RecruitedHRDate);
                 ObjParm.Add("@Remarks", m.Remarks);
 
                 ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
@@ -517,8 +520,9 @@ namespace DatabaseLayer
                 ObjParm.Add("@SubProject_ID", m.SubProject_ID);
                 ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
-                ObjParm.Add("@AchievedProcurement", m.AchievedProcurement);
-                ObjParm.Add("@ProcurementDate", m.ProcurementDate);
+                ObjParm.Add("@AchievedProcurement", m.NoOfProcurement);
+                ObjParm.Add("@ProcurementFromHRDate", m.ProcurementFromHRDate);
+                ObjParm.Add("@ProcurementToHRDate", m.ProcurementToHRDate);
                 ObjParm.Add("@Remarks", m.Remarks);
                 ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                 ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
@@ -537,14 +541,17 @@ namespace DatabaseLayer
             return status;
         }
         //GetALLprocurement
-        public static List<GetAllProcurementVM> getProcurementDL()
+        public static List<GetAllProcurementVM> getProcurementDL(int LoginRoleID, int LoginUserID)
         {
             List<GetAllProcurementVM> getAllProcurementVMLst = new List<GetAllProcurementVM>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
-                getAllProcurementVMLst = conn.Query<GetAllProcurementVM>("sp_GetAllProcurement", commandType: CommandType.StoredProcedure).ToList();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@LoginRoleID", LoginRoleID);
+                ObjParm.Add("@LoginUserID", LoginUserID);
+                getAllProcurementVMLst = conn.Query<GetAllProcurementVM>("sp_GetAllProcurement", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return getAllProcurementVMLst;

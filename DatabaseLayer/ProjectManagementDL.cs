@@ -591,7 +591,8 @@ namespace DatabaseLayer
                 ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
                 ObjParm.Add("@AchievedProcurement", m.AchievedProcurement);
-                ObjParm.Add("@ProcurementDate", m.ProcurementDate);
+                ObjParm.Add("@ProcurementFromDate", m.ProcurementFromDate);
+                ObjParm.Add("@ProcurementToDate", m.ProcurementToDate);
                 ObjParm.Add("@Remarks", m.Remarks);
 
                 ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);

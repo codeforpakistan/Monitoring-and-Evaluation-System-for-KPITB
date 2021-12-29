@@ -12,7 +12,7 @@
             <!-- START card-->
             <div class="card card-default">
                 <div class="card-header">
-                    <div class="card-title">Project Issue Form</div>
+                    <div class="card-title">Project Issue Log</div>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
@@ -34,13 +34,18 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label class="col-form-label">Issue Description *</label>
                                 @Html.TextBoxFor(model => model.IssueDescription, new { @class = "form-control", @placeholder = "Enter Issue Details" })
                                 @Html.ValidationMessageFor(m => m.IssueDescription, "", new { @class = "parsley-required" })
 
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Status/ActionTaken *</label>
+                                @Html.TextBoxFor(model => model.ActionTaken, new { @class = "form-control", @placeholder = "Enter Status/ActionTaken" })
+                                @Html.ValidationMessageFor(m => m.ActionTaken, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-4">
                                 <label class="col-form-label">Issue Date *</label>
                                 @Html.TextBoxFor(model => model.IssueDate, new { @class = "form-control", @type = "date", @placeholder = "dd/mm/yyyy" })
                                 @Html.ValidationMessageFor(m => m.IssueDate, "", new { @class = "parsley-required" })
@@ -50,13 +55,9 @@
                         <br />
                         <div class="row">
 
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Status/ActionTaken *</label>
-                                @Html.TextBoxFor(model => model.ActionTaken, new { @class = "form-control", @placeholder = "Enter Status/ActionTaken" })
-                                @Html.ValidationMessageFor(m => m.ActionTaken, "", new { @class = "parsley-required" })
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Solution/Remarks *</label>
+                            
+                            <div class="col-lg-12">
+                                <label class="col-form-label">Solution/Remarks </label>
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Enter Solution/Remarks" })
                                 @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
                             </div>

@@ -447,8 +447,8 @@ namespace ModelLayer
             public int CreatedByUser_ID { get; set; }
             [Range(1, int.MaxValue, ErrorMessage = "Please Select Batch")]
             public int RecruitedHR { get; set; }
-            public DateTime RecruitedFromHRDate { get; set; } 
-            public DateTime RecruitedToHRDate { get; set; }
+            public System.DateTime RecruitedFromHRDate { get; set; } 
+            public System.DateTime RecruitedToHRDate { get; set; }
 
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }
@@ -635,6 +635,8 @@ namespace ModelLayer
             public EditProcurementVM()
             {
                 comboProjects = new List<ComboProject>();
+                comboSubProjects = new List<ComboSubProject>();
+                comboBatch = new List<ComboBatch>();
             }
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
@@ -644,9 +646,12 @@ namespace ModelLayer
             public int AchievedProcurementID { get; set; }
             public int AchievedProcurement { get; set; }
             public double ProcurementPercent { get; set; }
-            public System.DateTime ProcurementDate { get; set; }
+            public System.DateTime ProcurementFromDate { get; set; }
+            public System.DateTime ProcurementToDate { get; set; }
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }
+            public List<ComboSubProject> comboSubProjects { get; set; }
+            public List<ComboBatch> comboBatch { get; set; }
         }
         public partial class GetAllProcurementVM
         {

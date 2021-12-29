@@ -201,8 +201,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
 
                 getRecruitedHR = new ProjectManagementBL().getSignleRecruitedHRBL(RecruitedHRID);
-                CreateRecruitedHRVM recruitedHRVM = new CreateRecruitedHRVM();
-                ComboProject(recruitedHRVM);
+                getProject();
                 getRecruitedHR.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
             }
             catch (Exception)
@@ -287,6 +286,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
 
                 getProcurement = new ProjectManagementBL().getSignleProcurementBL(AchievedProcurementID);
+
                 getProject();
                 getProcurement.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
             }

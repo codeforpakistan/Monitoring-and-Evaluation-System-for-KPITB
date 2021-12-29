@@ -48,9 +48,15 @@
 
                             </div>
                             <div class="col-lg-4">
-                                <label class="col-form-label">HR Date *</label>
-                                @Html.TextBoxFor(model => model.RecruitedHRDate, new { id = "RecruitedHRDate", @class = "datepicker form-control", @placeholder = "dd/mm/yyyy", @Value = @Model.RecruitedHRDate.ToShortDateString() })
-                                @Html.ValidationMessageFor(m => m.RecruitedHRDate, "", new { @class = "parsley-required" })
+                                <label class="col-form-label">HR From Date *</label>
+                                @Html.TextBoxFor(model => model.RecruitedFromHRDate, new { id = "RecruitedFromHRDate", @class = "datepicker form-control", @placeholder = "dd/mm/yyyy", @Value = @Model.RecruitedFromHRDate.ToShortDateString() })
+                                @Html.ValidationMessageFor(m => m.RecruitedFromHRDate, "", new { @class = "parsley-required" })
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">HR To Date *</label>
+                                @Html.TextBoxFor(model => model.RecruitedToHRDate, new { id = "RecruitedToHRDate", @class = "datepicker form-control", @placeholder = "dd/mm/yyyy", @Value = @Model.RecruitedToHRDate.ToShortDateString() })
+                                @Html.ValidationMessageFor(m => m.RecruitedToHRDate, "", new { @class = "parsley-required" })
 
                             </div>
                             <div class="col-lg-4">
@@ -89,7 +95,7 @@
 <script>
     $(document).ready(function () {
         $(function () {
-            $('#RecruitedHRDate').datepicker({
+            $('#RecruitedFromHRDate').datepicker({
                 format: "dd/mm/yyyy"
             });
         });

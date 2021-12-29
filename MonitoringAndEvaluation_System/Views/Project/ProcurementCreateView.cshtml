@@ -46,9 +46,8 @@
                                 <option value="HI">Other</option>
                             </select>
                         </div>
-                    </div>
-
-                        <div class="row">
+                      </div>
+                    <div class="row">
                             <div class="col-lg-4">
                                 <label class="col-form-label">No of Procurement *</label>
                                 @Html.TextBoxFor(model => model.NoOfProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" })
@@ -57,20 +56,22 @@
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Procurement From Date *</label>
-                                @Html.TextBoxFor(model => model.ProcurementFromHRDate, new { @class = "form-control", @type = "date", @id = "ProcurementFromHRDate", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.ProcurementFromHRDate, "", new { @class = "parsley-required" })
+                                @Html.TextBoxFor(model => model.ProcurementFromDate, new { @class = "form-control", @type = "date", @id ="ProcurementFromDate", @placeholder = "Enter No of Recruited -HR" })
+                                @Html.ValidationMessageFor(m => m.ProcurementFromDate, "", new { @class = "parsley-required" ,@id ="spanProcurementFromDate" })
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Procurement To Date *</label>
-                                @Html.TextBoxFor(model => model.ProcurementToHRDate, new { @class = "form-control", @type = "date", @id = "ProcurementToHRDate", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.ProcurementToHRDate, "", new { @class = "parsley-required" })
-                            </div>
-                            <div class="col-lg-4">
-                                <label class="col-form-label">Remarks *</label>
-                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
-                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
+                                @Html.TextBoxFor(model => model.ProcurementToDate, new { @class = "form-control", @type = "date", @id ="ProcurementToDate", @placeholder = "Enter No of Recruited -HR" })
+                                @Html.ValidationMessageFor(m => m.ProcurementToDate, "", new { @class = "parsley-required" ,@id= "spanProcurementFromDate" })
                             </div>
                         </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label class="col-form-label">Remarks </label>
+                            @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
+                            @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
+                        </div>
+                    </div>
                         <br />
                         <div class="required">* Required fields</div>
                         <hr />
@@ -80,10 +81,9 @@
                         <br />
                         <br />
                     </div>
-                    }
-
-                    <!--Table-->
-                    <div class="card card-default">
+                }
+                 <!--Table-->
+                 <div class="card card-default">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
@@ -164,28 +164,28 @@
 
         });
 
-        $("#ProcurementFromHRDate").on('change', function () {
+        $("#ProcurementFromDate").on('change', function () {
             debugger
             DateCompare();
         });
-        $("#ProcurementToHRDate").on('change', function () {
+        $("#ProcurementToDate").on('change', function () {
             debugger
             DateCompare();
         });
         function DateCompare() {
-            var _ProcurementFromHRDate = $('#ProcurementFromHRDate').val();
-            var _ProcurementToHRDate = $('#ProcurementToHRDate').val();
+            var _ProcurementFromHRDate = $('#ProcurementFromDate').val();
+            var _ProcurementToHRDate = $('#ProcurementToDate').val();
 
             if (_ProcurementToHRDate != '') {
                 if (_ProcurementFromHRDate > _ProcurementToHRDate)
                 {
 
-                    $("#spanProcurementFromHRDate").text("From-HRDate should not be greater then  To-HRDate")
+                    $("#spanProcurementFromDate").text("To-Date should not be greater then From-Date")
                     return false;
                 }
                 else
                 {
-                    $("#spanProcurementFromHRDate").text("")
+                    $("#spanProcurementFromDate").text("")
                     return false;
                 }
             }

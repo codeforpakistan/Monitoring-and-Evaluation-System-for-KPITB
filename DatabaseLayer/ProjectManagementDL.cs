@@ -261,7 +261,7 @@ namespace DatabaseLayer
                     //Procurement
                     ObjParm.Add("@AchievedProcurement", m.AchievedProcurement);
                     ObjParm.Add("@ProcurementPercent", m.ProcurementPercent);
-                    ObjParm.Add("@ProcurementDate", DateTime.Now);
+                    ObjParm.Add("@ProcurementFromDate", DateTime.Now);
 
                     //StackHolder
                     //ObjParm.Add("@StackholderName", m.StackholderName);
@@ -439,14 +439,17 @@ namespace DatabaseLayer
         }
 
         //GetALLRecruitedHR
-        public static List<GetAllRecruitedHRVM> getRecruitedHRDL()
+        public static List<GetAllRecruitedHRVM> getRecruitedHRDL(int LoginRoleID, int LoginUserID)
         {
             List<GetAllRecruitedHRVM> getAllRecruitedHRVMLst = new List<GetAllRecruitedHRVM>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
-                getAllRecruitedHRVMLst = conn.Query<GetAllRecruitedHRVM>("sp_GetAllRecruitedHR", commandType: CommandType.StoredProcedure).ToList();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@LoginRoleID", LoginRoleID);
+                ObjParm.Add("@LoginUserID", LoginUserID);
+                getAllRecruitedHRVMLst = conn.Query<GetAllRecruitedHRVM>("sp_GetAllRecruitedHR", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return getAllRecruitedHRVMLst;
@@ -484,7 +487,8 @@ namespace DatabaseLayer
                 ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
                 ObjParm.Add("@RecruitedHR", m.RecruitedHR);
-                //ObjParm.Add("@RecruitedHRDate", m.RecruitedHRDate);
+                ObjParm.Add("@RecruitedFromHRDate", m.RecruitedFromHRDate);
+                ObjParm.Add("@RecruitedToHRDate", m.RecruitedToHRDate);
                 ObjParm.Add("@Remarks", m.Remarks);
 
                 ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
@@ -521,8 +525,8 @@ namespace DatabaseLayer
                 ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
                 ObjParm.Add("@AchievedProcurement", m.NoOfProcurement);
-                ObjParm.Add("@ProcurementFromHRDate", m.ProcurementFromHRDate);
-                ObjParm.Add("@ProcurementToHRDate", m.ProcurementToHRDate);
+                ObjParm.Add("@ProcurementFromDate", m.ProcurementFromDate);
+                ObjParm.Add("@ProcurementToDate", m.ProcurementToDate);
                 ObjParm.Add("@Remarks", m.Remarks);
                 ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                 ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);

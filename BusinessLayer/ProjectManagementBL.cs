@@ -101,9 +101,9 @@ namespace BusinessLayer
         #endregion
         #region RecruitedView
         //GetAllRecruitedHR
-        public List<GetAllRecruitedHRVM> getAllRecruitedHRBL()
+        public List<GetAllRecruitedHRVM> getAllRecruitedHRBL(int LoginRoleID, int LoginUserID)
         {
-            return ProjectManagementDL.getRecruitedHRDL();
+            return ProjectManagementDL.getRecruitedHRDL(LoginRoleID, LoginUserID);
         }
         //GetSingleRecruitedHR For Edit
         public EditRecruitedHRVM getSignleRecruitedHRBL(int RecruitedHR)

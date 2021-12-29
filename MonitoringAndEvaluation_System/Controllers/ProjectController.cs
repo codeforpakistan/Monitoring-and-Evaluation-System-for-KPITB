@@ -366,7 +366,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         private void getAllRecruitedHR()
         {
-            ViewBag.LstAllRecruitedHR = new ProjectManagementBL().getAllRecruitedHRBL();
+            ViewBag.LstAllRecruitedHR = new ProjectManagementBL().getAllRecruitedHRBL(LoginRoleID, LoginUserID);
         }
         private void getAllProcurement()
         {
@@ -374,7 +374,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         private void getAllFinance()
         {
-            ViewBag.LstAllFinance = new ProjectManagementBL().getAllRecruitedHRBL();
+            ViewBag.LstAllFinance = new ProjectManagementBL().getAllRecruitedHRBL(LoginRoleID, LoginUserID);
         }
         private void getProject()
         {

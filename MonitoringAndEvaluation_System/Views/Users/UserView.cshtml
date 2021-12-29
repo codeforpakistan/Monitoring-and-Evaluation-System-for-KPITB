@@ -10,7 +10,7 @@
     <div class="card-body">
         <div>@Html.ActionLink("Add New User", "UserCreate", null, new { @class = "btn btn-primary" })</div>
         <hr />
-        <table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">
+        <table class="table table-striped my-4 w-100 table-hover" id="datatable2">
             <thead>
                 <tr>
 
@@ -32,10 +32,6 @@
                     </th>
                     <th>
                         Address
-                    </th>
-
-                    <th>
-                        Photo
                     </th>
                     <th>
                         Status
@@ -69,9 +65,9 @@
                                     <td>
                                         @item.Address
                                     </td>
-                                    <td>
+                                    @*<td>
                                         <img src="~/Content/Template/img/user/user.png" style="width:50px" />
-                                    </td>
+                                    </td>*@
                                     <td>
                                         @item.IsActive
                                     </td>

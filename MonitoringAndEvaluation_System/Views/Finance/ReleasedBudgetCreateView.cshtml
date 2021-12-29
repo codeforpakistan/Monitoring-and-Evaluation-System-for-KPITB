@@ -40,13 +40,13 @@
                         </div>
                         <div class="col-lg-4">
                             <label class="col-form-label">From Released Date *</label>
-                            @Html.TextBoxFor(model => model.ReleasedDate, new { @class = "form-control", @type = "date", @id = "ReleasedDate", @placeholder = "dd/mm/yyyy" })
-                            @Html.ValidationMessageFor(m => m.ReleasedDate, "", new { @class = "parsley-required" })
+                            @Html.TextBoxFor(model => model.ReleasedFromDate, new { @class = "form-control", @type = "date", @id = "ReleasedFromDate", @placeholder = "dd/mm/yyyy" })
+                            @Html.ValidationMessageFor(m => m.ReleasedFromDate, "", new { @class = "parsley-required",@id= "spanReleasedFromDate" })
                         </div>
                         <div class="col-lg-4">
                             <label class="col-form-label">To Released Date *</label>
-                            @Html.TextBoxFor(model => model.ReleasedDate, new { @class = "form-control", @type = "date", @id = "ReleasedDate", @placeholder = "dd/mm/yyyy" })
-                            @Html.ValidationMessageFor(m => m.ReleasedDate, "", new { @class = "parsley-required" })
+                            @Html.TextBoxFor(model => model.ReleasedToDate, new { @class = "form-control", @type = "date", @id = "ReleasedToDate", @placeholder = "dd/mm/yyyy" })
+                            @Html.ValidationMessageFor(m => m.ReleasedToDate, "", new { @class = "parsley-required" ,@id = "spanReleasedFromDate" })
                         </div>
                         <div class="col-lg-12">
                             <label class="col-form-label">Remarks </label>
@@ -162,28 +162,28 @@
 
         });
 
-        $("#ProcurementFromHRDate").on('change', function () {
+        $("#ReleasedFromDate").on('change', function () {
             debugger
             DateCompare();
         });
-        $("#ProcurementToHRDate").on('change', function () {
+        $("#ReleasedToDate").on('change', function () {
             debugger
             DateCompare();
         });
         function DateCompare() {
-            var _ProcurementFromHRDate = $('#ProcurementFromHRDate').val();
-            var _ProcurementToHRDate = $('#ProcurementToHRDate').val();
+            var _ReleasedFromDate = $('#ReleasedFromDate').val();
+            var _ReleasedToDate = $('#ReleasedToDate').val();
 
-            if (_ProcurementToHRDate != '') {
-                if (_ProcurementFromHRDate > _ProcurementToHRDate)
+            if (_ReleasedToDate != '') {
+                if (_ReleasedFromDate > _ReleasedToDate)
                 {
 
-                    $("#spanProcurementFromHRDate").text("From-HRDate should not be greater then  To-HRDate")
+                    $("#spanReleasedFromDate").text("From-Date should not be greater then  To-Date")
                     return false;
                 }
                 else
                 {
-                    $("#spanProcurementFromHRDate").text("")
+                    $("#spanReleasedFromDate").text("")
                     return false;
                 }
             }

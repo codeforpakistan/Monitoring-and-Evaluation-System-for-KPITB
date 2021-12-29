@@ -447,13 +447,7 @@ namespace ModelLayer
             public int CreatedByUser_ID { get; set; }
             [Range(1, int.MaxValue, ErrorMessage = "Please Select Batch")]
             public int RecruitedHR { get; set; }
-
-            [Required(ErrorMessage = "Enter From Date")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public DateTime RecruitedFromHRDate { get; set; }
-
-            [Required(ErrorMessage = "Enter To Date")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime RecruitedFromHRDate { get; set; } 
             public DateTime RecruitedToHRDate { get; set; }
 
             public string Remarks { get; set; }
@@ -624,12 +618,12 @@ namespace ModelLayer
             [Required(ErrorMessage = "Enter From Date")]
             [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public DateTime ProcurementFromHRDate { get; set; }
+            public DateTime ProcurementFromDate { get; set; }
 
             [Required(ErrorMessage = "Enter To Date")]
             [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public DateTime ProcurementToHRDate { get; set; }
+            public DateTime ProcurementToDate { get; set; }
 
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }

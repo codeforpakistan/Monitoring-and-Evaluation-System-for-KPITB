@@ -23,12 +23,12 @@
                                 @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                             </div>
                             <div class="col-lg-4">
-                                <label for="sel1">Select Sub Project</label>
+                                <label>Select Sub Project</label>
                                 @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"),  new { @class = "select2 form-control " })
                                 @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
                             </div>
                             <div class="col-lg-4">
-                                <label for="sel1">Select Cycle/Batch</label>
+                                <label>Select Cycle/Batch</label>
                                 @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"),   new { @class = " form-control" })
                                 @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
                             </div>

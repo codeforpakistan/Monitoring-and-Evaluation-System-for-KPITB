@@ -199,10 +199,8 @@ namespace MonitoringAndEvaluation_System.Controllers
             EditRecruitedHRVM getRecruitedHR = new EditRecruitedHRVM();
             try
             {
-
                 getRecruitedHR = new ProjectManagementBL().getSignleRecruitedHRBL(RecruitedHRID);
-                getProject();
-                getRecruitedHR.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
+                ComboProjectEdit(getRecruitedHR);
             }
             catch (Exception)
             {
@@ -219,9 +217,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 {
                     return View(editRecruitedHRVM);
                 }
-                getProject();
-                editRecruitedHRVM.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
-                editRecruitedHRVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+                editRecruitedHRVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new ProjectManagementBL().recruitedHREditBL(editRecruitedHRVM);
                 if (status.status)
                 {
@@ -350,6 +346,15 @@ namespace MonitoringAndEvaluation_System.Controllers
             //Get ProjectType list
             recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID,LoginUserID);
             ComboSubProject  msp= new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
+            recruitedHRVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            recruitedHRVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+        }
+        public void ComboProjectEdit(EditRecruitedHRVM recruitedHRVM)
+        {
+            //Get ProjectType list
+            recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
             recruitedHRVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
             ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
             recruitedHRVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);

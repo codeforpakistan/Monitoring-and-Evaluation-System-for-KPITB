@@ -201,7 +201,8 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
 
                 getRecruitedHR = new ProjectManagementBL().getSignleRecruitedHRBL(RecruitedHRID);
-                getProject();
+                CreateRecruitedHRVM recruitedHRVM = new CreateRecruitedHRVM();
+                ComboProject(recruitedHRVM);
                 getRecruitedHR.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllProject;
             }
             catch (Exception)
@@ -350,6 +351,15 @@ namespace MonitoringAndEvaluation_System.Controllers
             //Get ProjectType list
             recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID,LoginUserID);
             ComboSubProject  msp= new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
+            recruitedHRVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            recruitedHRVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+        }
+        public void ComboProjectEdit(EditRecruitedHRVM recruitedHRVM)
+        {
+            //Get ProjectType list
+            recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
             recruitedHRVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
             ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
             recruitedHRVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);

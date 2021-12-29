@@ -3,6 +3,8 @@
     ViewBag.Title = "Edit Recruited HR";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles{
+}
 
 <div class="row">
     <div class="col-xl-12">
@@ -18,17 +20,17 @@
                         @Html.HiddenFor(m => m.RecruitedHRID)
                         <div class="row">
                             <div class="col-lg-4">
-                                <label for="sel1">Select Project </label>
+                                <label>Select Project </label>
                                 @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control " })
                                 @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                             </div>
                             <div class="col-lg-4">
-                                <label for="sel1">Select Sub Project</label>
+                                <label>Select Sub Project</label>
                                 @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
                                 @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
                             </div>
                             <div class="col-lg-4">
-                                <label for="sel1">Select Cycle/Batch</label>
+                                <label>Select Cycle/Batch</label>
                                 @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
                                 @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
                             </div>
@@ -43,15 +45,16 @@
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">HR From Date *</label>
-                                @Html.TextBoxFor(model => model.RecruitedFromHRDate, new { id = "RecruitedFromHRDate", @class = "datepicker form-control", @placeholder = "dd/mm/yyyy", @Value = @Model.RecruitedFromHRDate.ToShortDateString() })
-                                @Html.ValidationMessageFor(m => m.RecruitedFromHRDate, "", new { @class = "parsley-required" })
+                                <input type="text" data-provide="datepicker" class="form-control date-Future datepicker" name="RecruitedFromHRDate" id="RecruitedFromHRDate" value="@Model.RecruitedFromHRDate.ToShortDateString()">
+                                @*@Html.TextBoxFor(model => model.RecruitedFromHRDate, new { @class = " form-control", @type = "text", @Value = @Model.RecruitedFromHRDate })
+                                    @Html.ValidationMessageFor(m => m.RecruitedFromHRDate, "", new { @class = "parsley-required" })*@
 
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">HR To Date *</label>
-                                @Html.TextBoxFor(model => model.RecruitedToHRDate, new { id = "RecruitedToHRDate", @class = "datepicker form-control", @placeholder = "dd/mm/yyyy", @Value = @Model.RecruitedToHRDate.ToShortDateString() })
-                                @Html.ValidationMessageFor(m => m.RecruitedToHRDate, "", new { @class = "parsley-required" })
-
+                                <input type="text" data-provide="datepicker" class="form-control date-Future datepicker" name="RecruitedToHRDate" id="RecruitedToHRDate" value="@Model.RecruitedToHRDate.ToShortDateString()">
+                                @*@Html.TextBoxFor(model => model.RecruitedToHRDate, htmlAttributes: new { @class = " form-control datepicker", @type = "date", @Value = @Model.RecruitedToHRDate.ToShortDateString(), @name = "RecruitedToHRDate" })*@
+                                @*@Html.ValidationMessageFor(m => m.RecruitedToHRDate, "", htmlAttributes: new { @class = "parsley-required" })*@
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Remarks *</label>
@@ -83,12 +86,22 @@
         <!-- END card-->
     </div>
 </div>
+ 
 
 @section Scripts{
     <script>
+
+        //$(function () {
+        //    $("#RecruitedToHRDate").datepicker({
+        //        dateFormat: "dd-mm-yy",
+        //        changeMonth: true,
+        //        changeYear: true,
+        //        yearRange: "-60:+0"
+        //    });
+
         $(document).ready(function ()
         {
-
+            $('.datepicker').datepicker();
         });
 
         $("#RecruitedFromHRDate").on('change', function () {

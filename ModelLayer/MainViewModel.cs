@@ -447,8 +447,10 @@ namespace ModelLayer
             public int CreatedByUser_ID { get; set; }
             [Range(1, int.MaxValue, ErrorMessage = "Please Select Batch")]
             public int RecruitedHR { get; set; }
-            public System.DateTime RecruitedFromHRDate { get; set; } 
-            public System.DateTime RecruitedToHRDate { get; set; }
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime RecruitedFromHRDate { get; set; }
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime RecruitedToHRDate { get; set; }
 
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }

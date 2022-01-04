@@ -56,7 +56,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             CreateViewExpenditureBudgetVM expenditureVM = new CreateViewExpenditureBudgetVM();
             ComboProject2(expenditureVM);
-            //getAllRecruitedHR();
+            getAllExpenditureBudget();
             return View(expenditureVM);
            
         }
@@ -96,6 +96,10 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             ViewBag.LstAllReleasedBudget = new FinanceManagementBL().getAllReleasedBudgetBL(LoginRoleID,LoginUserID);
         }
+        private void getAllExpenditureBudget()
+        {
+            ViewBag.LstAllExpenditureBudget = new FinanceManagementBL().getAllExpenditureBudgetBL(LoginRoleID, LoginUserID);
+        }
         public void ComboProject(CreateViewReleasedBudgetVM releasedVM)
         {
             //Get ProjectType list
@@ -109,6 +113,10 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             //Get ProjectType list
             expenditureVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
+            expenditureVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            expenditureVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
         }
     }
 }

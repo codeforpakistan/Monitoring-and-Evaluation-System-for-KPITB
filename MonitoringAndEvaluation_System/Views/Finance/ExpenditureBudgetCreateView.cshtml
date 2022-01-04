@@ -1,5 +1,6 @@
 ﻿@model ModelLayer.MainViewModel.CreateViewExpenditureBudgetVM
 @{ViewBag.Title = "Expenditure Budget";
+    List<ModelLayer.MainViewModel.GetAllExpenditureBudgetVM> _LstAllExpenditureBudget = (List<ModelLayer.MainViewModel.GetAllExpenditureBudgetVM>)ViewBag.LstAllExpenditureBudget;
 }
 
 <div class="col-xl-12">
@@ -40,13 +41,13 @@
                         </div>
                         <div class="col-lg-4">
                             <label class="col-form-label">Expenditure From Date *</label>
-                            @Html.TextBoxFor(model => model.ExpenditureDate, new { @class = "form-control", @type = "date", @id = "ReleasedDate", @placeholder = "dd/mm/yyyy" })
-                            @Html.ValidationMessageFor(m => m.ExpenditureDate, "", new { @class = "parsley-required" })
+                            @Html.TextBoxFor(model => model.ExpenditureFromDate, new { @class = "form-control", @type = "date", @id = "ExpenditureFromDate", @placeholder = "dd/mm/yyyy" })
+                            @Html.ValidationMessageFor(m => m.ExpenditureFromDate, "", new { @class = "parsley-required" })
                         </div>
                         <div class="col-lg-4">
                             <label class="col-form-label">ExpenditureTo Date *</label>
-                            @Html.TextBoxFor(model => model.ExpenditureDate, new { @class = "form-control", @type = "date", @id = "ReleasedDate", @placeholder = "dd/mm/yyyy" })
-                            @Html.ValidationMessageFor(m => m.ExpenditureDate, "", new { @class = "parsley-required" })
+                            @Html.TextBoxFor(model => model.ExpenditureToDate, new { @class = "form-control", @type = "date", @id = "ReleasedDate", @placeholder = "dd/mm/yyyy" })
+                            @Html.ValidationMessageFor(m => m.ExpenditureToDate, "", new { @class = "parsley-required" })
                         </div>
                         
                     </div>
@@ -77,16 +78,20 @@
                                                     <th>
                                                         ID
                                                     </th>
-                                                    <th class="col-lg-3">
+                                                    <th>
                                                         Project Name
                                                     </th>
-                                                    <th class="col-lg-3">
+                                                    <th>
+                                                        SubProject Name
+                                                    </th>
+                                                    <th>
+                                                        Batch Name
+                                                    </th>
+                                                    <th>
                                                         Expenditure Budget
                                                     </th>
-                                                    <th class="col-lg-3">
-                                                        Expenditure Date
-                                                    </th>
-                                                    <th class="col-lg-5">
+                                                    
+                                                    <th>
                                                         Remarks
                                                     </th>
 
@@ -97,30 +102,40 @@
                                             </thead>
                                             <tbody>
 
-                                                <tr>
-                                                    <td>
-                                                        1
-                                                    </td>
-                                                    <td>
-                                                        Durshal
-                                                    </td>
-                                                    <td>
-                                                        2M
-                                                    </td>
-                                                    <td>
-                                                        15/11/2021
-                                                    </td>
-                                                    <td>
-                                                        This is the Issues Field
-                                                    </td>
+                                                @{
+                                                    foreach (var item in _LstAllExpenditureBudget)
+                                                    {
+                                                        <tr>
+                                                            @Html.HiddenFor(m => item.ExpenditureBudgetID)
+                                                            <td>
+                                                                @item.ID
+                                                            </td>
 
-                                                    <td>
+                                                            <td>
+                                                                @item.ProjectName
+                                                            </td>
+                                                            <td>
+                                                                @item.SubProjectName
+                                                            </td>
+                                                            <td>
+                                                                @item.BatchName
+                                                            </td>
+                                                            <td>
+                                                                @item.ExpenditureBudget
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @item.Remarks
+                                                            </td>
+                                                            <td>
 
-                                                        @Html.ActionLink("Edit", "Edit", new { }, new { @class = "mb-1 btn btn-warning" })
+                                                                @Html.ActionLink("Edit", "ExpenditureBudgetEdit", new { ExpenditureBudgetID = item.ExpenditureBudgetID }, new { @class = "mb-1 btn btn-warning" })
 
-                                                    </td>
+                                                            </td>
 
-                                                </tr>
+                                                        </tr>
+                                                    }
+                                                }
 
                                             </tbody>
                                         </table>

@@ -570,8 +570,8 @@ namespace ModelLayer
 
             //Expenditure
             public int ExpenditureBudgetID { get; set; }
-            public System.DateTime ExpenditureDate { get; set; }
-            public string ExpenditureName { get; set; }
+            public DateTime ExpenditureFromDate { get; set; }
+            public DateTime ExpenditureToDate { get; set; }
             public long ExpenditureBudget { get; set; }
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }
@@ -583,13 +583,17 @@ namespace ModelLayer
 
             //Common Filed
             public int Project_ID { get; set; }
+            public int ID { get; set; }
             public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
             //Expenditure
-            public string ExpenditureName { get; set; }
+            public string ProjectName { get; set; }
+            public string SubProjectName { get; set; }
+            public string BatchName { get; set; }
             public int ExpenditureBudgetID { get; set; }
-            public System.DateTime ExpenditureDate { get; set; }
+            public DateTime ExpenditureFromDate { get; set; }
+            public DateTime ExpenditureToDate { get; set; }
             public long ExpenditureBudget { get; set; }
             public string Remarks { get; set; }
 

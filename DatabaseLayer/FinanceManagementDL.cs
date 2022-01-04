@@ -63,8 +63,8 @@ namespace DatabaseLayer
                 ObjParm.Add("@SubProject_ID", m.SubProject_ID);
                 ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
-                ObjParm.Add("@ExpenditureDate", m.ExpenditureDate);
-                ObjParm.Add("@ExpenditureName", m.ExpenditureName);
+                ObjParm.Add("@ExpenditureFromDate", m.ExpenditureFromDate);
+                ObjParm.Add("@ExpenditureToDate", m.ExpenditureToDate);
                 ObjParm.Add("@ExpenditureBudget", m.ExpenditureBudget);
                 ObjParm.Add("@Remarks", m.Remarks);
 
@@ -99,6 +99,22 @@ namespace DatabaseLayer
                 conn.Close();
                 conn.Dispose();
                 return getAllReleasedBudgetVMLst;
+            }
+        }
+        public static List<GetAllExpenditureBudgetVM> getAllExpenditureBudgetDL(int LoginRoleID, int LoginUserID)
+        {
+            List<GetAllExpenditureBudgetVM> getAllExpenditureBudgetVMLst = new List<GetAllExpenditureBudgetVM>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@LoginRoleID", LoginRoleID);
+                ObjParm.Add("@LoginUserID", LoginUserID);
+                getAllExpenditureBudgetVMLst = conn.Query<GetAllExpenditureBudgetVM>("sp_GetAllExpenditureBudget", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return getAllExpenditureBudgetVMLst;
             }
         }
         #endregion

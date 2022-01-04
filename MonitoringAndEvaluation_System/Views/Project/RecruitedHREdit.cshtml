@@ -54,7 +54,7 @@
                                 <label class="col-form-label">HR To Date *</label>
                                 <input type="text" data-provide="datepicker" class="form-control date-Future datepicker" name="RecruitedToHRDate" id="RecruitedToHRDate" value="@Model.RecruitedToHRDate.ToShortDateString()">
                                 @*@Html.TextBoxFor(model => model.RecruitedToHRDate, htmlAttributes: new { @class = " form-control datepicker", @type = "date", @Value = @Model.RecruitedToHRDate.ToShortDateString(), @name = "RecruitedToHRDate" })*@
-                                @*@Html.ValidationMessageFor(m => m.RecruitedToHRDate, "", htmlAttributes: new { @class = "parsley-required" })*@
+                                @Html.ValidationMessageFor(m => m.RecruitedToHRDate, "", htmlAttributes: new { @class = "parsley-required",@id= "spanRecruitedFromHRDate" })
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Remarks *</label>

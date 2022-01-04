@@ -17,15 +17,20 @@ namespace BusinessLayer
         {
             return FinanceManagementDL.releasedCreateViewDL(m);
         }
+        //GetAllReleasedBudget
+        public List<GetAllReleasedBudgetVM> getAllReleasedBudgetBL(int LoginRoleID, int LoginUserID)
+        {
+            return FinanceManagementDL.getAllReleasedBudgetDL(LoginRoleID, LoginUserID);
+        }
         //ExpenditureCreateView
         public StatusModel expenditureCreateViewBL(CreateViewExpenditureBudgetVM m)
         {
             return FinanceManagementDL.expenditureCreateViewDL(m);
         }
-        //GetAllReleasedBudget
-        public List<GetAllReleasedBudgetVM> getAllReleasedBudgetBL(int LoginRoleID, int LoginUserID)
+        //GetAllExpenditureBudget
+        public List<GetAllExpenditureBudgetVM> getAllExpenditureBudgetBL(int LoginRoleID, int LoginUserID)
         {
-            return FinanceManagementDL.getAllReleasedBudgetDL(LoginRoleID, LoginUserID);
+            return FinanceManagementDL.getAllExpenditureBudgetDL(LoginRoleID, LoginUserID);
         }
         //GetSingalProcurement
         public EditProcurementVM getSignleProcurementBL(int AchievedProcurementID)
@@ -33,6 +38,8 @@ namespace BusinessLayer
             EditProcurementVM m = ProjectManagementDL.getSignleProcurementDL(AchievedProcurementID);
             return m;
         }
+        //GetAllExpenditureBudget
+       
         #endregion
     }
 }

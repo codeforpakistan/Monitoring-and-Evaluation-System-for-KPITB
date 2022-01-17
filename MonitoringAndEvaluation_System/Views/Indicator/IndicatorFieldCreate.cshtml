@@ -14,7 +14,7 @@
 <!-- START row-->
 <div class="row">
     <div class="col-xl-12">
-        @using (Html.BeginForm("ProjectCreate", "Project", FormMethod.Post, new { @id = "SubmitFromBtnCreate", @class = "form-horizontal" }))
+        @using (Html.BeginForm("IndicatorFieldCreate", "Indicator", FormMethod.Post, new { @id = "SubmitFromBtnCreate", @class = "form-horizontal" }))
         {
             <!-- START card-->
 
@@ -22,339 +22,74 @@
                 <div class="card-header">
                     <div class="card-title">
                         <br />
-                        <h3> Add New Project </h3>
+                        <h4> Add Indicator Field </h4>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
-                        @*Basic Project Info*@
-                        <div class="card card-default" id="cardDemo1">
-                            <div class="card-header">
-                                <h4>Basic Project Info</h4>
-
-                            </div>
-                            <div class="card-wrapper collapse show">
-                                <div class="card-body">
-
-                                    <div class="row">
-
-                                        <div class="col-lg-4 ">
-                                            <label class="col-form-label">Project Name *</label>
-                                            @Html.TextBoxFor(model => model.ProjectName, new { @class = "form-control", @placeholder = "Enter Project Name" })
-                                            @Html.ValidationMessageFor(m => m.ProjectName, "", new { @class = "parsley-required", @id = "spanProjectName" })
-                                        </div>
-                                        <div class="col-lg-4 ">
-                                            <label for="sel1">Select Project Cagetory</label>
-                                            @Html.DropDownListFor(m => m.Category_ID, new SelectList(Model.comboCategories, "CategoryID", "categoryName"), "Please Select Category", new { @class = "select2 form-control ", @placeholder = "Select Category" })
-                                            @Html.ValidationMessageFor(m => m.Category_ID, "", new { @class = "parsley-required", @id = "spanCategory_ID" })
-                                        </div>
-                                        <div class="col-lg-4 ">
-                                            <label for="sel1">Select Project Type</label>
-                                            @Html.DropDownListFor(m => m.ProjectType_ID, new SelectList(Model.comboProjectTypes, "ProjectTypeID", "ProjectTypeName"), "Please Select Project Type", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
-                                            @Html.ValidationMessageFor(m => m.ProjectType_ID, "", new { @class = "parsley-required", @id = "spanProjectType_ID" })
-                                        </div>
-                                        <!---->
-
-                                    </div>
-                                    <br />
-                                    <div class="row">
-
-                                        <div class="col-lg-4 ">
-                                            <label for="sel1" class="col-form-label">Funding Source</label>
-                                            @Html.DropDownListFor(model => model.Funding_SourceArray, new MultiSelectList(Model.comboFundingSource, "FundingSourceName", "FundingSourceName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-3" })
-                                            @Html.ValidationMessageFor(model => model.Funding_SourceArray, "", new { @class = "text-danger", @id = "spanFunding_SourceArray" })
-                                        </div>
-                                      
-                                        <div class="col-lg-4 ">
-                                            <label for="sel1" class="col-form-label">Select Location</label>
-                                            @Html.DropDownListFor(m => m.City_ID, new SelectList(Model.comboCities, "CityID", "CityName"), "Please Select City Name", new { @class = "select2 form-control ", @placeholder = "Select City" })
-                                            @Html.ValidationMessageFor(m => m.City_ID, "", new { @class = "parsley-required", @id = "spanCity_ID" })
-                                        </div>
-                                        <div class="col-lg-4 ">
-                                            <label for="sel1">Select Digital Policy</label>
-                                            @Html.DropDownListFor(m => m.DigitalPolicy_ID, new SelectList(Model.comboDigitalPolicies, "DigitalPolicyID", "DigitalPolicyName"), "Please Select Digital Policy", new { @class = "select2 form-control ", @placeholder = "Select Digital Policy" })
-                                            @Html.ValidationMessageFor(m => m.DigitalPolicy_ID, "", new { @class = "parsley-required", @id = "spanDigitalPolicy_ID" })
-                                        </div>
-
-                                    </div>
-                                    <br />
-                                    <div class="row">
-                                        <div class="col-lg-2 ">
-                                            <label class="col-form-label">Planned Male Beneficiary</label>
-                                            @Html.TextBoxFor(model => model.MaleBeneficiary, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Male" })
-                                            @Html.ValidationMessageFor(m => m.MaleBeneficiary, "", new { @class = "parsley-required", @id = "spanMaleBeneficiary" })
-                                        </div>
-                                        <div class="col-lg-2 ">
-                                            <label class="col-form-label">Planned Female Beneficiary</label>
-                                            @Html.TextBoxFor(model => model.FemaleBeneficiary, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Female" })
-                                            @Html.ValidationMessageFor(m => m.FemaleBeneficiary, "", new { @class = "parsley-required", @id = "spanFemaleBeneficiary" })
-                                        </div>
-                                        <div class="col-lg-4 ">
-                                            <label class="col-form-label">Total Planned Beneficiary</label>
-                                            @Html.TextBoxFor(model => model.TotalBeneficiary, new { @class = "form-control", @type = "number", @placeholder = "Total Beneficiary", @readonly = "readonly" })
-                                            @Html.ValidationMessageFor(m => m.TotalBeneficiary, "", new { @class = "parsley-required", @id = "spanTotalBeneficiary" })
-                                            @*<input class="form-control" id="idtotalcpb" type="number" name="idtotalcpb" placeholder="Total Beneficiary" readonly>*@
-                                        </div>
-                                        <div class="col-lg-4 ">
-                                            <label class="col-form-label">Cost per Beneficiary</label>
-                                            @Html.TextBoxFor(model => model.CostPerBeneficiary, new { @class = "form-control", @placeholder = "Enter Cost per Beneficiary" })
-                                            @Html.ValidationMessageFor(m => m.CostPerBeneficiary, "", new { @class = "parsley-required", @id = "spanCostPerBeneficiary" })
-                                        </div>
-                                    </div>
-                                    <br />
-
-                                    <div class="row">
-                                        <div class="col-lg-12 ">
-                                            <label class="col-form-label">Project Objective </label>
-                                            @Html.TextAreaFor(model => model.Objective, new { @class = "form-control", @placeholder = "Text here" })
-                                            @Html.ValidationMessageFor(m => m.Objective, "", new { @class = "parsley-required", @id = "spanObjective" })
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    @*Project Schedule*@
-                    <div class="card card-default" id="cardDemo1">
-                        <div class="card-header">
-                            <br />
-                            <h4>  Project Schedule</h4>
-
-                        </div>
-                        <div class="card-wrapper collapse show">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Planned Start Date *</label>
-                                        <input class="form-control Select-date" id="PlannedDate" type="date" name="PlannedDate">
-
-                                    </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Actual Start Date *</label>
-                                        <input class="form-control Select-date" id="StartDate" type="date" name="StartDate">
-                                    </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Planned End Date *</label>
-                                        <input class="form-control Select-date" id="EndDate" type="date" name="EndDate">
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="card card-default" id="cardDemo1">
-                        <div class="card-header">
-                            <br />
-                            <h4>HR-recruitment</h4>
-
-                        </div>
-                        <div class="card-wrapper collapse show">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Planned-HR *</label>
-                                        @Html.TextBoxFor(model => model.PlannedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter Planned-HR No" })
-                                        @Html.ValidationMessageFor(m => m.PlannedHR, "", new { @class = "parsley-required", @id = "spanPlannedHR" })
-                                    </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Recruited-HR *</label>
-                                        @Html.TextBoxFor(model => model.RecruitedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter Recruited-HR No" })
-                                        @Html.ValidationMessageFor(m => m.RecruitedHR, "", new { @class = "parsley-required", @id = "spanRecruitedHR" })
-                                    </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Recruited-HR % *</label>
-                                        @Html.TextBoxFor(model => model.RecruitedHRPercent, new { @class = "form-control", @type = "number", @placeholder = "Enter Recruited-HR No", @readonly = "readonly" })
-                                        @Html.ValidationMessageFor(m => m.RecruitedHRPercent, "", new { @class = "parsley-required", @id = "spanRecruitedHRPercent" })
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    @*budget*@
-                    <div class="card card-default" id="cardDemo1">
-                        <div class="card-header">
-                            <br />
-                            <h4>Project Budget</h4>
-
-                        </div>
-                        <div class="card-wrapper collapse show">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Planned Budget *</label>
-                                        @Html.TextBoxFor(model => model.PlannedBudget, new { @class = "form-control", @type = "number", @placeholder = "Enter Planned Budget" })
-                                        @Html.ValidationMessageFor(m => m.PlannedBudget, "", new { @class = "parsley-required", @id = "spanPlannedBudget" })
-                                    </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Approved Budget *</label>
-                                        @Html.TextBoxFor(model => model.ApprovedBudget, new { @class = "form-control", @type = "number", @placeholder = "Enter Approved Budget" })
-                                        @Html.ValidationMessageFor(m => m.ApprovedBudget, "", new { @class = "parsley-required", @id = "spanApprovedBudget" })
-                                    </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Released Budget *</label>
-                                        @Html.TextBoxFor(model => model.ReleasedBudget, new { @class = "form-control", @type = "number", @placeholder = "Enter Released Budget" })
-                                        @Html.ValidationMessageFor(m => m.ReleasedBudget, "", new { @class = "parsley-required", @id = "spanReleasedBudget" })
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    @*Procrutment*@
-                    <div class="card card-default" id="cardDemo1">
-                        <div class="card-header">
-                            <br />
-                            <h4>
-                                Procurement
-                            </h4>
-
-                        </div>
-                        <div class="card-wrapper collapse show">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <label for="sel2" class="col-form-label">Headers</label>
-                                        <select class="form-control" id="select2-4" multiple="multiple">
-                                            <option value="AK">Furniture</option>
-                                            <option value="HI">Electronics</option>
-                                            <option value="HI">Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">
-                                            Planned Procurement ( No of Item )*
-                                        </label>
-                                        @Html.TextBoxFor(model => model.PlannedProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No fo Planned Procurement" })
-                                        @Html.ValidationMessageFor(m => m.PlannedProcurement, "", new { @class = "parsley-required", @id = "spanPlannedProcurement" })
-                                    </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Achieved Procurement *</label>
-                                        @Html.TextBoxFor(model => model.AchievedProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No fo Achieved Procurement" })
-                                        @Html.ValidationMessageFor(m => m.AchievedProcurement, "", new { @class = "parsley-required", @id = "spanAchievedProcurement" })
-                                    </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Procurement% *</label>
-                                        @Html.TextBoxFor(model => model.ProcurementPercent, new { @class = "form-control", @type = "number", @placeholder = "Enter Procurement%", @readonly = "readonly" })
-                                        @Html.ValidationMessageFor(m => m.ProcurementPercent, "", new { @class = "parsley-required", @id = "spanProcurementPercent" })
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    @*Risk*@
-                    <div class="card card-default" id="cardDemo1">
-                        <div class="card-header">
-                            <br />
-                            <h4>
-                                Risk Details
-                            </h4>
-
-                        </div>
-                        <div class="card-wrapper collapse show">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6 ">
-                                        <label class="col-form-label">Risk Name *</label>
-                                        <input class="form-control" id="idRiskName" type="text" name="RiskName" value="@Model.RiskName" placeholder="Enter Risk Name">
-                                        <span name="spanidRiskName" id="spanidRiskName" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-lg-6 ">
-                                        <label for="sel1" class="col-form-label">Risk Status</label>
-                                        @Html.DropDownListFor(m => m.RiskStatus_ID, new SelectList(Model.comboRiskStatus, "RiskStatusID", "RiskStatusName"), "Please Select Risk Status", new { @class = " form-control ", @placeholder = "Select RiskStatus", @id = "idRiskStatus", @name = "RiskStatus" })
-                                        @Html.ValidationMessageFor(m => m.RiskStatus_ID, "", new { @class = "parsley-required" })
-                                        <span name="spanidRiskStatus" id="spanidRiskStatus" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="float-right"><input type="button" id="AddRisk" value="Add Risk" class="btn btn-primary" /></div>
-                                <br />
-                                <br />
-                                <table class="table table-striped" id="tblRisk">
-                                    <thead class="table-info">
-                                        <tr>
-                                            <th data-column-id="id" data-type="numeric">ID</th>
-                                            <th data-column-id="RiskName">Risk Name</th>
-                                            <th data-column-id="Risk">Risk Status</th>
-                                            <th data-column-id="action">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    @*Stackholder*@
-                    <div class="card card-default" id="cardDemo1">
-                        <div class="card-header">
-                            <br />
-                            <h4>
-                                Stakeholder
-                            </h4>
-
-                        </div>
-                        <div class="card-wrapper collapse show">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-6 ">
-                                        <label class="col-form-label">Department/Orginization *</label>
-                                        <input class="form-control" id="idStackholderName" type="text" name="StackholderName" placeholder="Enter Stackholder Name">
+                                        <label class="col-form-label">Select Indicator *</label>
+                                        <input class="form-control" id="idStackholderName" type="text" name="StackholderName" placeholder="">
                                         <span name="spanTermsAndConditions" id="spanidStackholderName" class="text-danger"></span>
                                     </div>
                                     <div class="col-lg-6 ">
-                                        <label class="col-form-label">Type of Stakeholder *</label>
-                                        <input class="form-control" id="idDepartmentName" type="text" name="DepartmentName" placeholder="Focal Person Name">
+                                        <label class="col-form-label">Indicator Field Name *</label>
+                                        <input class="form-control" id="idDepartmentName" type="text" name="DepartmentName" placeholder="Enter Indicator Field Name">
                                         <span name="spanTermsAndConditions" id="spanidDepartmentName" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6 ">
-                                        <label class="col-form-label">ContactNo *</label>
-                                        <input class="form-control" id="idContactNo" type="text" name="ContactNo" placeholder="Enter Contact No">
-                                        <span name="spanTermsAndConditions" id="spanidContactNo" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-lg-6 ">
-                                        <label class="col-form-label">Email *</label>
-                                        <input class="form-control" id="idEmail" type="text" name="Email" placeholder="Enter Email Address">
-                                        <span name="spanTermsAndConditions" id="spanidEmail" class="text-danger"></span>
+                                    <div class="col-lg-3">
+                                        <label class="col-form-label">Data Types *</label>
                                     </div>
                                 </div>
-                                <br />
-                                <div class="float-right"><input type="button" id="AddStackHolder" value="Add Stakeholder" class="btn btn-primary" /></div>
-                                <br />
+                                <div class="row">
+                                    
+                                    <div class="col-lg-1">
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="idDepartmentName" type="radio" name="exampleRadios" value="option1" checked="">
+                                            <label class="form-check-label" for="exampleRadios1">Text</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="exampleRadios2" type="radio" name="exampleRadios" value="option2">
+                                            <label class="form-check-label" for="exampleRadios2">Integer</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="exampleRadios2" type="radio" name="exampleRadios" value="option2">
+                                            <label class="form-check-label" for="exampleRadios2">Float</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <div class="form-check">
+                                            <input class="form-check-input" id="exampleRadios2" type="radio" name="exampleRadios" value="option2">
+                                            <label class="form-check-label" for="exampleRadios2">Boolean</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <br />
+                                    <div class="float-right"><input type="button" id="AddStackHolder" value="Add Field" class="btn btn-primary" /></div>
+                                    <br />
 
-                                <br />
-                                <table class="table table-striped" id="tblStackHolder">
-                                    <thead class="table-info">
-                                        <tr>
-                                            <th data-column-id="id" data-type="numeric">ID</th>
-                                            <th data-column-id="StackholderName">Department/Orginization</th>
-                                            <th data-column-id="Department">Type of Stakeholder</th>
-                                            <th data-column-id="ContactNo">Contact No</th>
-                                            <th data-column-id="Email">Email Address</th>
-                                            <th data-column-id="action">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                                    <br />
+                                    <table class="table table-striped" id="tblStackHolder">
+                                        <thead class="table-info">
+                                            <tr>
+                                                <th data-column-id="id" data-type="numeric">ID</th>
+                                                <th data-column-id="StackholderName">Indicator Name</th>
+                                                <th data-column-id="Department">Indicator Field Name</th>
+                                                <th data-column-id="ContactNo">Indicator Field Type</th>
+                                                <th data-column-id="action">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                 </div>
                 <div class="required">* Required fields</div>
                 <br />
@@ -367,7 +102,7 @@
                             </div>
                         </div>
                         <div class="float-right">
-                            <button class="btn-lg btn-success" type="submit" id="btnCreate"> Create</button>
+                            <button class="btn btn-primary" type="submit" id="btnCreate"> Create</button>
                         </div>
 
                     </div>

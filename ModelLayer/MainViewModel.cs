@@ -744,6 +744,14 @@ namespace ModelLayer
         #endregion
 
         #region Project KPIS
+        //Indicator
+
+        //GetProjectReport
+        public partial class CreateIndicatorVM
+        {
+            
+            public string indicatorName { get; set; }
+        }
         public partial class GetProjectReport
         {
             public int ProjectID { get; set; }
@@ -809,6 +817,7 @@ namespace ModelLayer
             public DateTime ToDate { get; set; }
 
         }
+
         #endregion
     }
 

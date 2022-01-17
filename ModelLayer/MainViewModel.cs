@@ -742,6 +742,74 @@ namespace ModelLayer
 
         }
         #endregion
+
+        #region Project KPIS
+        public partial class GetProjectReport
+        {
+            public int ProjectID { get; set; }
+            public int Category_ID { get; set; }
+            public int ProjectType_ID { get; set; }
+            public int DigitalPolicy_ID { get; set; }
+            public int City_ID { get; set; }
+            public int User_ID { get; set; }
+            public string ProjectName { get; set; }
+            public long PlannedBudget { get; set; }
+            public long ApprovedBudget { get; set; }
+            public string Funding_Source { get; set; }
+            public List<string> Funding_SourceArray { get; set; }
+            public int PlannedHR { get; set; }
+            public int PlannedProcurement { get; set; }
+            public int MaleBeneficiary { get; set; }
+            public int FemaleBeneficiary { get; set; }
+            public int TotalBeneficiary { get; set; }
+            public int CostPerBeneficiary { get; set; }
+            public string Objective { get; set; }
+
+            //Procurent
+            public string AchievedProcurement_ID { get; set; }
+            public int AchievedProcurement { get; set; }
+            public double ProcurementPercent { get; set; }
+            public string AchievedProcurementDate { get; set; }
+            //ReleasedBudget
+            public long ReleasedBudget { get; set; }
+            public DateTime ReleasedDate { get; set; }
+            //Recruted-HR
+            public int RecruitedHR_ID { get; set; }
+            public int RecruitedHR { get; set; }
+            public double RecruitedHRPercent { get; set; }
+            public System.DateTime RecruitedHRDate { get; set; }
+            //Schedule
+            public int Schedule_ID { get; set; }
+            public System.DateTime PlannedDate { get; set; }
+            public System.DateTime StartDate { get; set; }
+            public System.DateTime EndDate { get; set; }
+            //Risk
+            public int RiskID { get; set; }
+            public int RiskStatus_ID { get; set; }
+            public string RiskName { get; set; }
+            //Stackholder
+            public int Stackholder_ID { get; set; }
+            public string StackholderName { get; set; }
+            public string StackholderDepartment { get; set; }
+            public string StackholderContact { get; set; }
+            public string StackholderEmail { get; set; }
+            //Indicator
+            public int IndicatorID { get; set; }
+            public string IndicatorName { get; set; }
+            //IndicatorField
+            public int IndicatorFieldID { get; set; }
+            public string IndicatorFieldName { get; set; }
+            //IndicatorFieldValue
+            public int IndicatorValueID { get; set; }
+            public string IndicatorValueText { get; set; }
+            public int IndicatorValueInteger { get; set; }
+            public bool IndicatorValueBoolean { get; set; }
+            public double IndicatorValueFloat { get; set; }
+            public DateTime FromDate { get; set; }
+            public DateTime ToDate { get; set; }
+
+        }
+        #endregion
     }
 
 }

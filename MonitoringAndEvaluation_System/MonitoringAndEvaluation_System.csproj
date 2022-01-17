@@ -405,6 +405,7 @@
     <Content Include="Views\Issues\IssueEdit.cshtml" />
     <Content Include="Views\Finance\ReleasedBudgetCreateView.cshtml" />
     <Content Include="Views\Finance\ExpenditureBudgetCreateView.cshtml" />
+    <Content Include="Views\Project\ProjectDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

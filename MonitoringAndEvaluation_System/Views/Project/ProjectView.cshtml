@@ -83,6 +83,7 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink("Edit", "ProjectEdit", new { ProjectID = item.ProjectID }, new { @class = "mb-1 btn btn-warning" })
+                                                @Html.ActionLink("Details", "ProjectDetails", new { ProjectID = item.ProjectID }, new { @class = "mb-1 btn btn-warning" })
                                                 @*@Html.ActionLink("Detail", "UserDetail", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-primary" })*@
                                             </td>
                                         </tr>

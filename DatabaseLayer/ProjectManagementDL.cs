@@ -399,6 +399,32 @@ namespace DatabaseLayer
                 return getAllProjectLst;
             }
         }
+
+        //ProjectDetail
+        public static GetProjectDetailsVM getProjectDetailDL(int ProjectID)
+        {
+            GetProjectDetailsVM getProjectDetailsVM = new GetProjectDetailsVM();
+            using (IDbConnection connection = new SqlConnection(Common.ConnectionString))
+            {
+                connection.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@Project_ID", ProjectID);
+                using (var multi = connection.QueryMultiple("sp_GetProjectDetails", ObjParm, commandType: CommandType.StoredProcedure))
+                {
+                    getProjectDetailsVM.getProjectDetailsQ1  = multi.Read<GetProjectDetailsQ1>().FirstOrDefault();
+                    getProjectDetailsVM.getProjectDetailsQ2 = multi.Read<GetProjectDetailsQ2>().FirstOrDefault();
+                    getProjectDetailsVM.getProjectDetailsQ3 = multi.Read<GetProjectDetailsQ3>().FirstOrDefault();
+                    getProjectDetailsVM.getProjectDetailsQ4 = multi.Read<GetProjectDetailsQ4>().FirstOrDefault();
+                    getProjectDetailsVM.getProjectDetailsQ5 = multi.Read<GetProjectDetailsQ5>().FirstOrDefault();
+                    getProjectDetailsVM.getProjectDetailsQ6Lst = multi.Read<GetProjectDetailsQ6>().ToList();
+                   // getProjectDetailsVM.getProjectDetailsQ7 = multi.Read<GetProjectDetailsQ7>().FirstOrDefault();
+
+
+                }
+            }
+            return getProjectDetailsVM;
+        }
+
         #endregion
 
         #region RecruitedHR

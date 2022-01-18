@@ -137,9 +137,13 @@ namespace MonitoringAndEvaluation_System.Controllers
             List<GetAllProjectVM> lst = new ProjectManagementBL().getAllProjectBL(LoginRoleID,LoginUserID);
             return View(lst);
         }
-        public ActionResult ProjectDetails()
+
+        [HttpGet]
+        public ActionResult ProjectDetails(int ProjectID)
         {
-            return View();
+            GetProjectDetailsVM data = new ProjectManagementBL().getProjectDetailsBL(ProjectID);
+            
+            return View(data);
         }
         #endregion
         #region RecruitedHR

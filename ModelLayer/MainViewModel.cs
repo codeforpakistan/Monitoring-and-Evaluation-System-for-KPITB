@@ -393,6 +393,80 @@ namespace ModelLayer
             public int TotalBeneficiary { get; set; }
             public String CostPerBeneficiary { get; set; }
         }
+
+        //GetProjectDetails
+        public partial class GetProjectDetailsVM
+        {
+            public GetProjectDetailsVM()
+            {
+                getProjectDetailsQ6Lst = new List<GetProjectDetailsQ6>();
+                getProjectDetailsQ7Lst = new List<GetProjectDetailsQ7>();
+                getIndicatorLst = new List<IndicatorNames>();
+            }
+            public GetProjectDetailsQ1 getProjectDetailsQ1 { get; set; }
+            public GetProjectDetailsQ2 getProjectDetailsQ2 { get; set; }
+            public GetProjectDetailsQ3 getProjectDetailsQ3 { get; set; }
+            public GetProjectDetailsQ4 getProjectDetailsQ4 { get; set; }
+            public GetProjectDetailsQ5 getProjectDetailsQ5 { get; set; }
+            public List<GetProjectDetailsQ6> getProjectDetailsQ6Lst { get; set; }
+            public List<GetProjectDetailsQ7> getProjectDetailsQ7Lst { get; set; }
+            public List<IndicatorNames> getIndicatorLst { get; set; }
+        }
+        public partial class GetProjectDetailsQ1
+        {
+            public string ProjectType { get; set; }
+            public int stackholder { get; set; }
+            public int ActiveIssues { get; set; }
+            public int ActiveRisks { get; set; }
+            public int PlannedHR { get; set; }
+            public int RecruitedHR { get; set; }
+            public int Funding_Source { get; set; }
+        }
+        public partial class GetProjectDetailsQ2
+        {
+            public string FormatedResult { get; set; }
+        }
+        public partial class GetProjectDetailsQ3
+        {
+            public int PlannedBudget { get; set; }
+            public int AllocatedBudget { get; set; }
+            public int ExpenditureBudget { get; set; }
+            public int RemainingBudget { get; set; }
+            public int FinancialDetails { get; set; }
+        }
+        public partial class GetProjectDetailsQ4
+        {
+            public DateTime PlannedDate { get; set; }
+            public DateTime ActualDate { get; set; }
+            public DateTime EndDate { get; set; }
+        }
+        public partial class GetProjectDetailsQ5
+        {
+            public string Objective { get; set; }
+        }
+        public partial class GetProjectDetailsQ6
+        {
+            public string ProjectName { get; set; }
+            public string IndicatorName { get; set; }
+            public string IndicatorFieldName { get; set; }
+            public string IndicatorValueText { get; set; }
+            public int IntegerValue { get; set; }
+            public int BoolValue { get; set; }
+            public float FloatValue { get; set; }
+           
+        }
+        public partial class GetProjectDetailsQ7
+        {
+            public string IndicatorName { get; set; }
+            public string IndicatorFieldName { get; set; }
+            public dynamic CommonFiled { get; set; }
+        }
+        public partial class IndicatorNames
+        {
+            public string IndicatorName { get; set; }
+        }
+        
+
         #endregion
         #region RecruitedHR
         public partial class CreateRecruitedHRVM

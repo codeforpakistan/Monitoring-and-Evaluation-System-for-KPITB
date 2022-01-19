@@ -99,6 +99,52 @@ namespace BusinessLayer
             return ProjectManagementDL.getProjectDL(LoginRoleID,LoginUserID);
         }
 
+        
+        public GetProjectDetailsVM getProjectDetailsBL(int ProjectID)
+        {
+            var getData = ProjectManagementDL.getProjectDetailDL(ProjectID);
+            getData.getProjectDetailsQ7Lst = new List<GetProjectDetailsQ7>();
+            GetProjectDetailsQ7 m = null;
+            for (int i = 0; i < getData.getProjectDetailsQ6Lst.Count; i++)
+            {
+                m = new GetProjectDetailsQ7();
+                if (getData.getProjectDetailsQ6Lst[i].IntegerValue != 0)
+                {
+                    m.IndicatorName = getData.getProjectDetailsQ6Lst[i].IndicatorName;
+                    m.IndicatorFieldName = getData.getProjectDetailsQ6Lst[i].IndicatorFieldName;
+                    m.CommonFiled = getData.getProjectDetailsQ6Lst[i].IntegerValue;
+                    getData.getProjectDetailsQ7Lst.Add(m);
+                }
+                else if (getData.getProjectDetailsQ6Lst[i].FloatValue != 0)
+                {
+                    m.IndicatorName = getData.getProjectDetailsQ6Lst[i].IndicatorName;
+                    m.IndicatorFieldName = getData.getProjectDetailsQ6Lst[i].IndicatorFieldName;
+                    m.CommonFiled = getData.getProjectDetailsQ6Lst[i].FloatValue;
+                    getData.getProjectDetailsQ7Lst.Add(m);
+                }
+                else if (getData.getProjectDetailsQ6Lst[i].BoolValue != 0)
+                {
+                    m.IndicatorName = getData.getProjectDetailsQ6Lst[i].IndicatorName;
+                    m.IndicatorFieldName = getData.getProjectDetailsQ6Lst[i].IndicatorFieldName;
+                    m.CommonFiled = getData.getProjectDetailsQ6Lst[i].BoolValue;
+                    getData.getProjectDetailsQ7Lst.Add(m) ;
+                }
+                else
+                {
+                    //item.CommonFiled = item.IndicatorValueText;
+                }
+            }
+
+            //Distinct IndicatorName
+            var DistinctItems = getData.getProjectDetailsQ7Lst.GroupBy(x => x.IndicatorName).ToList();
+            for (int j = 0; j < DistinctItems.Count; j++)
+            {
+                getData.getIndicatorLst.Add(new IndicatorNames { IndicatorName = DistinctItems[j].Key }); ;
+            }
+
+            return getData;
+        }
+
         public List<ComboFundingSource> getFudingSourceBL()
         {
             return ProjectManagementDL.getFudingSourceDL();

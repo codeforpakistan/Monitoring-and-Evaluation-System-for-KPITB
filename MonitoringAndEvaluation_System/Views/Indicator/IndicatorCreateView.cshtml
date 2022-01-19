@@ -1,9 +1,9 @@
-﻿@model ModelLayer.MainViewModel.CreateRoleVM
+﻿@model ModelLayer.MainViewModel.CreateIndicatorVM
 @{
     ViewBag.Title = "RoleCreateView";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    List<ModelLayer.MainViewModel.GetAllRoleVM> _LstAllRoles = (List<ModelLayer.MainViewModel.GetAllRoleVM>)ViewBag.LstAllRoles;
+    List<ModelLayer.MainViewModel.GetAllIndicatorVM> _LstAllIndicators = (List<ModelLayer.MainViewModel.GetAllIndicatorVM>)ViewBag.LstAllIndicators;
 }
 
 <!-- START row-->
@@ -21,14 +21,14 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <label class="col-form-label">Indicator Name </label>
-                                @Html.TextBoxFor(m => m.RoleName, new { @class = "form-control", @placeholder = "Please Enter Indicator Name" })
-                                @Html.ValidationMessageFor(m => m.RoleName, "", new { @class = "parsley-required" })
+                                @Html.TextBoxFor(m => m.IndicatorName, new { @class = "form-control", @placeholder = "Please Enter Indicator Name" })
+                                @Html.ValidationMessageFor(m => m.IndicatorName, "", new { @class = "parsley-required" })
                             </div>
                         </div>
 
                         <br />
                         <div class="required">* Required fields</div>
-                       
+
                         <hr />
                         <div class="float-right">
                             <button class="btn btn-primary" type="submit">Save</button>
@@ -59,11 +59,21 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Start Up</td>
-                                                </tr>
-                                            </tbody>
+                                                @{
+                                                    foreach (var item in _LstAllIndicators)
+                                                    {
+                                                        <tr>
+                                                            @Html.HiddenFor(m => item.IndicatorID)
+                                                            <td>
+                                                                @item.ID
+                                                            </td>
+                                                            <td>
+                                                                @item.IndicatorName
+                                                            </td>
+                                                        </tr>
+                                                        }
+                                                    }
+                                             </tbody>
                                         </table>
                                     </div>
                                 </div>

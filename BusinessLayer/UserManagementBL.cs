@@ -1,14 +1,9 @@
-﻿using Dapper;
+﻿
 using DatabaseLayer;
 using ModelLayer;
-using System;
+
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static DatabaseLayer.UserManagementDL;
+
 using static ModelLayer.ComboModel;
 using static ModelLayer.MainModel;
 using static ModelLayer.MainViewModel;

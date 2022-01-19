@@ -78,6 +78,16 @@ namespace ModelLayer
             public int BatchID { get; set; }
             public string BatchName { get; set; }
         }
+        public partial class ComboIndicator
+        {
+            public int IndicatorID { get; set; }
+            public string IndicatorName { get; set; }
+        }
+        public partial class ComboIndicatorDataType
+        {
+            public int IndicatorDataTypeID { get; set; }
+            public string IndicatorDataType { get; set; }
+        }
         #endregion
 
 

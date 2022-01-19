@@ -1,14 +1,12 @@
-﻿@model ModelLayer.MainViewModel.CreateProjectVM
+﻿@model ModelLayer.MainViewModel.CreateIndicatorFieldVM
 @{
-    ViewBag.Title = "CreateProject";
+    ViewBag.Title = "Create Indicator Field";
 
 }
 
 @section Styles{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
 }
 
 <!-- START row-->
@@ -26,70 +24,77 @@
                     </div>
                 </div>
                 <div class="card-body">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-6 ">
-                                        <label class="col-form-label">Select Indicator *</label>
-                                        <input class="form-control" id="idStackholderName" type="text" name="StackholderName" placeholder="">
-                                        <span name="spanTermsAndConditions" id="spanidStackholderName" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-lg-6 ">
-                                        <label class="col-form-label">Indicator Field Name *</label>
-                                        <input class="form-control" id="idDepartmentName" type="text" name="DepartmentName" placeholder="Enter Indicator Field Name">
-                                        <span name="spanTermsAndConditions" id="spanidDepartmentName" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        <label class="col-form-label">Data Types *</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    
-                                    <div class="col-lg-1">
-                                        <div class="form-check">
-                                            <input class="form-check-input" id="idDepartmentName" type="radio" name="exampleRadios" value="option1" checked="">
-                                            <label class="form-check-label" for="exampleRadios1">Text</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <div class="form-check">
-                                            <input class="form-check-input" id="exampleRadios2" type="radio" name="exampleRadios" value="option2">
-                                            <label class="form-check-label" for="exampleRadios2">Integer</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <div class="form-check">
-                                            <input class="form-check-input" id="exampleRadios2" type="radio" name="exampleRadios" value="option2">
-                                            <label class="form-check-label" for="exampleRadios2">Float</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <div class="form-check">
-                                            <input class="form-check-input" id="exampleRadios2" type="radio" name="exampleRadios" value="option2">
-                                            <label class="form-check-label" for="exampleRadios2">Boolean</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                    <br />
-                                    <div class="float-right"><input type="button" id="AddStackHolder" value="Add Field" class="btn btn-primary" /></div>
-                                    <br />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Select Indicator *</label>
+                                @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Please Select Risk Status", new { @class = " form-control ", @placeholder = "Select Indicator", @id = "idIndicatorName", @name = "IndicatorName" })
+                                @Html.ValidationMessageFor(m => m.Indicator_ID, "", new { @class = "parsley-required" })
+                                <span name="spanidIndicatorName" id="spanidIndicatorName" class="text-danger"></span>
 
-                                    <br />
-                                    <table class="table table-striped" id="tblStackHolder">
-                                        <thead class="table-info">
-                                            <tr>
-                                                <th data-column-id="id" data-type="numeric">ID</th>
-                                                <th data-column-id="StackholderName">Indicator Name</th>
-                                                <th data-column-id="Department">Indicator Field Name</th>
-                                                <th data-column-id="ContactNo">Indicator Field Type</th>
-                                                <th data-column-id="action">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Select Data Type *</label>
+                                @Html.DropDownListFor(m => m.IndicatorDataType_ID, new SelectList(Model.comboIndicatorDataTypes, "IndicatorDataTypeID", "IndicatorDataType"), "Please Select Indicator DataType", new { @class = " form-control ", @placeholder = "Select Indicator", @id = "idIndicatorName", @name = "IndicatorName" })
+                                @Html.ValidationMessageFor(m => m.IndicatorDataType_ID, "", new { @class = "parsley-required" })
+                                <span name="spanidIndicatorName" id="spanidIndicatorName" class="text-danger"></span>
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Indicator Field Name *</label>
+                                <input class="form-control" id="idIndicatorFieldName" type="text" name="IndicatorFieldName" placeholder="Enter Risk Name">
+                                <span name="spanidIndicatorFieldName" id="spanidIndicatorFieldName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        @*<div class="row">
+                            <div class="col-lg-3">
+                                <label class="col-form-label">Data Types *</label>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="idDepartmentName" type="radio" name="exampleRadios" value="option1" checked="">
+                                    <label class="form-check-label" for="exampleRadios1">Text</label>
                                 </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="exampleRadios2" type="radio" name="exampleRadios" value="option2">
+                                    <label class="form-check-label" for="exampleRadios2">Integer</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="exampleRadios2" type="radio" name="exampleRadios" value="option2">
+                                    <label class="form-check-label" for="exampleRadios2">Float</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="exampleRadios2" type="radio" name="exampleRadios" value="option2">
+                                    <label class="form-check-label" for="exampleRadios2">Boolean</label>
+                                </div>
+                            </div>
+                        </div>*@
+                        <br />
+                        <div class="float-right"><input type="button" id="AddIndicatorField" value="Add IndicatorField" class="btn btn-primary" /></div>
+                        <br />
+                        <br />
+                        <table class="table table-striped" id="tblIndicatorField">
+                            <thead class="table-info">
+                                <tr>
+                                    <th data-column-id="id" data-type="numeric">ID</th>
+                                    <th data-column-id="IndicatorName">Indicator Name</th>
+                                    <th data-column-id="IndicatorFieldName">Indicator Field</th>
+                                    <th data-column-id="action">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="required">* Required fields</div>
                 <br />
@@ -125,397 +130,53 @@
 
         $(document).ready(function () {
 
-            //$('.AutoDropDown').select2();
-
-
-            //$('.Select-date').daterangepicker({
-            //    locale: {
-            //        //  format: 'MM/DD/YYYY'
-            //        format: 'DD/MM/YYYY'
-            //    },
-            //    singleDatePicker: true
-            //});
-
-
-
-
-            $("#MaleBeneficiary,#FemaleBeneficiary").on('change', function () {
-                debugger;
-
-                var _MaleBeneficiary = $('#MaleBeneficiary').val();
-                var _FemaleBeneficiary = $('#FemaleBeneficiary').val();
-                var _TotalBeneficiary = 0;
-                _TotalBeneficiary = parseInt(_MaleBeneficiary) + parseInt(_FemaleBeneficiary);
-                $('#TotalBeneficiary').val(_TotalBeneficiary);
-            });
-
-
-
-            //$(function () {
-            //    $('#PlannedDate, #StartDate, #EndDate ').datepicker({
-            //        format: "dd/mm/yyyy"
-            //    });
-            //});
-
-            $("#RecruitedHR,#PlannedHR").on('change', function () {
-                debugger;
-                Uvalid();
-                Uchange();
-            });
-
-            $("#PlannedProcurement,#AchievedProcurement").on('change', function () {
-
-                debugger;
-                Uvalid();
-            Uchange();
-
-
-            });
-
-
-
-
-
         });//Ready
 
-        $("#AddRisk").click(function () {
+        $("#AddIndicatorField").click(function () {
             debugger;
-            if ($('#idRiskName').val() == "") {
-                $('#spanidRiskName').text('Risk Name should not be blank');
-                $('#spanidRiskName').show();
-                $('#idRiskName').focus();
+            if ($('#idIndicatorName').val() == 0) {
+                $('#spanidIndicatorName').text('Indicator should not be blank');
+                $('#spanidIndicatorName').show();
+                $('#idIndicatorName').focus();
                 return true;
             }
-            if ($('#idRiskStatus').val() == 0) {
-                $('#spanidRiskStatus').text('Risk Status should not be blank');
-                $('#spanidRiskStatus').show();
-                $('#ididRiskStatus').focus();
+            if ($('#idIndicatorFieldName').val() == "") {
+                $('#spanidIndicatorFieldName').text('Indicator Field Name should not be blank');
+                $('#spanidIndicatorFieldName').show();
+                $('#idIndicatorFieldName').focus();
                 return true;
             }
-            var trcount = $("#tblRisk tr").length;
-            $("#tblRisk").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idRiskName").val() + "</td>     <td id='" + $("#idRiskStatus").val() + "' >" + $("#idRiskStatus").find("option:selected").text() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
-            $("#idRiskName").val('');
-            $("#idRiskStatus").val('');
+           
+            var trcount = $("#tblIndicatorField tr").length;
+            $("#tblIndicatorField").append("<tr>  <td>" + trcount + "</td>    <td id='" + $("#idIndicatorName").val() + "' >" + $("#idIndicatorName").find("option:selected").text() + "</td> <td>" + $("#idIndicatorFieldName").val() + "</td>   <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#idIndicatorFieldName").val('');
+            $("#idIndicatorName").val('');
+
         });
 
         function RemoveDemerits(row) {
             $(row).parent().parent().remove();
         }
 
-        $("#idRiskName").on('change', function () {
+        $("#idIndicatorFieldName").on('change', function () {
             debugger;
-            if ($('#idRiskName').val() != "") {
-                $('#spanidRiskName').hide();
+            if ($('#idIndicatorFieldName').val() != "") {
+                $('#spanidIndicatorFieldName').hide();
                 return true;
             }
         });
-        $("#idRiskStatus").on('change', function () {
+        $("#idIndicatorName").on('change', function () {
             debugger;
-            if ($('#idRiskStatus').val() != "") {
-                $('#spanidRiskStatus').hide();
-                return true;
-            }
-        });
-
-        /* Add stackholder to table*/
-        $(document).ready(function () {
-
-        });
-
-        $("#AddStackHolder").click(function () {
-            debugger;
-            if ($('#idStackholderName').val() == "") {
-                $('#spanidStackholderName').text('Stackholder Name should not be blank');
-                $('#spanidStackholderName').show();
-                $('#idStackholderName').focus();
-                return true;
-            }
-            if ($('#idDepartmentName').val() == "") {
-                $('#spanidDepartmentName').text('Department Name should not be blank');
-                $('#spanidDepartmentName').show();
-                $('#idDepartmentName').focus();
-                return true;
-            } if ($('#idContactNo').val() == "") {
-                $('#spanidContactNo').text('Contact No should not be blank');
-                $('#spanidContactNo').show();
-                $('#idContactNo').focus();
-                return true;
-            } if ($('#idEmail').val() == "") {
-                $('#spanidEmail').text('Email should not be blank');
-                $('#spanidEmail').show();
-                $('#idEmail').focus();
-                return true;
-            }
-
-
-            var trcount = $("#tblStackHolder tr").length;
-
-            $("#tblStackHolder").append("<tr>  <td>" + trcount + "</td>            <td>" + $("#idStackholderName").val() + "</td>      <td>" + $("#idDepartmentName").val() + "</td>         <td>" + $("#idContactNo").val() + "</td>    <td>" + $("#idEmail").val() + "</td>      <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
-            $("#idStackholderName").val('');
-            $("#idDepartmentName").val('');
-            $("#idContactNo").val('');
-            $("#idEmail").val('');
-        });
-
-        function RemoveDemerits(row) {
-            $(row).parent().parent().remove();
-        }
-
-        $("#idStackholderName").on('change', function () {
-            debugger;
-            if ($('#idStackholderName').val() != "") {
-                $('#spanidStackholderName').hide();
-                return true;
-            }
-        });
-        $("#idDepartmentName").on('change', function () {
-            debugger;
-            if ($('#idDepartmentName').val() != "") {
-                $('#spanidDepartmentName').hide();
-                return true;
-            }
-        });
-        $("#idContactNo").on('change', function () {
-            debugger;
-            if ($('#idContactNo').val() != "") {
-                $('#spanidContactNo').hide();
-                return true;
-            }
-        });
-        $("#idEmail").on('change', function () {
-            debugger;
-            if ($('#idEmail').val() != "") {
-                $('#spanidEmail').hide();
+            if ($('#idIndicatorName').val() != "") {
+                $('#spanidIndicatorName').hide();
                 return true;
             }
         });
 
-
-        $("#ApprovedBudget").on('change', function () {
-            debugger;
-            Uvalid();
-
-            //Project Cost
-            var _PlannedBudget = $('#PlannedBudget').val();
-            var _ApprovedBudget = $('#ApprovedBudget').val();
-
-            debugger;
-            if (_ApprovedBudget > _PlannedBudget) {
-                $('#spanApprovedBudget').text(' Approved Budget Should not be greater then Planned Budget');
-                $('#spanApprovedBudget').show();
-                $('#spanApprovedBudget').focus();
-                return true;
-            } else {
-                $('#spanApprovedBudget').text('');
-                $('#spanApprovedBudget').hide();
-                return true;
-            }
-        });
-
-        $("#ReleasedBudget").on('change', function ()
-        {
-                var _ApprovedBudget = $('#ApprovedBudget').val();
-                var _ReleasedBudget = $('#ReleasedBudget').val();
-                if (_ReleasedBudget > _ApprovedBudget) {
-                    $('#spanReleasedBudget').text(' Released Budget Should not be greater then Approved Budget');
-                    $('#spanReleasedBudget').show();
-                    $('#spanReleasedBudget').focus();
-                    return true;
-                } else {
-                    $('#spanReleasedBudget').text('');
-                    $('#spanReleasedBudget').hide();
-                    return true;
-                }
-        });
 
         $("#btnCreate").click(function (e) {
             e.preventDefault();
             debugger;
-
-            if ($('#ProjectName').val() == '') {
-                $('#spanProjectName').text('Please Fill This Field');
-                $('#ProjectName').focus();
-                return true;
-            }
-            if ($('#Category_ID').val() == '') {
-                $('#spanCategory_ID').text('Please Fill This Field');
-                $('#Category_ID').focus();
-                return true;
-            }
-            if ($('#ProjectType_ID').val() == '') {
-                $('#spanProjectType_ID').text('Please Fill This Field');
-                $('#ProjectType_ID').focus();
-                return true;
-            }
-            if ($('#Funding_SourceArray').val() == '') {
-                $('#spanFunding_SourceArray').text('Please Fill This Field');
-                $('#Funding_SourceArray').focus();
-                return true;
-            }
-            if ($('#City_ID').val() == '') {
-                $('#spanCity_ID').text('Please Fill This Field');
-                $('#City_ID').focus();
-                return true;
-            }
-            if ($('#DigitalPolicy_ID').val() == '') {
-                $('#spanDigitalPolicy_ID').text('Please Fill This Field');
-                $('#DigitalPolicy_ID').focus();
-                return true;
-            }
-            //if ($('#MaleBeneficiary').val() == '' || $('#MaleBeneficiary').val() == 0) {
-            //    if ($('#MaleBeneficiary').val() == 0) {
-            //        $('#spanMaleBeneficiary').text('0 Value is not allowed');
-            //        $('#MaleBeneficiary').focus();
-            //        return true;
-            //    }
-            //    $('#spanMaleBeneficiary').text('Please Fill This Field');
-            //    $('#MaleBeneficiary').focus();
-            //    return true;
-            //}
-            //if ($('#FemaleBeneficiary').val() == '' || $('#FemaleBeneficiary').val() == 0) {
-            //    if ($('#FemaleBeneficiary').val() == 0) {
-            //        $('#spanFemaleBeneficiary').text('0 Value is not allowed');
-            //        $('#FemaleBeneficiary').focus();
-            //        return true;
-            //    }
-            //    $('#spanFemaleBeneficiary').text('Please Fill This Field');
-            //    $('#FemaleBeneficiary').focus();
-            //    return true;
-            //}
-            //if ($('#TotalBeneficiary').val() == '' || $('#TotalBeneficiary').val() == 0) {
-            //    if ($('#TotalBeneficiary').val() == 0) {
-            //        $('#spanTotalBeneficiary').text('0 Value is not allowed');
-            //        $('#TotalBeneficiary').focus();
-            //        return true;
-            //    }
-            //    $('#spanTotalBeneficiary').text('Please Fill This Field');
-            //    $('#TotalBeneficiary').focus();
-            //    return true;
-            //}
-            //if ($('#TotalBeneficiary').val() == '' || $('#TotalBeneficiary').val() == 0) {
-            //    if ($('#TotalBeneficiary').val() == 0) {
-            //        $('#spanTotalBeneficiary').text('0 Value is not allowed');
-            //        $('#TotalBeneficiary').focus();
-            //        return true;
-            //    }
-            //    $('#spanTotalBeneficiary').text('Please Fill This Field');
-            //    $('#TotalBeneficiary').focus();
-            //    return true;
-            //}
-
-            //if ($('#CostPerBeneficiary').val() == '' || $('#CostPerBeneficiary').val() == 0) {
-            //    if ($('#CostPerBeneficiary').val() == 0) {
-            //        $('#spanCostPerBeneficiary').text('0 Value is not allowed');
-            //        $('#CostPerBeneficiary').focus();
-            //        return true;
-            //    }
-            //    $('#spanCostPerBeneficiary').text('Please Fill This Field');
-            //    $('#CostPerBeneficiary').focus();
-            //    return true;
-            //}
-            if ($('#Objective').val() == '') {
-                $('#spanObjective').text('Please Fill This Field');
-                $('#Objective').focus();
-                return true;
-            }
-            if ($('#PlannedDate').val() == '') {
-                $('#spanPlannedDate').text('Please Fill This Field');
-                $('#PlannedDate').focus();
-                return true;
-            }
-            if ($('#StartDate').val() == '') {
-                $('#spanStartDate').text('Please Fill This Field');
-                $('#StartDate').focus();
-                return true;
-            }
-            if ($('#EndDate').val() == '') {
-                $('#spanEndDate').text('Please Fill This Field');
-                $('#EndDate').focus();
-                return true;
-            }
-            if ($('#PlannedHR').val() == '' || $('#PlannedHR').val() == 0) {
-                $('#spanPlannedHR').text('Please Fill This Field');
-                $('#PlannedHR').focus();
-                return true;
-            }
-            if ($('#RecruitedHRPercent').val() == '' || $('#RecruitedHRPercent').val() == 0) {
-                $('#spanRecruitedHRPercent').text('Please Fill This Field');
-                $('#RecruitedHRPercent').focus();
-                return true;
-            }
-            if ($('#PlannedBudget').val() == '' || $('#PlannedBudget').val() == 0) {
-                $('#spanPlannedBudget').text('Please Fill This Field');
-                $('#PlannedBudget').focus();
-                return true;
-            }
-            if ($('#ApprovedBudget').val() == '' || $('#ApprovedBudget').val() == 0) {
-                $('#spanApprovedBudget').text('Please Fill This Field');
-                $('#ApprovedBudget').focus();
-                return true;
-            }
-            if ($('#ReleasedBudget').val() == '' || $('#ReleasedBudget').val() == 0) {
-                $('#spanReleasedBudget').text('Please Fill This Field');
-                $('#ReleasedBudget').focus();
-                return true;
-            }
-            if ($('#PlannedProcurement').val() == '' || $('#PlannedProcurement').val() == 0) {
-                $('#spanPlannedProcurement').text('Please Fill This Field');
-                $('#PlannedProcurement').focus();
-                return true;
-            }
-            if ($('#AchievedProcurement').val() == '' || $('#AchievedProcurement').val() == 0) {
-                $('#spanAchievedProcurement').text('Please Fill This Field');
-                $('#AchievedProcurement').focus();
-                return true;
-            }
-            if ($('#ProcurementPercent').val() == '' || $('#ProcurementPercent').val() == 0) {
-                $('#spanProcurementPercent').text('Please Fill This Field');
-                $('#ProcurementPercent').focus();
-                return true;
-            }
-            if ($('#ProcurementPercent').val() == '') {
-                $('#spanProcurementPercent').text('Please Fill This Field');
-                $('#ProcurementPercent').focus();
-                return true;
-            }
-
-            //Risk
-            //if ($('#idRiskName').val() == "") {
-            //    $('#spanidRiskName').text('Risk Name should not be blank');
-            //    $('#spanidRiskName').show();
-            //    $('#idRiskName').focus();
-            //    return true;
-            //}
-            //if ($('#idRiskStatus').val() == 0) {
-            //    $('#spanidRiskStatus').text('Risk Status should not be blank');
-            //    $('#spanidRiskStatus').show();
-            //    $('#ididRiskStatus').focus();
-            //    return true;
-            //}
-
-            ////StackHolder
-            //if ($('#idStackholderName').val() == "") {
-            //    $('#spanidStackholderName').text('Stackholder Name should not be blank');
-            //    $('#spanidStackholderName').show();
-            //    $('#idStackholderName').focus();
-            //    return true;
-            //}
-            //if ($('#idDepartmentName').val() == "") {
-            //    $('#spanidDepartmentName').text('Department Name should not be blank');
-            //    $('#spanidDepartmentName').show();
-            //    $('#idDepartmentName').focus();
-            //    return true;
-            //} if ($('#idContactNo').val() == "") {
-            //    $('#spanidContactNo').text('Contact No should not be blank');
-            //    $('#spanidContactNo').show();
-            //    $('#idContactNo').focus();
-            //    return true;
-            //} if ($('#idEmail').val() == "") {
-            //    $('#spanidEmail').text('Email should not be blank');
-            //    $('#spanidEmail').show();
-            //    $('#idEmail').focus();
-            //    return true;
-            //}
 
           /*  var a = validationBeforeSubmit();*/
 
@@ -589,7 +250,7 @@
                 success: function (result) {
                     debugger;
                     if (result == 'false') {
-                       var route = '@Url.Action("ProjectCreate", "Project")'
+                       var route = '@Url.Action("IndicatorFieldCreate", "Indicator")'
                          window.location.href = route;
                     }
                     else if (result == 'true') {
@@ -605,60 +266,6 @@
             });
 
         });
-
-
-        //CustomFuncation
-        function Uvalid() {
-            debugger;
-                         //HR-recruitment
-                         var _PlannedHR = $('#PlannedHR').val();
-                         var _RecruitedHR = $('#RecruitedHR').val();
-
-                        //Procurement
-                         var _PlannedProcurement = $('#PlannedProcurement').val();
-                         var _AchievedProcurement = $('#AchievedProcurement').val();
-
-                        if (_RecruitedHR > _PlannedHR) { //HR-recruitment
-                             debugger;
-                             $('#spanRecruitedHR').text('Recruited-HR Should not be greater then Planned-HR');
-                             $('#spanRecruitedHR').show();
-                             $('#RecruitedHR').focus();
-                             return true;
-                        }
-                        else if (_AchievedProcurement > _PlannedProcurement) {//Procurement
-                            debugger;
-                            $('#spanAchievedProcurement').text('Achieved Procurement Should not be greater then Planned Procurement');
-                            $('#spanAchievedProcurement').show();
-                            $('#AchievedProcurement').focus();
-                            return true;
-                        }
-                        else { //HR-recruitment   ,Procurement
-                             $('#spanRecruitedHR').text('');
-                            $('#spanRecruitedHR').hide();
-
-                            $('#spanAchievedProcurement').text('');
-                            $('#spanAchievedProcurement').hide();
-                             return true;
-                            }
-
-        }
-        function Uchange() {
-            debugger;
-            //HR-recruitment
-            var _PlannedHR = $('#PlannedHR').val();
-            var _RecruitedHR = $('#RecruitedHR').val();
-            var _RecruitedHRPercent = 0;
-            _RecruitedHRPercent = _RecruitedHR / _PlannedHR * 100;
-            $('#RecruitedHRPercent').val(_RecruitedHRPercent);
-
-
-            //Procurement
-            var _PlannedProcurement = $('#PlannedProcurement').val();
-            var _AchievedProcurement = $('#AchievedProcurement').val();
-            var _ProcurementPercent = 0;
-            _ProcurementPercent = _AchievedProcurement / _PlannedProcurement * 100;
-            $('#ProcurementPercent').val(_ProcurementPercent);
-        }
 
         //function  validationBeforeSubmit() {
 

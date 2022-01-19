@@ -818,13 +818,76 @@ namespace ModelLayer
         #endregion
 
         #region Project KPIS
-        //Indicator
-
-        //GetProjectReport
+        //CreateIndicator
         public partial class CreateIndicatorVM
         {
-            
-            public string indicatorName { get; set; }
+            public string IndicatorName { get; set; }
+        }
+        //Get All Indicator
+        public partial class GetAllIndicatorVM
+        {
+            public int ID { get; set; }
+            public int IndicatorID { get; set; }
+            public string IndicatorName { get; set; }
+        }
+        public partial class CreateLinkIndicatorVM
+        {
+            public CreateLinkIndicatorVM()
+            {
+                comboProjects = new List<ComboProject>();
+                comboIndicator = new List<ComboIndicator>();
+                comboBatch = new List<ComboBatch>();
+            }
+            public int LinkID { get; set; }
+
+            [Range(1, int.MaxValue, ErrorMessage = "Please Select Project")]
+            public int Project_ID { get; set; }
+            [Required(ErrorMessage = "Please Select Batch")]
+            public int Batch_ID { get; set; }
+            [Required(ErrorMessage = "Please Select Indicator")]
+            public int Indicator_ID { get; set; }
+           
+           
+            public List<ComboProject> comboProjects { get; set; }
+            public List<ComboIndicator> comboIndicator { get; set; }
+            public List<ComboBatch> comboBatch { get; set; }
+        }
+        public partial class CreateIndicatorFieldVM
+        {
+            public CreateIndicatorFieldVM()
+            {
+                
+                comboIndicator = new List<ComboIndicator>();
+                comboIndicatorDataTypes= new List<ComboIndicatorDataType>();
+            }
+            public int IndicatorFieldID { get; set; }
+
+            [Range(1, int.MaxValue, ErrorMessage = "Please Select Indicator")]
+            public int Indicator_ID { get; set; }
+            public int IndicatorDataType_ID { get; set; }
+            public string IndicatorFieldName { get; set; }
+
+            public List<ComboIndicator> comboIndicator { get; set; }
+            public List<ComboIndicatorDataType> comboIndicatorDataTypes { get; set; }
+
+        }
+        public partial class CreateIndicatorValueVM
+        {
+            public CreateIndicatorValueVM()
+            {
+
+                comboIndicator = new List<ComboIndicator>();
+
+            }
+
+            public int IndicatorValueID { get; set; }
+            public int Indicator_ID { get; set; }
+            public int IndicatorField_ID { get; set; }
+            [Range(1, int.MaxValue, ErrorMessage = "Please Select Indicator")]
+            public string IndicatorFieldName { get; set; }
+
+            public List<ComboIndicator> comboIndicator { get; set; }
+
         }
         public partial class GetProjectReport
         {

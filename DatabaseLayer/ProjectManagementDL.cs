@@ -119,6 +119,52 @@ namespace DatabaseLayer
                 return ComboLst;
             }
         }
+        public static List<ComboBatch> getComboBoxBatchDL(int Project_ID, int Role_ID)
+        {
+            List<ComboBatch> ComboLst = new List<ComboBatch>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@Project_ID", Project_ID);
+                ObjParm.Add("@Role_ID", Role_ID);
+                ComboLst = conn.Query<ComboBatch>("sp_GetBatchBaseOnProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return ComboLst;
+            }
+        }
+        //ComboIndicatorDataType
+        public static List<ComboIndicatorDataType> getComboDataTypeDL()
+        {
+            List<ComboIndicatorDataType> ComboLst = new List<ComboIndicatorDataType>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ComboLst = conn.Query<ComboIndicatorDataType>("sp_GetIndicatorDataType", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return ComboLst;
+            }
+        }
+        //ComboIndicator
+        public static List<ComboIndicator> getComboIndicatorDL()
+        {
+            List<ComboIndicator> ComboLst = new List<ComboIndicator>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ComboLst = conn.Query<ComboIndicator>("sp_GetIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return ComboLst;
+            }
+        }
 
         //FundingSource
         public static List<ComboFundingSource> getFudingSourceDL()

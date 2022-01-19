@@ -43,6 +43,18 @@ namespace BusinessLayer
         {
             return ProjectManagementDL.getComboBatchDL(SubProject_ID, Role_ID);
         }
+        public List<ComboBatch> getComboBoxBatchBL(int Project_ID, int Role_ID)
+        {
+            return ProjectManagementDL.getComboBoxBatchDL(Project_ID, Role_ID);
+        }
+        public List<ComboIndicatorDataType> getComboDataTypeBL()
+        {
+            return ProjectManagementDL.getComboDataTypeDL();
+        }
+        public List<ComboIndicator> getComboIndicatorBL()
+        {
+            return ProjectManagementDL.getComboIndicatorDL();
+        }
         //Get Category
         public List<ComboCategory> getCategoryBL()
         {

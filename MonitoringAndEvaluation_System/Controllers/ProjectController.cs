@@ -413,7 +413,17 @@ namespace MonitoringAndEvaluation_System.Controllers
             cb.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
             return Json(cb, JsonRequestBehavior.AllowGet);
         }
-
+        [HttpPost]
+        public JsonResult ClickProjectComboBox(int Project_ID)
+        {
+            List<ComboBatch> cb = ObjProjectMngBL.getComboBoxBatchBL(Project_ID, LoginRoleID);
+            if (cb.Count() > 1)
+            {
+                return Json(cb, JsonRequestBehavior.AllowGet);
+            }
+            cb.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
+            return Json(cb, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public JsonResult ClickProjectCombo(int Project_ID)
         {

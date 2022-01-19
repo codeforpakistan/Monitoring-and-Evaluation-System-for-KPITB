@@ -409,7 +409,7 @@
     <Content Include="Views\Project\ProjectDetails.cshtml" />
     <Content Include="Views\Indicator\IndicatorCreateView.cshtml" />
     <Content Include="Views\Indicator\IndicatorFieldCreate.cshtml" />
-    <Content Include="Views\Indicator\IndicatorLink.cshtml" />
+    <Content Include="Views\Indicator\LinkIndicator.cshtml" />
     <Content Include="Views\Indicator\IndicatorFieldValue.cshtml" />
   </ItemGroup>
   <ItemGroup>

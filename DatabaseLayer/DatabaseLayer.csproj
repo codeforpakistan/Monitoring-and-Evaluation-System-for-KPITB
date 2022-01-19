@@ -77,6 +77,7 @@
     <Compile Include="Common.cs" />
     <Compile Include="FinanceManagementDL.cs" />
     <Compile Include="IgnorePropertyAttribute.cs" />
+    <Compile Include="IndicatorDL.cs" />
     <Compile Include="IssuesManagementDL.cs" />
     <Compile Include="ProjectManagementDL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -31,7 +31,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 {
                     getAllIndicator();
                     return View(indicatorVM);
-                }  
+                }
                 StatusModel status = new IndicatorBL().indicatorCreateBL(indicatorVM);
                 if (status.status)
                 {
@@ -55,7 +55,49 @@ namespace MonitoringAndEvaluation_System.Controllers
             CreateIndicatorFieldVM fieldIndicatorVM = new CreateIndicatorFieldVM();
             ComboForField(fieldIndicatorVM);
             return View(fieldIndicatorVM);
-          
+
+        }
+
+        [HttpPost]
+        public ActionResult IndicatorFieldCreate(CreateIndicatorFieldVM model)
+        {
+            try
+            {
+                List<CreateIndicatorFieldVM> fieldIndicatorLst = new List<CreateIndicatorFieldVM>();
+                string[] _IndicatorFields = Request.Form["_IndicatorFields"].Split(',');
+                for (int i = 0; i < _IndicatorFields.Length; i++)
+                {
+                    if (_IndicatorFields[0].Trim() != "")
+                    {
+                        string[] ItemArray = _IndicatorFields[i].Split('|');
+                        fieldIndicatorLst.Add(new CreateIndicatorFieldVM()
+                        {
+                            Indicator_ID = Convert.ToInt32(ItemArray[1]),
+                            IndicatorDataType_ID = Convert.ToInt32(ItemArray[2]),
+                            IndicatorFieldName = Convert.ToString(ItemArray[3])
+                        });
+                    }
+                }
+                StatusModel status = new IndicatorBL().indicatorFeildCreateBL(fieldIndicatorLst);
+                if (status.status)
+                {
+                    TempData["Message"] = status.statusDetail;
+                    TempData.Keep("Message");
+                    //ModelState.AddModelError("OK",status.statusDetail);
+                }
+                else
+                {
+                    TempData["Message"] = status.statusDetail;
+                    return Json("false");
+                }
+
+            }
+            catch (Exception ex1)
+            {
+                return Json("false");
+            }
+            return Json("true");
+
         }
         [HttpGet]
         public ActionResult LinkIndicator()
@@ -64,7 +106,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             ComboForLink(linkIndicatorVM);
             return View(linkIndicatorVM);
         }
-        
+
         [HttpPost]
         public ActionResult LinkIndicator(CreateLinkIndicatorVM linkIndicatorVM)
         {
@@ -72,7 +114,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
-                   
+
                     return View(linkIndicatorVM);
                 }
                 StatusModel status = new IndicatorBL().linkIndicatorCreateBL(linkIndicatorVM);

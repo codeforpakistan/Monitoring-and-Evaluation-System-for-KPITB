@@ -28,16 +28,16 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label class="col-form-label">Select Indicator *</label>
-                                @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Please Select Risk Status", new { @class = " form-control ", @placeholder = "Select Indicator", @id = "idIndicatorName", @name = "IndicatorName" })
+                                @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Select Risk Status", new { @class = " form-control ", @placeholder = "Select Indicator", @id = "idIndicatorName", @name = "IndicatorName" })
                                 @Html.ValidationMessageFor(m => m.Indicator_ID, "", new { @class = "parsley-required" })
                                 <span name="spanidIndicatorName" id="spanidIndicatorName" class="text-danger"></span>
 
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Select Data Type *</label>
-                                @Html.DropDownListFor(m => m.IndicatorDataType_ID, new SelectList(Model.comboIndicatorDataTypes, "IndicatorDataTypeID", "IndicatorDataType"), "Please Select Indicator DataType", new { @class = " form-control ", @placeholder = "Select Indicator", @id = "idIndicatorName", @name = "IndicatorName" })
+                                @Html.DropDownListFor(m => m.IndicatorDataType_ID, new SelectList(Model.comboIndicatorDataTypes, "IndicatorDataTypeID", "IndicatorDataType"), "Select Indicator Value Type", new { @class = " form-control " , @id = "IndicatorDataType_ID", @name = "IndicatorDataType_ID" })
                                 @Html.ValidationMessageFor(m => m.IndicatorDataType_ID, "", new { @class = "parsley-required" })
-                                <span name="spanidIndicatorName" id="spanidIndicatorName" class="text-danger"></span>
+                                <span name="spanidIndicatorName" id="spanidIndicatorDataType_ID" class="text-danger"></span>
 
                             </div>
                             <div class="col-lg-4">
@@ -87,6 +87,7 @@
                                 <tr>
                                     <th data-column-id="id" data-type="numeric">ID</th>
                                     <th data-column-id="IndicatorName">Indicator Name</th>
+                                    <th data-column-id="IndicatorDataType_ID">Value Type</th>
                                     <th data-column-id="IndicatorFieldName">Indicator Field</th>
                                     <th data-column-id="action">Action</th>
                                 </tr>
@@ -140,6 +141,12 @@
                 $('#idIndicatorName').focus();
                 return true;
             }
+            if ($('#IndicatorDataType_ID').val() == 0) {
+                $('#spanidIndicatorDataType_ID').text('Indicator Value should not be blank');
+                $('#spanidIndicatorDataType_ID').show();
+                $('#IndicatorDataType_ID').focus();
+                return true;
+            }   
             if ($('#idIndicatorFieldName').val() == "") {
                 $('#spanidIndicatorFieldName').text('Indicator Field Name should not be blank');
                 $('#spanidIndicatorFieldName').show();
@@ -148,10 +155,11 @@
             }
            
             var trcount = $("#tblIndicatorField tr").length;
-            $("#tblIndicatorField").append("<tr>  <td>" + trcount + "</td>    <td id='" + $("#idIndicatorName").val() + "' >" + $("#idIndicatorName").find("option:selected").text() + "</td> <td>" + $("#idIndicatorFieldName").val() + "</td>   <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#tblIndicatorField").append("<tr>  <td>" + trcount + "</td>    <td id='" + $("#idIndicatorName").val() + "' >" + $("#idIndicatorName").find("option:selected").text() + "</td> <td id='" + $("#IndicatorDataType_ID").val() + "' >" + $("#IndicatorDataType_ID").find("option:selected").text() + "</td> <td>" + $("#idIndicatorFieldName").val() + "</td>  <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
             $("#idIndicatorFieldName").val('');
             $("#idIndicatorName").val('');
-
+            $("#IndicatorDataType_ID").val('');
+            
         });
 
         function RemoveDemerits(row) {
@@ -165,6 +173,15 @@
                 return true;
             }
         });
+        $("#IndicatorDataType_ID").on('change', function () {
+            debugger;
+            if ($('#IndicatorDataType_ID').val() != "") {
+                $('#spanidIndicatorDataType_ID').hide();
+                return true;
+            }
+        });
+        
+
         $("#idIndicatorName").on('change', function () {
             debugger;
             if ($('#idIndicatorName').val() != "") {
@@ -178,69 +195,24 @@
             e.preventDefault();
             debugger;
 
-          /*  var a = validationBeforeSubmit();*/
-
             var formAllData = new FormData();
-
-            formAllData.append('txtCategory_ID', $("#Category_ID").val());
-            formAllData.append('txtProjectType_ID', $("#ProjectType_ID").val());
-            formAllData.append('txtDigitalPolicy_ID', $("#DigitalPolicy_ID").val());
-            formAllData.append('txtCity_ID', $("#City_ID").val());
-            formAllData.append('txtProjectName', $("#ProjectName").val());
-            formAllData.append('txtMaleBeneficiary', $("#MaleBeneficiary").val());
-            formAllData.append('txtFemaleBeneficiary', $("#FemaleBeneficiary").val());
-            formAllData.append('txtTotalBeneficiary', $("#TotalBeneficiary").val());
-            formAllData.append('txtCostPerBeneficiary', $("#CostPerBeneficiary").val());
-            formAllData.append('txtObjective', $("#Objective").val());
-            formAllData.append('txtPlannedDate', $("#PlannedDate").val());
-            formAllData.append('txtStartDate', $("#StartDate").val());
-            formAllData.append('txtEndDate', $("#EndDate").val());
-            formAllData.append('txtPlannedHR', $("#PlannedHR").val());
-            formAllData.append('txtRecruitedHR', $("#RecruitedHR").val());
-            formAllData.append('txtRecruitedHRPercent', $("#RecruitedHRPercent").val());
-            formAllData.append('txtPlannedBudget', $("#PlannedBudget").val());
-            formAllData.append('txtApprovedBudget', $("#ApprovedBudget").val());
-            formAllData.append('txtReleasedBudget', $("#ReleasedBudget").val());
-            formAllData.append('txtPlannedProcurement', $("#PlannedProcurement").val());
-            formAllData.append('txtAchievedProcurement', $("#AchievedProcurement").val());
-            formAllData.append('txtProcurementPercent', $("#ProcurementPercent").val());
-            formAllData.append('FundingSourceArray', $("#Funding_SourceArray").val());
-
-            //Risk
-            var RiskRows = new Array();   //ArrayList
-            $('#tblRisk tr').each(function ()
-            {
-                if ($(this).find('td:eq(0)').text() != '')
-                {
-                    //Risk
-                    debugger;
-                    $RiskRow = $(this).find('td:eq(0)').text() +
-                                "|" + $(this).find('td:eq(1)').text() +
-                                "|" + $(this).find('td:eq(2)').attr('id');
-                    RiskRows.push($RiskRow);
-                }
-            });
-            formAllData.append("_RiskRows", RiskRows);
+            
 
             //StackHolder
-            var StackholderRows = new Array();   //ArrayList
-            $('#tblStackHolder tr').each(function () {
+            var IndFieldRows = new Array();   //ArrayList
+            $('#tblIndicatorField tr').each(function () {
                 if ($(this).find('td:eq(0)').text() != '') {
                     //Risk
                     debugger;
-                    $StackholderRow = $(this).find('td:eq(0)').text() +
-                        "|" + $(this).find('td:eq(1)').text() +
-                        "|" + $(this).find('td:eq(2)').text() +
-                        "|" + $(this).find('td:eq(3)').text() +
-                        "|" + $(this).find('td:eq(4)').text();
-                    StackholderRows.push($StackholderRow);
+                    $row = $(this).find('td:eq(0)').text() +
+                        "|" + $(this).find('td:eq(1)').attr('id') +
+                        "|" + $(this).find('td:eq(2)').attr('id') +
+                        "|" + $(this).find('td:eq(3)').text();
+                    IndFieldRows.push($row);
                 }
             });
-            formAllData.append("_StackholderRows", StackholderRows);
-           //var model = formAllData;
-           //url: '/Project/ProjectCreate?ProjectVM=' + model
-          /*  $("#SubmitFromBtnCreate").submit();*/
-            var urllink = '@Url.Action("ProjectCreate", "Project")'
+            formAllData.append("_IndicatorFields", IndFieldRows);
+            var urllink = '@Url.Action("IndicatorFieldCreate", "Indicator")'
             $.ajax({
                 url: urllink,
                 type: "POST",
@@ -254,7 +226,8 @@
                          window.location.href = route;
                     }
                     else if (result == 'true') {
-                         var route = '@Url.Action("ProjectView", "Project")'
+                        //ViewForm
+                         var route = '@Url.Action("IndicatorFieldCreate", "Indicator")'
                          window.location.href = route;
                     }
 

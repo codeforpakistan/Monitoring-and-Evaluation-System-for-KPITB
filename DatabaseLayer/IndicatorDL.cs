@@ -13,6 +13,36 @@ namespace DatabaseLayer
 {
     public static class IndicatorDL
     {
+        #region IndicatorFieldDL
+        public static StatusModel indicatorFeildCreateDL(DataTable dt)
+        {
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@objIndicatorField", dt.AsTableValuedParameter("udt_IndicatorField"));
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_sp_IndicatorFieldCeateMulti", ObjParm, commandType: CommandType.StoredProcedure);
+
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return status;
+        }
+
+        #endregion
         //IssuesCreate
         public static StatusModel indicatorCreateDL(CreateIndicatorVM m)
         {

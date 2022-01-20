@@ -207,7 +207,6 @@ namespace ModelLayer
         }
 
         #endregion
-
         #region PROJECTMODEL
         //CreateProject
         public partial class CreateProjectVM
@@ -816,7 +815,6 @@ namespace ModelLayer
 
         }
         #endregion
-
         #region Project KPIS
         //CreateIndicator
         public partial class CreateIndicatorVM
@@ -875,18 +873,22 @@ namespace ModelLayer
         {
             public CreateIndicatorValueVM()
             {
-
+                comboProjects = new List<ComboProject>();
                 comboIndicator = new List<ComboIndicator>();
-
+                comboBatch = new List<ComboBatch>();
             }
 
             public int IndicatorValueID { get; set; }
+            public int Project_ID { get; set; }
+            public int Batch_ID { get; set; }
             public int Indicator_ID { get; set; }
             public int IndicatorField_ID { get; set; }
             [Range(1, int.MaxValue, ErrorMessage = "Please Select Indicator")]
             public string IndicatorFieldName { get; set; }
 
+            public List<ComboProject> comboProjects { get; set; }
             public List<ComboIndicator> comboIndicator { get; set; }
+            public List<ComboBatch> comboBatch { get; set; }
 
         }
         public partial class GetProjectReport

@@ -92,11 +92,42 @@ namespace MonitoringAndEvaluation_System.Controllers
             getAllIndicator();
             return RedirectToAction("LinkIndicator");
         }
+       
+        [HttpGet]
         public ActionResult IndicatorFieldValue()
         {
-            return View();
+            CreateIndicatorValueVM indicatorValueVM = new CreateIndicatorValueVM();
+            ComboForValue(indicatorValueVM);
+            return View(indicatorValueVM);
         }
 
+        [HttpPost]
+        public ActionResult IndicatorFieldValue(CreateLinkIndicatorVM linkIndicatorVM)
+        {
+            try
+            {
+                if (ModelState.IsValid == false)
+                {
+
+                    return View(linkIndicatorVM);
+                }
+                StatusModel status = new IndicatorBL().linkIndicatorCreateBL(linkIndicatorVM);
+                if (status.status)
+                {
+                    TempData["Message"] = "Record Saved Successfully.";
+                }
+                else
+                {
+                    TempData["Message"] = status.statusDetail;
+                }
+            }
+            catch (Exception ex1)
+            {
+                TempData["Message"] = "Exeption: " + ex1.Message;
+            }
+            getAllIndicator();
+            return RedirectToAction("LinkIndicator");
+        }
 
         //Custom Function
         private void getAllIndicator()
@@ -110,6 +141,14 @@ namespace MonitoringAndEvaluation_System.Controllers
             ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
             linkIndicatorVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
             linkIndicatorVM.comboIndicator = ObjProjectMngBL.getComboIndicatorBL();
+        }
+        public void ComboForValue(CreateIndicatorValueVM IndicatorValueVM)
+        {
+            //Get ProjectType list
+            IndicatorValueVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            IndicatorValueVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+            IndicatorValueVM.comboIndicator = ObjProjectMngBL.getComboIndicatorBL();
         }
         public void ComboForField(CreateIndicatorFieldVM indicatorFieldVM)
         {

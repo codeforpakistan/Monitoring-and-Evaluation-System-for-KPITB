@@ -417,11 +417,22 @@ namespace MonitoringAndEvaluation_System.Controllers
         public JsonResult ClickProjectComboBox(int Project_ID)
         {
             List<ComboBatch> cb = ObjProjectMngBL.getComboBoxBatchBL(Project_ID, LoginRoleID);
-            if (cb.Count() > 1)
-            {
-                return Json(cb, JsonRequestBehavior.AllowGet);
-            }
+            //if (cb.Count > 0)
+            //{
+            //    return Json(cb, JsonRequestBehavior.AllowGet);
+            //}
             cb.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
+            return Json(cb, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult ClickBatchComboBox(string Project_ID, string Batch_ID)
+        {
+            List<ComboIndicator> cb = ObjProjectMngBL.getComboIndicatorBL(Convert.ToInt32(Project_ID),Convert.ToInt32(Batch_ID));// Batch, LoginRoleID);
+            //if (cb.Count > 0)
+            //{
+            //    return Json(cb, JsonRequestBehavior.AllowGet);
+            //}
+            cb.Insert(0, new ComboIndicator { IndicatorID = 0, IndicatorName = "Please Select Indicator" });
             return Json(cb, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

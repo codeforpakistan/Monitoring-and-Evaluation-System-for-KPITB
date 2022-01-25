@@ -876,6 +876,7 @@ namespace ModelLayer
                 comboProjects = new List<ComboProject>();
                 comboIndicator = new List<ComboIndicator>();
                 comboBatch = new List<ComboBatch>();
+                dataTypeVMLst = new List<IndicatorDataTypeVM>();
             }
 
             public int IndicatorValueID { get; set; }
@@ -889,6 +890,7 @@ namespace ModelLayer
             public List<ComboProject> comboProjects { get; set; }
             public List<ComboIndicator> comboIndicator { get; set; }
             public List<ComboBatch> comboBatch { get; set; }
+            public List<IndicatorDataTypeVM> dataTypeVMLst { get; set; }
 
         }
         public partial class GetProjectReport
@@ -958,6 +960,19 @@ namespace ModelLayer
         }
 
         #endregion
+
+        #region Indicator
+        public partial class IndicatorDataTypeVM
+        {
+            public int IndicatorFieldID { get; set; }
+            public string IndicatorFieldName { get; set; }
+            public int IndicatorDataType_ID { get; set; }
+            public dynamic IndicatorDataTypeValue { get; set; }
+        }
+         
+
+        #endregion
+
     }
 
 }

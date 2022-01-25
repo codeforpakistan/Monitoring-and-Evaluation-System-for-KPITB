@@ -186,16 +186,32 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         public void ComboForValue(CreateIndicatorValueVM IndicatorValueVM)
         {
-            //Get ProjectType list
+            //Combo Project
             IndicatorValueVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            IndicatorValueVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
-            IndicatorValueVM.comboIndicator = ObjProjectMngBL.getComboIndicatorBL();
+            //Combo Batch
+            //ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            //IndicatorValueVM.comboBatch.Add(mb); 
+            ////Combo Indicator
+            //ComboIndicator mi = new ComboIndicator() { IndicatorID = 0, IndicatorName = "Please Select Indicator" };
+            //IndicatorValueVM.comboIndicator.Add(mi);
+            //IndicatorValueVM.comboIndicator = ObjProjectMngBL.getComboIndicatorBL();
         }
         public void ComboForField(CreateIndicatorFieldVM indicatorFieldVM)
         {
             indicatorFieldVM.comboIndicator = ObjProjectMngBL.getComboIndicatorBL();
             indicatorFieldVM.comboIndicatorDataTypes = ObjProjectMngBL.getComboDataTypeBL();
         }
+
+
+        #region ComboSetting
+
+        [HttpPost]
+        public JsonResult ClickIndicatorComboBox(int IndicatorID)
+        {
+            CreateIndicatorValueVM m = new CreateIndicatorValueVM();
+            m.dataTypeVMLst = new IndicatorBL().getndicatorDataTypeBL(IndicatorID);
+            return Json(m, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

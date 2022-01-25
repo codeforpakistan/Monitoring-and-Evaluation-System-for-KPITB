@@ -30,22 +30,25 @@
                             </div>
                             <div class="col-lg-4">
                                 <label for="sel1">Select Batch/Cycle *</label>
-                                @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), "Please Select Category", new { @class = "select2 form-control " })
-                                @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required", @id = "spanCategory_ID" })
+                                @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), "Please Select Batch", new { @class = "select2 form-control " })
+                                @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
                             </div>
                             <div class="col-lg-4">
                                 <label for="sel1">Select Indicator *</label>
-                                @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Please Select Project Type", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
-                                @Html.ValidationMessageFor(m => m.Indicator_ID, "", new { @class = "parsley-required", @id = "spanProjectType_ID" })
+                                @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Please Select Indicator", new { @class = "select2 form-control " })
+                                @Html.ValidationMessageFor(m => m.Indicator_ID, "", new { @class = "parsley-required", @id = "spanIndicatorID" })
                             </div>
                         </div>
-                        
+
                         <br />
                         @*<div class="float-right"><input type="button" id="AddStackHolder" value="Add Field" class="btn btn-primary" /></div>*@
                         <br />
-
                         <br />
-                        <table class="table table-striped" id="tblStackHolder">
+
+                        <input type="hidden" name="HdnTotalrowcnt" id="HdnTotalrowcnt" value="@*@Model.LstprjMileStones.Count*@" />
+                        <input type="hidden" name="Hdndeletedrow" id="Hdndeletedrow" value="" />
+
+                        <table class="table table-striped" name="tblIndicator" id="tblIndicator">
                             <thead class="table-info">
                                 <tr>
                                     <th data-column-id="id" data-type="numeric">ID</th>
@@ -54,7 +57,22 @@
                                     <th data-column-id="action">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tblBodyIndicator">
+
+                                @*<tr id="tblIndicatorRow">
+                                        <td>1</td>
+                                        <td> <input type="hidden" name="MilestoneDescription[1]" id="MilestoneDescription[1].hdIndicatorFieldID" value="0" /></td>
+                                        <td><input class="form-control" type="text" name="MilestoneDescription[1]" required value="MilestoneDescription[1].IndicatorFieldName"  /></td>
+                                        <td><input class="form-control" type="text" name="MilestoneDescription[1]" required value="MilestoneDescription[1].IndicatorDataType_ID" /></td>
+
+                                        <td>
+                                            <select class="form-control" name="Percentage[1]" value="" style="width:105px;">
+                                                <option value="true">Yes</option>
+                                                <option value="false">No</option>
+                                            </select>
+                                        </td>
+                                    </tr>*@
+
                             </tbody>
                         </table>
                     </div>
@@ -80,22 +98,14 @@
         }
     </div>
 </div>
-
-
-
-
-
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js" type="text/javascript"></script>
     <script src="~/Content/Template/vendor/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>
-
     <script>
-
        $(document).ready(function ()
         {
 
         });
-
 
         $("#Project_ID").on('change', function () {
             var _Project_ID = $(this).find("option:selected").val();
@@ -106,7 +116,6 @@
                      dataType: 'json',
                     data: { Project_ID: _Project_ID },  // Same Parameter with Action
                     success: function (BatchLst) {
-                        debugger;
                         $("#Batch_ID").empty();
                         if (BatchLst == 0 || BatchLst ==null) {
                             $("#Batch_ID").prop("disabled", true);
@@ -124,7 +133,101 @@
                      console.log('Failed to Retrieve Batch Data:  ' + ex);
                  }
                 });//Ajax_End
+        });
+        $("#Batch_ID").on('change', function () {
+
+            var obj = {};
+            obj.Project_ID = $("#Project_ID").find("option:selected").val();
+            obj.Batch_ID = $("#Batch_ID").find("option:selected").val();
+
+            //var Stock = { Project_ID: $("#Project_ID").find("option:selected").val(), Batch_ID: $("#Batch_ID").find("option:selected").val() };
+                $.ajax({
+                     type: 'POST',
+                     url: '@Url.Action("ClickBatchComboBox", "Project")',
+                    data: JSON.stringify(obj),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+
+                    success: function (IndicatorLst) {
+                        $("#Indicator_ID").empty();
+                        if (IndicatorLst == 0 || IndicatorLst ==null) {
+                            $("#Indicator_ID").prop("disabled", true);
+                            $("#Indicator_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Indicator" + '</option>');
+                        } else {
+                            $("#Indicator_ID").prop("disabled", false);
+                            $.each(IndicatorLst, function (i, Aqib) {
+                                $("#Indicator_ID").append('<option value="' + Aqib.IndicatorID + '">' +
+                                    Aqib.IndicatorName + '</option>');
+                            });
+                        }
+                 },
+                    error: function (ex) {
+                        console.log('Failed to Retrieve Indicator Data:  ' + ex.responseText);
+                 }
+                });//Ajax_End
             });
+        $("#Indicator_ID").on('change', function () {
+            _Indicator_ID = $(this).find("option:selected").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ClickIndicatorComboBox", "Indicator")',
+                dataType: 'json',
+                data: { IndicatorID: _Indicator_ID },  // Same Parameter with Action
+                success: function (IndicatorTypeLst) {
+                    $("#tblBodyIndicator").empty();
+                    debugger;
+
+                    var counter = 0;
+                    $.each(IndicatorTypeLst.dataTypeVMLst, function (index, v) {
+                        /// do stuff
+                        counter++;
+
+                        var HiddenValue = '';
+                        var ResultString = '';
+
+                        ResultString = '<td>';
+                        HiddenValue = '<td>';
+
+                        if (v.IndicatorDataType_ID == 1) {
+                            ResultString += '<input  class="form-control"    name=" dataTypeVMLst[' + counter +'].IndicatorDataTypeValue"   value="" type="text"  placeholder="Enter Indicator Text" required />'
+                            HiddenValue += '<input class="form-control"   name=" dataTypeVMLst[' + counter +'].IndicatorDataType_ID" value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                        }else if(v.IndicatorDataType_ID == 2) {
+                            ResultString += '<input class="form-control"    name=" dataTypeVMLst[' + counter +'].IndicatorDataTypeValue" value="' + v.IndicatorDataTypeValue + '" type="number"  placeholder="Enter Indicator Value" />'
+                            HiddenValue += '<input class="form-control"   name=" dataTypeVMLst[' + counter +'].IndicatorDataType_ID" value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                        } else if (v.IndicatorDataType_ID == 3) {
+                            ResultString += '<input class="form-control"  name=" dataTypeVMLst[' + counter +'].IndicatorDataTypeValue" value="' + v.IndicatorDataTypeValue + '" type="number" placeholder="Enter Indicator Percentage %"  />'
+                            HiddenValue += '<input class="form-control"  name=" dataTypeVMLst[' + counter +'].IndicatorDataType_ID"  value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                        } else if (v.IndicatorDataType_ID == 4) {
+                            ResultString += '<select class="form-control" name=" dataTypeVMLst[' + counter + '].IndicatorDataTypeValue">'
+                            ResultString += '<option value="true">Yes</option>'
+                            ResultString += '<option value="false">No</option>'
+                            ResultString += '</select>'
+                            HiddenValue += '<input class="form-control"  name=" dataTypeVMLst[' + counter +'].IndicatorDataType_ID"  value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                        }
+                        
+
+                        ResultString += '</td>';
+                        HiddenValue += '</td>';
+
+                        $('<tr id="tblIndicatorRow' + counter + '">' +
+                            '<td>' + counter + '</td>' +
+                              '<td>' + v.IndicatorFieldName + '</td>' +
+                            ResultString +
+                            HiddenValue +
+                            '</tr>').appendTo('#tblIndicator');
+
+                        });
+                 },
+                    error: function (ex) {
+                        debugger;
+                        console.log('Failed to Retrieve IndicatorDataType List Data:  ' + ex.responseText);
+                 }
+                });//Ajax_End
+            });
+
+
 
         $("#AddRisk").click(function () {
             debugger;
@@ -165,10 +268,6 @@
             }
         });
 
-        /* Add stackholder to table*/
-        $(document).ready(function () {
-
-        });
 
         $("#AddStackHolder").click(function () {
             debugger;
@@ -608,12 +707,7 @@
             $('#ProcurementPercent').val(_ProcurementPercent);
         }
 
-        //function  validationBeforeSubmit() {
 
-
-
-
-        //}
 
     </script>
 }

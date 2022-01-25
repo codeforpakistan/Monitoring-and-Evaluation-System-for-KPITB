@@ -117,5 +117,40 @@ namespace DatabaseLayer
             }
             return status;
         }
+
+        //public static List<ComboIndicator> getComboIndicatorDL(int Project_ID, int BatchID)
+        //{
+        //    List<ComboIndicator> ComboLst = new List<ComboIndicator>();
+
+        //    using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+        //    {
+        //        conn.Open();
+        //        DynamicParameters ObjParm = new DynamicParameters();
+        //        ObjParm.Add("@Project_ID", Project_ID);
+        //        ObjParm.Add("@Batch_ID", BatchID);
+        //        ComboLst = conn.Query<ComboIndicator>("sp_GetIndicatorBaseOnBatch", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+        //        conn.Close();
+        //        conn.Dispose();
+        //        return ComboLst;
+        //    }
+        //}
+
+        public static List<IndicatorDataTypeVM> getndicatorDataTypeDL(int IndicatorID)
+        {
+            List<IndicatorDataTypeVM> DataTypeLst = new List<IndicatorDataTypeVM>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@IndicatorID", IndicatorID);
+                DataTypeLst = conn.Query<IndicatorDataTypeVM>("sp_GetIndicatorFieldBaseOnIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return DataTypeLst;
+            }
+        }
+
+
     }
 }

@@ -42,5 +42,10 @@ namespace BusinessLayer
         {
             return IndicatorDL.linkIndicatorCreateDL(m);
         }
+         
+        public List<IndicatorDataTypeVM> getndicatorDataTypeBL(int IndicatorID)
+        {
+            return IndicatorDL.getndicatorDataTypeDL(IndicatorID);
+        }
     }
 }

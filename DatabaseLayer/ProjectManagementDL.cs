@@ -119,6 +119,26 @@ namespace DatabaseLayer
                 return ComboLst;
             }
         }
+
+        
+        public static List<ComboIndicator> getComboIndicatorDL(int Project_ID,int BatchID)
+        {
+            List<ComboIndicator> ComboLst = new List<ComboIndicator>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@Project_ID", Project_ID);
+                ObjParm.Add("@Batch_ID", BatchID);
+                ComboLst = conn.Query<ComboIndicator>("sp_GetIndicatorBaseOnBatch", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return ComboLst;
+            }
+        }
+
+
         public static List<ComboBatch> getComboBoxBatchDL(int Project_ID, int Role_ID)
         {
             List<ComboBatch> ComboLst = new List<ComboBatch>();
@@ -307,7 +327,7 @@ namespace DatabaseLayer
                     //Procurement
                     ObjParm.Add("@AchievedProcurement", m.AchievedProcurement);
                     ObjParm.Add("@ProcurementPercent", m.ProcurementPercent);
-                    ObjParm.Add("@ProcurementFromDate", DateTime.Now);
+                    ObjParm.Add("@ProcurementDate", DateTime.Now);
 
                     //StackHolder
                     //ObjParm.Add("@StackholderName", m.StackholderName);

@@ -9,7 +9,7 @@
 <!-- START row-->
 <div class="row">
     <div class="col-xl-12">
-        @using (Html.BeginForm("IndicatorFieldValue", "Indicator", FormMethod.Post, new { @id = "SubmitFromBtnCreate", @class = "form-horizontal" }))
+        @using (Html.BeginForm("IndicatorFieldValue", "Indicator", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             <!-- START card-->
 
@@ -54,7 +54,7 @@
                                     <th data-column-id="id" data-type="numeric">ID</th>
                                     <th data-column-id="Department">Indicator Field Name</th>
                                     <th data-column-id="ContactNo">Indicator Value</th>
-                                    <th data-column-id="action">Action</th>
+                                    <th data-column-id="action"></th>
                                 </tr>
                             </thead>
                             <tbody id="tblBodyIndicator">
@@ -88,7 +88,7 @@
                             </div>
                         </div>
                         <div class="float-right">
-                            <button class="btn btn-primary" type="submit" id="btnCreate"> Create</button>
+                            <button class="btn btn-primary" type="submit" id="btnnnnCreate"> Create</button>
                         </div>
 
                     </div>
@@ -182,42 +182,45 @@
                     var counter = 0;
                     $.each(IndicatorTypeLst.dataTypeVMLst, function (index, v) {
                         /// do stuff
-                        counter++;
-
+                      
+                        var IndicatorFieldID = '<td style="display:none";><input  name="dataTypeVMLst[' + counter + '].IndicatorFieldID" value="' + v.IndicatorFieldID + '" type="text"  /></td>';
                         var HiddenValue = '';
                         var ResultString = '';
 
                         ResultString = '<td>';
                         HiddenValue = '<td>';
 
+
                         if (v.IndicatorDataType_ID == 1) {
-                            ResultString += '<input  class="form-control"    name=" dataTypeVMLst[' + counter +'].IndicatorDataTypeValue"   value="" type="text"  placeholder="Enter Indicator Text" required />'
-                            HiddenValue += '<input class="form-control"   name=" dataTypeVMLst[' + counter +'].IndicatorDataType_ID" value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                            ResultString += '<input  class="form-control"    name="dataTypeVMLst[' + counter +'].TEXT"     type="text"  placeholder="Enter Indicator Text" required />'
+                            HiddenValue += '<input class="form-control"   name="dataTypeVMLst[' + counter +'].IndicatorDataType_ID" value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
                         }else if(v.IndicatorDataType_ID == 2) {
-                            ResultString += '<input class="form-control"    name=" dataTypeVMLst[' + counter +'].IndicatorDataTypeValue" value="' + v.IndicatorDataTypeValue + '" type="number"  placeholder="Enter Indicator Value" />'
-                            HiddenValue += '<input class="form-control"   name=" dataTypeVMLst[' + counter +'].IndicatorDataType_ID" value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                            ResultString += '<input class="form-control"    name="dataTypeVMLst[' + counter +'].INTEGER" type="number"  placeholder="Enter Indicator Value" />'
+                            HiddenValue += '<input class="form-control"   name="dataTypeVMLst[' + counter + '].IndicatorDataType_ID" value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
                         } else if (v.IndicatorDataType_ID == 3) {
-                            ResultString += '<input class="form-control"  name=" dataTypeVMLst[' + counter +'].IndicatorDataTypeValue" value="' + v.IndicatorDataTypeValue + '" type="number" placeholder="Enter Indicator Percentage %"  />'
-                            HiddenValue += '<input class="form-control"  name=" dataTypeVMLst[' + counter +'].IndicatorDataType_ID"  value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                            ResultString += '<input class="form-control"  name="dataTypeVMLst[' + counter +'].FLOAT" type="number" placeholder="Enter Indicator Percentage %"  />'
+                            HiddenValue += '<input class="form-control"  name="dataTypeVMLst[' + counter + '].IndicatorDataType_ID"  value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
                         } else if (v.IndicatorDataType_ID == 4) {
-                            ResultString += '<select class="form-control" name=" dataTypeVMLst[' + counter + '].IndicatorDataTypeValue">'
-                            ResultString += '<option value="true">Yes</option>'
-                            ResultString += '<option value="false">No</option>'
+                            ResultString += '<select class="form-control" name="dataTypeVMLst[' + counter + '].BOOL">'
+                            ResultString += '<option>Select Yes/No</option>'
+                            ResultString += '<option value="Yes">Yes</option>'
+                            ResultString += '<option value="No">No</option>'
                             ResultString += '</select>'
-                            HiddenValue += '<input class="form-control"  name=" dataTypeVMLst[' + counter +'].IndicatorDataType_ID"  value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                            HiddenValue += '<input class="form-control"  name="dataTypeVMLst[' + counter +'].IndicatorDataType_ID"  value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
                         }
-                        
 
                         ResultString += '</td>';
                         HiddenValue += '</td>';
 
                         $('<tr id="tblIndicatorRow' + counter + '">' +
                             '<td>' + counter + '</td>' +
+                            IndicatorFieldID +
                               '<td>' + v.IndicatorFieldName + '</td>' +
                             ResultString +
                             HiddenValue +
                             '</tr>').appendTo('#tblIndicator');
 
+                        counter++;
                         });
                  },
                     error: function (ex) {

@@ -884,6 +884,9 @@ namespace ModelLayer
             public int Batch_ID { get; set; }
             public int Indicator_ID { get; set; }
             public int IndicatorField_ID { get; set; }
+            public DateTime FromDate { get; set; }
+            public DateTime ToDate { get; set; }
+
             [Range(1, int.MaxValue, ErrorMessage = "Please Select Indicator")]
             public string IndicatorFieldName { get; set; }
 
@@ -967,7 +970,11 @@ namespace ModelLayer
             public int IndicatorFieldID { get; set; }
             public string IndicatorFieldName { get; set; }
             public int IndicatorDataType_ID { get; set; }
-            public dynamic IndicatorDataTypeValue { get; set; }
+ 
+            public string TEXT { get; set; }
+            public int INTEGER { get; set; }
+            public float FLOAT { get; set; }
+            public string BOOL { get; set; }
         }
          
 

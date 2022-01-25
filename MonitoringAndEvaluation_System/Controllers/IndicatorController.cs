@@ -144,16 +144,15 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
 
         [HttpPost]
-        public ActionResult IndicatorFieldValue(CreateLinkIndicatorVM linkIndicatorVM)
+        public ActionResult IndicatorFieldValue(CreateIndicatorValueVM valueVM)
         {
             try
             {
                 if (ModelState.IsValid == false)
                 {
-
-                    return View(linkIndicatorVM);
+                    return View(valueVM);
                 }
-                StatusModel status = new IndicatorBL().linkIndicatorCreateBL(linkIndicatorVM);
+                StatusModel status = new IndicatorBL().indicatorFieldValueCreateBL(valueVM);
                 if (status.status)
                 {
                     TempData["Message"] = "Record Saved Successfully.";
@@ -167,8 +166,8 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 TempData["Message"] = "Exeption: " + ex1.Message;
             }
-            getAllIndicator();
-            return RedirectToAction("LinkIndicator");
+            //getAllIndicator();
+            return View(valueVM);
         }
 
         //Custom Function
@@ -207,7 +206,7 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         [HttpPost]
         public JsonResult ClickIndicatorComboBox(int IndicatorID)
-        {
+        { 
             CreateIndicatorValueVM m = new CreateIndicatorValueVM();
             m.dataTypeVMLst = new IndicatorBL().getndicatorDataTypeBL(IndicatorID);
             return Json(m, JsonRequestBehavior.AllowGet);

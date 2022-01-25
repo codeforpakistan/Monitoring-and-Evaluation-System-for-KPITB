@@ -118,6 +118,39 @@ namespace DatabaseLayer
             return status;
         }
 
+
+        #region indicatorFieldValueCreateBL
+        public static StatusModel indicatorFieldValueCreateDL(DataTable dt, CreateIndicatorValueVM m)
+        {
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                m.FromDate = DateTime.Now;
+                m.ToDate = DateTime.Now;
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@objIFV", dt.AsTableValuedParameter("udt_IndicatorFieldValue"));
+                ObjParm.Add("@FromDate", m.FromDate);
+                ObjParm.Add("@ToDate", m.ToDate);
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_sp_IndicatorFieldValueCeateMulti", ObjParm, commandType: CommandType.StoredProcedure);
+
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return status;
+        }
+        #endregion
         //public static List<ComboIndicator> getComboIndicatorDL(int Project_ID, int BatchID)
         //{
         //    List<ComboIndicator> ComboLst = new List<ComboIndicator>();

@@ -94,7 +94,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 StatusModel status = ObjUserMngBL.userCreateBL(userVM);
                     if (status.status)
                     {
-                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.Successfully);
+                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                     }
                     else
                     {
@@ -132,13 +132,13 @@ namespace MonitoringAndEvaluation_System.Controllers
                 userEditVM.comboRoles = ObjUserMngBL.getRoleBL();
                 if (ModelState.IsValid == false)
                 {
-                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.Successfully);
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                     return View(userEditVM);
                 }
                 StatusModel status = ObjUserMngBL.userEditBL(userEditVM);
                 if (status.status)
                 {
-                    ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.Successfully); ;
+                    ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.SaveSuccessfully); ;
                 }
                 else
                 {

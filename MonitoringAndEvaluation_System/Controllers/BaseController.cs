@@ -70,7 +70,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
 
         public void ShowMessage(MessageBox MessageType, OperationType opertaion, string Message)
-        {
+        {//
             TempData["Opertaion"] = opertaion;
             TempData["Message"] = Message;
             switch (MessageType)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -54,5 +55,67 @@ namespace MonitoringAndEvaluation_System.Controllers
 
             base.OnActionExecuting(filterContext);
         }
+
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+          
+          Log("OnActionExecuted", filterContext.RouteData);
+        }
+        private void Log(string methodName, RouteData routeData)
+        {
+            var controllerName = routeData.Values["controller"];
+            var actionName = routeData.Values["action"];
+            var message = String.Format("{0} controller:{1} action:{2}", methodName, controllerName, actionName);
+            Debug.WriteLine(message, "Action Filter Log");
+        }
+
+        public void ShowMessage(MessageBox MessageType, OperationType opertaion, string Message)
+        {
+            TempData["Opertaion"] = opertaion;
+            TempData["Message"] = Message;
+            switch (MessageType)
+            {
+                case MessageBox.Success: //Green
+                    TempData["CssClass"] = "alert alert-success alert-dismissible";
+                    TempData["CssIcon"] = "icon fa fa-check";
+                    break;
+                case MessageBox.Error:  //Red
+                    TempData["CssClass"] = "alert alert-danger alert-dismissible";
+                    TempData["CssIcon"] = "icon fa fa-ban";
+                    break;
+                case MessageBox.Warning:   //Yellow
+                    TempData["CssClass"] = "alert alert-warning alert-dismissible";
+                    TempData["CssIcon"] = "icon fa fa-warning";
+                    break;
+                case MessageBox.Info: //Gray
+                    TempData["CssClass"] = "alert alert-warning alert-dismissible";
+                    TempData["CssIcon"] = "icon fa fa-warning";
+                    break;
+                default:
+                    TempData["CssClass"] = "alert alert-info alert-dismissible";
+                    TempData["CssIcon"] = "icon fa fa-info";
+                    break;
+            }
+        }
+
+        public enum OperationType
+        {
+            Saved = 1,
+            Updated = 2,
+            Error = 3,
+            Warning = 4,
+            Deleted = 5
+        }
+        public enum MessageBox
+        {
+            Success = 1,
+            Error = 2,
+            Warning = 3,
+             Info = 4
+        }
+
+
+       
+
     }
 }

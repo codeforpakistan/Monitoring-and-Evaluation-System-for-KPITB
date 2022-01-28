@@ -62,15 +62,6 @@
                         </div>
                         <br />
                         <button class="btn btn-primary" type="submit" id="btnSubmit">Submit</button>
-                        <!--Popup Msg-->
-                        @{
-                            if (TempData["Message"] != null)
-                            {
-                                <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
-                                    <strong>Well done!</strong>You successfully read this important alert message.
-                                </div>
-                            }
-                        }
                     </div>
                 </div>
             </fieldset>
@@ -82,39 +73,5 @@
 
 @section Scripts{
     <script>
-        $(document).ready(function () {
-            $("#divMessage").delay(2000).slideUp(500);
-        });
-
-        //$('#btnSubmit').click(function (){
-        //    if($("#Role_ID").val() == '')
-        //    {
-        //        Alert("Please enter Course Name");
-        //            return validate = false;
-        //    }
-        //    debugger;
-        //    if ($('#Role_ID').val() == '') {
-        //        $('#Role_ID').text('Please Select Role jQuery');
-        //        $('#Role_ID').show();
-        //        $('#Role_ID').focus();
-        //        return true;
-        //    }
-
-
-
-       
-
-
-            //$("#ConfirmPassword").on('change', function () {
-            //    debugger;
-            //    alert('ok2);
-            //    if ($('#Password').val() == ConfirmPassword) {
-            //        return true;
-            //        $('#ConfirmPassword').text('Password is not Match.');
-            //        $('#ConfirmPassword').show();
-            //        $('#ConfirmPassword').focus();
-            //    }
-            //});
-
     </script>
 }

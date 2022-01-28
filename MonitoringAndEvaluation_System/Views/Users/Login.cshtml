@@ -23,18 +23,19 @@
     <link rel="stylesheet" href="~/Content/Template/css/bootstrap.css" id="bscss">
     <!-- =============== APP STYLES ===============-->
     <link rel="stylesheet" href="~/Content/Template/css/app.css" id="maincss">
+    <style>
+       .customNotification {
+            padding: 20px 40px;
+            min-width: 420px;
+            position: absolute;
+            right: 0;
+            top: 10px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 
 <body>
-
-    @{
-        if (TempData["Message"] != null)
-        {
-            <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
-                <strong>Fail !</strong>Record Not Found.
-            </div>
-        }
-    }
 
     <div class="wrapper">
         <div class="block-center mt-4 wd-xl">
@@ -97,6 +98,23 @@
         </div>
     </div>
 
+
+    <div class="row">
+        <div id="divMessage" class=" customNotification col-md-5">
+            @if (TempData["CssClass"] != null)
+            {
+                <div class="@TempData["CssClass"]">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="@TempData["CssIcon"]"></i> @TempData["Opertaion"] !</h4>
+                    @TempData["Message"]
+                </div>
+            }
+            </div>
+    </div>
+
+
+
+
     <!-- =============== VENDOR SCRIPTS ===============-->
     <!-- MODERNIZR-->
     <script src="~/Content/Template/vendor/modernizr/modernizr.custom.js"></script>
@@ -113,7 +131,7 @@
 
     <script>
         $(document).ready(function () {
-            $("#divMessage").delay(2000).slideUp(500);
+                      $("#divMessage").delay(4000).slideUp(1000);
         });
 
     </script>

@@ -78,15 +78,7 @@
                         </div>
                         <br />
                         <button class="btn btn-primary" type="submit" id="btnSubmit">Submit</button>
-                        <!--Popup Msg-->
-                        @{ 
-                            if (TempData["Message"] != null)
-                            {
-                                <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
-                                <strong>Well done!</strong>You successfully read this important alert message.
-                                </div>
-                               }
-                           }
+                     
                     </div>
                 </div>
             </fieldset>
@@ -98,9 +90,6 @@
 
 @section Scripts{
     <script>
-        $(document).ready(function () {
-            $("#divMessage").alert(2000).slideUp(500);
-        });
 
         //$('#btnSubmit').click(function (){
         //    if($("#Role_ID").val() == '')

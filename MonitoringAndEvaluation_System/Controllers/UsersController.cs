@@ -8,6 +8,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Utility;
 using static ModelLayer.MainModel;
 using static ModelLayer.MainViewModel;
 
@@ -46,17 +47,17 @@ namespace MonitoringAndEvaluation_System.Controllers
                     Session["RoleID"] = loginUserDataModel.RoleID;
                     Session["Email"] = loginUserDataModel.Email;
                     FormsAuthentication.SetAuthCookie(loginUserDataModel.FullName, false);
-                    ModelState.AddModelError(string.Empty, "User Created Successfully");
                     return RedirectToAction("Admin", "Dashboard");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid Credentials");
+                    ShowMessage(MessageBox.Error, OperationType.Error, "Invalid Credentials");
                     return View(model);
                 }
             }
             catch (Exception ex1)
             {
+                ShowMessage(MessageBox.Warning, OperationType.Warning, ex1.Message);
             }
             //return RedirectToAction("UserCreate");
             return RedirectToAction("Login", "Users");
@@ -87,21 +88,22 @@ namespace MonitoringAndEvaluation_System.Controllers
                 userVM.comboRoles = ObjUserMngBL.getRoleBL();
                 if (ModelState.IsValid == false)
                 {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(userVM);
                 }
                 StatusModel status = ObjUserMngBL.userCreateBL(userVM);
                     if (status.status)
                     {
-                      TempData["Message"] = "Record Saved Successfully.";
+                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.Successfully);
                     }
                     else
                     {
-                      
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "User Not Created");
                     }
-                  
             }
             catch (Exception ex1)
             {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             return RedirectToAction("UserView");
         }
@@ -130,23 +132,25 @@ namespace MonitoringAndEvaluation_System.Controllers
                 userEditVM.comboRoles = ObjUserMngBL.getRoleBL();
                 if (ModelState.IsValid == false)
                 {
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.Successfully);
                     return View(userEditVM);
                 }
                 StatusModel status = ObjUserMngBL.userEditBL(userEditVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Saved Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.Successfully); ;
                 }
                 else
                 {
-
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
 
             }
             catch (Exception ex1)
             {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
-            return RedirectToAction("UserView");
+            return View(new EditUserVM());
         }
         public ActionResult UserView()
         {

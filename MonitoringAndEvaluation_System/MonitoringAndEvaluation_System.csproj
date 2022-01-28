@@ -168,6 +168,7 @@
     <Content Include="Content\Template\css\app.css" />
     <Content Include="Content\Template\css\bootstrap-rtl.css" />
     <Content Include="Content\Template\css\bootstrap.css" />
+    <Content Include="Content\Template\css\style.css" />
     <Content Include="Content\Template\css\theme-a.css" />
     <Content Include="Content\Template\css\theme-b.css" />
     <Content Include="Content\Template\css\theme-c.css" />
@@ -434,6 +435,10 @@
     <ProjectReference Include="..\ModelLayer\ModelLayer.csproj">
       <Project>{82D48388-F45F-4827-BE68-A1DB700300E7}</Project>
       <Name>ModelLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{0ED5E692-52B0-4A31-AD09-5D0616DFE961}</Project>
+      <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -584,28 +584,37 @@ namespace ModelLayer
             public EditReleasedBudgetVM()
             {
                 comboProjects = new List<ComboProject>();
+                comboSubProjects = new List<ComboSubProject>();
+                comboBatch = new List<ComboBatch>();
             }
             //Common Filed
-
             [Range(1, int.MaxValue, ErrorMessage = "Please Select Project")]
             public int Project_ID { get; set; }
 
             [Required(ErrorMessage = "Please Select SubProject")]
             public int SubProject_ID { get; set; }
+            [Required(ErrorMessage = "Please Select Batch")]
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
 
             //ReleasedBudget
             public int ReleasedBudgetID { get; set; }
-            
-            [Required(ErrorMessage = "Select Date")]
+
+            [Required(ErrorMessage = "Select From Date")]
             [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public System.DateTime ReleasedDate { get; set; }
+            public System.DateTime ReleasedFromDate { get; set; }
+
+            [Required(ErrorMessage = "Select To Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime ReleasedToDate { get; set; }
             [Range(1, int.MaxValue, ErrorMessage = "Please Enetr Released-Budget")]
             public long ReleasedBudget { get; set; }
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }
+            public List<ComboSubProject> comboSubProjects { get; set; }
+            public List<ComboBatch> comboBatch { get; set; }
         }
         public partial class GetAllReleasedBudgetVM
         {
@@ -963,7 +972,6 @@ namespace ModelLayer
         }
 
         #endregion
-
         #region Indicator
         public partial class IndicatorDataTypeVM
         {
@@ -976,8 +984,37 @@ namespace ModelLayer
             public float FLOAT { get; set; }
             public string BOOL { get; set; }
         }
-         
 
+
+        #endregion
+        #region Batch
+        //CreateBatch
+        public partial class CreateBatchVM
+        {
+            public CreateBatchVM()
+            {
+                comboProjects = new List<ComboProject>();
+                comboSubProjects = new List<ComboSubProject>();
+            }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int BatchID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public string BatchName { get; set; }
+            public List<ComboProject> comboProjects { get; set; }
+            public List<ComboSubProject> comboSubProjects { get; set; }
+        }
+
+        //GetAllBatches
+        public partial class GetAllBatchVM
+        {
+            public string ProjectName { get; set; }
+            public string SubProjectName { get; set; }
+            public int BatchID { get; set; }
+            public int ID { get; set; } 
+            public string BatchName { get; set; }
+          
+        }
         #endregion
 
     }

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BatchManagementBL.cs" />
     <Compile Include="FinanceManagementBL.cs" />
     <Compile Include="IndicatorBL.cs" />
     <Compile Include="IssuesManagementBL.cs" />

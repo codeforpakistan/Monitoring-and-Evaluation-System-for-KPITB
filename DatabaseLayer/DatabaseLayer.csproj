@@ -74,6 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BatchManagementDL.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="FinanceManagementDL.cs" />
     <Compile Include="IgnorePropertyAttribute.cs" />

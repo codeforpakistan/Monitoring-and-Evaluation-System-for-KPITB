@@ -4,3 +4,14 @@ D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\ModelLayer\obj\Deb
 D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\ModelLayer\obj\Debug\ModelLayer.csproj.CoreCompileInputs.cache
 D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\ModelLayer\obj\Debug\ModelLayer.dll
 D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\ModelLayer\obj\Debug\ModelLayer.pdb
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\ModelLayer\bin\Debug\ModelLayer.dll
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\ModelLayer\bin\Debug\ModelLayer.pdb
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\ModelLayer\obj\Debug\ModelLayer.csproj.AssemblyReference.cache
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\ModelLayer\obj\Debug\ModelLayer.csproj.CoreCompileInputs.cache
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\ModelLayer\obj\Debug\ModelLayer.dll
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\ModelLayer\obj\Debug\ModelLayer.pdb
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\ModelLayer\bin\Debug\ModelLayer.dll
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\ModelLayer\bin\Debug\ModelLayer.pdb
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\ModelLayer\obj\Debug\ModelLayer.csproj.CoreCompileInputs.cache
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\ModelLayer\obj\Debug\ModelLayer.dll
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\ModelLayer\obj\Debug\ModelLayer.pdb

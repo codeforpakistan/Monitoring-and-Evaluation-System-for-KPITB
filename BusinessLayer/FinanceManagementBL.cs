@@ -17,6 +17,12 @@ namespace BusinessLayer
         {
             return FinanceManagementDL.releasedCreateViewDL(m);
         }
+        //GetSingleReleasedBuget For Edit
+        public EditReleasedBudgetVM getSignleReleasedBudgetBL(int ReleasedBudgetID)
+        {
+            EditReleasedBudgetVM m = FinanceManagementDL.getSignleReleasedBudgetDL(ReleasedBudgetID);
+            return m;
+        }
         //GetAllReleasedBudget
         public List<GetAllReleasedBudgetVM> getAllReleasedBudgetBL(int LoginRoleID, int LoginUserID)
         {

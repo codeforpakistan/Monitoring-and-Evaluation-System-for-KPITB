@@ -49,6 +49,21 @@ namespace DatabaseLayer
             }
             return status;
         }
+        //GetSingleIssue
+        public static EditReleasedBudgetVM getSignleReleasedBudgetDL(int ReleasedBudgetID)
+        {
+            EditReleasedBudgetVM model = new EditReleasedBudgetVM();
+            using (IDbConnection Con = new SqlConnection(Common.ConnectionString))
+            {
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@ReleasedBudgetID", ReleasedBudgetID);
+                model = Con.Query<EditReleasedBudgetVM>("sp_GetSingleReleasedBudget", ObjParm, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                Con.Close();
+                Con.Dispose();
+            }
+            return model;
+        }
         public static StatusModel expenditureCreateViewDL(CreateViewExpenditureBudgetVM m)
         {
             StatusModel status = new StatusModel();

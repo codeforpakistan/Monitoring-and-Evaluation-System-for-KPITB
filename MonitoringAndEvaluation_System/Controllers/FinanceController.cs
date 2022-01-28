@@ -51,6 +51,29 @@ namespace MonitoringAndEvaluation_System.Controllers
             //getProject();
             return RedirectToAction("ReleasedBudgetCreateView");
         }
+
+        //ReleasedBudgetEdit
+        [HttpGet]
+        public ActionResult ReleasedBudgetEdit(int ReleasedBudgetID)
+        {
+            EditReleasedBudgetVM getReleasedBudget = new EditReleasedBudgetVM();
+
+            try
+            {
+
+                getReleasedBudget = new FinanceManagementBL().getSignleReleasedBudgetBL(ReleasedBudgetID);
+                // getAllIssue();
+                ComboReleasedBudgetEdit(getReleasedBudget);
+               
+
+            }
+            catch (Exception)
+            {
+            }
+
+            return View(getReleasedBudget);
+        }
+
         [HttpGet]
         public ActionResult ExpenditureBudgetCreateView()
         {
@@ -117,6 +140,15 @@ namespace MonitoringAndEvaluation_System.Controllers
             expenditureVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
             ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
             expenditureVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+        }
+        public void ComboReleasedBudgetEdit(EditReleasedBudgetVM getReleasedBudgetVM)
+        {
+            //Get ProjectType list
+            getReleasedBudgetVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
+            getReleasedBudgetVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            getReleasedBudgetVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
         }
     }
 }

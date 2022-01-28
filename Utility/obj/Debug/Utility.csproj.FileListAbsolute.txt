@@ -4,3 +4,8 @@ D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\Utility\obj\Debug\
 D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\Utility\obj\Debug\Utility.dll
 D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\Utility\obj\Debug\Utility.pdb
 D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\Utility\obj\Debug\Utility.csproj.AssemblyReference.cache
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\Utility\bin\Debug\Utility.dll
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\Utility\bin\Debug\Utility.pdb
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\Utility\obj\Debug\Utility.csproj.CoreCompileInputs.cache
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\Utility\obj\Debug\Utility.dll
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\Utility\obj\Debug\Utility.pdb

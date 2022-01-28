@@ -1,0 +1,242 @@
+﻿@model ModelLayer.MainViewModel.CreateBatchVM
+@{
+    ViewBag.Title = "Add New Issue";
+    List<ModelLayer.MainViewModel.GetAllIssue> _LstAllIssues = (List<ModelLayer.MainViewModel.GetAllIssue>)ViewBag.LstAllIssues;
+}
+
+<!-- START row-->
+<div class="row">
+    <div class="col-xl-12">
+        @using (Html.BeginForm("BatchCreateView", "Batch", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <!-- START card-->
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">Project Batch</div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Project </label>
+                                @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
+                                @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Sub Project</label>
+                                @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
+                                @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Batch Name</label>
+                                
+                                @Html.TextBoxFor(model => model.BatchName, new { @class = "form-control", @placeholder = "Enter Batch Name" })
+                                @Html.ValidationMessageFor(m => m.BatchName, "", new { @class = "parsley-required" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="required">* Required fields</div>
+                        <hr />
+                        <div class="float-right">
+                            <button class="btn btn-primary" type="submit">Save</button>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="card card-default">
+                            <div class="row">
+                                <div class="col-lg-12 ">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <table class="table table-striped my-4 w-100  table-hover" id="datatable2">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th>
+                                                            ID
+                                                        </th>
+                                                        <th>
+                                                            Project Name
+                                                        </th>
+                                                        <th>
+                                                            SubProject Name
+                                                        </th>
+
+                                                        <th>
+                                                           Batch Name
+                                                        </th>
+                                                        
+                                                        <th>
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                @*<tbody>
+                                                    @{
+                                                        foreach (var item in _LstAllIssues)
+                                                        {
+                                                            <tr>
+                                                                @Html.HiddenFor(m => item.IssuesID)
+                                                                <td>
+                                                                    @item.ID
+                                                                </td>
+                                                                <td>
+                                                                    @item.IssueDescription
+                                                                </td>
+                                                                <td>
+                                                                    @item.IssueDate
+                                                                </td>
+                                                                <td>
+                                                                    @item.ActionTaken
+                                                                </td>
+                                                                <td>
+                                                                    @item.Remarks
+                                                                </td>
+
+                                                                <td>
+
+                                                                    @Html.ActionLink("Edit", "IssueEdit", new { IssuesID = item.IssuesID }, new { @class = "mb-1 btn btn-warning" })
+
+                                                                </td>
+
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </tbody>*@
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- END card-->
+        }
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function ()
+        {
+
+        });
+
+        $("#RecruitedFromHRDate").on('change', function () {
+            debugger
+            DateCompare();
+        });
+
+        $("#RecruitedToHRDate").on('change', function () {
+            debugger
+            DateCompare();
+        });
+
+        function DateCompare() {
+            var _RecruitedToHRDate = $('#RecruitedToHRDate').val();
+
+            var _RecruitedFromHRDate = $('#RecruitedFromHRDate').val();
+            if (_RecruitedToHRDate != '') {
+                if (_RecruitedFromHRDate > _RecruitedToHRDate)
+                {
+
+                    $("#spanRecruitedFromHRDate").text("From-HRDate should not be greater then  To-HRDate")
+                    return false;
+                }
+                else
+                {
+                    $("#spanRecruitedFromHRDate").text("")
+                    return false;
+                }
+            }
+        }
+
+            $("#Project_ID").on('change', function () {
+                var _Project_ID = $(this).find("option:selected").val();
+                $.ajax({
+                     type: 'POST',
+                     url: '@Url.Action("ProjectCheckUmbrella","Project")',
+                     dataType: 'json',
+                    data: { ProjectID: _Project_ID },  // Same Parameter with Action
+                    success: function (Value) {
+                        debugger;
+                        if (Value != 1)  // Non-Umbrella
+                        {
+                            $("#SubProject_ID").prop("disabled", true);
+                            $("#Batch_ID").prop("disabled", true);
+
+                            $("#SubProject_ID").empty();
+                            $("#Batch_ID").empty();
+
+                            $("#SubProject_ID").append('<option value="' + 0 + '">' +
+                                "Please Select SubProject" + '</option>');
+                            $("#Batch_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Batch" + '</option>');
+
+                        } else {
+                                      $.ajax({
+                                      //url: "/ManageStock/GetProductNameCombo" + Category_ID,
+                                       type: 'POST',
+                                       url: '@Url.Action("ClickProjectCombo","Project")',
+                                       dataType: 'json',
+                                       data: { Project_ID: _Project_ID },  // Same Parameter with Action
+                                       success: function (SubProjectLst)
+                                       {
+                                           $("#SubProject_ID").prop("disabled", false);
+                                           $("#Batch_ID").prop("disabled", false);
+                                           debugger;
+                                           $("#SubProject_ID").empty();
+                                           $.each(SubProjectLst, function (i, Njaeeb)
+                                           {
+                                               $("#SubProject_ID").append('<option value="' + Njaeeb.SubProjectID + '">' +
+                                                   Njaeeb.SubProjectName + '</option>');
+                                            });
+                                        },
+                                        error: function (ex)
+                                        {
+                                           alert('Failed to Retrieve Sub-Project Data:  ' + ex);
+                                        }
+                                  });
+                        }
+                 },
+                 error: function (ex) {
+                     console.log('Failed to Retrieve Sub-Project Data:  ' + ex);
+                 }
+                });//Ajax_End
+            });
+
+        $("#SubProject_ID").on('change', function () {
+            var _SubProject_ID = $(this).find("option:selected").val();
+
+                $.ajax({
+                     type: 'POST',
+                     url: '@Url.Action("ClickSubProjectCombo","Project")',
+                     dataType: 'json',
+                    data: { SubProject_ID: _SubProject_ID },  // Same Parameter with Action
+                    success: function (BatchLst) {
+                        debugger;
+                        $("#Batch_ID").empty();
+                        if (BatchLst == 0) {
+                            $("#Batch_ID").prop("disabled", true);
+                            $("#Batch_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Batch" + '</option>');
+                        } else {
+                            $("#Batch_ID").prop("disabled", false);
+                            $.each(BatchLst, function (i, Aqib) {
+                                $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
+                                    Aqib.BatchName + '</option>');
+                            });
+                        }
+                 },
+                 error: function (ex) {
+                     console.log('Failed to Retrieve Batch Data:  ' + ex);
+                 }
+                });//Ajax_End
+            });
+    </script>
+}

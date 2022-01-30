@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Utility;
 using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
@@ -30,6 +31,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 if (ModelState.IsValid == false)
                 {
                     getAllIssue();
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(issueVM);
                 }
 
@@ -37,16 +39,16 @@ namespace MonitoringAndEvaluation_System.Controllers
                 StatusModel status = new IssuesManagementBL().issueCreateBL(issueVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Saved Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             getAllIssue();
             return RedirectToAction("IssueCreateView");
@@ -78,6 +80,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(issueVM);
                 }
                 getProjectEdit(issueVM);
@@ -86,16 +89,16 @@ namespace MonitoringAndEvaluation_System.Controllers
                 StatusModel status = new IssuesManagementBL().issueEditBL(issueVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Updeted Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.UpdateSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             getAllIssue();
             return RedirectToAction("IssueCreateView");

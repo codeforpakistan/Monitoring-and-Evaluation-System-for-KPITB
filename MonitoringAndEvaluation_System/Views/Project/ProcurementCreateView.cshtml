@@ -11,7 +11,10 @@
         <!-- START card-->
         <div class="card card-default">
             <div class="card-header">
-                <div class="card-title">Add New Procurement</div>
+                <div class="card-title">
+                    <h4>Add New Procurement</h4>
+                </div>
+
             </div>
             <div class="card-body">
                 <!--Foum-->
@@ -94,14 +97,12 @@
                                                     <th>
                                                         ID
                                                     </th>
-                                                    <th class="col-lg-3">
-                                                        Planned Procurement
-                                                    </th>
+                                                   
                                                     <th class="col-lg-3">
                                                         Achieved Procurement
                                                     </th>
                                                     <th class="col-lg-3">
-                                                        Procurement %
+                                                        Date
                                                     </th>
                                                     <th class="col-lg-5">
                                                         Remarks
@@ -120,15 +121,13 @@
                                                             <td>
                                                                 @item.ID
                                                             </td>
-                                                            <td>
-                                                                @item.PlannedProcurement
-                                                            </td>
+                                                            
                                                             <td>
                                                                 @item.AchievedProcurement
                                                             </td>
 
                                                             <td>
-                                                                @item.ProcurementPercent
+                                                                @item.ProcurementFromDate.ToShortDateString()
                                                             </td>
                                                             <td>
                                                                 @item.Remarks

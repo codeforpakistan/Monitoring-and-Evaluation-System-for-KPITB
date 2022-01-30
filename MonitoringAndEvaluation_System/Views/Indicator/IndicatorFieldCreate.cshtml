@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label class="col-form-label">Select Indicator *</label>
-                                @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Select Risk Status", new { @class = " form-control ", @placeholder = "Select Indicator", @id = "idIndicatorName", @name = "IndicatorName" })
+                                @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Select IndicatorName", new { @class = " form-control ", @placeholder = "Select Indicator", @id = "idIndicatorName", @name = "IndicatorName" })
                                 @Html.ValidationMessageFor(m => m.Indicator_ID, "", new { @class = "parsley-required" })
                                 <span name="spanidIndicatorName" id="spanidIndicatorName" class="text-danger"></span>
 
@@ -42,7 +42,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Indicator Field Name *</label>
-                                <input class="form-control" id="idIndicatorFieldName" type="text" name="IndicatorFieldName" placeholder="Enter Risk Name">
+                                <input class="form-control" id="idIndicatorFieldName" type="text" name="IndicatorFieldName" placeholder="Enter Indicator Field Name">
                                 <span name="spanidIndicatorFieldName" id="spanidIndicatorFieldName" class="text-danger"></span>
                             </div>
                         </div>

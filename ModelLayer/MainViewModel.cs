@@ -40,9 +40,9 @@ namespace ModelLayer
             [StringLength(12, ErrorMessage = "Please Enter Contact without Dashes", MinimumLength = 11)]
             public string ContactNo { get; set; }
 
-            [Required(ErrorMessage = "Please Fill CNIC No")]
-            [StringLength(13, ErrorMessage = "Please Enter CNIC without Dashes.", MinimumLength = 13)]
-            public string CNICNo { get; set; }
+            //[Required(ErrorMessage = "Please Fill CNIC No")]
+            //[StringLength(13, ErrorMessage = "Please Enter CNIC without Dashes.", MinimumLength = 13)]
+            //public string CNICNo { get; set; }
 
             [NotMapped] // Does not effect with your database
             [Compare("ConfirmPassword")]
@@ -76,7 +76,7 @@ namespace ModelLayer
             //[EmailAddress(ErrorMessage = "Invalid Email Address")]
             public string Email { get; set; }
             public string ContactNo { get; set; }
-            public string CNICNo { get; set; }
+            //public string CNICNo { get; set; }
             //public string Photo { get; set; }
             public string Address { get; set; }
 
@@ -536,9 +536,9 @@ namespace ModelLayer
             public int ID { get; set; }
             public int PlannedHR { get; set; }
             public int RecruitedHR { get; set; }
-            public double RecruitedHRPercent { get; set; }
+            public DateTime RecruitedFromHRDate { get; set; }
             public string Remarks { get; set; }
-            public System.DateTime RecruitedHRDate { get; set; }
+            
         }
         #endregion
         #region Finance
@@ -631,7 +631,7 @@ namespace ModelLayer
             public string SubProjectName { get; set; }
             public string BatchName { get; set; }
             public int ReleasedBudgetID { get; set; }
-            public System.DateTime ReleasedDate { get; set; }
+            public System.DateTime ReleasedFromDate { get; set; }
             public long ReleasedBudget { get; set; }
             public string Remarks { get; set; }
 
@@ -756,7 +756,7 @@ namespace ModelLayer
             public int AchievedProcurementID { get; set; }
             public int AchievedProcurement { get; set; }
             public double ProcurementPercent { get; set; }
-            public System.DateTime ProcurementDate { get; set; }
+            public System.DateTime ProcurementFromDate { get; set; }
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }
         }
@@ -846,7 +846,6 @@ namespace ModelLayer
                 comboBatch = new List<ComboBatch>();
             }
             public int LinkID { get; set; }
-
             [Range(1, int.MaxValue, ErrorMessage = "Please Select Project")]
             public int Project_ID { get; set; }
             [Required(ErrorMessage = "Please Select Batch")]
@@ -858,6 +857,17 @@ namespace ModelLayer
             public List<ComboProject> comboProjects { get; set; }
             public List<ComboIndicator> comboIndicator { get; set; }
             public List<ComboBatch> comboBatch { get; set; }
+        }
+        public partial class GetAllLinkIndicatorVM
+        {
+            public int LinkID { get; set; }
+            public int ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int Indicator_ID { get; set; }
+            public string ProjectName { get; set; }
+            public string BatchName { get; set; }
+            public string IndicatorName { get; set; }
+            
         }
         public partial class CreateIndicatorFieldVM
         {

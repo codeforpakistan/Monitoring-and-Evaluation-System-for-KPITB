@@ -45,36 +45,37 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-lg-5">
+                            @*<div class="col-lg-5">
                                 <label for="validationServer04">CNIC No</label>
                                 @Html.TextBoxFor(model => model.CNICNo, new { @class = "form-control", @placeholder = "Enter CNIC No" })
                                 @Html.ValidationMessageFor(m => m.CNICNo, "", new { @class = "parsley-required" })
-                            </div>
+                            </div>*@
+                            
+                        </div>
+                        <div class="form-row">
                             <div class="col-lg-5">
                                 <label for="validationServer05">Contact No</label>
                                 @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control", @placeholder = "Contact No" })
                                 @Html.ValidationMessageFor(m => m.ContactNo, "", new { @class = "parsley-required" })
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="col-lg-5">
                                 <label for="validationServer04">Title</label>
                                 @Html.DropDownListFor(m => m.Role_ID, new SelectList(Model.comboRoles, "RoleID", "RoleName"), "Please Select UserTitle", new { @class = "select2 form-control ", @placeholder = "Select Role" })
                                 @Html.ValidationMessageFor(m => m.Role_ID, "", new { @class = "parsley-required" })
                             </div>
                             @*<div class="col-lg-5">
-                                      <label for="validationServer04">Profile Picture</label>
-                                      <input class="form-control " id="@Model.Photo" name="@Model.Photo" type="file" placeholder="" >
-                                      <div class="invalid-feedback">Please Upload User image.</div>
-                                  </div>*@
+            <label for="validationServer04">Profile Picture</label>
+            <input class="form-control " id="@Model.Photo" name="@Model.Photo" type="file" placeholder="" >
+            <div class="invalid-feedback">Please Upload User image.</div>
+        </div>*@
 
-                        <div class="col-lg-10">
-                            <label for="validationServer05">Address</label>
+                            <div class="col-lg-10">
+                                <label for="validationServer05">Address</label>
 
-                            <div class="invalid-feedback">Please Enter Address.</div>
-                            @Html.TextAreaFor(model => model.Address, new { @class = "form-control", @placeholder = "Address" })
-                            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "parsley-required" })
-                        </div>
+                                <div class="invalid-feedback">Please Enter Address.</div>
+                                @Html.TextAreaFor(model => model.Address, new { @class = "form-control", @placeholder = "Address" })
+                                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "parsley-required" })
+                            </div>
                         </div>
                         <br />
                         <button class="btn btn-primary" type="submit" id="btnSubmit">Submit</button>

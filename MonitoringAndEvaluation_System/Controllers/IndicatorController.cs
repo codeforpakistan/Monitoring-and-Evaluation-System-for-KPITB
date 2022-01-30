@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Utility;
 using static ModelLayer.ComboModel;
 using static ModelLayer.MainViewModel;
 
@@ -30,21 +31,22 @@ namespace MonitoringAndEvaluation_System.Controllers
                 if (ModelState.IsValid == false)
                 {
                     getAllIndicator();
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(indicatorVM);
                 }
                 StatusModel status = new IndicatorBL().indicatorCreateBL(indicatorVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Saved Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             getAllIndicator();
             return RedirectToAction("IndicatorCreateView");
@@ -81,19 +83,20 @@ namespace MonitoringAndEvaluation_System.Controllers
                 StatusModel status = new IndicatorBL().indicatorFeildCreateBL(fieldIndicatorLst);
                 if (status.status)
                 {
-                    TempData["Message"] = status.statusDetail;
-                    TempData.Keep("Message");
-                    //ModelState.AddModelError("OK",status.statusDetail);
+                    //TempData["Message"] = status.statusDetail;
+                    //TempData.Keep("Message");
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                     return Json("false");
                 }
 
             }
             catch (Exception ex1)
             {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
                 return Json("false");
             }
             return Json("true");
@@ -104,6 +107,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             CreateLinkIndicatorVM linkIndicatorVM = new CreateLinkIndicatorVM();
             ComboForLink(linkIndicatorVM);
+            getAllLinkIndicator();
             return View(linkIndicatorVM);
         }
 
@@ -114,22 +118,23 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
-
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(linkIndicatorVM);
                 }
                 StatusModel status = new IndicatorBL().linkIndicatorCreateBL(linkIndicatorVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Saved Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
+
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             getAllIndicator();
             return RedirectToAction("LinkIndicator");
@@ -150,21 +155,22 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(valueVM);
                 }
                 StatusModel status = new IndicatorBL().indicatorFieldValueCreateBL(valueVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Saved Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             //getAllIndicator();
             return View(valueVM);
@@ -210,6 +216,11 @@ namespace MonitoringAndEvaluation_System.Controllers
             CreateIndicatorValueVM m = new CreateIndicatorValueVM();
             m.dataTypeVMLst = new IndicatorBL().getndicatorDataTypeBL(IndicatorID);
             return Json(m, JsonRequestBehavior.AllowGet);
+        }
+
+        private void getAllLinkIndicator()
+        {
+            ViewBag.LstAllLinkIndicator = new IndicatorBL().getALLLinkIndicatorBL();
         }
         #endregion
     }

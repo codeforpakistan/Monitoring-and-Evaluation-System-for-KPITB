@@ -12,7 +12,7 @@
         <!-- START card-->
         <div class="card card-default">
             <div class="card-header">
-                <div class="card-title">Add New Indicator</div>
+                <div class="card-title"><h4>Add New Indicator</h4></div>
             </div>
             <div class="card-body">
                 <div class="form-group">
@@ -53,7 +53,7 @@
                                                        Indicator Name
                                                     </th>
                                                     
-                                                    <th>
+                                                    <th class="col-lg-1">
                                                         Action
                                                     </th>
                                                 </tr>
@@ -62,14 +62,17 @@
                                                 @{
                                                     foreach (var item in _LstAllIndicators)
                                                     {
-                                                        <tr>
-                                                            @Html.HiddenFor(m => item.IndicatorID)
-                                                            <td>
-                                                                @item.ID
-                                                            </td>
-                                                            <td>
-                                                                @item.IndicatorName
-                                                            </td>
+                                                    <tr>
+                                                             @Html.HiddenFor(m => item.IndicatorID)
+                                                    <td>
+                                                        @item.ID
+                                                    </td>
+                                                     <td>
+                                                         @item.IndicatorName
+                                                     </td>
+                                                     <td>
+                                                         @Html.ActionLink("Edit", "IndicatorEdit", new { IndicatorID = item.IndicatorID }, new { @class = "mb-1 btn btn-warning" })
+                                                     </td>
                                                         </tr>
                                                         }
                                                     }

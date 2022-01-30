@@ -43,7 +43,7 @@ namespace DatabaseLayer
         }
 
         #endregion
-        //IssuesCreate
+        //IndicatorCreate
         public static StatusModel indicatorCreateDL(CreateIndicatorVM m)
         {
             StatusModel status = new StatusModel();
@@ -86,7 +86,7 @@ namespace DatabaseLayer
             }
         }
 
-        //IssuesCreate
+        //LinkIndicatorCreate
         public static StatusModel linkIndicatorCreateDL(CreateLinkIndicatorVM m)
         {
             StatusModel status = new StatusModel();
@@ -117,7 +117,20 @@ namespace DatabaseLayer
             }
             return status;
         }
+        //GetALLLinkIndicator
+        public static List<GetAllLinkIndicatorVM> getALLLinkIndicatorDL()
+        {
+            List<GetAllLinkIndicatorVM> getVMLst = new List<GetAllLinkIndicatorVM>();
 
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                getVMLst = conn.Query<GetAllLinkIndicatorVM>("sp_GetAllLinkIndicator", commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return getVMLst;
+            }
+        }
 
         #region indicatorFieldValueCreateBL
         public static StatusModel indicatorFieldValueCreateDL(DataTable dt, CreateIndicatorValueVM m)

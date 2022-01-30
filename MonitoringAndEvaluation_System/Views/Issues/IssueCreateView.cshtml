@@ -12,7 +12,7 @@
             <!-- START card-->
             <div class="card card-default">
                 <div class="card-header">
-                    <div class="card-title">Project Issue Log</div>
+                    <div class="card-title"><h4>Project Issue Log</h4></div>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
@@ -113,7 +113,7 @@
                                                                     @item.IssueDescription
                                                                 </td>
                                                                 <td>
-                                                                    @item.IssueDate
+                                                                    @item.IssueDate.ToShortDateString()
                                                                 </td>
                                                                 <td>
                                                                     @item.ActionTaken

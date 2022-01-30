@@ -40,7 +40,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
-                    TempData["Message"] = "Record Saved Successfully.";
+                    
                 }
                 else
                 {
@@ -70,6 +70,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(expenditureVM);
                 }
 
@@ -77,16 +78,16 @@ namespace MonitoringAndEvaluation_System.Controllers
                 StatusModel status = new FinanceManagementBL().expenditureCreateViewBL(expenditureVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Saved Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             //getProject();
             return RedirectToAction("ExpenditureBudgetCreateView");

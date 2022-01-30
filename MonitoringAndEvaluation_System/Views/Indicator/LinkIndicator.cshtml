@@ -1,53 +1,109 @@
 ﻿@model ModelLayer.MainViewModel.CreateLinkIndicatorVM
 
 @{
-    ViewBag.Title = "Create User";
+    ViewBag.Title = "Link Indicator";
+    
+    List<ModelLayer.MainViewModel.GetAllLinkIndicatorVM> _LstAllLinkIndicators = (List<ModelLayer.MainViewModel.GetAllLinkIndicatorVM>)ViewBag.LstAllLinkIndicator;
 }
 <!-- START card-->
 <div class="card card-default">
-    <div class="card-header">User Registration</div>
+    <div class="card-header"><h4>Link Indicator</h4></div>
     <div class="card-body">
         @using (Html.BeginForm("LinkIndicator", "Indicator", FormMethod.Post, new { @class = "form-horizontal" }))
         {
 
             <div class="form-group row">
                 <label class="col-md-1 col-form-label"></label>
-                <div class="col-md-8 offset-1">
+                <div class="col-md-12">
                     <div class="form-row ">
-                        <div class="col-lg-8 ">
-                            <label class="col-form-label">Project*</label>
+
+                        <div class="col-lg-3">
+                            <label for="sel1">Project*</label>
                             @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
                             @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                         </div>
-
-                    </div>
-                    <div class="form-row">
-                        <div class="col-lg-8 ">
+                        <div class="col-lg-3">
                             <label for="sel1">Select Batch/Cycle/Cohort</label>
                             @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), "Please Select Category", new { @class = "select2 form-control " })
                             @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required", @id = "spanCategory_ID" })
                         </div>
-                        <div class="col-lg-8 ">
+                        <div class="col-lg-3">
                             <label for="sel1">Select Indicator</label>
                             @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Please Select Project Type", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
                             @Html.ValidationMessageFor(m => m.Indicator_ID, "", new { @class = "parsley-required", @id = "spanProjectType_ID" })
                         </div>
+                        <div class="col-lg-3">
+                            <label for="sel1" style="color:transparent">]</label>
+                            <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Link Indicator</button>
+                        </div>  
                     </div>
+             </div>
+            </div>
+            <div class="card card-default">
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-striped my-4 w-100  table-hover" id="datatable2">
+                                    <thead>
+                                        <tr>
 
-                    <br />
-                    <button class="btn btn-primary" type="submit" id="btnSubmit">Link Indicator</button>
-                    <!--Popup Msg-->
-                    @{
-                        if (TempData["Message"] != null)
-                        {
-                            <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
-                                <strong>Well done!</strong>You successfully read this important alert message.
+                                            <th>
+                                                ID
+                                            </th>
+                                            <th>
+                                                Project Name
+                                            </th>
+                                           
+                                            <th>
+                                                Batch
+                                            </th>
+                                            <th>
+                                                Indicator Name
+                                            </th>
+                                            
+                                            <th>
+                                                Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            foreach (var item in _LstAllLinkIndicators)
+                                            {
+                                                <tr>
+                                                    @Html.HiddenFor(m => item.LinkID)
+                                                    <td>
+                                                        @item.ID
+                                                    </td>
+
+                                                    <td>
+                                                        @item.ProjectName
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        @item.BatchName
+                                                    </td>
+                                                    <td>
+                                                        @item.IndicatorName
+                                                    </td>
+                                                    
+                                                    <td>
+
+                                                        @Html.ActionLink("Edit", "LinkIndicatorEdit", new { LinkID = item.LinkID }, new { @class = "mb-1 btn btn-warning" })
+
+                                                    </td>
+
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
-                        }
-                    }
+                        </div>
+                    </div>
                 </div>
             </div>
-
         }
     </div>
 </div>

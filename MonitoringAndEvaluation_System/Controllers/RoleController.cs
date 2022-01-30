@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Utility;
 using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
@@ -27,22 +28,23 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(roleVM);
                 }
 
                 StatusModel status = new RoleManagementBL().roleCreateBL(roleVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Saved Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             getAllRoles();
             return RedirectToAction("RoleCreateView");
@@ -70,22 +72,23 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(editRoleVM);
                 }
 
                 StatusModel status = new RoleManagementBL().roleEditBL(editRoleVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Updeted Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.UpdateSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             getAllRoles();
             return RedirectToAction("RoleCreateView");

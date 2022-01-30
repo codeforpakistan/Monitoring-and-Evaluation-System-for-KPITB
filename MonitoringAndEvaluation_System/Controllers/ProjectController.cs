@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Utility;
 using static ModelLayer.ComboModel;
 using static ModelLayer.MainModel;
 using static ModelLayer.MainViewModel;
@@ -110,19 +111,18 @@ namespace MonitoringAndEvaluation_System.Controllers
                 StatusModel status = ObjProjectMngBL.projectCreateBL(ProjectVM);
                 if (status.status)
                 {
-                    TempData["Message"] = status.statusDetail;
-                    TempData.Keep("Message");
-                    //ModelState.AddModelError("OK",status.statusDetail);
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);    
                     return Json("false");
                 }
 
             }
             catch (Exception ex1)
             {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
                 return Json("false");
             }
             return Json("true");
@@ -178,6 +178,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 {
                     ComboProject(recruitedHRVM);
                     getAllRecruitedHR();
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(recruitedHRVM);
                 }
 
@@ -185,16 +186,16 @@ namespace MonitoringAndEvaluation_System.Controllers
                 StatusModel status = new ProjectManagementBL().recruitedCreateBL(recruitedHRVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Saved Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             ComboProject(recruitedHRVM);
             getAllRecruitedHR();
@@ -223,22 +224,23 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(editRecruitedHRVM);
                 }
                 editRecruitedHRVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new ProjectManagementBL().recruitedHREditBL(editRecruitedHRVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Updeted Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.UpdateSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             getProject();
             return RedirectToAction("RecruitedHRCreate");
@@ -260,6 +262,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(procurementVM);
                 }
 
@@ -267,16 +270,16 @@ namespace MonitoringAndEvaluation_System.Controllers
                 StatusModel status = new ProjectManagementBL().procurementCreateBL(procurementVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Saved Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             return RedirectToAction("ProcurementCreateView");
             //return View();
@@ -304,6 +307,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(editProcurementVM);
                 }
                 getProject();
@@ -312,16 +316,16 @@ namespace MonitoringAndEvaluation_System.Controllers
                 StatusModel status = new ProjectManagementBL().procurementEditBL(editProcurementVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Updeted Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.UpdateSuccessfully);
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             getProject();
             return RedirectToAction("ProcurementCreateView");

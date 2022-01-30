@@ -10,7 +10,7 @@
         <!-- START card-->
         <div class="card card-default">
             <div class="card-header">
-                <div class="card-title">Add Released Budget</div>
+                <div class="card-title"><h4> Add Released Budget</h4></div>
             </div>
             <div class="card-body">
                 <div class="form-group">
@@ -79,10 +79,10 @@
                                                         Project Name
                                                     </th>
                                                     <th>
-                                                        SubProject Name
+                                                        SubProject
                                                     </th>
                                                     <th>
-                                                        Batch Name
+                                                        Batch 
                                                     </th>
                                                     <th>
                                                         Released Budget
@@ -122,7 +122,7 @@
                                                                 @item.ReleasedBudget
                                                             </td>
                                                             <td>
-                                                                @item.ReleasedDate
+                                                                @item.ReleasedFromDate.ToShortDateString()
                                                             </td>
                                                             <td>
                                                                 @item.Remarks

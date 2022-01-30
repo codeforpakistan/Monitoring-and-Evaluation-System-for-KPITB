@@ -79,14 +79,12 @@
                                                         <th>
                                                             ID
                                                         </th>
-                                                        <th>
-                                                            Planned-HR
-                                                        </th>
+                                                        
                                                         <th>
                                                             Recruited-HR
                                                         </th>
                                                         <th>
-                                                            Recruited %
+                                                            Recruited Date
                                                         </th>
                                                         <th class="col-lg-4">
                                                             Remarks
@@ -105,15 +103,13 @@
                                                                 <td>
                                                                     @item.ID
                                                                 </td>
-                                                                <td>
-                                                                    @item.PlannedHR
-                                                                </td>
+                                                                
                                                                 <td>
                                                                     @item.RecruitedHR
                                                                 </td>
 
                                                                 <td>
-                                                                    @item.RecruitedHRPercent
+                                                                    @item.RecruitedFromHRDate.ToShortDateString()
                                                                 </td>
                                                                 <td>
                                                                     @item.Remarks

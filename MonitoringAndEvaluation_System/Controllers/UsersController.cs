@@ -138,7 +138,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 StatusModel status = ObjUserMngBL.userEditBL(userEditVM);
                 if (status.status)
                 {
-                    ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.SaveSuccessfully); ;
+                    ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.UpdateSuccessfully); ;
                 }
                 else
                 {
@@ -150,7 +150,8 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
-            return View(new EditUserVM());
+            
+            return RedirectToAction("UserView");
         }
         public ActionResult UserView()
         {

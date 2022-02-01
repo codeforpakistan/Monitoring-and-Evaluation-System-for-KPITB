@@ -491,13 +491,14 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpPost]
         public JsonResult ClickProjectComboBox(int Project_ID)
         {
-            List<ComboBatch> cb = ObjProjectMngBL.getComboBoxBatchBL(Project_ID, LoginRoleID);
+            List<ComboBatch> cbBatch = ObjProjectMngBL.getComboBoxBatchBL(Project_ID, LoginRoleID);
+            List<ComboIndicator> cbIndicator = ObjProjectMngBL.getComboIndicatorBL(Convert.ToInt32(Project_ID), 0);
             //if (cb.Count > 0)
             //{
             //    return Json(cb, JsonRequestBehavior.AllowGet);
             //}
-            cb.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
-            return Json(cb, JsonRequestBehavior.AllowGet);
+            cbBatch.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
+            return Json(cbBatch, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public JsonResult ClickBatchComboBox(string Project_ID, string Batch_ID)
@@ -519,12 +520,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
 
 
-        [HttpPost]
-        public JsonResult CheckBatchIsZero(int SubProjectID)
-        { 
-            int val = ObjProjectMngBL.checkBatchIsZeroBL(SubProjectID);
-            return Json(val, JsonRequestBehavior.AllowGet);
-        }
+   
 
         #endregion
         #region JSON
@@ -589,7 +585,6 @@ namespace MonitoringAndEvaluation_System.Controllers
                 return Json("false", JsonRequestBehavior.AllowGet);
             }
         }
-
 
         [HttpPost]
         public JsonResult CheckBatchIsZero(int SubProjectID)

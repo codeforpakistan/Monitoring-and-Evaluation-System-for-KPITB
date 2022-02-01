@@ -116,6 +116,7 @@
                      dataType: 'json',
                     data: { Project_ID: _Project_ID },  // Same Parameter with Action
                     success: function (BatchLst) {
+                        debugger;
                         $("#Batch_ID").empty();
                         if (BatchLst == 0 || BatchLst ==null) {
                             $("#Batch_ID").prop("disabled", true);

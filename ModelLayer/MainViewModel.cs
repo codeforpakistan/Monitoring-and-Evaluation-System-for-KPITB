@@ -987,6 +987,18 @@ namespace ModelLayer
         #region Indicator
         public partial class IndicatorDataTypeVM
         {
+            List<ComboBatch> comboBatches { get; set; }
+            List<ComboIndicator> comboIndicators { get; set; }
+            
+            public IndicatorDataTypeVM()
+            {
+                comboBatches = new List<ComboBatch>();
+                comboIndicators = new List<ComboIndicator>();
+            }
+        
+        }
+            public partial class IndicatorDataTypeVM
+        {
             public int IndicatorFieldID { get; set; }
             public string IndicatorFieldName { get; set; }
             public int IndicatorDataType_ID { get; set; }

@@ -100,12 +100,10 @@
         });
 
         $("#RecruitedFromHRDate").on('change', function () {
-            debugger
             DateCompare();
         });
 
         $("#RecruitedToHRDate").on('change', function () {
-            debugger
             DateCompare();
         });
 
@@ -116,7 +114,6 @@
             if (_RecruitedToHRDate != '') {
                 if (_RecruitedFromHRDate > _RecruitedToHRDate)
                 {
-
                     $("#spanRecruitedFromHRDate").text("From-HRDate should not be greater then  To-HRDate")
                     return false;
                 }
@@ -136,7 +133,6 @@
                      dataType: 'json',
                     data: { ProjectID: _Project_ID },  // Same Parameter with Action
                     success: function (Value) {
-                        debugger;
                         if (Value != 1)  // Non-Umbrella
                         {
                             $("#SubProject_ID").prop("disabled", true);
@@ -161,7 +157,6 @@
                                        {
                                            $("#SubProject_ID").prop("disabled", false);
                                            $("#Batch_ID").prop("disabled", false);
-                                           debugger;
                                            $("#SubProject_ID").empty();
                                            $.each(SubProjectLst, function (i, Njaeeb)
                                            {
@@ -191,7 +186,6 @@
                      dataType: 'json',
                     data: { SubProject_ID: _SubProject_ID },  // Same Parameter with Action
                     success: function (BatchLst) {
-                        debugger;
                         $("#Batch_ID").empty();
                         if (BatchLst == 0) {
                             $("#Batch_ID").prop("disabled", true);

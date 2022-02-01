@@ -24,23 +24,123 @@ namespace DatabaseLayer
         {
             try
             {
-            int value = 0; 
-            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
-            {
-                conn.Open();
-                DynamicParameters ObjParm = new DynamicParameters();
-                ObjParm.Add("@ProjectID", ProjectID);
-                value = conn.Query<int>("sp_CheckUmberla", ObjParm, commandType: CommandType.StoredProcedure).First(); ;
-                conn.Close();
-                conn.Dispose();
-                return Convert.ToInt32(value);
-            }
+                int value = 0;
+                using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+                {
+                    conn.Open();
+                    DynamicParameters ObjParm = new DynamicParameters();
+                    ObjParm.Add("@ProjectID", ProjectID);
+                    value = conn.Query<int>("sp_CheckUmberla", ObjParm, commandType: CommandType.StoredProcedure).First(); ;
+                    conn.Close();
+                    conn.Dispose();
+                    return Convert.ToInt32(value);
+                }
             }
             catch (Exception ex)
             {
 
                 throw;
             }
+        }
+        public static bool IsProjectNameExistsDL(string _ProjectName)
+        {
+            bool isTrue = false;
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+
+                ObjParm.Add("@ProjectName", _ProjectName);
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_IsProjectNameExists", ObjParm, commandType: CommandType.StoredProcedure);
+
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                isTrue = status.status;
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return isTrue;
+        }
+        public static StatusModel ComparePlannedHR_RecruitedHRDL(int _ProjectID, out int PlannedHR, out int RecruitedHR)
+        {
+            PlannedHR = 0;
+            RecruitedHR = 0;
+
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+
+                ObjParm.Add("@ProjectID", _ProjectID);
+                ObjParm.Add("@PlannedHR", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                ObjParm.Add("@RecruitedHR", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_ComparePlannedHR_With_RecruitedHR", ObjParm, commandType: CommandType.StoredProcedure);
+
+                PlannedHR = Convert.ToInt32(ObjParm.Get<int>("@PlannedHR"));
+                RecruitedHR = Convert.ToInt32(ObjParm.Get<int>("@RecruitedHR"));
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+           
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+
+           
+            return status;
+        }
+        public static StatusModel ComparePlanned_PrucrementDL(int _ProjectID, out int PlannedProcurement, out int AchievedProcurement)
+        {
+            PlannedProcurement = 0;
+            AchievedProcurement = 0;
+
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+
+                ObjParm.Add("@ProjectID", _ProjectID);
+                ObjParm.Add("@PlannedProcurement", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                ObjParm.Add("@AchievedProcurement", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_ComparePlannedHR_With_PrucrementHR", ObjParm, commandType: CommandType.StoredProcedure);
+
+                PlannedProcurement = Convert.ToInt32(ObjParm.Get<int>("@PlannedProcurement"));
+                AchievedProcurement = Convert.ToInt32(ObjParm.Get<int>("@AchievedProcurement"));
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return status;
         }
 
         public static int checkBatchIsZeroDL(int SubProjectID)
@@ -120,8 +220,8 @@ namespace DatabaseLayer
             }
         }
 
-        
-        public static List<ComboIndicator> getComboIndicatorDL(int Project_ID,int BatchID)
+
+        public static List<ComboIndicator> getComboIndicatorDL(int Project_ID, int BatchID)
         {
             List<ComboIndicator> ComboLst = new List<ComboIndicator>();
 
@@ -328,6 +428,7 @@ namespace DatabaseLayer
                     ObjParm.Add("@AchievedProcurement", m.AchievedProcurement);
                     ObjParm.Add("@ProcurementPercent", m.ProcurementPercent);
                     ObjParm.Add("@ProcurementDate", DateTime.Now);
+                    ObjParm.Add("@ProcurmentHeader", m.Headers);
 
                     //StackHolder
                     //ObjParm.Add("@StackholderName", m.StackholderName);
@@ -384,56 +485,61 @@ namespace DatabaseLayer
                     conn = new SqlConnection(Common.ConnectionString);
                     cmd = new SqlCommand("sp_RiskCreateMulti", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-       
-                     var _AssignRiskList = m.AssignRiskList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.RiskName, p.RiskStatus_ID, p.CreatedByUser_ID }).ToList();
-                    DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignRiskList);
-                    cmd.Parameters.AddWithValue("@RiskTable", dt).SqlDbType = SqlDbType.Structured;
 
-                    SqlParameter _StatusParm = new SqlParameter("@Status", SqlDbType.Bit);
-                    _StatusParm.Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add(_StatusParm);
-                    SqlParameter _StatusDetailsParm = new SqlParameter("@StatusDetails", SqlDbType.VarChar, 100);
-                    _StatusDetailsParm.Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add(_StatusDetailsParm);
+                    var _AssignRiskList = m.AssignRiskList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.RiskName, p.RiskStatus_ID, p.CreatedByUser_ID }).ToList();
+                    if (_AssignRiskList.Count > 0)
+                    {
+                        DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignRiskList);
+                        cmd.Parameters.AddWithValue("@RiskTable", dt).SqlDbType = SqlDbType.Structured;
 
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
+                        SqlParameter _StatusParm = new SqlParameter("@Status", SqlDbType.Bit);
+                        _StatusParm.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(_StatusParm);
+                        SqlParameter _StatusDetailsParm = new SqlParameter("@StatusDetails", SqlDbType.VarChar, 100);
+                        _StatusDetailsParm.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(_StatusDetailsParm);
 
-                    _Status = (bool)_StatusParm.Value;
-                    _StatusDetails = (string)_StatusDetailsParm.Value;
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
 
+                        _Status = (bool)_StatusParm.Value;
+                        _StatusDetails = (string)_StatusDetailsParm.Value;
+                    }
 
-                #region 2
-                conn = new SqlConnection(Common.ConnectionString);
-                cmd = new SqlCommand("sp_StackholderCreateMulti", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                    #region 2
+                    conn = new SqlConnection(Common.ConnectionString);
+                    cmd = new SqlCommand("sp_StackholderCreateMulti", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                var _AssignStackholderList = m.AssignStackholderList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.StackholderName, p.StackholderDepartment, p.StackholderContact, p.StackholderEmail, p.CreatedByUser_ID }).ToList();
-                DataTable dt2 = Utility.Conversion.ConvertListToDataTable(_AssignStackholderList);
-                cmd.Parameters.AddWithValue("@StackholderTable", dt2).SqlDbType = SqlDbType.Structured;
+                    var _AssignStackholderList = m.AssignStackholderList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.StackholderName, p.StackholderDepartment, p.StackholderContact, p.StackholderEmail, p.CreatedByUser_ID }).ToList();
+                    if (_AssignStackholderList.Count > 0)
+                    {
+                        DataTable dt2 = Utility.Conversion.ConvertListToDataTable(_AssignStackholderList);
+                        cmd.Parameters.AddWithValue("@StackholderTable", dt2).SqlDbType = SqlDbType.Structured;
 
-                SqlParameter _StatusParm2 = new SqlParameter("@Status", SqlDbType.Bit);
-                _StatusParm2.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(_StatusParm2);
-                SqlParameter _StatusDetailsParm2 = new SqlParameter("@StatusDetails", SqlDbType.VarChar, 100);
-                _StatusDetailsParm2.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(_StatusDetailsParm2);
+                        SqlParameter _StatusParm2 = new SqlParameter("@Status", SqlDbType.Bit);
+                        _StatusParm2.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(_StatusParm2);
+                        SqlParameter _StatusDetailsParm2 = new SqlParameter("@StatusDetails", SqlDbType.VarChar, 100);
+                        _StatusDetailsParm2.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(_StatusDetailsParm2);
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                conn.Close();
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
 
-                status.status = (bool)_StatusParm2.Value;
-                status.statusDetail = (string)_StatusDetailsParm2.Value;
-                    #endregion
-                    conn.Dispose();
-                    cmd.Dispose();
+                        status.status = (bool)_StatusParm2.Value;
+                        status.statusDetail = (string)_StatusDetailsParm2.Value;
+                    }
+                        #endregion
+                        conn.Dispose();
+                        cmd.Dispose();
 
-                    transactionScope.Complete();
-                transactionScope.Dispose();
+                        transactionScope.Complete();
+                        transactionScope.Dispose();
+                    }
                 }
-            }
             catch (Exception ex)
             {
                 _Status = false;
@@ -442,7 +548,7 @@ namespace DatabaseLayer
             }
             finally
             {
-                
+
             }
             #endregion
             return status;
@@ -477,13 +583,13 @@ namespace DatabaseLayer
                 ObjParm.Add("@Project_ID", ProjectID);
                 using (var multi = connection.QueryMultiple("sp_GetProjectDetails", ObjParm, commandType: CommandType.StoredProcedure))
                 {
-                    getProjectDetailsVM.getProjectDetailsQ1  = multi.Read<GetProjectDetailsQ1>().FirstOrDefault();
+                    getProjectDetailsVM.getProjectDetailsQ1 = multi.Read<GetProjectDetailsQ1>().FirstOrDefault();
                     getProjectDetailsVM.getProjectDetailsQ2 = multi.Read<GetProjectDetailsQ2>().FirstOrDefault();
                     getProjectDetailsVM.getProjectDetailsQ3 = multi.Read<GetProjectDetailsQ3>().FirstOrDefault();
                     getProjectDetailsVM.getProjectDetailsQ4 = multi.Read<GetProjectDetailsQ4>().FirstOrDefault();
                     getProjectDetailsVM.getProjectDetailsQ5 = multi.Read<GetProjectDetailsQ5>().FirstOrDefault();
                     getProjectDetailsVM.getProjectDetailsQ6Lst = multi.Read<GetProjectDetailsQ6>().ToList();
-                   // getProjectDetailsVM.getProjectDetailsQ7 = multi.Read<GetProjectDetailsQ7>().FirstOrDefault();
+                    // getProjectDetailsVM.getProjectDetailsQ7 = multi.Read<GetProjectDetailsQ7>().FirstOrDefault();
 
 
                 }
@@ -496,37 +602,37 @@ namespace DatabaseLayer
         #region RecruitedHR
         //RecruitedHRCreate
         public static StatusModel recruitedCreateDL(CreateRecruitedHRVM m)
+        {
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
             {
-                StatusModel status = new StatusModel();
-                IDbConnection Con = null;
-                try
-                {
-                    Con = new SqlConnection(Common.ConnectionString);
-                    Con.Open();
-                    DynamicParameters ObjParm = new DynamicParameters();
-                        
-                        ObjParm.Add("@Project_ID", m.Project_ID);
-                        ObjParm.Add("@SubProject_ID", m.SubProject_ID);
-                        ObjParm.Add("@Batch_ID", m.Batch_ID);
-                        ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
-                        ObjParm.Add("@RecruitedHR", m.RecruitedHR);
-                        ObjParm.Add("@RecruitedFromHRDate", m.RecruitedFromHRDate);
-                        ObjParm.Add("@RecruitedToHRDate", m.RecruitedToHRDate);
-                        ObjParm.Add("@Remarks", m.Remarks);
-                        ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                        ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                       Con.Execute("sp_recruiteHRCreate", ObjParm, commandType: CommandType.StoredProcedure);
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
 
-                       status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
-                       status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
-                }
-                catch (Exception ex)
-                {
-                }
-                finally
-                {
-                    Con.Close();
-                }
+                ObjParm.Add("@Project_ID", m.Project_ID);
+                ObjParm.Add("@SubProject_ID", m.SubProject_ID);
+                ObjParm.Add("@Batch_ID", m.Batch_ID);
+                ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
+                ObjParm.Add("@RecruitedHR", m.RecruitedHR);
+                ObjParm.Add("@RecruitedFromHRDate", m.RecruitedFromHRDate);
+                ObjParm.Add("@RecruitedToHRDate", m.RecruitedToHRDate);
+                ObjParm.Add("@Remarks", m.Remarks);
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_recruiteHRCreate", ObjParm, commandType: CommandType.StoredProcedure);
+
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
             return status;
         }
 
@@ -619,6 +725,7 @@ namespace DatabaseLayer
                 ObjParm.Add("@AchievedProcurement", m.NoOfProcurement);
                 ObjParm.Add("@ProcurementFromDate", m.ProcurementFromDate);
                 ObjParm.Add("@ProcurementToDate", m.ProcurementToDate);
+                ObjParm.Add("@ProcurementHeader", m.ProcurementHeader);
                 ObjParm.Add("@Remarks", m.Remarks);
                 ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                 ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);

@@ -23,17 +23,17 @@
                 <div class="form-group">
 
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <label for="sel1">Select Project </label>
                             @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
                             @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                         </div>
-                        <div class="col-lg-4">
+                        @*<div class="col-lg-4">
                             <label for="sel1">Select Sub Project</label>
                             @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
                             @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
-                        </div>
-                        <div class="col-lg-4">
+                        </div>*@
+                        <div class="col-lg-6">
                             <label>Select Cycle/Batch</label>
                             @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
                              @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
@@ -41,21 +41,20 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <label for="sel2" class="col-form-label">Headers</label>
-                            <select class="form-control" id="select2-4" multiple="multiple">
-                                <option value="AK">Furniture</option>
-                                <option value="HI">Electronics</option>
-                                <option value="HI">Other</option>
-                            </select>
+                            <label class="col-form-label">Headers</label>
+                            @Html.TextBoxFor(model => model.ProcurementHeader, new { @class = "form-control", @type = "text", @placeholder = "Enter No of Headers" })
+                            @Html.ValidationMessageFor(m => m.ProcurementHeader, "", new { @class = "parsley-required", @id = "spanHeaders" })
                         </div>
                       </div>
                     <div class="row">
-                            <div class="col-lg-4">
-                                <label class="col-form-label">No of Procurement *</label>
-                                @Html.TextBoxFor(model => model.NoOfProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" })
-                                @Html.ValidationMessageFor(m => m.NoOfProcurement, "", new { @class = "parsley-required" })
+                        <div class="col-lg-4">
+                            <label class="col-form-label">No of Procurement *</label>
+                            <label class="col-form-label parsley-required" id="lblNoOfProcurement"></label>
+                            <input hidden id="RemaningNoOfProcurement" type="number" name="RemaningNoOfProcurement" />
+                            @Html.TextBoxFor(model => model.NoOfProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" })
+                            @Html.ValidationMessageFor(m => m.NoOfProcurement, "", new { @class = "parsley-required", @id = "spanNoOfProcurement" })
 
-                            </div>
+                        </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Procurement From Date *</label>
                                 @Html.TextBoxFor(model => model.ProcurementFromDate, new { @class = "form-control", @type = "date", @id ="ProcurementFromDate", @placeholder = "Enter No of Recruited -HR" })
@@ -189,6 +188,7 @@
             }
         }
         $("#Project_ID").on('change', function () {
+
                 var _Project_ID = $(this).find("option:selected").val();
                 $.ajax({
                      type: 'POST',
@@ -196,7 +196,12 @@
                      dataType: 'json',
                     data: { ProjectID: _Project_ID },  // Same Parameter with Action
                     success: function (Value) {
-                        debugger;
+                     
+                        var remainValue = Value[3] - Value[4];
+                        $("#RemaningNoOfProcurement").val(remainValue); //Hidden
+                        $("#lblNoOfProcurement").text(remainValue);
+                        $("#lblNoOfProcurement").show();
+
                         if (Value != 1)  // Non-Umbrella
                         {
                             $("#SubProject_ID").prop("disabled", true);
@@ -243,7 +248,9 @@
             });
 
 
-
+        $("#NoOfProcurement").on('change', function () {
+            CheckProcurementRemaningValue();
+        });
 
         $("#SubProject_ID").on('change', function () {
             var _SubProject_ID = $(this).find("option:selected").val();
@@ -272,7 +279,24 @@
                      console.log('Failed to Retrieve Batch Data:  ' + ex);
                  }
                 });//Ajax_End
-            });
+        });
+
+        function CheckProcurementRemaningValue() {
+            debugger;
+            var _Procurement = $("#NoOfProcurement").val();
+            var _RemaningProcurement = $("#lblNoOfProcurement").text();
+            if (parseInt(_Procurement) > parseInt(_RemaningProcurement)) {
+                $("#spanNoOfProcurement").text("Procurement should not be greater than AchivedProcurement");
+                $("#spanNoOfProcurement").show();
+                $("#NoOfProcurement").focus();
+                return true;
+            } else {
+                $("#spanNoOfProcurement").text("");
+                $("#spanNoOfProcurement").hide();
+                return true;
+            }
+        }
+
     </script>
 }
 

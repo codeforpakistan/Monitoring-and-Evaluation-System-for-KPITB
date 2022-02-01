@@ -58,19 +58,15 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult IssueEdit(int IssuesID)
         {
             EditIssueVM getIssues = new EditIssueVM();
-
             try
             {
-
                 getIssues = new IssuesManagementBL().getSignleIssueBL(IssuesID);
                 getAllIssue();
                 getProjectEdit(getIssues);
-
             }
             catch (Exception)
             {
             }
-
             return View(getIssues);
         }
         [HttpPost]
@@ -78,9 +74,12 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
+        
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
+                    issueVM = new IssuesManagementBL().getSignleIssueBL(issueVM.IssuesID);
+                    getAllIssue();
                     return View(issueVM);
                 }
                 getProjectEdit(issueVM);

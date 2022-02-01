@@ -4,14 +4,14 @@
 }
 
 <!--PopupMsg-->
-@{       
+@*@{       
     if (TempData["Message"] != null)
     {
        <div class="alert alert-success alert-dismissible show" id="_show" role="alert">
            <strong>Project Created Successfully </strong> 
        </div>
      }
-    }
+    }*@
 <div class="row">
     <div class="col-xl-12">
         <!-- START card-->
@@ -103,13 +103,12 @@
 
 @section Scripts{
     <script>
-        $(document).ready(function () {
-            //PopupTimeOut
-            $('#alert').removeClass('d-none')
-            setTimeout(function () {
-                $('.alert').fadeOut('close')
-            }, 2000)
-
-        });
+        //$(document).ready(function () {
+        //    //PopupTimeOut
+        //    $('#alert').removeClass('d-none')
+        //    setTimeout(function () {
+        //        $('.alert').fadeOut('close')
+        //    }, 2000)
+        //});
     </script>
 }

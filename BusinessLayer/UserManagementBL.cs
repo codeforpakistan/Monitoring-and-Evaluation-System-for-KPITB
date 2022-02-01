@@ -43,6 +43,10 @@ namespace BusinessLayer
         }
 
         //UserCreate
+        public bool IsEmailExistsBL(string Email)
+        {
+            return UserManagementDL.IsEmailExistsDL(Email);
+        }
         public StatusModel userCreateBL(CreateUserVM m)
         {
             return UserManagementDL.userCreateDL(m);

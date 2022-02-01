@@ -64,7 +64,7 @@
                                             @Html.DropDownListFor(model => model.Funding_SourceArray, new MultiSelectList(Model.comboFundingSource, "FundingSourceName", "FundingSourceName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-3" })
                                             @Html.ValidationMessageFor(model => model.Funding_SourceArray, "", new { @class = "text-danger", @id = "spanFunding_SourceArray" })
                                         </div>
-                                      
+
                                         <div class="col-lg-4 ">
                                             <label for="sel1" class="col-form-label">Select Location</label>
                                             @Html.DropDownListFor(m => m.City_ID, new SelectList(Model.comboCities, "CityID", "CityName"), "Please Select City Name", new { @class = "select2 form-control ", @placeholder = "Select City" })
@@ -219,13 +219,10 @@
                         <div class="card-wrapper collapse show">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <label for="sel2" class="col-form-label">Headers</label>
-                                        <select class="form-control" id="select2-4" multiple="multiple">
-                                            <option value="AK">Furniture</option>
-                                            <option value="HI">Electronics</option>
-                                            <option value="HI">Other</option>
-                                        </select>
+                                    <div class="col-lg-12 ">
+                                        <label class="col-form-label">Headers</label>
+                                        @Html.TextBoxFor(model => model.Headers, new { @class = "form-control", @type = "text", @placeholder = "Enter No of Headers" })
+                                        @Html.ValidationMessageFor(m => m.Headers, "", new { @class = "parsley-required", @id = "spanHeaders" })
                                     </div>
                                 </div>
 
@@ -234,7 +231,7 @@
                                         <label class="col-form-label">
                                             Planned Procurement ( No of Item )*
                                         </label>
-                                        @Html.TextBoxFor(model => model.PlannedProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No fo Planned Procurement" })
+                                        @Html.TextBoxFor(model => model.PlannedProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Planned Procurement" })
                                         @Html.ValidationMessageFor(m => m.PlannedProcurement, "", new { @class = "parsley-required", @id = "spanPlannedProcurement" })
                                     </div>
                                     <div class="col-lg-4 ">
@@ -443,6 +440,33 @@
 
         });//Ready
 
+ $("#ProjectName").change(function () {
+            if ($("#ProjectName").val() != '') {
+                       var urllink = '@Url.Action("IsProjectNamelExists", "Project")'
+                       $.ajax({
+                           url: urllink,
+                           type: "GET",
+                           data: { _ProjectName: $('#ProjectName').val() },
+                           success: function (result) {
+                               if (result == "true") {
+                                   $('#spanProjectName').text('Project Name Already Exists !');
+                                   $('#ProjectName').focus();
+                               }
+                             else {
+                                   $('#spanProjectName').text('');
+                               }
+                           },
+                           error: function (err) {
+                               alert('err');
+                               alert(err.statusText);
+                           }
+                       });
+                   }
+               });//Change
+
+
+
+
         $("#AddRisk").click(function () {
             debugger;
             if ($('#idRiskName').val() == "") {
@@ -480,11 +504,6 @@
                 $('#spanidRiskStatus').hide();
                 return true;
             }
-        });
-
-        /* Add stackholder to table*/
-        $(document).ready(function () {
-
         });
 
         $("#AddStackHolder").click(function () {
@@ -593,8 +612,8 @@
                 }
         });
 
-        $("#btnCreate").click(function (e) {
-            e.preventDefault();
+            $("#btnCreate").click(function (e) {
+                e.preventDefault();
 
             debugger;
 
@@ -807,6 +826,7 @@
             formAllData.append('txtApprovedBudget', $("#ApprovedBudget").val());
             formAllData.append('txtReleasedBudget', $("#ReleasedBudget").val());
             formAllData.append('txtPlannedProcurement', $("#PlannedProcurement").val());
+            formAllData.append('txtHeaders', $("#Headers").val());
             formAllData.append('txtAchievedProcurement', $("#AchievedProcurement").val());
             formAllData.append('txtProcurementPercent', $("#ProcurementPercent").val());
             formAllData.append('FundingSourceArray', $("#Funding_SourceArray").val());

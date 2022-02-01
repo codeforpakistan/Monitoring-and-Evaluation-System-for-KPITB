@@ -3,6 +3,9 @@
     ViewBag.Title = "Edit Issues";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
+}
 <!-- START row-->
 <div class="row">
     <div class="col-xl-12">
@@ -54,9 +57,8 @@
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Issue Date *</label>
-                                @Html.TextBoxFor(model => model.IssueDate, "", new { id = "IssueDate", @class = "datepicker form-control", @placeholder = "dd/mm/yyyy", @Value = @Model.IssueDate.ToShortDateString() })
-                                @*@Html.TextBoxFor(model => model.IssueDate, new { @class = "form-control", @type = "date", @placeholder = "dd/mm/yyyy" })*@
-                                @Html.ValidationMessageFor(m => m.IssueDate, "", new { @class = "parsley-required" })
+                                <input type="date" class="form-control " name="IssueDate" id="IssueDate" value="@Model.IssueDate.ToString("yyyy-MM-dd")">
+                                @Html.ValidationMessageFor(m => m.IssueDate, "", new { @class = "parsley-required", @id = "spanIssueDate" })
                             </div>
                         </div>
 
@@ -83,15 +85,18 @@
     </div>
 </div>
 
-@section Styles{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
+@section Scripts{
+    <script>
+        //$(document).ready(function () {
+        //    $('.datepicker').datepicker();
+        //    alert('Trigered1');
+        //});
+
+        //$("#IssueDate").on('change', function () {
+        //    debugger;
+        //    var dd = $("#IssueDate").val();
+        //    $('#IssueDate').append(dd);
+        //    alert(dd);
+        //});
+    </script>
 }
-<script>
-    $(document).ready(function () {
-        $(function () {
-            $('#IssueDate').datepicker({
-                format: "dd/mm/yyyy"
-            });
-        });
-    });
-</script>

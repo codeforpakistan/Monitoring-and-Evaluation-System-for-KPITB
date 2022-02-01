@@ -33,6 +33,8 @@ namespace MonitoringAndEvaluation_System.Controllers
             try
             {
 
+               
+
                 #region SingleValues
 
                 ProjectVM.Category_ID = Convert.ToInt32(Request.Form["txtCategory_ID"]);
@@ -55,6 +57,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.ApprovedBudget = Convert.ToInt32(Request.Form["txtApprovedBudget"]);
                 ProjectVM.ReleasedBudget = Convert.ToInt32(Request.Form["txtReleasedBudget"]);
                 ProjectVM.PlannedProcurement = Convert.ToInt32(Request.Form["txtPlannedProcurement"]);
+                ProjectVM.Headers = Convert.ToString(Request.Form["txtHeaders"]);
                 ProjectVM.AchievedProcurement = Convert.ToInt32(Request.Form["txtAchievedProcurement"]);
                 ProjectVM.ProcurementPercent = Convert.ToDouble(Request.Form["txtProcurementPercent"]);
                 ProjectVM.User_ID = LoginUserID;//Convert.ToInt32(Session["LoginUserID"]);
@@ -102,7 +105,14 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.AssignStackholderList = _lstStackholder;
                 #endregion
 
-               // ModelState.Remove("RiskStatus_ID");
+                bool isExists = ObjProjectMngBL.IsProjectNameExistsBL(ProjectVM.ProjectName);  //ProjectName Check
+                if (isExists)
+                {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Project Name Already Exists !");
+                    return View("~/Views/Project/ProjectCreate.cshtml", ProjectVM);
+                }
+
+                // ModelState.Remove("RiskStatus_ID");
                 //if (ModelState.IsValid == false)
                 //{
                 //    Combo(ProjectVM);
@@ -157,11 +167,12 @@ namespace MonitoringAndEvaluation_System.Controllers
             
         }
         [HttpPost]
-        public ActionResult RecruitedHRCreate(CreateRecruitedHRVM recruitedHRVM)
+        public ActionResult RecruitedHRCreate(CreateRecruitedHRVM recruitedHRVM, FormCollection fm)
         {
             try
             {
-                List<ComboBatch> cb = ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+                //var remainHR = Convert.ToInt32(fm["RemaningRecruitedHR"]);
+                //List<ComboBatch> cb = ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
                 //int valBatch = ObjProjectMngBL.checkUmberlaBL(recruitedHRVM.Project_ID);
                 //if (cb.Count() < 1)
                 //{
@@ -174,11 +185,24 @@ namespace MonitoringAndEvaluation_System.Controllers
                 //    recruitedHRVM.SubProject_ID = 0;
                 //    recruitedHRVM.Batch_ID = 0;
                 //}
+
                 if (ModelState.IsValid == false)
                 {
                     ComboProject(recruitedHRVM);
                     getAllRecruitedHR();
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
+                    return View(recruitedHRVM);
+                }
+                int[] value = new int[2];
+                StatusModel status1 = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(recruitedHRVM.Project_ID, out value[0], out value[1]);
+                int rr = value[0]- value[1];
+               
+        
+                if (recruitedHRVM.RecruitedHR > rr)
+                {
+                    ComboProject(recruitedHRVM);
+                    getAllRecruitedHR();
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Recruited-HR should not be greater than Planned-HR:  " + rr);
                     return View(recruitedHRVM);
                 }
 
@@ -263,6 +287,21 @@ namespace MonitoringAndEvaluation_System.Controllers
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
+                    ComboProjectProc(procurementVM);
+                    getAllProcurement();
+                    return View(procurementVM);
+                }
+
+                int planned, Achived;
+                StatusModel status2 = ObjProjectMngBL.ComparePlanned_PrucrementBL(procurementVM.Project_ID, out planned, out Achived);
+                int rr = planned - Achived;
+
+                var ss =procurementVM.NoOfProcurement - planned;
+                if (procurementVM.NoOfProcurement >rr )
+                {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Procurement should not be greater than AchivedProcurement");
+                    ComboProjectProc(procurementVM);
+                    getAllProcurement();
                     return View(procurementVM);
                 }
 
@@ -271,17 +310,21 @@ namespace MonitoringAndEvaluation_System.Controllers
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
+                    return RedirectToAction("ProcurementCreateView");
                 }
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
+                    ComboProjectProc(procurementVM);
+                    getAllProcurement();
+                    return View(procurementVM);
                 }
             }
             catch (Exception ex1)
             {
-                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message); 
+                return View(procurementVM);
             }
-            return RedirectToAction("ProcurementCreateView");
             //return View();
         }
         [HttpGet]
@@ -447,12 +490,6 @@ namespace MonitoringAndEvaluation_System.Controllers
             return Json(cb, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult ProjectCheckUmbrella(int ProjectID)
-        {
-            int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
-            return Json(val, JsonRequestBehavior.AllowGet);
-        }
 
         [HttpPost]
         public JsonResult CheckBatchIsZero(int SubProjectID)
@@ -460,6 +497,125 @@ namespace MonitoringAndEvaluation_System.Controllers
             int val = ObjProjectMngBL.checkBatchIsZeroBL(SubProjectID);
             return Json(val, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+        #region JSON
+
+        public JsonResult IsProjectNamelExists(string _ProjectName)
+        {
+            try
+            {
+                bool isExists = ObjProjectMngBL.IsProjectNameExistsBL(_ProjectName);
+                if (isExists)
+                {
+                    return Json("true", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("false", JsonRequestBehavior.AllowGet);
+                } 
+            }
+            catch (Exception ex1)
+            {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                return Json("false", JsonRequestBehavior.AllowGet);
+            } 
+        }
+
+
+
+        //[HttpPost]
+        //public JsonResult ProjectCheckUmbrella(int ProjectID)
+        //{
+        //    int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
+        //    return Json(val, JsonRequestBehavior.AllowGet);
+        //}
+
+        [HttpPost]
+        public JsonResult ProjectCheckUmbrella(int ProjectID)
+        {
+            try
+            {
+                int[] value = new int[5];
+                int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
+                value[0] = val; 
+                StatusModel status = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(ProjectID, out value[1], out value[2]);
+                StatusModel status2 = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
+                if (status.status )
+                {
+                    return Json(value, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    value[0] = 0;
+                    value[1] = 0;
+                    value[2] = 0;
+                    value[3] = 0;
+                    value[4] = 0;
+                    return Json(value, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex1)
+            {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                return Json("false", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult IsProjectNamelExists11111111(int ProjectID)
+        {
+            try
+            {
+                int[] value = new int[3];
+              
+                StatusModel status = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[1], out value[2]);
+
+                if (status.status)
+                {
+                    return Json(value, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    value[0] = 0;
+                    value[1] = 0;
+                    value[2] = 0;
+                    return Json(value, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex1)
+            {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                return Json("false", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        //public JsonResult ComparePlannedHR_RecruitedHR(int _ProjectID)
+        //{
+        //    try
+        //    {
+        //        int[] value = new int[2];
+        //        StatusModel status = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(_ProjectID, out value[0], out value[1]);
+        //        if (status.status)
+        //        {
+        //            return Json(value, JsonRequestBehavior.AllowGet);
+        //        }
+        //        else
+        //        {
+        //            value[0] = 0;
+        //            value[1] = 0;
+        //            return Json(value, JsonRequestBehavior.AllowGet);
+
+        //        }
+        //    }
+        //    catch (Exception ex1)
+        //    {
+        //        ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+        //        return Json("false", JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+
 
         #endregion
     }

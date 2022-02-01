@@ -46,7 +46,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                     Session["UserID"] = loginUserDataModel.UserID;
                     Session["RoleID"] = loginUserDataModel.RoleID;
                     Session["Email"] = loginUserDataModel.Email;
-                    FormsAuthentication.SetAuthCookie(loginUserDataModel.FullName, false);
+                    //FormsAuthentication.SetAuthCookie(loginUserDataModel.FullName, false);
                     return RedirectToAction("Admin", "Dashboard");
                 }
                 else
@@ -89,6 +89,13 @@ namespace MonitoringAndEvaluation_System.Controllers
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
+                    return View(userVM);
+                }
+
+                bool isExists = ObjUserMngBL.IsEmailExistsBL(userVM.Email);  //Check DuplicateEmail
+                if (isExists)
+                {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Email Already Exists");
                     return View(userVM);
                 }
                 StatusModel status = ObjUserMngBL.userCreateBL(userVM);
@@ -138,7 +145,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 StatusModel status = ObjUserMngBL.userEditBL(userEditVM);
                 if (status.status)
                 {
-                    ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.UpdateSuccessfully); ;
+                    ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.UpdateSuccessfully);
                 }
                 else
                 {
@@ -168,6 +175,29 @@ namespace MonitoringAndEvaluation_System.Controllers
         
         }
         #endregion
+        #region JSON
+        public JsonResult IsEmailExists(string _Email)
+        {
+            try
+            {
+                bool isExists = ObjUserMngBL.IsEmailExistsBL(_Email);
+                if (isExists)
+                {
+                    return Json("true");
+                }
+                else
+                { 
+                    return Json("false");
+                }
 
+            }
+            catch (Exception ex1)
+            {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                return Json("false");
+            }
+            return Json("true");
+        }
+        #endregion
     }
 }

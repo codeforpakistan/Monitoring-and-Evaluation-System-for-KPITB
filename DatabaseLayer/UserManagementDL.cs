@@ -103,6 +103,36 @@ namespace DatabaseLayer
             }
             return model;
         }
+        
+        public static bool IsEmailExistsDL(string Email)
+        {
+            bool isTrue = false;
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+
+                ObjParm.Add("@Email", Email);
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_IsEmailExists", ObjParm, commandType: CommandType.StoredProcedure);
+
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                isTrue = status.status;
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return isTrue;
+        }
 
         public static StatusModel userCreateDL(CreateUserVM m)
             {

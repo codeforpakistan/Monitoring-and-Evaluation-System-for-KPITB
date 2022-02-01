@@ -15,6 +15,24 @@ namespace BusinessLayer
     {
 
         #region CustomFuncation
+        //JSON
+        public bool IsProjectNameExistsBL(string _ProjectName)
+        {
+            return ProjectManagementDL.IsProjectNameExistsDL(_ProjectName.Trim());
+        }
+        //JSON
+        public StatusModel ComparePlannedHR_RecruitedHRBL(int _ProjectID, out int PlannedHR, out int RecruitedHR)
+        {
+            PlannedHR = 0;
+            RecruitedHR = 0;
+            return ProjectManagementDL.ComparePlannedHR_RecruitedHRDL(_ProjectID, out PlannedHR, out RecruitedHR);
+        }
+        public StatusModel ComparePlanned_PrucrementBL(int _ProjectID, out int PlannedProcurement, out int AchievedProcurement)
+        {
+            PlannedProcurement = 0;
+            AchievedProcurement = 0;
+            return ProjectManagementDL.ComparePlanned_PrucrementDL(_ProjectID, out PlannedProcurement, out AchievedProcurement);
+        }
 
         //Get SubProject
         public int checkUmberlaBL(int ProjectID)

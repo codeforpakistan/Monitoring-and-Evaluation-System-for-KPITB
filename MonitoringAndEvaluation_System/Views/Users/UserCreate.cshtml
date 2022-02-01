@@ -28,8 +28,8 @@
 
                             <div class="col-lg-5">
                                 <label for="">Email Address</label>
-                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "example@gmail.com" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "parsley-required" })
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "example@gmail.com", @id = "idEmail" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "parsley-required", @id = "spanEmail" })
                             </div>
                         </div>
                         <div class="form-row">
@@ -44,14 +44,13 @@
                                 @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "parsley-required" })
                             </div>
                         </div>
-                        <div class="form-row">
-                            @*<div class="col-lg-5">
+                        @*<div class="form-row">
+                            <div class="col-lg-5">
                                 <label for="validationServer04">CNIC No</label>
                                 @Html.TextBoxFor(model => model.CNICNo, new { @class = "form-control", @placeholder = "Enter CNIC No" })
                                 @Html.ValidationMessageFor(m => m.CNICNo, "", new { @class = "parsley-required" })
-                            </div>*@
-                            
-                        </div>
+                            </div>
+                        </div>*@
                         <div class="form-row">
                             <div class="col-lg-5">
                                 <label for="validationServer05">Contact No</label>
@@ -64,10 +63,10 @@
                                 @Html.ValidationMessageFor(m => m.Role_ID, "", new { @class = "parsley-required" })
                             </div>
                             @*<div class="col-lg-5">
-            <label for="validationServer04">Profile Picture</label>
-            <input class="form-control " id="@Model.Photo" name="@Model.Photo" type="file" placeholder="" >
-            <div class="invalid-feedback">Please Upload User image.</div>
-        </div>*@
+                                    <label for="validationServer04">Profile Picture</label>
+                                    <input class="form-control " id="@Model.Photo" name="@Model.Photo" type="file" placeholder="" >
+                                    <div class="invalid-feedback">Please Upload User image.</div>
+                                </div>*@
 
                             <div class="col-lg-10">
                                 <label for="validationServer05">Address</label>
@@ -79,7 +78,7 @@
                         </div>
                         <br />
                         <button class="btn btn-primary" type="submit" id="btnSubmit">Submit</button>
-                     
+
                     </div>
                 </div>
             </fieldset>
@@ -91,36 +90,65 @@
 
 @section Scripts{
     <script>
+        $(document).ready(function () {
+       
+        });//Ready
 
-        //$('#btnSubmit').click(function (){
-        //    if($("#Role_ID").val() == '')
-        //    {
-        //        Alert("Please enter Course Name");
-        //            return validate = false;
-        //    }
-        //    debugger;
-        //    if ($('#Role_ID').val() == '') {
-        //        $('#Role_ID').text('Please Select Role jQuery');
-        //        $('#Role_ID').show();
-        //        $('#Role_ID').focus();
-        //        return true;
-        //    }
+        @*$('#idEmail').change(function () {
+            debugger;
+                   if ($(this).val() == '') {
+                       var urllink = '@Url.Action("IsEmailExists", "Users")'
+                       $.ajax({
+                           url: urllink,
+                           type: "POST",
+                           contentType: false, // Not to set any content header
+                           processData: false, // Not to process data
+                           data: { _Email: $('#Email').val() },
+                           success: function (result) {
+                               debugger;
+                               if (result == 'true') {
+                                   $('#spanEmail').text('Email Already Exists !');
+                                   $('#Email').focus();
+                               }
+                           },
+                           error: function (err) {
+                               alert(err.statusText);
+                           }
+                       });
+                   }
+               });//Change*@
 
-
-
-        });
-
-
-            //$("#ConfirmPassword").on('change', function () {
-            //    debugger;
-            //    alert('ok2);
-            //    if ($('#Password').val() == ConfirmPassword) {
-            //        return true;
-            //        $('#ConfirmPassword').text('Password is not Match.');
-            //        $('#ConfirmPassword').show();
-            //        $('#ConfirmPassword').focus();
-            //    }
-            //});
 
     </script>
 }
+
+@*@section Scripts{
+        <script>
+            $(document).ready(function () {
+                alert('as');
+            });//Ready
+            $('#Email').change(function () {
+                debugger;
+                if ($(this).val() == '') {
+                     var urllink = '@Url.Action("IsEmailExists", "Users")'
+                    $.ajax({
+                        url: urllink,
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: { _Email = $('#Email').val() },
+                    success: function (result) {
+                        debugger;
+                        if (result == 'true') {
+                            $('#spanEmail').text('Email Already Exists !');
+                            $('#Email').focus();
+                        }
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+                }
+            });
+        </script>
+    }*@

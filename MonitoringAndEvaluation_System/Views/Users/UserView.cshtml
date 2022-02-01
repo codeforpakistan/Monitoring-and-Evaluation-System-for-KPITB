@@ -36,7 +36,7 @@
                         Status
                     </th>
                     <th>
-                       Action
+                        Action
                     </th>
                 </tr>
             </thead>
@@ -44,50 +44,63 @@
                 @{
                     foreach (var item in Model)
                     {
-                                <tr>
-                                    @Html.HiddenFor(m => item.UserID)
-                                    <td>
-                                        @item.ID
-                                    </td>
-                                    <td>
-                                        @item.RoleName
-                                    </td>
-                                    <td>
-                                        @item.FullName
-                                    </td>
-                                    <td>
-                                        @item.Email
-                                    </td>
-                                    <td>
-                                        @item.ContactNo
-                                    </td>
-                                    <td>
-                                        @item.Address
-                                    </td>
-                                    @*<td>
-                                        <img src="~/Content/Template/img/user/user.png" style="width:50px" />
-                                    </td>*@
-                                    <td>
-                                        @item.IsActive
-                                    </td>
+                        <tr>
+                            @Html.HiddenFor(m => item.UserID)
+                            <td>
+                                @item.ID
+                            </td>
+                            <td>
+                                @item.RoleName
+                            </td>
+                            <td>
+                                @item.FullName
+                            </td>
+                            <td>
+                                @item.Email
+                            </td>
+                            <td>
+                                @item.ContactNo
+                            </td>
+                            <td>
+                                @item.Address
+                            </td>
+                            @*<td>
+                                    <img src="~/Content/Template/img/user/user.png" style="width:50px" />
+                                </td>*@
+                            <td>
+                                @item.IsActive
+                            </td>
 
-                                    @*<td>
-                                       <div class="float-left">
-                                           <label class="switch">
-                                               <input id="chk-fixed" type="checkbox" data-toggle-state="layout-fixed">
-                                               <span></span>
-                                           </label>
-                                       </div
-                                       </td>>*@
-                                    <td>
-                                        @Html.ActionLink("Edit", "UserEdit", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-warning" })
-                                        @*@Html.ActionLink("Detail", "UserDetail", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-primary" })*@
-                                    </td>
-                                </tr>
+                            @*<td>
+                                <div class="float-left">
+                                    <label class="switch">
+                                        <input id="chk-fixed" type="checkbox" data-toggle-state="layout-fixed">
+                                        <span></span>
+                                    </label>
+                                </div
+                                </td>>*@
+                            <td>
+                                @Html.ActionLink("Edit", "UserEdit", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-warning" })
+                                @*@Html.ActionLink("Detail", "UserDetail", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-primary" })*@
+                            </td>
+                        </tr>
                     }
                 }
-              
+
             </tbody>
         </table>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function ()
+        {
+            alert('as');
+             
+        });//Ready
+
+
+
+    </script>
+}

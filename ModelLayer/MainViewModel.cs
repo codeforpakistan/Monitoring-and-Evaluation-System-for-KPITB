@@ -301,6 +301,7 @@ namespace ModelLayer
             public double ProcurementPercent { get; set; }
 
             public string AchievedProcurementDate { get; set; }
+            public string Headers { get; set; }
 
             //ReleasedBudget
             public long ReleasedBudget { get; set; }
@@ -480,7 +481,7 @@ namespace ModelLayer
 
             [Range(1, int.MaxValue, ErrorMessage = "Please Select Project")]
             public int Project_ID { get; set; }
-            [Required(ErrorMessage = "Please Select SubProject")]
+            //[Required(ErrorMessage = "Please Select SubProject")]
             public int SubProject_ID { get; set; }
             [Required(ErrorMessage = "Please Select Batch")]
             public int Batch_ID { get; set; }
@@ -690,6 +691,7 @@ namespace ModelLayer
                 comboSubProjects = new List<ComboSubProject>();
                 comboBatch = new List<ComboBatch>();
             }
+            public string ProcurementHeader { get; set; }
             [Range(1, int.MaxValue, ErrorMessage = "Please Ener Procurement-Value")]
             public int NoOfProcurement { get; set; }
 
@@ -798,10 +800,10 @@ namespace ModelLayer
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
             public string IssueDescription { get; set; }
-            [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-            [Display(Name = "Issue Date")]
-            public System.DateTime IssueDate { get; set; }
+     
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            [DataType(DataType.DateTime)]
+            public DateTime IssueDate { get; set; }
             public string ActionTaken { get; set; }
             public string Solution { get; set; }
             public string Remarks { get; set; }

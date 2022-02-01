@@ -51,7 +51,7 @@
                                 @Html.TextBoxFor(model => model.RecruitedToHRDate, new { @class = "form-control", @type = "date" })
                                 @Html.ValidationMessageFor(m => m.RecruitedToHRDate, "", new { @class = "parsley-required", @id = "spanRecruitedToHRDate" })
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-4">
                                 <label class="col-form-label">Remarks </label>
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
                                 @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
@@ -174,6 +174,34 @@
                 }
             }
         }
+          $("#Project_ID").on('change', function () {
+            var _Project_ID = $(this).find("option:selected").val();
+
+                $.ajax({
+                     type: 'POST',
+                     url: '@Url.Action("ClickProjectComboBox", "Project")',
+                     dataType: 'json',
+                    data: { Project_ID: _Project_ID },  // Same Parameter with Action
+                    success: function (BatchLst) {
+                        $("#Batch_ID").empty();
+                        if (BatchLst == 0 || BatchLst ==null) {
+                            $("#Batch_ID").prop("disabled", true);
+                            $("#Batch_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Batch" + '</option>');
+                        } else {
+                            $("#Batch_ID").prop("disabled", false);
+                            $.each(BatchLst, function (i, Aqib) {
+                                $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
+                                    Aqib.BatchName + '</option>');
+                            });
+                        }
+                 },
+                 error: function (ex) {
+                     console.log('Failed to Retrieve Batch Data:  ' + ex);
+                 }
+                });//Ajax_End
+        });
+       
 
         $("#Project_ID").on('change', function () {
                 var _Project_ID = $(this).find("option:selected").val();

@@ -203,17 +203,30 @@ namespace DatabaseLayer
             }
         }
         //ComboBatch
-        public static List<ComboBatch> getComboBatchDL(int SubProject_ID, int Role_ID)
+        public static List<ComboBatch> getComboBatchDL(int Project_ID, int Role_ID)
         {
+            //List<ComboBatch> ComboLst = new List<ComboBatch>();
+
+            //using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            //{
+            //    conn.Open();
+            //    DynamicParameters ObjParm = new DynamicParameters();
+            //    ObjParm.Add("@SubProject_ID", SubProject_ID);
+            //    ObjParm.Add("@Role_ID", Role_ID);
+            //    ComboLst = conn.Query<ComboBatch>("sp_GetBatchBaseOnSubProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+            //    conn.Close();
+            //    conn.Dispose();
+            //    return ComboLst;
+            //}
             List<ComboBatch> ComboLst = new List<ComboBatch>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
-                ObjParm.Add("@SubProject_ID", SubProject_ID);
+                ObjParm.Add("@Project_ID", Project_ID);
                 ObjParm.Add("@Role_ID", Role_ID);
-                ComboLst = conn.Query<ComboBatch>("sp_GetBatchBaseOnSubProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                ComboLst = conn.Query<ComboBatch>("sp_GetBatchBaseOnProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return ComboLst;

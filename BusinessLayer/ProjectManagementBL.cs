@@ -35,10 +35,10 @@ namespace BusinessLayer
         }
 
         //Get SubProject
-        public int checkUmberlaBL(int ProjectID)
-        {
-            return ProjectManagementDL.checkUmberlaDL(ProjectID);
-        }
+        //public int checkUmberlaBL(int ProjectID)
+        //{
+        //    return ProjectManagementDL.checkUmberlaDL(ProjectID);
+        //}
         //Get SubProject
         public int checkBatchIsZeroBL(int SubProjectID)
         {

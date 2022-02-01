@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FinanceController.cs" />
     <Compile Include="Controllers\IndicatorController.cs" />
@@ -412,6 +413,7 @@
     <Content Include="Views\Indicator\IndicatorFieldCreate.cshtml" />
     <Content Include="Views\Indicator\LinkIndicator.cshtml" />
     <Content Include="Views\Indicator\IndicatorFieldValue.cshtml" />
+    <Content Include="Views\Batch\BatchCreateView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -20,28 +20,28 @@ namespace DatabaseLayer
     {
 
         #region CustomFuncation
-        public static int checkUmberlaDL(int ProjectID)
-        {
-            try
-            {
-            int value = 0; 
-            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
-            {
-                conn.Open();
-                DynamicParameters ObjParm = new DynamicParameters();
-                ObjParm.Add("@ProjectID", ProjectID);
-                value = conn.Query<int>("sp_CheckUmberla", ObjParm, commandType: CommandType.StoredProcedure).First(); ;
-                conn.Close();
-                conn.Dispose();
-                return Convert.ToInt32(value);
-            }
-            }
-            catch (Exception ex)
-            {
+        //public static int checkUmberlaDL(int ProjectID)
+        //{
+        //    try
+        //    {
+        //    int value = 0; 
+        //    using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+        //    {
+        //        conn.Open();
+        //        DynamicParameters ObjParm = new DynamicParameters();
+        //        ObjParm.Add("@ProjectID", ProjectID);
+        //        value = conn.Query<int>("sp_CheckUmberla", ObjParm, commandType: CommandType.StoredProcedure).First(); ;
+        //        conn.Close();
+        //        conn.Dispose();
+        //        return Convert.ToInt32(value);
+        //    }
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
 
         public static int checkBatchIsZeroDL(int SubProjectID)
         {
@@ -103,23 +103,35 @@ namespace DatabaseLayer
             }
         }
         //ComboBatch
-        public static List<ComboBatch> getComboBatchDL(int SubProject_ID, int Role_ID)
+        public static List<ComboBatch> getComboBatchDL(int Project_ID, int Role_ID)
         {
+            //List<ComboBatch> ComboLst = new List<ComboBatch>();
+
+            //using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            //{
+            //    conn.Open();
+            //    DynamicParameters ObjParm = new DynamicParameters();
+            //    ObjParm.Add("@SubProject_ID", SubProject_ID);
+            //    ObjParm.Add("@Role_ID", Role_ID);
+            //    ComboLst = conn.Query<ComboBatch>("sp_GetBatchBaseOnSubProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+            //    conn.Close();
+            //    conn.Dispose();
+            //    return ComboLst;
+            //}
             List<ComboBatch> ComboLst = new List<ComboBatch>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
-                ObjParm.Add("@SubProject_ID", SubProject_ID);
+                ObjParm.Add("@Project_ID", Project_ID);
                 ObjParm.Add("@Role_ID", Role_ID);
-                ComboLst = conn.Query<ComboBatch>("sp_GetBatchBaseOnSubProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                ComboLst = conn.Query<ComboBatch>("sp_GetBatchBaseOnProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return ComboLst;
             }
         }
-
         
         public static List<ComboIndicator> getComboIndicatorDL(int Project_ID,int BatchID)
         {

@@ -20,7 +20,7 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         [HttpGet]
         public ActionResult ProjectCreate()
-        
+
         {
             CreateProjectVM projectVM = new CreateProjectVM();
 
@@ -37,7 +37,7 @@ namespace MonitoringAndEvaluation_System.Controllers
 
                 ProjectVM.Category_ID = Convert.ToInt32(Request.Form["txtCategory_ID"]);
                 ProjectVM.ProjectType_ID = Convert.ToInt32(Request.Form["txtProjectType_ID"]);
-                ProjectVM.DigitalPolicy_ID = Convert.ToInt32( Request.Form["txtDigitalPolicy_ID"]);
+                ProjectVM.DigitalPolicy_ID = Convert.ToInt32(Request.Form["txtDigitalPolicy_ID"]);
                 ProjectVM.City_ID = Convert.ToInt32(Request.Form["txtCity_ID"]);
                 ProjectVM.ProjectName = Convert.ToString(Request.Form["txtProjectName"]);
                 ProjectVM.MaleBeneficiary = Convert.ToInt32(Request.Form["txtMaleBeneficiary"]);
@@ -61,7 +61,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 #endregion
                 #region FundingArray
                 string aaa = Convert.ToString(Request.Form["FundingSourceArray"]);
-                ProjectVM.Funding_Source =  string.Join(",", aaa);
+                ProjectVM.Funding_Source = string.Join(",", aaa);
                 #endregion
                 #region Risk
                 //From Risk GridView
@@ -102,7 +102,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.AssignStackholderList = _lstStackholder;
                 #endregion
 
-               // ModelState.Remove("RiskStatus_ID");
+                // ModelState.Remove("RiskStatus_ID");
                 //if (ModelState.IsValid == false)
                 //{
                 //    Combo(ProjectVM);
@@ -115,7 +115,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 }
                 else
                 {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);    
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
                     return Json("false");
                 }
 
@@ -134,7 +134,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult ProjectView()
         {
             @ViewBag.MainTitle = "Project List";
-            List<GetAllProjectVM> lst = new ProjectManagementBL().getAllProjectBL(LoginRoleID,LoginUserID);
+            List<GetAllProjectVM> lst = new ProjectManagementBL().getAllProjectBL(LoginRoleID, LoginUserID);
             return View(lst);
         }
 
@@ -142,7 +142,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult ProjectDetails(int ProjectID)
         {
             GetProjectDetailsVM data = new ProjectManagementBL().getProjectDetailsBL(ProjectID);
-            
+
             return View(data);
         }
         #endregion
@@ -151,17 +151,18 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult RecruitedHRCreate()
         {
             CreateRecruitedHRVM recruitedHRVM = new CreateRecruitedHRVM();
-            ComboProject(recruitedHRVM);
+            //ComboProject(recruitedHRVM);
+            ComboForRecruitedHR(recruitedHRVM);
             getAllRecruitedHR();
             return View(recruitedHRVM);
-            
+
         }
         [HttpPost]
         public ActionResult RecruitedHRCreate(CreateRecruitedHRVM recruitedHRVM)
         {
             try
             {
-                List<ComboBatch> cb = ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+                List<ComboBatch> cb = ObjProjectMngBL.getComboBatchBL(recruitedHRVM.Project_ID, LoginRoleID);
                 //int valBatch = ObjProjectMngBL.checkUmberlaBL(recruitedHRVM.Project_ID);
                 //if (cb.Count() < 1)
                 //{
@@ -177,12 +178,13 @@ namespace MonitoringAndEvaluation_System.Controllers
                 if (ModelState.IsValid == false)
                 {
                     ComboProject(recruitedHRVM);
+
                     getAllRecruitedHR();
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(recruitedHRVM);
                 }
 
-                recruitedHRVM.CreatedByUser_ID=LoginUserID;
+                recruitedHRVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new ProjectManagementBL().recruitedCreateBL(recruitedHRVM);
                 if (status.status)
                 {
@@ -214,7 +216,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             catch (Exception)
             {
             }
-            
+
             return View(getRecruitedHR);
         }
         [HttpPost]
@@ -246,7 +248,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             return RedirectToAction("RecruitedHRCreate");
         }
         #endregion
-       
+
         [HttpGet]
         public ActionResult ProcurementCreateView()
         {
@@ -291,8 +293,8 @@ namespace MonitoringAndEvaluation_System.Controllers
 
             try
             {
-              getProcurement = new ProjectManagementBL().getSignleProcurementBL(AchievedProcurementID);
-              ComboProjectProcEdit(getProcurement);
+                getProcurement = new ProjectManagementBL().getSignleProcurementBL(AchievedProcurementID);
+                ComboProjectProcEdit(getProcurement);
             }
             catch (Exception)
             {
@@ -335,7 +337,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             return View();
         }
 
-        #region CustomFuncation
+       
 
         public void Combo(CreateProjectVM projectVM)
         {
@@ -354,48 +356,74 @@ namespace MonitoringAndEvaluation_System.Controllers
         public void ComboProject(CreateRecruitedHRVM recruitedHRVM)
         {
             //Get ProjectType list
-            recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID,LoginUserID);
-            ComboSubProject  msp= new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
-            recruitedHRVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
-            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            recruitedHRVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
-        }
-        public void ComboProjectEdit(EditRecruitedHRVM recruitedHRVM)
-        {
-            //Get ProjectType list
             recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
             ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
             recruitedHRVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
             ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
             recruitedHRVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
         }
+
+        #region ComboForCreateAndEdit
+        public void ComboForRecruitedHR(CreateRecruitedHRVM recruitedHRVM)
+        {
+            recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+        }
+        public void ComboProjectEdit(EditRecruitedHRVM recruitedHRVM)
+        {
+            recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+        }
         public void ComboProjectProc(CreateProcurementVM procurementVM)
         {
-            //Get ProjectType list
             procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
-            procurementVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
-            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            procurementVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
 
         }
         public void ComboProjectProcEdit(EditProcurementVM procurementEditVM)
         {
-            //Get ProjectType list
             procurementEditVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
-            procurementEditVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
-            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            procurementEditVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
-
         }
+        #endregion
+
+
+        #region GetComo_Ignnor
+        //public void ComboProjectEdit(EditRecruitedHRVM recruitedHRVM)
+        //{
+        //    //Get ProjectType list
+        //    recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+        //    ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
+        //    recruitedHRVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
+        //    ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+        //    recruitedHRVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+        //}
+        //public void ComboProjectProc(CreateProcurementVM procurementVM)
+        //{
+        //    //Get ProjectType list
+        //    procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+        //    ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
+        //    procurementVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
+        //    ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+        //    procurementVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+
+        //}
+        //public void ComboProjectProcEdit(EditProcurementVM procurementEditVM)
+        //{
+        //    //Get ProjectType list
+        //    procurementEditVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+        //    ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
+        //    procurementEditVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
+        //    ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+        //    procurementEditVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+
+        //}
+        #endregion
+
+        #region View List
         private void getAllRecruitedHR()
         {
             ViewBag.LstAllRecruitedHR = new ProjectManagementBL().getAllRecruitedHRBL(LoginRoleID, LoginUserID);
         }
         private void getAllProcurement()
         {
-            ViewBag.LstAllProcurement = new ProjectManagementBL().getAllProcurementBL(LoginRoleID,LoginUserID);
+            ViewBag.LstAllProcurement = new ProjectManagementBL().getAllProcurementBL(LoginRoleID, LoginUserID);
         }
         private void getAllFinance()
         {
@@ -405,12 +433,13 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             ViewBag.LstAllProject = new ProjectManagementBL().getComboProjectBL(LoginRoleID, LoginUserID);
         }
-
+        #endregion
+        #region CoboBoxes
         [HttpPost]
         public JsonResult ClickSubProjectCombo(int SubProject_ID)
         {
             List<ComboBatch> cb = ObjProjectMngBL.getComboBatchBL(SubProject_ID, LoginRoleID);
-            if(cb.Count() < 1)
+            if (cb.Count() < 1)
             {
                 return Json(cb, JsonRequestBehavior.AllowGet);
             }
@@ -431,7 +460,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpPost]
         public JsonResult ClickBatchComboBox(string Project_ID, string Batch_ID)
         {
-            List<ComboIndicator> cb = ObjProjectMngBL.getComboIndicatorBL(Convert.ToInt32(Project_ID),Convert.ToInt32(Batch_ID));// Batch, LoginRoleID);
+            List<ComboIndicator> cb = ObjProjectMngBL.getComboIndicatorBL(Convert.ToInt32(Project_ID), Convert.ToInt32(Batch_ID));// Batch, LoginRoleID);
             //if (cb.Count > 0)
             //{
             //    return Json(cb, JsonRequestBehavior.AllowGet);
@@ -442,25 +471,27 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpPost]
         public JsonResult ClickProjectCombo(int Project_ID)
         {
-            List <ComboSubProject>   cb = ObjProjectMngBL.getComboSubProjectBL(Project_ID, LoginRoleID);
-            cb.Insert(0, new ComboSubProject {SubProjectID = 0, SubProjectName = "Please Select SubProject" });
+            List<ComboSubProject> cb = ObjProjectMngBL.getComboSubProjectBL(Project_ID, LoginRoleID);
+            cb.Insert(0, new ComboSubProject { SubProjectID = 0, SubProjectName = "Please Select SubProject" });
             return Json(cb, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult ProjectCheckUmbrella(int ProjectID)
-        {
-            int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
-            return Json(val, JsonRequestBehavior.AllowGet);
-        }
+        //[HttpPost]
+        //public JsonResult ProjectCheckUmbrella(int ProjectID)
+        //{
+        //    //int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
+        //    //return Json(val, JsonRequestBehavior.AllowGet);
+        //}
 
         [HttpPost]
         public JsonResult CheckBatchIsZero(int SubProjectID)
-        { 
+        {
             int val = ObjProjectMngBL.checkBatchIsZeroBL(SubProjectID);
             return Json(val, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
+
+
     }
 }

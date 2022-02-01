@@ -898,6 +898,8 @@ namespace ModelLayer
                 comboIndicator = new List<ComboIndicator>();
                 comboBatch = new List<ComboBatch>();
                 dataTypeVMLst = new List<IndicatorDataTypeVM>();
+                dataTypeCommonVMLst = new List<IndicatorDataTypeCommonValueVM>();
+                dataTypeConveVMLst = new List<IndicatorDataTypeConvertVM>();
             }
 
             public int IndicatorValueID { get; set; }
@@ -915,7 +917,8 @@ namespace ModelLayer
             public List<ComboIndicator> comboIndicator { get; set; }
             public List<ComboBatch> comboBatch { get; set; }
             public List<IndicatorDataTypeVM> dataTypeVMLst { get; set; }
-
+            public List<IndicatorDataTypeCommonValueVM> dataTypeCommonVMLst { get; set; }
+            public List<IndicatorDataTypeConvertVM> dataTypeConveVMLst { get; set; }
         }
         public partial class GetProjectReport
         {
@@ -985,28 +988,33 @@ namespace ModelLayer
 
         #endregion
         #region Indicator
+       
         public partial class IndicatorDataTypeVM
-        {
-            List<ComboBatch> comboBatches { get; set; }
-            List<ComboIndicator> comboIndicators { get; set; }
-            
-            public IndicatorDataTypeVM()
-            {
-                comboBatches = new List<ComboBatch>();
-                comboIndicators = new List<ComboIndicator>();
-            }
-        
-        }
-            public partial class IndicatorDataTypeVM
         {
             public int IndicatorFieldID { get; set; }
             public string IndicatorFieldName { get; set; }
             public int IndicatorDataType_ID { get; set; }
  
             public string TEXT { get; set; }
-            public int INTEGER { get; set; }
-            public float FLOAT { get; set; }
-            public string BOOL { get; set; }
+            public int? INTEGER { get; set; }
+            public float? FLOAT { get; set; }
+            public bool? BOOL { get; set; }
+        }
+        public partial class IndicatorDataTypeConvertVM
+        {
+            public int IndicatorFieldID { get; set; }
+            public string IndicatorFieldName { get; set; }
+            public string TEXT { get; set; }
+            public int? INTEGER { get; set; }
+            public float? FLOAT { get; set; }
+            public string BOOLConvert { get; set; }
+        }
+        public partial class IndicatorDataTypeCommonValueVM
+        {
+            public int IndicatorFieldID { get; set; }
+            public string IndicatorFieldName { get; set; }
+            public dynamic CommonValue { get; set; }
+      
         }
 
 
@@ -1040,7 +1048,19 @@ namespace ModelLayer
           
         }
         #endregion
+        #region COMBOVM
+        public partial class ComboIndicatorBatchIndicatorVM
+        {
+            public List<ComboBatch> comboBatches { get; set; }
+            public List<ComboIndicator> comboIndicators { get; set; }
 
+            public ComboIndicatorBatchIndicatorVM()
+            {
+                comboBatches = new List<ComboBatch>();
+                comboIndicators = new List<ComboIndicator>();
+            }
+        }
+        #endregion
     }
 
 }

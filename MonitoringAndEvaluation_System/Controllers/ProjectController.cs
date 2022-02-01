@@ -491,14 +491,16 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpPost]
         public JsonResult ClickProjectComboBox(int Project_ID)
         {
-            List<ComboBatch> cbBatch = ObjProjectMngBL.getComboBoxBatchBL(Project_ID, LoginRoleID);
-            List<ComboIndicator> cbIndicator = ObjProjectMngBL.getComboIndicatorBL(Convert.ToInt32(Project_ID), 0);
+            ComboIndicatorBatchIndicatorVM batchIndicatorVM = new ComboIndicatorBatchIndicatorVM();
+            batchIndicatorVM.comboBatches = ObjProjectMngBL.getComboBoxBatchBL(Project_ID, LoginRoleID);
+            batchIndicatorVM.comboIndicators = ObjProjectMngBL.getComboIndicatorBL(Convert.ToInt32(Project_ID), 0);
             //if (cb.Count > 0)
             //{
             //    return Json(cb, JsonRequestBehavior.AllowGet);
             //}
-            cbBatch.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
-            return Json(cbBatch, JsonRequestBehavior.AllowGet);
+            batchIndicatorVM.comboBatches.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
+            batchIndicatorVM.comboIndicators.Insert(0, new ComboIndicator { IndicatorID = 0, IndicatorName = "Please Select Indicator" });
+            return Json(batchIndicatorVM, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public JsonResult ClickBatchComboBox(string Project_ID, string Batch_ID)

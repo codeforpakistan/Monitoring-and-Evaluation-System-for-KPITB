@@ -153,19 +153,23 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
+                 
+
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    return View(valueVM);
+                    return RedirectToAction("IndicatorFieldValue");
                 }
                 StatusModel status = new IndicatorBL().indicatorFieldValueCreateBL(valueVM);
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
+                    return RedirectToAction("IndicatorFieldValue");
                 }
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
+                    return View(valueVM);
                 }
             }
             catch (Exception ex1)
@@ -173,6 +177,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             //getAllIndicator();
+            ComboForValue(valueVM);
             return View(valueVM);
         }
 
@@ -214,7 +219,9 @@ namespace MonitoringAndEvaluation_System.Controllers
         public JsonResult ClickIndicatorComboBox(int IndicatorID)
         { 
             CreateIndicatorValueVM m = new CreateIndicatorValueVM();
+            
             m.dataTypeVMLst = new IndicatorBL().getndicatorDataTypeBL(IndicatorID);
+            m.dataTypeCommonVMLst = new IndicatorBL().getIndicatorInsertedFieldBaseOnIndicatorBL(IndicatorID);
             return Json(m, JsonRequestBehavior.AllowGet);
         }
 

@@ -63,13 +63,13 @@
                         </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Procurement From Date *</label>
-                                @Html.TextBoxFor(model => model.ProcurementFromDate, new { @class = "form-control", @type = "date", @id ="ProcurementFromDate", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.ProcurementFromDate, "", new { @class = "parsley-required" ,@id ="spanProcurementFromDate" })
+                                @Html.TextBoxFor(model => model.ProcurementFromDate, new { @class = "form-control", @type = "date", @id = "ProcurementFromDate", @placeholder = "Enter No of Recruited -HR" })
+                                @Html.ValidationMessageFor(m => m.ProcurementFromDate, "", new { @class = "parsley-required", @id = "spanProcurementFromDate" })
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Procurement To Date *</label>
-                                @Html.TextBoxFor(model => model.ProcurementToDate, new { @class = "form-control", @type = "date", @id ="ProcurementToDate", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.ProcurementToDate, "", new { @class = "parsley-required" ,@id= "spanProcurementFromDate" })
+                                @Html.TextBoxFor(model => model.ProcurementToDate, new { @class = "form-control", @type = "date", @id = "ProcurementToDate", @placeholder = "Enter No of Recruited -HR" })
+                                @Html.ValidationMessageFor(m => m.ProcurementToDate, "", new { @class = "parsley-required", @id = "spanProcurementFromDate" })
                             </div>
                         </div>
                     <div class="row">
@@ -152,6 +152,7 @@
                         </div>
                     </div>
                 </div>
+                                                    }
         </div>
         <!-- END card-->
 

@@ -196,7 +196,21 @@ namespace DatabaseLayer
                 return DataTypeLst;
             }
         }
+        public static List<IndicatorDataTypeConvertVM> getIndicatorInsertedFieldBaseOnIndicatorDL(int IndicatorID)
+        {
+            List<IndicatorDataTypeConvertVM> DataTypeLst = new List<IndicatorDataTypeConvertVM>();
 
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@IndicatorID", IndicatorID);
+                DataTypeLst = conn.Query<IndicatorDataTypeConvertVM>("sp_GetIndicatorInsertedFieldBaseOnIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return DataTypeLst;
+            }
+        }
 
     }
 }

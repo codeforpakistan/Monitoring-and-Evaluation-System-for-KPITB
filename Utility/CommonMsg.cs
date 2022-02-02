@@ -13,7 +13,7 @@ namespace Utility
         public static readonly string SaveSuccessfully = "Record Saved Successfully";
         public static readonly string UpdateSuccessfully = "Record Updated Successfully";
         public static readonly string DeleteSuccessfully = "Record Deleted  Successfully";
-        public static readonly string OperationNotperform = "Operation not perform Successfully, Please try again";
+        public static readonly string OperationNotperform = "Operation not perform Successfully, Something went wrong !";
 
     }
 }

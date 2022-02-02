@@ -11,18 +11,21 @@ using System.Web.Security;
 using Utility;
 using static ModelLayer.MainModel;
 using static ModelLayer.MainViewModel;
-
+using System.Web;
+using System.Web.Mvc;
 namespace MonitoringAndEvaluation_System.Controllers
 {
     public class UsersController : BaseController
     {
         // GET: Users
         UserManagementBL ObjUserMngBL = new UserManagementBL();
-
+  
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Login()
         {
+            //.Where(a.LoginDateTime > DateTime.Now.AddMinutes(-30))
+
             LoginVM loginVM = new LoginVM();
             return View(loginVM);
         }
@@ -31,6 +34,11 @@ namespace MonitoringAndEvaluation_System.Controllers
         [AllowAnonymous]
         public ActionResult Login(LoginVM model)
         {
+            var IPAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            if (string.IsNullOrEmpty(IPAddress))
+            {
+                IPAddress = Request.ServerVariables["REMOTE_ADDR"];
+            }
             try
             {
                 //model

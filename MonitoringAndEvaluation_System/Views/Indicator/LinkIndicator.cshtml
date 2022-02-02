@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Link Indicator";
-    
     List<ModelLayer.MainViewModel.GetAllLinkIndicatorVM> _LstAllLinkIndicators = (List<ModelLayer.MainViewModel.GetAllLinkIndicatorVM>)ViewBag.LstAllLinkIndicator;
 }
 <!-- START card-->
@@ -131,13 +130,13 @@
                     success: function (BatchLst) {
                         debugger;
                         $("#Batch_ID").empty();
-                        if (BatchLst == 0 || BatchLst ==null) {
+                        if (BatchLst.comboBatches == 0 || BatchLst.comboBatches ==null) {
                             $("#Batch_ID").prop("disabled", true);
                             $("#Batch_ID").append('<option value="' + 0 + '">' +
                                 "Please Select Batch" + '</option>');
                         } else {
                             $("#Batch_ID").prop("disabled", false);
-                            $.each(BatchLst, function (i, Aqib) {
+                            $.each(BatchLst.comboBatches, function (i, Aqib) {
                                 $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
                                     Aqib.BatchName + '</option>');
                             });

@@ -153,19 +153,23 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
+                 
+
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    return View(valueVM);
+                    return RedirectToAction("IndicatorFieldValue");
                 }
                 StatusModel status = new IndicatorBL().indicatorFieldValueCreateBL(valueVM);
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
+                    return RedirectToAction("IndicatorFieldValue");
                 }
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
+                    return View(valueVM);
                 }
             }
             catch (Exception ex1)
@@ -173,6 +177,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             //getAllIndicator();
+            ComboForValue(valueVM);
             return View(valueVM);
         }
 
@@ -211,10 +216,12 @@ namespace MonitoringAndEvaluation_System.Controllers
         #region ComboSetting
 
         [HttpPost]
-        public JsonResult ClickIndicatorComboBox(int IndicatorID)
+        public JsonResult ClickIndicatorComboBox(string Project_ID, string IndicatorID) 
         { 
             CreateIndicatorValueVM m = new CreateIndicatorValueVM();
-            m.dataTypeVMLst = new IndicatorBL().getndicatorDataTypeBL(IndicatorID);
+            
+            m.dataTypeVMLst = new IndicatorBL().getndicatorDataTypeBL(Convert.ToInt32(IndicatorID));
+            m.dataTypeCommonVMLst = new IndicatorBL().getIndicatorInsertedFieldBaseOnIndicatorBL(Convert.ToInt32(Project_ID),Convert.ToInt32(IndicatorID));
             return Json(m, JsonRequestBehavior.AllowGet);
         }
 

@@ -161,8 +161,8 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult RecruitedHRCreate()
         {
             CreateRecruitedHRVM recruitedHRVM = new CreateRecruitedHRVM();
-            //ComboProject(recruitedHRVM);
-            ComboForRecruitedHR(recruitedHRVM);
+            ComboProject(recruitedHRVM);
+            
             getAllRecruitedHR();
             return View(recruitedHRVM);
 
@@ -276,6 +276,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult ProcurementCreateView()
         {
             CreateProcurementVM procurementVM = new CreateProcurementVM();
+      
             ComboProjectProc(procurementVM);
             getAllProcurement();
             return View(procurementVM);
@@ -417,6 +418,8 @@ namespace MonitoringAndEvaluation_System.Controllers
         public void ComboProjectProc(CreateProcurementVM procurementVM)
         {
             procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            procurementVM.comboBatch.Add(mb);
 
         }
         public void ComboProjectProcEdit(EditProcurementVM procurementEditVM)
@@ -491,14 +494,16 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpPost]
         public JsonResult ClickProjectComboBox(int Project_ID)
         {
-            List<ComboBatch> cbBatch = ObjProjectMngBL.getComboBoxBatchBL(Project_ID, LoginRoleID);
-            List<ComboIndicator> cbIndicator = ObjProjectMngBL.getComboIndicatorBL(Convert.ToInt32(Project_ID), 0);
+            ComboIndicatorBatchIndicatorVM batchIndicatorVM = new ComboIndicatorBatchIndicatorVM();
+            batchIndicatorVM.comboBatches = ObjProjectMngBL.getComboBoxBatchBL(Project_ID, LoginRoleID);
+            batchIndicatorVM.comboIndicators = ObjProjectMngBL.getComboIndicatorBL(Convert.ToInt32(Project_ID), 0);
             //if (cb.Count > 0)
             //{
             //    return Json(cb, JsonRequestBehavior.AllowGet);
             //}
-            cbBatch.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
-            return Json(cbBatch, JsonRequestBehavior.AllowGet);
+            batchIndicatorVM.comboBatches.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
+            batchIndicatorVM.comboIndicators.Insert(0, new ComboIndicator { IndicatorID = 0, IndicatorName = "Please Select Indicator" });
+            return Json(batchIndicatorVM, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public JsonResult ClickBatchComboBox(string Project_ID, string Batch_ID)

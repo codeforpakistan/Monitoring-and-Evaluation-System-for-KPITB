@@ -51,7 +51,7 @@
                                 @Html.TextBoxFor(model => model.RecruitedToHRDate, new { @class = "form-control", @type = "date" })
                                 @Html.ValidationMessageFor(m => m.RecruitedToHRDate, "", new { @class = "parsley-required", @id = "spanRecruitedToHRDate" })
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-12">
                                 <label class="col-form-label">Remarks </label>
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
                                 @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
@@ -144,7 +144,8 @@
     <script>
         $(document).ready(function ()
         {
-
+            $("#SubProject_ID").prop("disabled", false);
+            $("#Batch_ID").prop("disabled", true);
         });
 
         $("#RecruitedFromHRDate").on('change', function () {
@@ -174,7 +175,8 @@
                 }
             }
         }
-          $("#Project_ID").on('change', function () {
+
+        @*$("#Project_ID").on('change', function () {
             var _Project_ID = $(this).find("option:selected").val();
 
                 $.ajax({
@@ -183,6 +185,7 @@
                      dataType: 'json',
                     data: { Project_ID: _Project_ID },  // Same Parameter with Action
                     success: function (BatchLst) {
+                        debugger;
                         $("#Batch_ID").empty();
                         if (BatchLst == 0 || BatchLst ==null) {
                             $("#Batch_ID").prop("disabled", true);
@@ -200,7 +203,8 @@
                      console.log('Failed to Retrieve Batch Data:  ' + ex);
                  }
                 });//Ajax_End
-        });
+        });*@
+       
 
         $("#Project_ID").on('change', function () {
                 var _Project_ID = $(this).find("option:selected").val();
@@ -217,47 +221,41 @@
                         $("#lblRemaningHR").text(remainValue);
                         $("#lblRemaningHR").show();
                       
-                        if (Value != 1)  // Non-Umbrella
-                        {
-                            $("#SubProject_ID").prop("disabled", true);
-                            $("#Batch_ID").prop("disabled", true);
-
-                            $("#SubProject_ID").empty();
-                            $("#Batch_ID").empty();
-
-                            $("#SubProject_ID").append('<option value="' + 0 + '">' +
-                                "Please Select SubProject" + '</option>');
-                            $("#Batch_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Batch" + '</option>');
-
-                        }
-                        else {
                                       $.ajax({
                                       //url: "/ManageStock/GetProductNameCombo" + Category_ID,
                                        type: 'POST',
-                                       url: '@Url.Action("ClickProjectCombo")',
+                                       url: '@Url.Action("ClickProjectComboBox")',
                                        dataType: 'json',
                                        data: { Project_ID: _Project_ID },  // Same Parameter with Action
-                                       success: function (SubProjectLst)
+                                       success: function (response)
                                        {
-                                           $("#SubProject_ID").prop("disabled", false);
-                                           $("#Batch_ID").prop("disabled", false);
-                                           $("#SubProject_ID").empty();
-                                           $.each(SubProjectLst, function (i, Njaeeb)
+                                           debugger;
+                                           if (response.comboBatches.length <= 1) {
+                                               $("#SubProject_ID").prop("disabled", true);
+                                               $("#Batch_ID").prop("disabled", true);
+                                               $("#Batch_ID").append('<option value="' + 0 + '">' +
+                                                   "Please Select Batch" + '</option>');
+                                           }
+                                           else
                                            {
-                                               $("#SubProject_ID").append('<option value="' + Njaeeb.SubProjectID + '">' +
-                                                   Njaeeb.SubProjectName + '</option>');
-                                            });
+                                               $("#SubProject_ID").prop("disabled", false);$("#Batch_ID").prop("disabled", false);
+                                               $("#SubProject_ID").empty(); $("#Batch_ID").empty();
+                                               $.each(response.comboBatches, function (i, item)
+                                               {
+                                                   $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
+                                                       item.BatchName + '</option>');
+                                               });
+                                           }
                                         },
                                         error: function (ex)
                                         {
-                                           alert('Failed to Retrieve Sub-Project Data:  ' + ex);
+                                           alert('Failed to Retrieve Batch Data:  ' + ex);
                                         }
                                   });
-                        }
+                       
                  },
                  error: function (ex) {
-                     console.log('Failed to Retrieve Sub-Project Data:  ' + ex);
+                     console.log('Failed to Retrieve Project Data:  ' + ex);
                  }
                 });//Ajax_End
             });

@@ -85,7 +85,18 @@ namespace MonitoringAndEvaluation_System.Controllers
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(expenditureVM);
                 }
+                int Released, Expenditure;
+                StatusModel status2 = ObjFinanceMngBL.ComparePlanned_BudgetBL(expenditureVM.Project_ID, out Released, out Expenditure);
+                int rr = Released - Expenditure;
 
+                var ss = expenditureVM.ExpenditureBudget - Released;
+                if (expenditureVM.ExpenditureBudget > rr)
+                {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "ExpenditureBudget Budget should not be greater than Released Budget");
+                    ComboProject2(expenditureVM);
+                    getAllReleasedBudget();
+                    return View(expenditureVM);
+                }
                 expenditureVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new FinanceManagementBL().expenditureCreateViewBL(expenditureVM);
                 if (status.status)
@@ -118,21 +129,24 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         public void ComboProject(CreateViewReleasedBudgetVM releasedVM)
         {
-            //Get ProjectType list
+
             releasedVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
-            releasedVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
-            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            releasedVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+            ////Get ProjectType list
+            //releasedVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            //ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
+            //releasedVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
+            //ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            //releasedVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
         }
         public void ComboProject2(CreateViewExpenditureBudgetVM expenditureVM)
         {
-            //Get ProjectType list
             expenditureVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
-            expenditureVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
-            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            expenditureVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+            ////Get ProjectType list
+            //expenditureVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            //ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
+            //expenditureVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
+            //ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            //expenditureVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
         }
     }
 }

@@ -31,7 +31,7 @@
                             @* @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })*@
                         </div>
                         <div class="col-lg-4">
-                            <label class="col-form-label">Released Budget *</label>
+                            <label>Released Budget *</label>
                             <label class="col-form-label parsley-required" id="lblRemaninBudget"></label>
                             <input hidden id="RemaningBudget" type="number" name="RemaningBudget" />
                             @Html.TextBoxFor(model => model.ReleasedBudget, new { @class = "form-control", @type = "number", @placeholder = "Released Budget in KPR" })
@@ -188,7 +188,9 @@
                 }
             }
         }
-       $("#Project_ID").on('change', function () {
+
+
+         $("#Project_ID").on('change', function () {
             var _Project_ID = $(this).find("option:selected").val();
 
                 $.ajax({
@@ -197,17 +199,25 @@
                      dataType: 'json',
                     data: { Project_ID: _Project_ID },  // Same Parameter with Action
                     success: function (BatchLst) {
+                        debugger;
                         $("#Batch_ID").empty();
-                        if (BatchLst == 0 || BatchLst ==null) {
+                        $("#Indicator_ID").empty();
+                        if (BatchLst.comboBatches.length <= 1 || BatchLst.comboBatches == null) {
                             $("#Batch_ID").prop("disabled", true);
                             $("#Batch_ID").append('<option value="' + 0 + '">' +
                                 "Please Select Batch" + '</option>');
+
+                           
+
                         } else {
                             $("#Batch_ID").prop("disabled", false);
-                            $.each(BatchLst, function (i, Aqib) {
+                            $.each(BatchLst.comboBatches, function (i, Aqib) {
                                 $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
                                     Aqib.BatchName + '</option>');
                             });
+
+                          
+
                         }
                  },
                  error: function (ex) {
@@ -215,8 +225,12 @@
                  }
                 });//Ajax_End
         });
+    
 
-        $("#Project_ID").on('change', function () {
+
+
+
+        @*$("#Project_ID").on('change', function () {
                 var _Project_ID = $(this).find("option:selected").val();
                 $.ajax({
                      type: 'POST',
@@ -233,14 +247,14 @@
 
                         if (Value != 1)  // Non-Umbrella
                         {
-                            $("#SubProject_ID").prop("disabled", true);
+                            $("#Project_ID").prop("disabled", true);
                             $("#Batch_ID").prop("disabled", true);
 
-                            $("#SubProject_ID").empty();
+                            $("#Project_ID").empty();
                             $("#Batch_ID").empty();
 
-                            $("#SubProject_ID").append('<option value="' + 0 + '">' +
-                                "Please Select SubProject" + '</option>');
+                            $("#Project_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Project" + '</option>');
                             $("#Batch_ID").append('<option value="' + 0 + '">' +
                                 "Please Select Batch" + '</option>');
 
@@ -303,7 +317,7 @@
                      console.log('Failed to Retrieve Batch Data:  ' + ex);
                  }
                 });//Ajax_End
-        });
+        });*@
 
         $("#ReleasedBudget").on('change', function () {
             CheckHRRemaningValue();

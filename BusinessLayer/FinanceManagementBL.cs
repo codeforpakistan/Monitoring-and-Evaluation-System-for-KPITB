@@ -18,8 +18,13 @@ namespace BusinessLayer
             ReleasedBudget = 0;
             return FinanceManagementDL.ComparePlanned_BudgetDL(_ProjectID, out ApprovedBudget, out ReleasedBudget);
         }
+        public StatusModel CompareReleased_ExpenditureBL(int _ProjectID, out int ReleasedBudget, out int ExpenditureBudget)
+        {
+            ReleasedBudget = 0;
+            ExpenditureBudget = 0;
+            return FinanceManagementDL.CompareReleased_ExpenditureDL(_ProjectID, out ReleasedBudget, out ExpenditureBudget);
+        }
 
-       
 
         //ReleasedCreateView
         public StatusModel releasedCreateViewBL(CreateViewReleasedBudgetVM m)

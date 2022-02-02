@@ -44,5 +44,23 @@ namespace DatabaseLayer
             }
             return status;
         }
+
+        //GetALLBatches
+        public static List<GetAllBatchVM> getALLBatcheDL(int LoginRoleID, int LoginUserID)
+        {
+            List<GetAllBatchVM> getAllAllBatchVMVMLst = new List<GetAllBatchVM>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@LoginRoleID", LoginRoleID);
+                ObjParm.Add("@LoginUserID", LoginUserID);
+                getAllAllBatchVMVMLst = conn.Query<GetAllBatchVM>("sp_GetAllBatch", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return getAllAllBatchVMVMLst;
+            }
+        }
     }
 }

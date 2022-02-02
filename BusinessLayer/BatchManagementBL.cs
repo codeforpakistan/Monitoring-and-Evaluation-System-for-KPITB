@@ -15,5 +15,9 @@ namespace BusinessLayer
         {
             return BatchManagementDL.batchCreateViewDL(m);
         }
+        public List<GetAllBatchVM> getAllBatchBL(int LoginRoleID, int LoginUserID)
+        {
+            return BatchManagementDL.getALLBatcheDL(LoginRoleID, LoginUserID);
+        }
     }
 }

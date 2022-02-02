@@ -20,7 +20,8 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             CreateBatchVM batchVM = new CreateBatchVM();
             ComboProject(batchVM);
-            //getAllIssue();
+            getAllBatch();
+            
             return View(batchVM);
         }
         [HttpPost]
@@ -53,6 +54,10 @@ namespace MonitoringAndEvaluation_System.Controllers
             return RedirectToAction("BatchCreateView");
         }
 
+        private void getAllBatch()
+        {
+            ViewBag.LstAllBatch = new BatchManagementBL().getAllBatchBL(LoginRoleID, LoginUserID);
+        }
         public void ComboProject(CreateBatchVM batchVM)
         {
             //Get ProjectType list

@@ -1,36 +1,3 @@
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\BusinessLayer.dll
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\BusinessLayer.pdb
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\Dapper.dll
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\DatabaseLayer.dll
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\ModelLayer.dll
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\DatabaseLayer.pdb
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\DatabaseLayer.dll.config
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\ModelLayer.pdb
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\Dapper.xml
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\obj\Debug\BusinessLayer.csproj.AssemblyReference.cache
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\obj\Debug\BusinessLayer.csproj.CoreCompileInputs.cache
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\obj\Debug\BusinessLayer.csproj.CopyComplete
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\obj\Debug\BusinessLayer.dll
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\obj\Debug\BusinessLayer.pdb
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\Utility.dll
-D:\Application\Web\ASP.NET\MVC\MonitoringAndEvaluation_System\BusinessLayer\bin\Debug\Utility.pdb
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\BusinessLayer.dll
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\BusinessLayer.pdb
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\Dapper.dll
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\DatabaseLayer.dll
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\ModelLayer.dll
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\Utility.dll
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\DatabaseLayer.pdb
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\DatabaseLayer.dll.config
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\ModelLayer.pdb
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\Dapper.xml
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\Utility.pdb
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\obj\Debug\BusinessLayer.csproj.AssemblyReference.cache
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\obj\Debug\BusinessLayer.csproj.CoreCompileInputs.cache
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\obj\Debug\BusinessLayer.csproj.CopyComplete
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\obj\Debug\BusinessLayer.dll
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\obj\Debug\BusinessLayer.pdb
-E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\Dapper.pdb
 E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\BusinessLayer.dll
 E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\BusinessLayer.pdb
 E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Monitoring-and-Evaluation-System-for-KPITB\BusinessLayer\bin\Debug\DatabaseLayer.dll

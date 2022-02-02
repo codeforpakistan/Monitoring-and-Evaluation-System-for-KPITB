@@ -14,6 +14,40 @@ namespace DatabaseLayer
     public class FinanceManagementDL
     {
         #region Finance
+        public static StatusModel ComparePlanned_BudgetDL(int _ProjectID, out int ApprovedBudget, out int ReleasedBudget)
+        {
+            ApprovedBudget = 0;
+            ReleasedBudget = 0;
+
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+
+                ObjParm.Add("@ProjectID", _ProjectID);
+                ObjParm.Add("@ApprovedBudget", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                ObjParm.Add("@ReleasedBudget", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_CompareApprovedBudget_With_ReleasedBudget", ObjParm, commandType: CommandType.StoredProcedure);
+
+                ApprovedBudget = Convert.ToInt32(ObjParm.Get<int>("@ApprovedBudget"));
+                ReleasedBudget = Convert.ToInt32(ObjParm.Get<int>("@ReleasedBudget"));
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return status;
+        }
         public static StatusModel releasedCreateViewDL(CreateViewReleasedBudgetVM m)
         {
             StatusModel status = new StatusModel();

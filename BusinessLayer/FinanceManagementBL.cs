@@ -12,6 +12,15 @@ namespace BusinessLayer
     public class FinanceManagementBL
     {
         #region Finance
+        public StatusModel ComparePlanned_BudgetBL(int _ProjectID, out int ApprovedBudget, out int ReleasedBudget)
+        {
+            ApprovedBudget = 0;
+            ReleasedBudget = 0;
+            return FinanceManagementDL.ComparePlanned_BudgetDL(_ProjectID, out ApprovedBudget, out ReleasedBudget);
+        }
+
+       
+
         //ReleasedCreateView
         public StatusModel releasedCreateViewBL(CreateViewReleasedBudgetVM m)
         {

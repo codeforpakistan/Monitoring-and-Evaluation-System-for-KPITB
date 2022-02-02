@@ -15,6 +15,7 @@ namespace MonitoringAndEvaluation_System.Controllers
     {
         // GET: Finance
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
+        FinanceManagementBL ObjFinanceMngBL = new FinanceManagementBL();
         [HttpGet]
         public ActionResult ReleasedBudgetCreateView()
         {
@@ -34,7 +35,18 @@ namespace MonitoringAndEvaluation_System.Controllers
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(releasedVM);
                 }
+                int planned, Achived;
+                StatusModel status2 = ObjFinanceMngBL.ComparePlanned_BudgetBL(releasedVM.Project_ID, out planned, out Achived);
+                int rr = planned - Achived;
 
+                var ss = releasedVM.ReleasedBudget - planned;
+                if (releasedVM.ReleasedBudget > rr)
+                {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Released Budget should not be greater than Approved Budget");
+                    ComboProject(releasedVM);
+                    getAllReleasedBudget();
+                    return View(releasedVM);
+                }
                 releasedVM.CreatedByUser_ID =LoginUserID; ;
                 StatusModel status = new FinanceManagementBL().releasedCreateViewBL(releasedVM);
                 if (status.status)

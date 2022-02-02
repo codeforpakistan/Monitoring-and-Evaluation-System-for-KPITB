@@ -300,7 +300,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 var ss =procurementVM.NoOfProcurement - planned;
                 if (procurementVM.NoOfProcurement >rr )
                 {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Procurement should not be greater than AchivedProcurement");
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Procurement should not be greater than Planned Procurement");
                     ComboProjectProc(procurementVM);
                     getAllProcurement();
                     return View(procurementVM);

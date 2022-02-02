@@ -1,7 +1,7 @@
 ﻿@model ModelLayer.MainViewModel.CreateBatchVM
 @{
     ViewBag.Title = "Add New Issue";
-    List<ModelLayer.MainViewModel.GetAllIssue> _LstAllIssues = (List<ModelLayer.MainViewModel.GetAllIssue>)ViewBag.LstAllIssues;
+    List<ModelLayer.MainViewModel.GetAllBatchVM> _LstAllBatches = (List<ModelLayer.MainViewModel.GetAllBatchVM>)ViewBag.LstAllBatch;
 }
 
 <!-- START row-->
@@ -57,10 +57,7 @@
                                                         <th>
                                                             Project Name
                                                         </th>
-                                                        <th>
-                                                            SubProject Name
-                                                        </th>
-
+                                                        
                                                         <th>
                                                            Batch Name
                                                         </th>
@@ -70,38 +67,32 @@
                                                         </th>
                                                     </tr>
                                                 </thead>
-                                                @*<tbody>
+                                                <tbody>
                                                     @{
-                                                        foreach (var item in _LstAllIssues)
+                                                        foreach (var item in _LstAllBatches)
                                                         {
                                                             <tr>
-                                                                @Html.HiddenFor(m => item.IssuesID)
+                                                                @Html.HiddenFor(m => item.BatchID)
                                                                 <td>
                                                                     @item.ID
                                                                 </td>
                                                                 <td>
-                                                                    @item.IssueDescription
+                                                                    @item.ProjectName
                                                                 </td>
                                                                 <td>
-                                                                    @item.IssueDate
+                                                                    @item.BatchName
                                                                 </td>
-                                                                <td>
-                                                                    @item.ActionTaken
-                                                                </td>
-                                                                <td>
-                                                                    @item.Remarks
-                                                                </td>
-
+                                                                
                                                                 <td>
 
-                                                                    @Html.ActionLink("Edit", "IssueEdit", new { IssuesID = item.IssuesID }, new { @class = "mb-1 btn btn-warning" })
+                                                                    @Html.ActionLink("Edit", "BatchEdit", new { BatchID = item.BatchID }, new { @class = "mb-1 btn btn-warning" })
 
                                                                 </td>
 
                                                             </tr>
                                                         }
                                                     }
-                                                </tbody>*@
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>

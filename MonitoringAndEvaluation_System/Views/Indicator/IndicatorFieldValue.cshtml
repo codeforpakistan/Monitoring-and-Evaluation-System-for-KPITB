@@ -147,6 +147,16 @@
                                 $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
                                     Aqib.BatchName + '</option>');
                             });
+
+                            if (BatchLst.comboIndicators.length > 1)
+                            {
+                                $.each(BatchLst.comboIndicators, function (i, Aqib2) {
+                                    $("#Indicator_ID").prop("disabled", false);
+                                    $("#Indicator_ID").append('<option value="' + Aqib2.IndicatorID + '">' +
+                                        Aqib2.IndicatorName + '</option>');
+                                });
+                            }
+
                         }
                  },
                  error: function (ex) {
@@ -193,13 +203,17 @@
                 });//Ajax_End
             });
         $("#Indicator_ID").on('change', function () {
-            _Indicator_ID = $(this).find("option:selected").val();
-
+            
+            var obj1 = {};
+            obj1.Project_ID = $("#Project_ID").find("option:selected").val();
+            obj1.IndicatorID = $(this).find("option:selected").val();
+            debugger;
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("ClickIndicatorComboBox", "Indicator")',
+                contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
-                data: { IndicatorID: _Indicator_ID },  // Same Parameter with Action
+                data: JSON.stringify(obj1),  // Same Parameter with Action
                 success: function (IndicatorTypeLst) {
                     $("#tblBodyIndicator").empty();
                     $("#tblBodyIndicator2").empty();

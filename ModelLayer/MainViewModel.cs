@@ -1002,6 +1002,7 @@ namespace ModelLayer
         }
         public partial class IndicatorDataTypeConvertVM
         {
+             public int Project_ID { get; set; }
             public int IndicatorFieldID { get; set; }
             public string IndicatorFieldName { get; set; }
             public string TEXT { get; set; }
@@ -1053,7 +1054,7 @@ namespace ModelLayer
         {
             public List<ComboBatch> comboBatches { get; set; }
             public List<ComboIndicator> comboIndicators { get; set; }
-
+            public int[] value = new int[5];
             public ComboIndicatorBatchIndicatorVM()
             {
                 comboBatches = new List<ComboBatch>();

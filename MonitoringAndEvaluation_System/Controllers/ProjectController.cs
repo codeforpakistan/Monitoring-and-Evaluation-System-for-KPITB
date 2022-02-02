@@ -161,8 +161,8 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult RecruitedHRCreate()
         {
             CreateRecruitedHRVM recruitedHRVM = new CreateRecruitedHRVM();
-            //ComboProject(recruitedHRVM);
-            ComboForRecruitedHR(recruitedHRVM);
+            ComboProject(recruitedHRVM);
+            
             getAllRecruitedHR();
             return View(recruitedHRVM);
 
@@ -276,6 +276,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult ProcurementCreateView()
         {
             CreateProcurementVM procurementVM = new CreateProcurementVM();
+      
             ComboProjectProc(procurementVM);
             getAllProcurement();
             return View(procurementVM);
@@ -417,6 +418,8 @@ namespace MonitoringAndEvaluation_System.Controllers
         public void ComboProjectProc(CreateProcurementVM procurementVM)
         {
             procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            procurementVM.comboBatch.Add(mb);
 
         }
         public void ComboProjectProcEdit(EditProcurementVM procurementEditVM)

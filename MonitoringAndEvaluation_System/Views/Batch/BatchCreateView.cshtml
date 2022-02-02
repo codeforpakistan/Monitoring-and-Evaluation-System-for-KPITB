@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-lg-5">
+                            <div class="col-lg-6">
                                 <label for="sel1">Select Project </label>
                                 @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
                                 @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
@@ -27,7 +27,7 @@
                                 @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
                                 @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
                             </div>*@
-                            <div class="col-lg-5">
+                            <div class="col-lg-6">
                                 <label for="sel1">Batch Name</label>
                                 
                                 @Html.TextBoxFor(model => model.BatchName, new { @class = "form-control", @placeholder = "Enter Batch Name" })

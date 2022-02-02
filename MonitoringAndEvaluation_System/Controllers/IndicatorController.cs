@@ -216,12 +216,12 @@ namespace MonitoringAndEvaluation_System.Controllers
         #region ComboSetting
 
         [HttpPost]
-        public JsonResult ClickIndicatorComboBox(int IndicatorID)
+        public JsonResult ClickIndicatorComboBox(string Project_ID, string IndicatorID) 
         { 
             CreateIndicatorValueVM m = new CreateIndicatorValueVM();
             
-            m.dataTypeVMLst = new IndicatorBL().getndicatorDataTypeBL(IndicatorID);
-            m.dataTypeCommonVMLst = new IndicatorBL().getIndicatorInsertedFieldBaseOnIndicatorBL(IndicatorID);
+            m.dataTypeVMLst = new IndicatorBL().getndicatorDataTypeBL(Convert.ToInt32(IndicatorID));
+            m.dataTypeCommonVMLst = new IndicatorBL().getIndicatorInsertedFieldBaseOnIndicatorBL(Convert.ToInt32(Project_ID),Convert.ToInt32(IndicatorID));
             return Json(m, JsonRequestBehavior.AllowGet);
         }
 

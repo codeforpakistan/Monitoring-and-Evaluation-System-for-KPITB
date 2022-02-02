@@ -145,6 +145,7 @@ namespace DatabaseLayer
                 Con.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
                 ObjParm.Add("@objIFV", dt.AsTableValuedParameter("udt_IndicatorFieldValue"));
+                ObjParm.Add("@Project_ID", m.Project_ID);
                 ObjParm.Add("@FromDate", m.FromDate);
                 ObjParm.Add("@ToDate", m.ToDate);
                 ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
@@ -196,7 +197,7 @@ namespace DatabaseLayer
                 return DataTypeLst;
             }
         }
-        public static List<IndicatorDataTypeConvertVM> getIndicatorInsertedFieldBaseOnIndicatorDL(int IndicatorID)
+        public static List<IndicatorDataTypeConvertVM> getIndicatorInsertedFieldBaseOnIndicatorDL(int Project_ID, int IndicatorID)
         {
             List<IndicatorDataTypeConvertVM> DataTypeLst = new List<IndicatorDataTypeConvertVM>();
 
@@ -204,6 +205,7 @@ namespace DatabaseLayer
             {
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@Project_ID", Project_ID);
                 ObjParm.Add("@IndicatorID", IndicatorID);
                 DataTypeLst = conn.Query<IndicatorDataTypeConvertVM>("sp_GetIndicatorInsertedFieldBaseOnIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();

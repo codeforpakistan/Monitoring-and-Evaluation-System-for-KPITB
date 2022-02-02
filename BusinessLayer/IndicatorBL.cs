@@ -51,9 +51,9 @@ namespace BusinessLayer
         {
             return IndicatorDL.getndicatorDataTypeDL(IndicatorID);
         }
-        public List<IndicatorDataTypeCommonValueVM> getIndicatorInsertedFieldBaseOnIndicatorBL(int IndicatorID)
+        public List<IndicatorDataTypeCommonValueVM> getIndicatorInsertedFieldBaseOnIndicatorBL(int Project_ID,int IndicatorID)
         {
-            List <IndicatorDataTypeConvertVM> lst = IndicatorDL.getIndicatorInsertedFieldBaseOnIndicatorDL(IndicatorID);
+            List <IndicatorDataTypeConvertVM> lst = IndicatorDL.getIndicatorInsertedFieldBaseOnIndicatorDL(Project_ID,IndicatorID);
             List<IndicatorDataTypeCommonValueVM> mLst = new List<IndicatorDataTypeCommonValueVM>();
             IndicatorDataTypeCommonValueVM m = new IndicatorDataTypeCommonValueVM();
      

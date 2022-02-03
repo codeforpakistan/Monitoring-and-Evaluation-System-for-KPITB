@@ -43,6 +43,35 @@ namespace DatabaseLayer
         }
 
         #endregion
+        public static bool IsIndicatorNameExistsDL(string _IndicatorName)
+        {
+            bool isTrue = false;
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+
+                ObjParm.Add("@IndicatorName", _IndicatorName);
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_IsIndicatorNameExists", ObjParm, commandType: CommandType.StoredProcedure);
+
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                isTrue = status.status;
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return isTrue;
+        }
         //IndicatorCreate
         public static StatusModel indicatorCreateDL(CreateIndicatorVM m)
         {

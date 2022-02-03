@@ -619,13 +619,13 @@
         <div id="divMessage" class=" customNotification  col-md-5 ">
             @if (TempData["CssClass"] != null)
             {
-            <div class="@TempData["CssClass"]">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="@TempData["CssIcon"]"></i> @TempData["Opertaion"]</h4>
-                @TempData["Message"]
-            </div>
+                <div class="@TempData["CssClass"]">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="@TempData["CssIcon"]"></i> @TempData["Opertaion"]</h4>
+                    @TempData["Message"]
+                </div>
             }
-            </div>
+        </div>
     </div>
 
 
@@ -723,9 +723,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     @RenderSection("Scripts", required: false)
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    @*<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
 
     <script type="text/javascript">
         $(document).ready(function () {

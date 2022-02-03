@@ -15,6 +15,7 @@ namespace MonitoringAndEvaluation_System.Controllers
     {
         // GET: Indicator
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
+        IndicatorBL ObjIndicatorMngBL = new IndicatorBL();
         //IndicatorCreate
         [HttpGet]
         public ActionResult IndicatorCreateView()
@@ -34,6 +35,19 @@ namespace MonitoringAndEvaluation_System.Controllers
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(indicatorVM);
                 }
+                bool isExists = ObjIndicatorMngBL.IsIndicatorNameExistsBL(indicatorVM.IndicatorName);  //Check DuplicateIndicatorName
+                if (isExists)
+                {
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "IndicatorName Already Exists");
+                    getAllIndicator();
+                    return View(indicatorVM);
+                }
+                //bool isExists = ObjIndicatorMngBL.IsIndicatorNameExistsBL(indicatorVM.IndicatorName);  //ProjectName Check
+                //if (isExists)
+                //{
+                //    ShowMessage(MessageBox.Warning, OperationType.Warning, "Indicator Name Already Exists !");
+                //    return View("~/Views/Indicator/IndicatorCreateView.cshtml", indicatorVM);
+                //}
                 StatusModel status = new IndicatorBL().indicatorCreateBL(indicatorVM);
                 if (status.status)
                 {
@@ -228,6 +242,28 @@ namespace MonitoringAndEvaluation_System.Controllers
         private void getAllLinkIndicator()
         {
             ViewBag.LstAllLinkIndicator = new IndicatorBL().getALLLinkIndicatorBL();
+        }
+        #endregion
+        #region Json
+        public JsonResult IsIndicatorNameExists(string _IndicatorName)
+        {
+            try
+            {
+                bool isExists = ObjIndicatorMngBL.IsIndicatorNameExistsBL(_IndicatorName);
+                if (isExists)
+                {
+                    return Json("true", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("false", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex1)
+            {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                return Json("false", JsonRequestBehavior.AllowGet);
+            }
         }
         #endregion
     }

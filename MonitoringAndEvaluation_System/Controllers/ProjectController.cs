@@ -33,8 +33,6 @@ namespace MonitoringAndEvaluation_System.Controllers
             try
             {
 
-               
-
                 #region SingleValues
 
                 ProjectVM.Category_ID = Convert.ToInt32(Request.Form["txtCategory_ID"]);
@@ -460,7 +458,6 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         //}
         #endregion
-
         #region View List
         private void getAllRecruitedHR()
         {

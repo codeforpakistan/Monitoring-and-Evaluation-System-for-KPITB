@@ -22,7 +22,7 @@
                             <div class="col-lg-12">
                                 <label class="col-form-label">Indicator Name </label>
                                 @Html.TextBoxFor(m => m.IndicatorName, new { @class = "form-control", @placeholder = "Please Enter Indicator Name" })
-                                @Html.ValidationMessageFor(m => m.IndicatorName, "", new { @class = "parsley-required" })
+                                @Html.ValidationMessageFor(m => m.IndicatorName, "", new { @class = "parsley-required", @id = "spanIndicatorName" })
                             </div>
                         </div>
 
@@ -50,9 +50,9 @@
                                                         ID
                                                     </th>
                                                     <th>
-                                                       Indicator Name
+                                                        Indicator Name
                                                     </th>
-                                                    
+
                                                     <th class="col-lg-1">
                                                         Action
                                                     </th>
@@ -62,21 +62,21 @@
                                                 @{
                                                     foreach (var item in _LstAllIndicators)
                                                     {
-                                                    <tr>
-                                                             @Html.HiddenFor(m => item.IndicatorID)
-                                                    <td>
-                                                        @item.ID
-                                                    </td>
-                                                     <td>
-                                                         @item.IndicatorName
-                                                     </td>
-                                                     <td>
-                                                         @Html.ActionLink("Edit", "IndicatorEdit", new { IndicatorID = item.IndicatorID }, new { @class = "mb-1 btn btn-warning" })
-                                                     </td>
+                                                        <tr>
+                                                            @Html.HiddenFor(m => item.IndicatorID)
+                                                            <td>
+                                                                @item.ID
+                                                            </td>
+                                                            <td>
+                                                                @item.IndicatorName
+                                                            </td>
+                                                            <td>
+                                                                @Html.ActionLink("Edit", "IndicatorEdit", new { IndicatorID = item.IndicatorID }, new { @class = "mb-1 btn btn-warning" })
+                                                            </td>
                                                         </tr>
-                                                        }
                                                     }
-                                             </tbody>
+                                                }
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -89,6 +89,31 @@
         <!-- END card-->
     </div>
 </div>
-
-
-
+@section Scripts{
+    <script>
+    //IndicatorName Exist
+    $("#IndicatorName").change(function () {
+        if ($("#IndicatorName").val() != '') {
+              var urllink = '@Url.Action("IsIndicatorNameExists", "Indicator")'
+                $.ajax({
+                    url: urllink,
+                    type: "GET",
+                    data: { _IndicatorName: $('#IndicatorName').val() },
+                    success: function (result) {
+                        if (result == "true") {
+                            $('#spanIndicatorName').text('Indicator Name Already Exists !');
+                            $('#IndicatorName').focus();
+                        }
+                      else {
+                            $('#spanIndicatorName').text('');
+                        }
+                    },
+                    error: function (err) {
+                        alert('err');
+                        alert(err.statusText);
+                    }
+                });
+            }
+        });//Change
+    </script>
+    }

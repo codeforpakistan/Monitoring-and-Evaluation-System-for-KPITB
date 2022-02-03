@@ -27,6 +27,12 @@ namespace BusinessLayer
             return IndicatorDL.indicatorFeildCreateDL(dt);
         }
         #endregion
+
+        //JSON
+        public bool IsIndicatorNameExistsBL(string _IndicatorName)
+        {
+            return IndicatorDL.IsIndicatorNameExistsDL(_IndicatorName.Trim());
+        }
         //Createindicator
         public StatusModel indicatorCreateBL(CreateIndicatorVM m)
         {

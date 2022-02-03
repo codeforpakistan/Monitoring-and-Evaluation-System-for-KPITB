@@ -5,11 +5,44 @@
 
 <div class="card">
     <div class="card-header">
-        <div class="card-title">View User</div>
+        <div class="card-title"><h4>View User</h4></div>
     </div>
+
     <div class="card-body">
         <div>@Html.ActionLink("Add New User", "UserCreate", null, new { @class = "btn btn-primary" })</div>
         <hr />
+        <!-- START card-->
+        <div class="card card-default">
+            <div class="card-body">
+                <form class="form-horizontal">
+                    <div class="form-row ">
+                        <div class="col-lg-3">
+                            <label for="sel1">Search By Name</label>
+                            <input class="select2 form-control" type="text" placeholder="Search By Name">
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="sel1">Search By Email</label>
+                            <input class="select2 form-control" type="text" placeholder="Search By Email">
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="sel1">Search By Role Name</label>
+                            <input class="select2 form-control" type="text" placeholder="Select Role Name">
+
+                        </div>
+                        <div class="col-lg-1">
+                            <label for="sel1" style="color:transparent">]</label>
+                            <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Search</button>
+                        </div>
+                        <div class="col-lg-1">
+                            <label for="sel1" style="color:transparent">]</label>
+                            <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+        <!-- END card-->
         <table class="table table-striped my-4 w-100" id="datatable2">
             <thead>
                 <tr>
@@ -22,7 +55,6 @@
                     <th>
                         Full Name
                     </th>
-
                     <th>
                         Email
                     </th>
@@ -65,20 +97,20 @@
                                 @item.Address
                             </td>
                             @*<td>
-                                    <img src="~/Content/Template/img/user/user.png" style="width:50px" />
-                                </td>*@
+                                <img src="~/Content/Template/img/user/user.png" style="width:50px" />
+                            </td>*@
                             <td>
                                 @item.IsActive
                             </td>
 
                             @*<td>
-                                <div class="float-left">
-                                    <label class="switch">
-                                        <input id="chk-fixed" type="checkbox" data-toggle-state="layout-fixed">
-                                        <span></span>
-                                    </label>
-                                </div
-                                </td>>*@
+                            <div class="float-left">
+                                <label class="switch">
+                                    <input id="chk-fixed" type="checkbox" data-toggle-state="layout-fixed">
+                                    <span></span>
+                                </label>
+                            </div
+                            </td>>*@
                             <td>
                                 @Html.ActionLink("Edit", "UserEdit", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-warning" })
                                 @*@Html.ActionLink("Detail", "UserDetail", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-primary" })*@

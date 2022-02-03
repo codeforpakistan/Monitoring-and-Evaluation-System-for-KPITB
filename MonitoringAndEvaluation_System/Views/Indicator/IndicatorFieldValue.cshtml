@@ -12,7 +12,6 @@
         @using (Html.BeginForm("IndicatorFieldValue", "Indicator", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             <!-- START card-->
-
             <div class="card card-default">
                 <div class="card-header">
                     <div class="card-title">
@@ -42,27 +41,13 @@
 
                         <br />
                         @*<div class="float-right"><input type="button" id="AddStackHolder" value="Add Field" class="btn btn-primary" /></div>*@
-                        <br />
-                        <br />
+                       
                     
                         <div class="row">
-                            <!--Fetch-->
-                            <div class="col-lg-6">
-                                <table class="table table-striped" name="tblIndicator2" id="tblIndicator2">
-                                    <thead class="table-info">
-                                        <tr>
-                                            <th data-column-id="id" data-type="numeric">ID</th>
-                                            <th data-column-id="Department">Indicator Field Name</th>
-                                            <th data-column-id="ContactNo">Indicator Value</th>
-                                            <th data-column-id="action"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tblBodyIndicator2">
-                                    </tbody>
-                                </table>
-                            </div>
+
                             <!--Insert-->
                             <div class="col-lg-6">
+                                <strong>New Entries</strong>
                                 <table class="table table-striped" name="tblIndicator" id="tblIndicator">
                                     <thead class="table-info">
                                         <tr>
@@ -73,8 +58,22 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tblBodyIndicator">
-                                         
-
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--Fetch-->
+                            <div class="col-lg-6">
+                                <strong>Previes History</strong>
+                                <table class="table table-striped" name="tblIndicator2" id="tblIndicator2">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric">ID</th>
+                                            <th data-column-id="Department">Indicator Field Name</th>
+                                            <th data-column-id="ContactNo">Indicator Value</th>
+                                            <th data-column-id="action"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblBodyIndicator2">
                                     </tbody>
                                 </table>
                             </div>

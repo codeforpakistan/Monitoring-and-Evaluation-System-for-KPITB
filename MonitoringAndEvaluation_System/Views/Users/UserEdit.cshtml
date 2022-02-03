@@ -5,7 +5,7 @@
 }
 <!-- START card-->
 <div class="card card-default">
-    <div class="card-header">User Registration</div>
+    <div class="card-header"><h4>User Registration</h4></div>
     <div class="card-body">
         @using (Html.BeginForm("UserEdit", "Users", FormMethod.Post, new { @class = "form-horizontal" }))
         {
@@ -29,10 +29,10 @@
                         </div>
                         <div class="form-row">
                             @*<div class="col-lg-5">
-            <label for="validationServer04">CNIC No</label>
-            @Html.TextBoxFor(model => model.CNICNo, new { @class = "form-control", @placeholder = "Enter CNIC No" })
-            @Html.ValidationMessageFor(m => m.CNICNo, "", new { @class = "parsley-required" })
-        </div>*@
+                           <label for="validationServer04">CNIC No</label>
+                           @Html.TextBoxFor(model => model.CNICNo, new { @class = "form-control", @placeholder = "Enter CNIC No" })
+                           @Html.ValidationMessageFor(m => m.CNICNo, "", new { @class = "parsley-required" })
+                           </div>*@
 
                         </div>
                         <div class="form-row">
@@ -48,10 +48,10 @@
 
                             </div>
                             @*<div class="col-lg-5">
-        <label for="validationServer04">Profile Picture</label>
-        <input class="form-control " id="@Model.Photo" name="@Model.Photo" type="file" placeholder="" >
-        <div class="invalid-feedback">Please Upload User image.</div>
-        </div>*@
+                            <label for="validationServer04">Profile Picture</label>
+                            <input class="form-control " id="@Model.Photo" name="@Model.Photo" type="file" placeholder="" >
+                            <div class="invalid-feedback">Please Upload User image.</div>
+                            </div>*@
 
                             <div class="col-lg-10">
                                 <label for="validationServer05">Address</label>

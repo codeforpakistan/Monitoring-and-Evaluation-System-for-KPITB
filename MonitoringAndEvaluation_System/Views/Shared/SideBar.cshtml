@@ -2,10 +2,17 @@
 
 <!-- END user info-->
 <!-- Iterates over all sidebar items-->
+
 <li class="nav-heading ">
     <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
 </li>
 
+<li class=" ">
+    <a href="@Url.Content("~/Dashboard/Admin")" title="Home">
+        <em class="fa fa-windows"></em>
+        <span data-localize="sidebar.nav.element.BUTTON">Dashboard</span>
+    </a>
+</li>
 
 
 <!--DYNAMIC_MENU-->
@@ -30,48 +37,48 @@
         {
 
             @*if (ItemChild.ChildMenuName.Equals("Dashboard"))
-            {
-                <li class=" ">
-                    <a href="#dashboard" title="Dashboard" data-toggle="collapse">
+                {
+                    <li class=" ">
+                        <a href="#dashboard" title="Dashboard" data-toggle="collapse">
 
-                        <em class="icon-speedometer"></em>
-                        <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
-                    </a>
-                </li>
-            }*@
+                            <em class="icon-speedometer"></em>
+                            <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
+                        </a>
+                    </li>
+                }*@
             //else
             //{
 
-                <li class=" ">
-                    <a href="#elements-@ItemChild.NavChildMenuID" title="Elements" data-toggle="collapse" id="@ItemChild.NavChildMenuID">
-                        <em class="icon-user"></em>
-                        <span data-localize="sidebar.nav.element.ELEMENTS">@ItemChild.ChildMenuName</span>
-                    </a>
-                    
-                    <ul class="sidebar-nav sidebar-subnav collapse" id="elements-@ItemChild.NavChildMenuID">
+            <li class=" ">
+                <a href="#elements-@ItemChild.NavChildMenuID" title="Elements" data-toggle="collapse" id="@ItemChild.NavChildMenuID">
+                    <em class="icon-user"></em>
+                    <span data-localize="sidebar.nav.element.ELEMENTS">@ItemChild.ChildMenuName</span>
+                </a>
 
-                        @{
-                          var  _SubChildMenuLst = SubChildMenuLst.Where(suChild => suChild.NavChild_ID == ItemChild.NavChildMenuID).OrderBy(suChild => suChild.SubChildSeqNo).ToList();
-                            foreach (var ItemSubChild in _SubChildMenuLst)
-                            {
-                              <li class=" ">
-                                  @*<a href="@Url.Content("~/Users/UserCreate")" title="Notifications">
-                                      <span data-localize="sidebar.nav.element.NOTIFICATION">Add User</span>
-                                  </a>*@
-                                  <a href="@Url.Action(ItemSubChild.Action, ItemChild.Controller)" title="Notifications">
-                                      <span data-localize="sidebar.nav.element.NOTIFICATION">@ItemSubChild.NavSubChildName</span>
-                                  </a>
+                <ul class="sidebar-nav sidebar-subnav collapse" id="elements-@ItemChild.NavChildMenuID">
 
-                              </li>
-                            }<!--SubChild_Loop-->
-                        }
+                    @{
+                        var _SubChildMenuLst = SubChildMenuLst.Where(suChild => suChild.NavChild_ID == ItemChild.NavChildMenuID).OrderBy(suChild => suChild.SubChildSeqNo).ToList();
+                        foreach (var ItemSubChild in _SubChildMenuLst)
+                        {
+                            <li class=" ">
+                                @*<a href="@Url.Content("~/Users/UserCreate")" title="Notifications">
+                                        <span data-localize="sidebar.nav.element.NOTIFICATION">Add User</span>
+                                    </a>*@
+                                <a href="@Url.Action(ItemSubChild.Action, ItemChild.Controller)" title="Notifications">
+                                    <span data-localize="sidebar.nav.element.NOTIFICATION">@ItemSubChild.NavSubChildName</span>
+                                </a>
 
-                    </ul>
-                </li>
-            }<!--Child_Loop-->
+                            </li>
+                        }<!--SubChild_Loop-->
+                    }
 
-        }<!--Main_Loop-->
+                </ul>
+            </li>
+        }<!--Child_Loop-->
 
-    }
+    }<!--Main_Loop-->
+
+}
 
 

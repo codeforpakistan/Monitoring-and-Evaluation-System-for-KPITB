@@ -25,17 +25,47 @@
                                 @Html.ValidationMessageFor(m => m.IndicatorName, "", new { @class = "parsley-required", @id = "spanIndicatorName" })
                             </div>
                         </div>
-
                         <br />
-                        <div class="required">* Required fields</div>
-
-                        <hr />
+                        <div class="required float-left">* Required fields</div>
                         <div class="float-right">
                             <button class="btn btn-primary" type="submit">Save</button>
-
                         </div>
+                        <!--Popup Msg-->
+
+                        @*if (TempData["Message"] != null)
+            {
+                <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
+                    <strong>@TempData["Message"]</strong>
+                </div>
+            }*@
                         <br />
+                        <hr />
                     }
+                    <!-- START card-->
+                    <div class="card card-default">
+                        <div class="card-body">
+                            <form class="form-horizontal">
+                                <div class="form-row ">
+                                    <div class="col-lg-10">
+                                        <label for="sel1">Search By Indicator Name</label>
+                                        <input class="select2 form-control" type="text" placeholder="Search By Indicator Name">
+                                    </div>
+
+                                    <div class="col-lg-1">
+                                        <label for="sel1" style="color:transparent">]</label>
+                                        <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Search</button>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="sel1" style="color:transparent">]</label>
+                                        <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END card-->
+                 
                     <br />
                     <div class="card card-default">
                         <div class="row">

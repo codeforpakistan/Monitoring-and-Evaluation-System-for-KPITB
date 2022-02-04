@@ -34,9 +34,40 @@
                         <div class="col-lg-3">
                             <label for="sel1" style="color:transparent">]</label>
                             <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Link Indicator</button>
-                        </div>  
+                        </div>
                     </div>
-             </div>
+                </div>
+            </div>
+            <!-- START card-->
+            <div class="card card-default">
+                <div class="card-body">
+                    <form class="form-horizontal">
+                        <div class="form-row ">
+                            <div class="col-lg-3">
+                                <label for="sel1">Search By Project</label>
+                                <input class="select2 form-control" type="text" placeholder="Select Project Name">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="sel1">Search By Batch</label>
+                                <input class="select2 form-control" type="text" placeholder="Select Batch Name">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="sel1">Search By Indicator Name</label>
+                                <input class="select2 form-control" type="text" placeholder="Search By Indicator Name">
+                            </div>
+
+                            <div class="col-lg-1">
+                                <label for="sel1" style="color:transparent">]</label>
+                                <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Search</button>
+                            </div>
+                            <div class="col-lg-1">
+                                <label for="sel1" style="color:transparent">]</label>
+                                <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
             </div>
             <div class="card card-default">
                 <div class="row">
@@ -53,14 +84,14 @@
                                             <th>
                                                 Project Name
                                             </th>
-                                           
+
                                             <th>
                                                 Batch
                                             </th>
                                             <th>
                                                 Indicator Name
                                             </th>
-                                            
+
                                             <th>
                                                 Action
                                             </th>
@@ -79,14 +110,14 @@
                                                     <td>
                                                         @item.ProjectName
                                                     </td>
-                                                    
+
                                                     <td>
                                                         @item.BatchName
                                                     </td>
                                                     <td>
                                                         @item.IndicatorName
                                                     </td>
-                                                    
+
                                                     <td>
 
                                                         @Html.ActionLink("Edit", "LinkIndicatorEdit", new { LinkID = item.LinkID }, new { @class = "mb-1 btn btn-warning" })

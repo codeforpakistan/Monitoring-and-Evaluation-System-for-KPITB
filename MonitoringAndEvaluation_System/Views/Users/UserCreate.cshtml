@@ -3,14 +3,9 @@
 @{
     ViewBag.Title = "Create User";
 }
-
-
-
-
-
 <!-- START card-->
 <div class="card card-default">
-    <div class="card-header">User Registration</div>
+    <div class="card-header"><h4>User Registration</h4></div>
     <div class="card-body">
         @using (Html.BeginForm("UserCreate", "Users", FormMethod.Post, new { @class = "form-horizontal" }))
         {
@@ -28,7 +23,7 @@
 
                             <div class="col-lg-5">
                                 <label for="">Email Address</label>
-                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "example@gmail.com", @id = "idEmail" })
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "example@gmail.com"})
                                 @Html.ValidationMessageFor(m => m.Email, "", new { @class = "parsley-required", @id = "spanEmail" })
                             </div>
                         </div>
@@ -45,12 +40,12 @@
                             </div>
                         </div>
                         @*<div class="form-row">
-                            <div class="col-lg-5">
-                                <label for="validationServer04">CNIC No</label>
-                                @Html.TextBoxFor(model => model.CNICNo, new { @class = "form-control", @placeholder = "Enter CNIC No" })
-                                @Html.ValidationMessageFor(m => m.CNICNo, "", new { @class = "parsley-required" })
-                            </div>
-                        </div>*@
+                                <div class="col-lg-5">
+                                    <label for="validationServer04">CNIC No</label>
+                                    @Html.TextBoxFor(model => model.CNICNo, new { @class = "form-control", @placeholder = "Enter CNIC No" })
+                                    @Html.ValidationMessageFor(m => m.CNICNo, "", new { @class = "parsley-required" })
+                                </div>
+                            </div>*@
                         <div class="form-row">
                             <div class="col-lg-5">
                                 <label for="validationServer05">Contact No</label>
@@ -87,68 +82,31 @@
 </div>
 <!-- END card-->
 
-
 @section Scripts{
     <script>
-        $(document).ready(function () {
-       
-        });//Ready
-
-        @*$('#idEmail').change(function () {
-            debugger;
-                   if ($(this).val() == '') {
-                       var urllink = '@Url.Action("IsEmailExists", "Users")'
-                       $.ajax({
-                           url: urllink,
-                           type: "POST",
-                           contentType: false, // Not to set any content header
-                           processData: false, // Not to process data
-                           data: { _Email: $('#Email').val() },
-                           success: function (result) {
-                               debugger;
-                               if (result == 'true') {
-                                   $('#spanEmail').text('Email Already Exists !');
-                                   $('#Email').focus();
-                               }
-                           },
-                           error: function (err) {
-                               alert(err.statusText);
-                           }
-                       });
-                   }
-               });//Change*@
-
-
-    </script>
-}
-
-@*@section Scripts{
-        <script>
-            $(document).ready(function () {
-                alert('as');
-            });//Ready
-            $('#Email').change(function () {
-                debugger;
-                if ($(this).val() == '') {
-                     var urllink = '@Url.Action("IsEmailExists", "Users")'
-                    $.ajax({
-                        url: urllink,
-                        type: "POST",
-                        contentType: false, // Not to set any content header
-                        processData: false, // Not to process data
-                        data: { _Email = $('#Email').val() },
+    //IndicatorName Exist
+    $("#Email").change(function () {
+        if ($("#Email").val() != '') {
+              var urllink = '@Url.Action("IsEmailExists", "Users")'
+                $.ajax({
+                    url: urllink,
+                    type: "GET",
+                    data: { _Email: $('#Email').val() },
                     success: function (result) {
-                        debugger;
-                        if (result == 'true') {
+                        if (result == "true") {
                             $('#spanEmail').text('Email Already Exists !');
                             $('#Email').focus();
                         }
+                      else {
+                            $('#spanEmail').text('');
+                        }
                     },
                     error: function (err) {
+                        alert('err');
                         alert(err.statusText);
                     }
                 });
-                }
-            });
-        </script>
-    }*@
+            }
+        });//Change
+    </script>
+}

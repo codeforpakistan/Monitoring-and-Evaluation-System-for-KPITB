@@ -16,13 +16,46 @@
     <div class="col-xl-12">
         <!-- START card-->
         <div class="card card-default" id="cardDemo14">
-            <div class="card-header">Project List</div>
+            <div class="card-header"><h4>Project List</h4></div>
             <div class="card-body">
                 <div class="card">
                     <div class="card-body">
                         <div>@Html.ActionLink("Add New Project", "ProjectCreate", null, new { @class = "btn btn-primary" })</div>
-                        <hr />
-                        @*<table class="table table-striped my-4 w-100 table-responsive table-hover" id="datatable2">*@
+                        <br />
+                        <!-- START card-->
+                        <div class="card card-default">
+                            <div class="card-body">
+                                <form class="form-horizontal">
+                                    <div class="form-row ">
+                                        <div class="col-lg-3">
+                                            <label for="sel1">Search By Project Name</label>
+                                            <input class="select2 form-control" type="text" placeholder="Search By Project Name">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="sel1">Search By Project Type</label>
+                                            <input class="select2 form-control" type="text" placeholder="Search By Project Type">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="sel1">Search By Location</label>
+                                            <input class="select2 form-control" type="text" placeholder="Search By Location">
+
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <label for="sel1" style="color:transparent">]</label>
+                                            <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Search</button>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <label for="sel1" style="color:transparent">]</label>
+                                            <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <!-- END card-->
+
+
                         <table class="table table-striped my-4 w-100" id="datatable2">
                             <thead>
                                 <tr>

@@ -27,29 +27,51 @@
                             </div>
 
                             <br />
-                            <div class="required">* Required fields</div>
-                            <!--Popup Msg-->
-                          
-                                if (TempData["Message"] != null)
-                                {
-                                    <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
-                                        <strong>@TempData["Message"]</strong>
-                                    </div>
-                                }
-                          
-                            <hr />
+                            <div class="required float-left">* Required fields</div>
                             <div class="float-right">
                                 <button class="btn btn-primary" type="submit">Save</button>
-
                             </div>
+                            <!--Popup Msg-->
+
+                            @*if (TempData["Message"] != null)
+            {
+                <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
+                    <strong>@TempData["Message"]</strong>
+                </div>
+            }*@
                             <br />
+                            <hr />
                         }
-                        <br />
+                        <!-- START card-->
+                        <div class="card card-default">
+                            <div class="card-body">
+                                <form class="form-horizontal">
+                                    <div class="form-row ">
+                                        <div class="col-lg-10">
+                                            <label for="sel1">Search By Role Name</label>
+                                            <input class="select2 form-control" type="text" placeholder="Search By Role Name">
+                                        </div>
+
+                                        <div class="col-lg-1">
+                                            <label for="sel1" style="color:transparent">]</label>
+                                            <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Search</button>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <label for="sel1" style="color:transparent">]</label>
+                                            <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <!-- END card-->
                         <div class="card card-default">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card">
                                         <div class="card-body">
+
                                             <table class="table table-striped my-4 w-100  table-hover" id="datatable2">
                                                 <thead>
                                                     <tr>
@@ -61,33 +83,33 @@
                                                             Role
                                                         </th>
                                                         <th class="col-lg-6">
-                                                           Status
+                                                            Status
                                                         </th>
                                                         <th class="col-lg-1">
                                                             Action
                                                         </th>
-                                                
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @{
                                                         foreach (var item in _LstAllRoles)
                                                         {
-                                                             <tr>
-                                                                 @Html.HiddenFor(m=>item.RoleID)
-                                                                 <td>
-                                                                     @item.ID
-                                                                 </td>
-                                                                 <td>
-                                                                     @item.RoleName
-                                                                 </td>
-                                                                 <td>
-                                                                     @item.IsActive
-                                                                 </td>
-                                                                 <td>
-                                                                     @Html.ActionLink("Edit", "RoleEdit", new { RoleID = item.RoleID }, new { @class = "mb-1 btn btn-warning" })
-                                                                 </td>
-                                                             </tr>
+                                                            <tr>
+                                                                @Html.HiddenFor(m => item.RoleID)
+                                                                <td>
+                                                                    @item.ID
+                                                                </td>
+                                                                <td>
+                                                                    @item.RoleName
+                                                                </td>
+                                                                <td>
+                                                                    @item.IsActive
+                                                                </td>
+                                                                <td>
+                                                                    @Html.ActionLink("Edit", "RoleEdit", new { RoleID = item.RoleID }, new { @class = "mb-1 btn btn-warning" })
+                                                                </td>
+                                                            </tr>
                                                         }
                                                     }
                                                 </tbody>

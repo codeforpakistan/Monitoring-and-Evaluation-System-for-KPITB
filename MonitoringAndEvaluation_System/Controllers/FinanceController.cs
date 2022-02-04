@@ -94,7 +94,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, "ExpenditureBudget Budget should not be greater than Released Budget");
                     ComboProject2(expenditureVM);
-                    getAllReleasedBudget();
+                    getAllExpenditureBudget();
                     return View(expenditureVM);
                 }
                 expenditureVM.CreatedByUser_ID = LoginUserID;

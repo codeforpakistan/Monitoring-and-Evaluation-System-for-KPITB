@@ -184,6 +184,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         #endregion
         #region JSON
+     
         public JsonResult IsEmailExists(string _Email)
         {
             try
@@ -191,20 +192,18 @@ namespace MonitoringAndEvaluation_System.Controllers
                 bool isExists = ObjUserMngBL.IsEmailExistsBL(_Email);
                 if (isExists)
                 {
-                    return Json("true");
+                    return Json("true", JsonRequestBehavior.AllowGet);
                 }
                 else
-                { 
-                    return Json("false");
+                {
+                    return Json("false", JsonRequestBehavior.AllowGet);
                 }
-
             }
             catch (Exception ex1)
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
-                return Json("false");
+                return Json("false", JsonRequestBehavior.AllowGet);
             }
-            return Json("true");
         }
         #endregion
     }

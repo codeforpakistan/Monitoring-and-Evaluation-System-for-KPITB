@@ -23,17 +23,17 @@
                                 @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                             </div>
                             @*<div class="col-lg-4">
-            <label>Select Sub Project</label>
-            @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
-            @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
-        </div>*@
+                           <label>Select Sub Project</label>
+                           @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
+                           @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
+                          </div>*@
                             <div class="col-lg-4">
                                 <label>Select Cycle/Batch</label>
                                 @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
                                 @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
                             </div>
                             <div class="col-lg-4">
-                                <label class="col-form-label">No of Recruited -HR *</label>
+                                <label class="">No of Recruited -HR *</label>
                                 <label class="col-form-label parsley-required" id="lblRemaningHR"></label>
                                 <input hidden id="RemaningRecruitedHR" type="number" name="RemaningRecruitedHR" />
                                 @Html.TextBoxFor(model => model.RecruitedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Recruited -HR" })
@@ -41,34 +41,66 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label class="col-form-label">From HR Date *</label>
                                 @Html.TextBoxFor(model => model.RecruitedFromHRDate, new { @class = "form-control", @type = "date" })
                                 @Html.ValidationMessageFor(m => m.RecruitedFromHRDate, "", new { @class = "parsley-required", @id = "spanRecruitedFromHRDate" })
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <label class="col-form-label">To HR Date *</label>
                                 @Html.TextBoxFor(model => model.RecruitedToHRDate, new { @class = "form-control", @type = "date" })
                                 @Html.ValidationMessageFor(m => m.RecruitedToHRDate, "", new { @class = "parsley-required", @id = "spanRecruitedToHRDate" })
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-4">
                                 <label class="col-form-label">Remarks </label>
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
                                 @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
-                        @*a*@
+                                @*a*@
                             </div>
                         </div>
 
                         <br />
 
-                        <div class="required">* Required fields</div>
-                        <hr />
+                        <div class="required float-left">* Required fields</div>
                         <div class="float-right">
                             <button class="btn btn-primary" type="submit">Save</button>
                         </div>
                         <br />
-                        <br />
-                        <div class="card card-default mt-5">
+                        <hr />
+
+                        <!-- START card-->
+                        <div class="card card-default">
+                            <div class="card-body">
+                                <form class="form-horizontal">
+                                    <div class="form-row ">
+                                        <div class="col-lg-3">
+                                            <label for="sel1">Search By Project Name</label>
+                                            <input class="select2 form-control" type="text" placeholder="Search By Project Name">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="sel1">Search By Project Type</label>
+                                            <input class="select2 form-control" type="text" placeholder="Search By Project Type">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="sel1">Search By Location</label>
+                                            <input class="select2 form-control" type="text" placeholder="Search By Location">
+
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <label for="sel1" style="color:transparent">]</label>
+                                            <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Search</button>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <label for="sel1" style="color:transparent">]</label>
+                                            <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                        <!-- END card-->
+                        <div class="card card-default">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="card">

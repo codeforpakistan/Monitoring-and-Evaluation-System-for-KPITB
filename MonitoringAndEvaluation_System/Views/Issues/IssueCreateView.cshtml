@@ -55,7 +55,7 @@
                         <br />
                         <div class="row">
 
-                            
+
                             <div class="col-lg-12">
                                 <label class="col-form-label">Solution/Remarks </label>
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Enter Solution/Remarks" })
@@ -63,86 +63,118 @@
                             </div>
                         </div>
                         <br />
-                        <div class="required">* Required fields</div>
-                        <hr />
+                        <div class="required float-left">* Required fields</div>
                         <div class="float-right">
                             <button class="btn btn-primary" type="submit">Save</button>
                         </div>
                         <br />
-                        <br />
-                        <div class="card card-default">
-                            <div class="row">
-                                <div class="col-lg-12 ">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <table class="table table-striped my-4 w-100  table-hover" id="datatable2">
-                                                <thead>
-                                                    <tr>
+                    </div>
+                    
+                    <!--Table-->
+                    <!-- START card-->
+                    <div class="card card-default">
+                        <div class="card-body">
+                            <form class="form-horizontal">
+                                <div class="form-row ">
+                                    <div class="col-lg-3">
+                                        <label for="sel1">Search By Project</label>
+                                        <input class="select2 form-control" type="text" placeholder="Select Project Name">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="sel1">Search By Batch</label>
+                                        <input class="select2 form-control" type="text" placeholder="Select Batch Name">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="sel1">Search By Date</label>
+                                        @Html.TextBoxFor(model => model.IssueDate, new { @class = "select2 form-control", @type = "date", @id = "ProcurementFromDate", @placeholder = "Enter No of Recruited -HR" })
+                                        @Html.ValidationMessageFor(m => m.IssueDate, "", new { @class = "parsley-required", @id = "spanProcurementFromDate" })
+                                    </div>
 
-                                                        <th>
-                                                            ID
-                                                        </th>
-                                                        <th>
-                                                            Issue Description
-                                                        </th>
-                                                        <th>
-                                                            Issue Date
-                                                        </th>
+                                    <div class="col-lg-1">
+                                        <label for="sel1" style="color:transparent">]</label>
+                                        <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Search</button>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="sel1" style="color:transparent">]</label>
+                                        <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
+                                    </div>
+                                </div>
 
-                                                        <th>
-                                                            Action Taken
-                                                        </th>
-                                                        <th>
-                                                            Solution/Remarks
-                                                        </th>
-                                                        <th>
-                                                            Action
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @{
-                                                        foreach (var item in _LstAllIssues)
-                                                        {
-                                                            <tr>
-                                                                @Html.HiddenFor(m => item.IssuesID)
-                                                                <td>
-                                                                    @item.ID
-                                                                </td>
-                                                                <td>
-                                                                    @item.IssueDescription
-                                                                </td>
-                                                                <td>
-                                                                    @item.IssueDate.ToShortDateString()
-                                                                </td>
-                                                                <td>
-                                                                    @item.ActionTaken
-                                                                </td>
-                                                                <td>
-                                                                    @item.Remarks
-                                                                </td>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card card-default">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table class="table table-striped my-4 w-100  table-hover" id="datatable2">
+                                            <thead>
+                                                <tr>
 
-                                                                <td>
+                                                    <th>
+                                                        ID
+                                                    </th>
+                                                    <th>
+                                                        Issue Description
+                                                    </th>
+                                                    <th>
+                                                        Issue Date
+                                                    </th>
 
-                                                                    @Html.ActionLink("Edit", "IssueEdit", new { IssuesID = item.IssuesID }, new { @class = "mb-1 btn btn-warning" })
+                                                    <th>
+                                                        Action Taken
+                                                    </th>
+                                                    <th>
+                                                        Solution/Remarks
+                                                    </th>
+                                                    <th>
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    foreach (var item in _LstAllIssues)
+                                                    {
+                                                        <tr>
+                                                            @Html.HiddenFor(m => item.IssuesID)
+                                                            <td>
+                                                                @item.ID
+                                                            </td>
+                                                            <td>
+                                                                @item.IssueDescription
+                                                            </td>
+                                                            <td>
+                                                                @item.IssueDate.ToShortDateString()
+                                                            </td>
+                                                            <td>
+                                                                @item.ActionTaken
+                                                            </td>
+                                                            <td>
+                                                                @item.Remarks
+                                                            </td>
 
-                                                                </td>
+                                                            <td>
 
-                                                            </tr>
-                                                        }
+                                                                @Html.ActionLink("Edit", "IssueEdit", new { IssuesID = item.IssuesID }, new { @class = "mb-1 btn btn-warning" })
+
+                                                            </td>
+
+                                                        </tr>
                                                     }
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
-            </div>
+
+                </div>
             <!-- END card-->
         }
     </div>

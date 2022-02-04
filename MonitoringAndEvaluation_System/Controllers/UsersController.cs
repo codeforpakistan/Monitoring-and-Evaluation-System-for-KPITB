@@ -47,7 +47,8 @@ namespace MonitoringAndEvaluation_System.Controllers
                 { 
                   LoginAttemptes login = new LoginAttemptes();
                     login.Email = model.Email;
-                    login.Password = model.Password;
+                  
+                    //login.Password = Utility.Encryption.Decrypt(model.Password);
                     StatusModel s = ObjUserMngBL.userAttemptBL(login);  //Get UserLogin Data
                    if( s.status == false)
                      {
@@ -143,12 +144,13 @@ namespace MonitoringAndEvaluation_System.Controllers
             return RedirectToAction("UserView");
         }
         [HttpGet]
-        public ActionResult UserEdit(int UserID)
+        public ActionResult UserEdit(string UserID)
         {
+            
             EditUserVM getUser = new EditUserVM();
             try
             {
-                getUser = new UserManagementBL().getSignleUserBL(UserID);
+                getUser = new UserManagementBL().getSignleUserBL(Convert.ToInt32(Utility.Encryption.DecryptURL(UserID)));
                 getAllRoles();
                 getUser.comboRoles = (List<ComboModel.ComboRole>)ViewBag.LstAllRoles;
             }

@@ -111,10 +111,11 @@
                                 </label>
                             </div
                             </td>>*@
-                            <td>
-                                @Html.ActionLink("Edit", "UserEdit", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-warning" })
-                                @*@Html.ActionLink("Detail", "UserDetail", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-primary" })*@
-                            </td>
+                        <td>
+                                                                                                                     
+                            @Html.ActionLink("Edit", "UserEdit", new { UserID = Utility.Encryption.EncryptURL(Convert.ToString(item.UserID)) }, new { @class = "mb-1 btn btn-warning" })
+                            @*@Html.ActionLink("Detail", "UserDetail", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-primary" })*@
+                        </td>
                         </tr>
                     }
                 }

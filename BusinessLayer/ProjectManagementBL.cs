@@ -16,6 +16,11 @@ namespace BusinessLayer
 
         #region CustomFuncation
         //JSON
+        public List<GetAllProjectVM> SearchProjectByAttributesBL(string ProjectName, string ProjectType, string Location, int UserID, int RoleID)
+        {
+            return ProjectManagementDL.SearchProjectByAttributesDL(ProjectName.Trim(), ProjectType.Trim(), Location.Trim(), UserID,  RoleID);
+        }
+        //JSON
         public bool IsProjectNameExistsBL(string _ProjectName)
         {
             return ProjectManagementDL.IsProjectNameExistsDL(_ProjectName.Trim());

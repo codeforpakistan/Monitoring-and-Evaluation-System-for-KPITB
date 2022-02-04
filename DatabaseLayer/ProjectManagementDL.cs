@@ -42,6 +42,35 @@ namespace DatabaseLayer
                 throw;
             }
         }
+        public static List<GetAllProjectVM> SearchProjectByAttributesDL(string ProjectName, string ProjectType, string Location,int UserID,int RoleID)
+        {
+            List<GetAllProjectVM> getAllProjectLst = new List<GetAllProjectVM>();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@LoginRoleID", RoleID);
+                ObjParm.Add("@LoginUserID", UserID);
+                ObjParm.Add("@ProjectName", ProjectName = ProjectName == "" ? null : ProjectName);
+                ObjParm.Add("@ProjectType", ProjectType = ProjectType == "" ? null : ProjectType);
+                ObjParm.Add("@Location", Location = Location == "" ? null : Location);
+                getAllProjectLst = Con.Query<GetAllProjectVM>("sp_SearchProjectByAttributes", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                Con.Close();
+                Con.Dispose();
+                return getAllProjectLst;
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return getAllProjectLst;
+        }
+
         public static bool IsProjectNameExistsDL(string _ProjectName)
         {
             bool isTrue = false;
@@ -142,7 +171,6 @@ namespace DatabaseLayer
             }
             return status;
         }
-
         public static int checkBatchIsZeroDL(int SubProjectID)
         {
             try

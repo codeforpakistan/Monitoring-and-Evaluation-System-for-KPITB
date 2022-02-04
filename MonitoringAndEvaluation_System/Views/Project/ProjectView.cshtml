@@ -4,11 +4,11 @@
 }
 
 <!--PopupMsg-->
-@*@{       
+@*@{
     if (TempData["Message"] != null)
     {
        <div class="alert alert-success alert-dismissible show" id="_show" role="alert">
-           <strong>Project Created Successfully </strong> 
+           <strong>Project Created Successfully </strong>
        </div>
      }
     }*@
@@ -29,23 +29,23 @@
                                     <div class="form-row ">
                                         <div class="col-lg-3">
                                             <label for="sel1">Search By Project Name</label>
-                                            <input class="select2 form-control" type="text" placeholder="Search By Project Name">
+                                            <input class="select2 form-control" id="txtProjectName" type="text" placeholder="Search By Project Name">
                                         </div>
                                         <div class="col-lg-3">
                                             <label for="sel1">Search By Project Type</label>
-                                            <input class="select2 form-control" type="text" placeholder="Search By Project Type">
+                                            <input class="select2 form-control" id="txtProjectType" type="text" placeholder="Search By Project Type">
                                         </div>
                                         <div class="col-lg-3">
                                             <label for="sel1">Search By Location</label>
-                                            <input class="select2 form-control" type="text" placeholder="Search By Location">
+                                            <input class="select2 form-control" id="txtLocation" type="text" placeholder="Search By Location">
 
                                         </div>
                                         <div class="col-lg-1">
-                                            <label for="sel1" style="color:transparent">]</label>
-                                            <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Search</button>
+                                            <label for="sel1" style="color:transparent"></label>
+                                            <button class="btn btn-primary form-control" type="button" id="btnSearch">Search</button>
                                         </div>
                                         <div class="col-lg-1">
-                                            <label for="sel1" style="color:transparent">]</label>
+                                            <label for="sel1" style="color:transparent"></label>
                                             <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="IDtbody">
                                 @{
                                     foreach (var item in Model)
                                     {
@@ -136,12 +136,67 @@
 
 @section Scripts{
     <script>
-        //$(document).ready(function () {
-        //    //PopupTimeOut
-        //    $('#alert').removeClass('d-none')
-        //    setTimeout(function () {
-        //        $('.alert').fadeOut('close')
-        //    }, 2000)
-        //});
+        $(document).ready(function () {
+
+
+
+        });
+
+
+        $("#btnSearch").click(function () {
+
+            var obj1 = {};
+            obj1.ProjectName = $("#txtProjectName").val();
+            obj1.ProjectType = $("#txtProjectType").val();
+            obj1.Location = $("#txtLocation").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SearchProject", "Project")',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(obj1),  // Same Parameter with Action
+                success: function (response) {
+                    debugger;
+                    if (response == 'false') {
+                       @*var route = '@Url.Action("ProjectCreate", "Project")'
+                         window.location.href = route;*@
+                    }
+                    else
+                    {
+                        var loop = 0;
+                        $("#IDtbody").empty();
+                        $.each(response, function (index, v)
+                        {
+                            var HiddenValue = '';
+                                  HiddenValue = '<td>';
+                            HiddenValue += '<input class="form-control"   name="response[' + loop + '].ProjectID" value="' + v.ProjectID + '" type="text"   style="display:none;" />'
+                                  HiddenValue += '</td>';
+
+                            $('<tr role="row" class="odd">' +
+                                + HiddenValue +
+                                '<td class="sorting_1">' + v.ID + '</td>' +
+                                '<td>' + v.ProjectName + '</td>' +
+                                '<td>' + v.ProjectTypeName + '</td>' +
+                                '<td>' + v.Funding_Source + '</td>' +
+                                '<td>' + v.PlannedBudget + '</td>' +
+                                '<td>' + v.ApprovedBudget + '</td>' +
+                                '<td>' + v.CityName + '</td>' +
+                                '<td> <a class="mb-1 btn btn-warning" href="/Project/ProjectEdit?ProjectID= ' + v.ProjectID + ' ">Edit</a><a class="mb-1 btn btn-primary" href="/Project/ProjectDetails?ProjectID=' + v.ProjectID +'">Details</a> </td>' +
+                                '</tr>').appendTo('#IDtbody');
+                                loop++;
+                        });
+                    }
+                },
+                error: function (err) {
+                    //For Failure notification
+                    alert(err.statusText);
+                }
+            });
+
+
+            });
+
+
     </script>
 }

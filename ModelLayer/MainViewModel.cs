@@ -111,6 +111,8 @@ namespace ModelLayer
             [Required(ErrorMessage = "Password is not match")]
             [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$", ErrorMessage = "Invalid Password")]
             public string Password { get; set; }
+
+            public string Clicked { get; set; }
         }
 
         public partial class LoginReturnDataVM

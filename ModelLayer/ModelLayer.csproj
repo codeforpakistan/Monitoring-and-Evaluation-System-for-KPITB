@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ComboModel.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="LoginAttemptes.cs" />
     <Compile Include="MainModel.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -33,38 +33,44 @@ namespace MonitoringAndEvaluation_System.Controllers
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    return View(releasedVM);
                 }
+                #region COMPARE_BUDGET
                 int planned, Achived;
                 StatusModel status2 = ObjFinanceMngBL.ComparePlanned_BudgetBL(releasedVM.Project_ID, out planned, out Achived);
                 int rr = planned - Achived;
-
+              
                 var ss = releasedVM.ReleasedBudget - planned;
                 if (releasedVM.ReleasedBudget > rr)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, "Released Budget should not be greater than Approved Budget");
-                    ComboProject(releasedVM);
-                    getAllReleasedBudget();
-                    return View(releasedVM);
                 }
-                releasedVM.CreatedByUser_ID =LoginUserID; ;
+                releasedVM.CreatedByUser_ID = LoginUserID; 
+                #endregion
+                #region INSERTION
                 StatusModel status = new FinanceManagementBL().releasedCreateViewBL(releasedVM);
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
-                    
                 }
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
-                }
+                } 
+                #endregion
             }
             catch (Exception ex1)
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
-            //getProject();
-            return RedirectToAction("ReleasedBudgetCreateView");
+            if (ModelState.IsValid) { 
+                return RedirectToAction("ReleasedBudgetCreateView");
+            }
+            else
+            {
+                ComboProject(releasedVM);
+                getAllReleasedBudget();
+                return View(releasedVM);
+            }
         }
         [HttpGet]
         public ActionResult ExpenditureBudgetCreateView()

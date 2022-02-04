@@ -191,18 +191,16 @@ namespace MonitoringAndEvaluation_System.Controllers
                     getAllRecruitedHR();
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(recruitedHRVM);
+                
                 }
                 int[] value = new int[2];
                 StatusModel status1 = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(recruitedHRVM.Project_ID, out value[0], out value[1]);
                 int rr = value[0]- value[1];
-               
-        
+
                 if (recruitedHRVM.RecruitedHR > rr)
                 {
-                    ComboProject(recruitedHRVM);
-                    getAllRecruitedHR();
                     ShowMessage(MessageBox.Warning, OperationType.Warning, "Recruited-HR should not be greater than Planned-HR:  " + rr);
-                    return View(recruitedHRVM);
+                    goto end;
                 }
 
                 recruitedHRVM.CreatedByUser_ID=LoginUserID;
@@ -220,9 +218,11 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
-            ComboProject(recruitedHRVM);
-            getAllRecruitedHR();
             return RedirectToAction("RecruitedHRCreate");
+          
+            end: getAllRecruitedHR();
+            ComboProject(recruitedHRVM);
+            return View(recruitedHRVM);
         }
 
         [HttpGet]
@@ -494,12 +494,12 @@ namespace MonitoringAndEvaluation_System.Controllers
             ComboIndicatorBatchIndicatorVM batchIndicatorVM = new ComboIndicatorBatchIndicatorVM();
             batchIndicatorVM.comboBatches = ObjProjectMngBL.getComboBoxBatchBL(Project_ID, LoginRoleID);
             batchIndicatorVM.comboIndicators = ObjProjectMngBL.getComboIndicatorBL(Convert.ToInt32(Project_ID), 0);
-            //if (cb.Count > 0)
-            //{
-            //    return Json(cb, JsonRequestBehavior.AllowGet);
-            //}
+         
             batchIndicatorVM.comboBatches.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
             batchIndicatorVM.comboIndicators.Insert(0, new ComboIndicator { IndicatorID = 0, IndicatorName = "Please Select Indicator" });
+
+            batchIndicatorVM.value =  CompareValue(Project_ID);
+
             return Json(batchIndicatorVM, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -623,6 +623,19 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         #endregion
 
+        #region CUSTOMFUNCATION
+
+        public int[] CompareValue(int ProjectID)
+        {
+                int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
+                 int[] value = new int[5];
+                value[0] = val;
+                StatusModel status = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(ProjectID, out value[1], out value[2]);
+                StatusModel status2 = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
+            return value;
+        }
+
+        #endregion
 
     }
 }

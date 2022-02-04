@@ -27,8 +27,17 @@ namespace DatabaseLayer
             }
         }
 
-    
-            public static void AddTable<T>(this DynamicParameters source, string parameterName, string dataTableType, ICollection<T> values)
+        public static string ConnectionStringLocal
+        {
+            get
+            {
+                return System.Configuration.ConfigurationManager.AppSettings["DBContextLocal"];
+                //return EncryptAndDecrypt.Decrypt(System.Configuration.ConfigurationManager.AppSettings["DBContext"], true);
+            }
+        }
+
+
+        public static void AddTable<T>(this DynamicParameters source, string parameterName, string dataTableType, ICollection<T> values)
             {
                 var table = new DataTable();
 

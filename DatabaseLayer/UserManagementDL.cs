@@ -103,7 +103,47 @@ namespace DatabaseLayer
             }
             return model;
         }
-        
+
+        public static StatusModel userAttemptDL(LoginAttemptes m)
+        {
+            LoginAttemptes model = new LoginAttemptes();
+            StatusModel statusModel = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+
+                ObjParm.Add("@Email", m.Email);
+                ObjParm.Add("@Password", m.Password);
+                ObjParm.Add("@LoginCount", m.LoginCount);
+                ObjParm.Add("@MACAddress", m.MACAddress);
+                ObjParm.Add("@IPv4Address", m.IPv4Address);
+                ObjParm.Add("@HostName", m.HostName);
+                ObjParm.Add("@BrowserName", m.BrowserName);
+                //ObjParm.Add("@EntryDateTime", m.EntryDateTime);
+                //ObjParm.Add("@LoginDateTime", m.LoginDateTime);
+                //ObjParm.Add("@NextLoginDateTime", m.NextLoginDateTime);
+                //ObjParm.Add("@User_ID", m.User_ID);
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+
+                Con.Execute("usp_CheckLogin", ObjParm, commandType: CommandType.StoredProcedure);
+                statusModel.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                statusModel.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return statusModel;
+        }
+
         public static bool IsEmailExistsDL(string Email)
         {
             bool isTrue = false;

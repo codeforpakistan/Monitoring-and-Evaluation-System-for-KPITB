@@ -13,41 +13,60 @@ using static ModelLayer.MainModel;
 using static ModelLayer.MainViewModel;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
+using System.Net.NetworkInformation;
+
 namespace MonitoringAndEvaluation_System.Controllers
 {
     public class UsersController : BaseController
     {
         // GET: Users
         UserManagementBL ObjUserMngBL = new UserManagementBL();
-  
+
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Login()
         {
+            
+
             //.Where(a.LoginDateTime > DateTime.Now.AddMinutes(-30))
 
             LoginVM loginVM = new LoginVM();
             return View(loginVM);
         }
 
+       
+
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Login(LoginVM model)
         {
-            var IPAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if (string.IsNullOrEmpty(IPAddress))
-            {
-                IPAddress = Request.ServerVariables["REMOTE_ADDR"];
-            }
             try
             {
+                if (model.Clicked == "Clicked")
+                { 
+                  LoginAttemptes login = new LoginAttemptes();
+                    login.Email = model.Email;
+                    login.Password = model.Password;
+                    StatusModel s = ObjUserMngBL.userAttemptBL(login);  //Get UserLogin Data
+                   if( s.status == false)
+                     {
+                        ShowMessage(MessageBox.Warning, OperationType.Warning, s.statusDetail);
+                        goto errorreturn;
+                     }
+                }
+
                 //model
                 if (ModelState.IsValid == false)
                 {
-                    return View(model);
+                    goto errorreturn;
                 }
 
-                LoginReturnDataVM loginUserDataModel =  ObjUserMngBL.userLoginBL(model);  //Get UserLogin Data
+                #region LoginAttemps
+                LoginReturnDataVM loginUserDataModel = ObjUserMngBL.userLoginBL(model);  //Get UserLogin Data
+                #endregion
+
+                
                 if (loginUserDataModel != null)
                 {
                     Session["LoginUser"] = loginUserDataModel;
@@ -60,15 +79,16 @@ namespace MonitoringAndEvaluation_System.Controllers
                 else
                 {
                     ShowMessage(MessageBox.Error, OperationType.Error, "Invalid Credentials");
-                    return View(model);
+                    goto errorreturn;
                 }
             }
             catch (Exception ex1)
             {
                 ShowMessage(MessageBox.Warning, OperationType.Warning, ex1.Message);
             }
-            //return RedirectToAction("UserCreate");
+
             return RedirectToAction("Login", "Users");
+            errorreturn: return View(model);
 
         }
 
@@ -107,14 +127,14 @@ namespace MonitoringAndEvaluation_System.Controllers
                     return View(userVM);
                 }
                 StatusModel status = ObjUserMngBL.userCreateBL(userVM);
-                    if (status.status)
-                    {
-                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
-                    }
-                    else
-                    {
+                if (status.status)
+                {
+                    ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
+                }
+                else
+                {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, "User Not Created");
-                    }
+                }
             }
             catch (Exception ex1)
             {
@@ -136,7 +156,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             catch (Exception)
             {
             }
-           
+
             return View(getUser);
         }
         [HttpPost]
@@ -165,7 +185,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
-            
+
             return RedirectToAction("UserView");
         }
         public ActionResult UserView()
@@ -178,9 +198,9 @@ namespace MonitoringAndEvaluation_System.Controllers
         #region CUSTOM_FUNCATION
         private void getAllRoles()
         {
-            
+
             ViewBag.LstAllRoles = ObjUserMngBL.getRoleBL();
-        
+
         }
         #endregion
         #region JSON
@@ -194,7 +214,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                     return Json("true");
                 }
                 else
-                { 
+                {
                     return Json("false");
                 }
 

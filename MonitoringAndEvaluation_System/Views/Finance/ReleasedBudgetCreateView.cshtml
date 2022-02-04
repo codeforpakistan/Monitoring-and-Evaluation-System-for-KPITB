@@ -206,18 +206,12 @@
                             $("#Batch_ID").prop("disabled", true);
                             $("#Batch_ID").append('<option value="' + 0 + '">' +
                                 "Please Select Batch" + '</option>');
-
-                           
-
                         } else {
                             $("#Batch_ID").prop("disabled", false);
                             $.each(BatchLst.comboBatches, function (i, Aqib) {
                                 $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
                                     Aqib.BatchName + '</option>');
                             });
-
-                          
-
                         }
                  },
                  error: function (ex) {

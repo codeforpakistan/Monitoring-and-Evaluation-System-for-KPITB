@@ -1,9 +1,11 @@
 ﻿
 using DatabaseLayer;
 using ModelLayer;
-
+using System;
 using System.Collections.Generic;
-
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Web;
 using static ModelLayer.ComboModel;
 using static ModelLayer.MainModel;
 using static ModelLayer.MainViewModel;
@@ -71,5 +73,32 @@ namespace BusinessLayer
         {
             return UserManagementDL.userLoginDL(m);
         }
+        //UserLoginAttempts
+        public StatusModel userAttemptBL(LoginAttemptes login)
+        {
+            
+            HttpRequest req = System.Web.HttpContext.Current.Request;
+            login.BrowserName = req.Browser.Browser; //Browser
+            login.HostName = Dns.GetHostName(); //System_Name
+            login.IPv4Address = Dns.GetHostByName(login.HostName).AddressList[0].ToString();// System_IP
+            login.MACAddress = GetMACAddress();//MAC_Address
+            return UserManagementDL.userAttemptDL(login);
+        }
+        private string GetMACAddress()
+        {
+            NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+            String MacAddress = string.Empty;
+            foreach (NetworkInterface adapter in nics)
+            {
+                if (MacAddress == String.Empty)// only return MAC Address from first card  
+                {
+                    IPInterfaceProperties properties = adapter.GetIPProperties();
+                    MacAddress = adapter.GetPhysicalAddress().ToString();
+                }
+            }
+            return MacAddress;
+        }
+
+
     }
 }

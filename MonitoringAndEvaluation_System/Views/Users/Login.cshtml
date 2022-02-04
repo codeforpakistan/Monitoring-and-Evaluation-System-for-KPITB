@@ -48,42 +48,43 @@
                 </div>
                 @using (Html.BeginForm("Login", "Users", FormMethod.Post, new { @class = "form-horizontal" }))
                 {
-                    <div class="card-body">
-                        <p class="text-center py-2">SIGN IN TO CONTINUE.</p>
-                        <div class="form-group">
-                            <div class="input-group with-focus">
-                                @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control border-right-0", @placeholder = "Enter Email Address" })
-                                <div class="input-group-append">
-                                    <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0"></span>
-                                </div>
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "parsley-required" })
+            <div class="card-body">
+                <p class="text-center py-2">SIGN IN TO CONTINUE.</p>
+                <div class="form-group">
+                    <div class="input-group with-focus">
+                        @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control border-right-0", @placeholder = "Enter Email Address" })
+                        <div class="input-group-append">
+                            <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0"></span>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "parsley-required" })
 
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group with-focus">
-                                @Html.TextBoxFor(m => m.Password, "", new { @class = "form-control border-right-0", @placeholder = "Enter Password", @type = "password" })
-                                <div class="input-group-append">
-                                    <span class="input-group-text fa fa-lock text-muted bg-transparent border-left-0"></span>
-                                </div>
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "parsley-required" })
-
-                            </div>
-                        </div>
-                        <h4 class="text-danger">@ViewBag.ErrorMessage</h4>
-                        <div class="clearfix">
-                            <div class="checkbox c-checkbox float-left mt-0">
-                                <label>
-                                    <input type="checkbox" value="" name="remember">
-                                    <span class="fa fa-check"></span>Remember Me
-                                </label>
-                            </div>
-                            <div class="float-right">
-                                <a class="text-muted" href="recover.html">Forgot your password?</a>
-                            </div>
-                        </div>
-                        <button class="btn btn-block btn-primary mt-3" type="submit">Login</button>
                     </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group with-focus">
+                        @Html.TextBoxFor(m => m.Password, "", new { @class = "form-control border-right-0", @placeholder = "Enter Password", @type = "password" })
+                        <div class="input-group-append">
+                            <span class="input-group-text fa fa-lock text-muted bg-transparent border-left-0"></span>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "parsley-required" })
+
+                    </div>
+                </div>
+                <h4 class="text-danger">@ViewBag.ErrorMessage</h4>
+                <div class="clearfix">
+                    <div class="checkbox c-checkbox float-left mt-0">
+                        <label>
+                            <input type="checkbox" value="" name="remember">
+                            <span class="fa fa-check"></span>Remember Me
+                        </label>
+                    </div>
+                    <div class="float-right">
+                        <a class="text-muted" href="recover.html">Forgot your password?</a>
+                    </div>
+                </div>
+                <button class="btn btn-block btn-primary mt-3" type="submit" value="Clicked" name="Clicked" id="@Model.Clicked" >Login</button>
+                
+            </div>
                 }
             </div>
             <!-- END card-->

@@ -146,7 +146,6 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpGet]
         public ActionResult UserEdit(string UserID)
         {
-            
             EditUserVM getUser = new EditUserVM();
             try
             {
@@ -154,11 +153,9 @@ namespace MonitoringAndEvaluation_System.Controllers
                 getAllRoles();
                 getUser.comboRoles = (List<ComboModel.ComboRole>)ViewBag.LstAllRoles;
             }
-
             catch (Exception)
             {
             }
-
             return View(getUser);
         }
         [HttpPost]

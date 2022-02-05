@@ -427,8 +427,6 @@ namespace MonitoringAndEvaluation_System.Controllers
             procurementEditVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
         }
         #endregion
-
-
         #region GetComo_Ignnor
         //public void ComboProjectEdit(EditRecruitedHRVM recruitedHRVM)
         //{
@@ -529,6 +527,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         #endregion
         #region JSON
 
+        [HttpGet]
         public JsonResult IsProjectNamelExists(string _ProjectName)
         {
             try
@@ -550,6 +549,20 @@ namespace MonitoringAndEvaluation_System.Controllers
             } 
         }
 
+        [HttpPost]
+        public JsonResult SearchProject(string ProjectName, string ProjectType, string Location)
+        {
+            try
+            {
+                List<GetAllProjectVM> resultList = ObjProjectMngBL.SearchProjectByAttributesBL(ProjectName, ProjectType, Location,LoginUserID,LoginRoleID);
+                return Json(resultList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex1)
+            {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                return Json("false", JsonRequestBehavior.AllowGet);
+            }
+        }
 
 
         //[HttpPost]
@@ -624,7 +637,6 @@ namespace MonitoringAndEvaluation_System.Controllers
 
 
         #endregion
-
         #region CUSTOMFUNCATION
 
         public int[] CompareValue(int ProjectID)

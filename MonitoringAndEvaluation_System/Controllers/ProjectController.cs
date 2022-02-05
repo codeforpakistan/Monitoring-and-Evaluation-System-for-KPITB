@@ -147,9 +147,9 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
 
         [HttpGet]
-        public ActionResult ProjectDetails(int ProjectID)
+        public ActionResult ProjectDetails(string ProjectID)
         {
-            GetProjectDetailsVM data = new ProjectManagementBL().getProjectDetailsBL(ProjectID);
+            GetProjectDetailsVM data = new ProjectManagementBL().getProjectDetailsBL(Convert.ToInt32(Utility.Encryption.DecryptURL(ProjectID)));
 
             return View(data);
         }
@@ -226,12 +226,12 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
 
         [HttpGet]
-        public ActionResult RecruitedHREdit(int RecruitedHRID)
+        public ActionResult RecruitedHREdit(string RecruitedHRID)
         {
             EditRecruitedHRVM getRecruitedHR = new EditRecruitedHRVM();
             try
             {
-                getRecruitedHR = new ProjectManagementBL().getSignleRecruitedHRBL(RecruitedHRID);
+                getRecruitedHR = new ProjectManagementBL().getSignleRecruitedHRBL(Convert.ToInt32(Utility.Encryption.DecryptURL(RecruitedHRID)));
                 ComboProjectEdit(getRecruitedHR);
             }
             catch (Exception)
@@ -328,13 +328,13 @@ namespace MonitoringAndEvaluation_System.Controllers
             //return View();
         }
         [HttpGet]
-        public ActionResult ProcurementEdit(int AchievedProcurementID)
+        public ActionResult ProcurementEdit(string AchievedProcurementID)
         {
             EditProcurementVM getProcurement = new EditProcurementVM();
 
             try
             {
-                getProcurement = new ProjectManagementBL().getSignleProcurementBL(AchievedProcurementID);
+                getProcurement = new ProjectManagementBL().getSignleProcurementBL(Convert.ToInt32(Utility.Encryption.DecryptURL(AchievedProcurementID)));
                 ComboProjectProcEdit(getProcurement);
             }
             catch (Exception)
@@ -416,8 +416,10 @@ namespace MonitoringAndEvaluation_System.Controllers
         public void ComboProjectProc(CreateProcurementVM procurementVM)
         {
             procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            procurementVM.comboBatch.Add(mb);
+
+            //procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            //ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            //procurementVM.comboBatch.Add(mb);
 
         }
         public void ComboProjectProcEdit(EditProcurementVM procurementEditVM)

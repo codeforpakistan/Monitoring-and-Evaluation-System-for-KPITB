@@ -85,7 +85,7 @@
                                                                 
                                                                 <td>
 
-                                                                    @Html.ActionLink("Edit", "BatchEdit", new { BatchID = item.BatchID }, new { @class = "mb-1 btn btn-warning" })
+                                                                    @Html.ActionLink("Edit", "BatchEdit", new { BatchID = Utility.Encryption.EncryptURL(Convert.ToString(item.BatchID)) }, new { @class = "mb-1 btn btn-warning" })
 
                                                                 </td>
 

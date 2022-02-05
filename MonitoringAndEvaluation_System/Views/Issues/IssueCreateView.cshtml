@@ -157,7 +157,7 @@
 
                                                             <td>
 
-                                                                @Html.ActionLink("Edit", "IssueEdit", new { IssuesID = item.IssuesID }, new { @class = "mb-1 btn btn-warning" })
+                                                                @Html.ActionLink("Edit", "IssueEdit", new { IssuesID = Utility.Encryption.EncryptURL(Convert.ToString(item.IssuesID)) }, new { @class = "mb-1 btn btn-warning" })
 
                                                             </td>
 

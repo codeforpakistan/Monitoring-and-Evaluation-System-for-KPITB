@@ -46,6 +46,7 @@
                             <input hidden id="RemaningNoOfProcurement" type="number" name="RemaningNoOfProcurement" />
                             @Html.TextBoxFor(model => model.NoOfProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" })
                             @Html.ValidationMessageFor(m => m.NoOfProcurement, "", new { @class = "parsley-required", @id = "spanNoOfProcurement" })
+
                         </div>
 
                     </div>
@@ -167,7 +168,7 @@
                                                             @item.Remarks
                                                         </td>
                                                         <td>
-                                                            @Html.ActionLink("Edit", "ProcurementEdit", new { AchievedProcurementID = item.AchievedProcurementID }, new { @class = "mb-1 btn btn-warning" })
+                                                            @Html.ActionLink("Edit", "ProcurementEdit", new { AchievedProcurementID = Utility.Encryption.EncryptURL(Convert.ToString(item.AchievedProcurementID))}, new { @class = "mb-1 btn btn-warning" })
                                                         </td>
                                                     </tr>
                                                 }
@@ -223,69 +224,60 @@
                 }
             }
         }
-        $("#Project_ID").on('change', function () {
 
+        $("#Project_ID").on('change', function () {
                 var _Project_ID = $(this).find("option:selected").val();
                 $.ajax({
                      type: 'POST',
-                     url: '@Url.Action("ClickProjectComboBox", "Project")',
+                     url: '@Url.Action("ProjectCheckUmbrella")',
                      dataType: 'json',
                     data: { ProjectID: _Project_ID },  // Same Parameter with Action
                     success: function (Value) {
-                     
-                        var remainValue = Value[3] - Value[4];
+                        debugger;
+
+                        var remainValue = Value[1] - Value[2] ;
                         $("#RemaningNoOfProcurement").val(remainValue); //Hidden
                         $("#lblNoOfProcurement").text(remainValue);
                         $("#lblNoOfProcurement").show();
 
-                        if (Value != 1)  // Non-Umbrella
-                        {
-                            $("#SubProject_ID").prop("disabled", true);
-                            $("#Batch_ID").prop("disabled", true);
-
-                            $("#SubProject_ID").empty();
-                            $("#Batch_ID").empty();
-
-                            $("#SubProject_ID").append('<option value="' + 0 + '">' +
-                                "Please Select SubProject" + '</option>');
-                            $("#Batch_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Batch" + '</option>');
-
-                        } else {
                                       $.ajax({
                                       //url: "/ManageStock/GetProductNameCombo" + Category_ID,
                                        type: 'POST',
-                                       url: '@Url.Action("ClickProjectCombo")',
+                                       url: '@Url.Action("ClickProjectComboBox")',
                                        dataType: 'json',
                                        data: { Project_ID: _Project_ID },  // Same Parameter with Action
-                                       success: function (SubProjectLst)
+                                       success: function (response)
                                        {
-                                           $("#SubProject_ID").prop("disabled", false);
-                                           $("#Batch_ID").prop("disabled", false);
                                            debugger;
-                                           $("#SubProject_ID").empty();
-                                           $.each(SubProjectLst, function (i, Njaeeb)
+                                           if (response.comboBatches.length <= 1) {
+                                               $("#SubProject_ID").prop("disabled", true);
+                                               $("#Batch_ID").prop("disabled", true);
+                                               $("#Batch_ID").append('<option value="' + 0 + '">' +
+                                                   "Please Select Batch" + '</option>');
+                                           }
+                                           else
                                            {
-                                               $("#SubProject_ID").append('<option value="' + Njaeeb.SubProjectID + '">' +
-                                                   Njaeeb.SubProjectName + '</option>');
-                                            });
+                                               $("#SubProject_ID").prop("disabled", false);$("#Batch_ID").prop("disabled", false);
+                                               $("#SubProject_ID").empty(); $("#Batch_ID").empty();
+                                               $.each(response.comboBatches, function (i, item)
+                                               {
+                                                   $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
+                                                       item.BatchName + '</option>');
+                                               });
+                                           }
                                         },
                                         error: function (ex)
                                         {
-                                           alert('Failed to Retrieve Sub-Project Data:  ' + ex);
+                                           alert('Failed to Retrieve Batch Data:  ' + ex);
                                         }
                                   });
-                        }
+
                  },
                  error: function (ex) {
-                     console.log('Failed to Retrieve Sub-Project Data:  ' + ex);
+                     console.log('Failed to Retrieve Project Data:  ' + ex);
                  }
                 });//Ajax_End
-        });
-
-        $("#NoOfProcurement").on('change', function () {
-            CheckProcurementRemaningValue();
-        });
+            });
 
         $("#SubProject_ID").on('change', function () {
             var _SubProject_ID = $(this).find("option:selected").val();
@@ -316,12 +308,16 @@
                 });//Ajax_End
         });
 
-        function CheckProcurementRemaningValue() {
+        $("#NoOfProcurement").on('change', function () {
+            CheckHRRemaningValue();
+        });
+
+        function CheckHRRemaningValue() {
             debugger;
-            var _Procurement = $("#NoOfProcurement").val();
-            var _RemaningProcurement = $("#lblNoOfProcurement").text();
-            if (parseInt(_Procurement) > parseInt(_RemaningProcurement)) {
-                $("#spanNoOfProcurement").text("Procurement should not be greater than AchivedProcurement");
+            var _NoOfProcurement = $("#NoOfProcurement").val();
+            var _RemaningNoOfProcurement = $("#lblNoOfProcurement").text();
+            if (parseInt(_RecruitedHR) > parseInt(_RemaningRecruitedHR)) {
+                $("#spanNoOfProcurement").text("Achived Procurement should not be greater than Planned Procurement");
                 $("#spanNoOfProcurement").show();
                 $("#NoOfProcurement").focus();
                 return true;
@@ -331,7 +327,6 @@
                 return true;
             }
         }
-
     </script>
 }
 

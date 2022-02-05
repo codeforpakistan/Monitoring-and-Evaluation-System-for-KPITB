@@ -158,7 +158,7 @@
                                                             </td>
                                                             <td>
 
-                                                                @Html.ActionLink("Edit", "ExpenditureBudgetEdit", new { ExpenditureBudgetID = item.ExpenditureBudgetID }, new { @class = "mb-1 btn btn-warning" })
+                                                                @Html.ActionLink("Edit", "ExpenditureBudgetEdit", new { ExpenditureBudgetID = Utility.Encryption.EncryptURL(Convert.ToString(item.ExpenditureBudgetID)) }, new { @class = "mb-1 btn btn-warning" })
 
                                                             </td>
 

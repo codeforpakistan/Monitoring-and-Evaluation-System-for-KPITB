@@ -52,12 +52,12 @@ namespace MonitoringAndEvaluation_System.Controllers
 
 
         [HttpGet]
-        public ActionResult RoleEdit(int RoleID)
+        public ActionResult RoleEdit(string RoleID)
         {
             EditRoleVM getRole = new EditRoleVM();
             try
             {
-                 getRole = new RoleManagementBL().getSignleRoleBL(RoleID);
+                 getRole = new RoleManagementBL().getSignleRoleBL(Convert.ToInt32(Utility.Encryption.DecryptURL(RoleID)));
             }
             catch (Exception)
             {

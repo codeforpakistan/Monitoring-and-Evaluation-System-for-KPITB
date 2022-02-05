@@ -148,11 +148,11 @@
                                                                     @item.Remarks
                                                                 </td>
                                                                 <td>
-                                                                    @Html.ActionLink("Edit", "RecruitedHREdit", new { RecruitedHRID = item.RecruitedHRID }, new { @class = "mb-1 btn btn-warning" })
+                                                                    @Html.ActionLink("Edit", "RecruitedHREdit", new { RecruitedHRID = Utility.Encryption.EncryptURL(Convert.ToString(item.RecruitedHRID))}, new { @class = "mb-1 btn btn-warning" })
                                                                 </td>
                                                             </tr>
                                                         }
-                                                    }
+                                                                        }
 
                                                 </tbody>
                                             </table>
@@ -178,35 +178,35 @@
         {
             $("#SubProject_ID").prop("disabled", false);
             $("#Batch_ID").prop("disabled", true);
-        });
+                                                                    });
 
         $("#RecruitedFromHRDate").on('change', function () {
-            debugger
+                                                                        debugger
             DateCompare();
-        });
+                                                                    });
 
         $("#RecruitedToHRDate").on('change', function () {
-            debugger
+                                                                        debugger
             DateCompare();
-        });
+                                                                    });
 
         function DateCompare() {
-            var _RecruitedToHRDate = $('#RecruitedToHRDate').val();
+                                                                        var _RecruitedToHRDate = $('#RecruitedToHRDate').val();
 
-            var _RecruitedFromHRDate = $('#RecruitedFromHRDate').val();
-            if (_RecruitedToHRDate != '') {
-                if (_RecruitedFromHRDate > _RecruitedToHRDate)
-                {
+                                                                        var _RecruitedFromHRDate = $('#RecruitedFromHRDate').val();
+                                                                        if (_RecruitedToHRDate != '') {
+                                                                            if (_RecruitedFromHRDate > _RecruitedToHRDate)
+                                                                            {
                     $("#spanRecruitedFromHRDate").text("From-HRDate should not be greater then  To-HRDate");
-                    return false;
-                }
-                else
-                {
+                                                                                return false;
+                                                                            }
+                                                                            else
+                                                                            {
                     $("#spanRecruitedFromHRDate").text("");
-                    return false;
-                }
-            }
-        }
+                                                                                return false;
+                                                                            }
+                                                                        }
+                                                                    }
 
         @*$("#Project_ID").on('change', function () {
             var _Project_ID = $(this).find("option:selected").val();

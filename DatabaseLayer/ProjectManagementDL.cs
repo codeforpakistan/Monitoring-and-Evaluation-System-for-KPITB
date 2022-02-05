@@ -735,10 +735,10 @@ namespace DatabaseLayer
                 ObjParm.Add("@SubProject_ID", m.SubProject_ID);
                 ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
+                ObjParm.Add("@ProcurementHeader", m.ProcurementHeader);
                 ObjParm.Add("@AchievedProcurement", m.NoOfProcurement);
                 ObjParm.Add("@ProcurementFromDate", m.ProcurementFromDate);
                 ObjParm.Add("@ProcurementToDate", m.ProcurementToDate);
-                ObjParm.Add("@ProcurementHeader", m.ProcurementHeader);
                 ObjParm.Add("@Remarks", m.Remarks);
                 ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                 ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
@@ -802,6 +802,7 @@ namespace DatabaseLayer
                 ObjParm.Add("@SubProject_ID", m.SubProject_ID);
                 ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
+                ObjParm.Add("@ProcurementHeader", m.ProcurementHeader);
                 ObjParm.Add("@AchievedProcurement", m.AchievedProcurement);
                 ObjParm.Add("@ProcurementFromDate", m.ProcurementFromDate);
                 ObjParm.Add("@ProcurementToDate", m.ProcurementToDate);

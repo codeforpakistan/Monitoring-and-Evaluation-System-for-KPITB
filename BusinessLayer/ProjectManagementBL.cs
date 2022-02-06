@@ -26,11 +26,9 @@ namespace BusinessLayer
             return ProjectManagementDL.IsProjectNameExistsDL(_ProjectName.Trim());
         }
         //JSON
-        public StatusModel ComparePlannedHR_RecruitedHRBL(int _ProjectID, out int PlannedHR, out int RecruitedHR)
+        public RemainingValues RemainingValuesBL(int _ProjectID)
         {
-            PlannedHR = 0;
-            RecruitedHR = 0;
-            return ProjectManagementDL.ComparePlannedHR_RecruitedHRDL(_ProjectID, out PlannedHR, out RecruitedHR);
+            return ProjectManagementDL.RemainingValuesDL(_ProjectID);
         }
         public StatusModel ComparePlanned_PrucrementBL(int _ProjectID, out int PlannedProcurement, out int AchievedProcurement)
         {

@@ -26,27 +26,23 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         }
         [HttpPost]
-        public ActionResult ReleasedBudgetCreateView(CreateViewReleasedBudgetVM releasedVM)
+        public ActionResult ReleasedBudgetCreateView(CreateViewReleasedBudgetVM releasedVM, FormCollection form)
         {
             try
             {
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
+                    goto gotoWithModel;
                 }
-                #region COMPARE_BUDGET
-                int planned, Achived;
-                StatusModel status2 = ObjFinanceMngBL.ComparePlanned_BudgetBL(releasedVM.Project_ID, out planned, out Achived);
-                int rr = planned - Achived;
               
-                var ss = releasedVM.ReleasedBudget - planned;
-                if (releasedVM.ReleasedBudget > rr)
+                int hdnRemaningHR = Convert.ToInt32( form["hdnRemaningBudget"]);
+                if (releasedVM.ReleasedBudget > hdnRemaningHR)
                 {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Released Budget should not be greater than Approved Budget");
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Released Budget should not be greater than Approved Budget: "+ hdnRemaningHR);
+                    goto gotoWithModel;
                 }
                 releasedVM.CreatedByUser_ID = LoginUserID; 
-                #endregion
-                #region INSERTION
                 StatusModel status = new FinanceManagementBL().releasedCreateViewBL(releasedVM);
                 if (status.status)
                 {
@@ -55,53 +51,48 @@ namespace MonitoringAndEvaluation_System.Controllers
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
+                    goto gotoWithModel;
                 } 
-                #endregion
+       
             }
             catch (Exception ex1)
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                goto gotoWithModel;
             }
-            if (ModelState.IsValid) { 
-                return RedirectToAction("ReleasedBudgetCreateView");
-            }
-            else
-            {
-                ComboProject(releasedVM);
-                getAllReleasedBudget();
-                return View(releasedVM);
-            }
+            return RedirectToAction("ReleasedBudgetCreateView");
+
+            gotoWithModel:
+            ComboProject(releasedVM);
+            getAllReleasedBudget();
+            return View(releasedVM);
         }
         [HttpGet]
         public ActionResult ExpenditureBudgetCreateView()
         {
             CreateViewExpenditureBudgetVM expenditureVM = new CreateViewExpenditureBudgetVM();
-            ComboProject2(expenditureVM);
+            expenditureVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            expenditureVM.comboBatch.Add(mb);
             getAllExpenditureBudget();
             return View(expenditureVM);
            
         }
         [HttpPost]
-        public ActionResult ExpenditureBudgetCreateView(CreateViewExpenditureBudgetVM expenditureVM)
+        public ActionResult ExpenditureBudgetCreateView(CreateViewExpenditureBudgetVM expenditureVM, FormCollection form)
         {
             try
             {
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    return View(expenditureVM);
+                    goto gotoWithModel;
                 }
-                int Released, Expenditure;
-                StatusModel status2 = ObjFinanceMngBL.ComparePlanned_BudgetBL(expenditureVM.Project_ID, out Released, out Expenditure);
-                int rr = Released - Expenditure;
-
-                var ss = expenditureVM.ExpenditureBudget - Released;
-                if (expenditureVM.ExpenditureBudget > rr)
+                int hdnExpenditureBudget = Convert.ToInt32(form["hdnExpenditureBudget"]);
+                if (expenditureVM.ExpenditureBudget > hdnExpenditureBudget)
                 {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, "ExpenditureBudget Budget should not be greater than Released Budget");
-                    ComboProject2(expenditureVM);
-                    getAllExpenditureBudget();
-                    return View(expenditureVM);
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "ExpenditureBudget Budget should not be greater than Released Budget: "+ hdnExpenditureBudget);
+                    goto gotoWithModel; 
                 }
                 expenditureVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new FinanceManagementBL().expenditureCreateViewBL(expenditureVM);
@@ -112,14 +103,22 @@ namespace MonitoringAndEvaluation_System.Controllers
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
+                    goto gotoWithModel;
                 }
             }
             catch (Exception ex1)
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                goto gotoWithModel;
             }
-            //getProject();
             return RedirectToAction("ExpenditureBudgetCreateView");
+
+            gotoWithModel:
+            expenditureVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            expenditureVM.comboBatch.Add(mb);
+            getAllExpenditureBudget();
+            return View(expenditureVM);
         }
 
 
@@ -135,24 +134,10 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         public void ComboProject(CreateViewReleasedBudgetVM releasedVM)
         {
-
             releasedVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ////Get ProjectType list
-            //releasedVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            //ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
-            //releasedVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
-            //ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            //releasedVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            releasedVM.comboBatch.Add(mb); 
         }
-        public void ComboProject2(CreateViewExpenditureBudgetVM expenditureVM)
-        {
-            expenditureVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ////Get ProjectType list
-            //expenditureVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            //ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
-            //expenditureVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
-            //ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            //expenditureVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
-        }
+        
     }
 }

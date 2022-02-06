@@ -115,9 +115,9 @@
           
                 $.ajax({
                      type: 'POST',
-                     url: '@Url.Action("ClickProjectComboBox", "Project")',
+                     url: '@Url.Action("ClickProjectComboBox", "Common")',
                      dataType: 'json',
-                    data: { Project_ID: _Project_ID },  // Same Parameter with Action
+                    data: { ProjectID: _Project_ID },  // Same Parameter with Action
                     success: function (BatchLst) {
                         debugger;
                         $("#Batch_ID").empty();
@@ -176,7 +176,7 @@
             //var Stock = { Project_ID: $("#Project_ID").find("option:selected").val(), Batch_ID: $("#Batch_ID").find("option:selected").val() };
                 $.ajax({
                      type: 'POST',
-                     url: '@Url.Action("ClickBatchComboBox", "Project")',
+                     url: '@Url.Action("ClickBatchComboBox", "Common")',
                     data: JSON.stringify(obj),
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
@@ -209,7 +209,7 @@
             debugger;
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("ClickIndicatorComboBox", "Indicator")',
+                url: '@Url.Action("ClickIndicatorComboBox", "Common")',
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify(obj1),  // Same Parameter with Action

@@ -10,7 +10,7 @@
         <div class="card card-default">
             <div class="card-header">
                 <div class="card-title">
-                    <h4>Add Expenditure Budget</h4> 
+                    <h4>Add Expenditure Budget</h4>
                 </div>
             </div>
             <div class="card-body">
@@ -19,38 +19,33 @@
                         <div class="col-lg-4">
                             <label for="sel1">Select Project </label>
                             @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
-                            @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
+                            @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required", @id = "spanProjectID" })
                         </div>
-                        @*<div class="col-lg-4">
-                <label for="sel1">Select Sub Project</label>
-                @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
-                @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
-            </div>*@
                         <div class="col-lg-4">
                             <label for="sel1">Select Cycle/Batch</label>
                             @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
-                            @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
+                            @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
                         </div>
                         <div class="col-lg-4">
                             <label>Expenditure Budget *</label>
+                            <input hidden id="hdnExpenditureBudget" name="hdnExpenditureBudget" />
+                            <label class="col-form-label parsley-required" id="lblExpenditureBudget" name="lblExpenditureBudget" for="lblExpenditureBudget"></label>
                             @Html.TextBoxFor(model => model.ExpenditureBudget, new { @class = "form-control", @type = "number", @placeholder = "Enter Expensive Amount KPR" })
-                            @Html.ValidationMessageFor(m => m.ExpenditureBudget, "", new { @class = "parsley-required" })
+                            @Html.ValidationMessageFor(m => m.ExpenditureBudget, "", new { @class = "parsley-required", @id = "spanExpenditureBudget" })
 
                         </div>
                     </div>
                     <br />
                     <div class="row">
-
-
                         <div class="col-lg-4">
                             <label class="col-form-label">Expenditure From Date *</label>
                             @Html.TextBoxFor(model => model.ExpenditureFromDate, new { @class = "form-control", @type = "date", @id = "ExpenditureFromDate", @placeholder = "dd/mm/yyyy" })
-                            @Html.ValidationMessageFor(m => m.ExpenditureFromDate, "", new { @class = "parsley-required" })
+                            @Html.ValidationMessageFor(m => m.ExpenditureFromDate, "", new { @class = "parsley-required", @id = "spanExpenditureFromDate" })
                         </div>
                         <div class="col-lg-4">
                             <label class="col-form-label">ExpenditureTo Date *</label>
                             @Html.TextBoxFor(model => model.ExpenditureToDate, new { @class = "form-control", @type = "date", @id = "ReleasedDate", @placeholder = "dd/mm/yyyy" })
-                            @Html.ValidationMessageFor(m => m.ExpenditureToDate, "", new { @class = "parsley-required" })
+                            @Html.ValidationMessageFor(m => m.ExpenditureToDate, "", new { @class = "parsley-required", @id = "spanExpenditureToDate" })
                         </div>
                         <div class="col-lg-4">
                             <label class="col-form-label">Remarks</label>
@@ -87,7 +82,7 @@
 
                                     <div class="col-lg-1">
                                         <label for="sel1" style="color:transparent">]</label>
-                                        <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Search</button>
+                                        <button class="btn btn-primary form-control" type="button" id="btnSubmit">Search</button>
                                     </div>
                                     <div class="col-lg-1">
                                         <label for="sel1" style="color:transparent">]</label>
@@ -182,163 +177,10 @@
     }
 </div>
 
+<div id="ProjectComboLink"
+     url-Val="@Url.Action("ClickProjectComboBox", "Common")">
+</div>
+
 @section Scripts{
-    <script>
-        $(document).ready(function ()
-        {
-
-        });
-
-        $("#RecruitedFromHRDate").on('change', function () {
-            debugger
-            DateCompare();
-        });
-
-        $("#RecruitedToHRDate").on('change', function () {
-            debugger
-            DateCompare();
-        });
-
-        function DateCompare() {
-            var _RecruitedToHRDate = $('#RecruitedToHRDate').val();
-
-            var _RecruitedFromHRDate = $('#RecruitedFromHRDate').val();
-            if (_RecruitedToHRDate != '') {
-                if (_RecruitedFromHRDate > _RecruitedToHRDate)
-                {
-
-                    $("#spanRecruitedFromHRDate").text("From-HRDate should not be greater then  To-HRDate")
-                    return false;
-                }
-                else
-                {
-                    $("#spanRecruitedFromHRDate").text("")
-                    return false;
-                }
-            }
-        }
-
-
-            $("#Project_ID").on('change', function () {
-            var _Project_ID = $(this).find("option:selected").val();
-
-                $.ajax({
-                     type: 'POST',
-                     url: '@Url.Action("ClickProjectComboBox", "Project")',
-                     dataType: 'json',
-                    data: { Project_ID: _Project_ID },  // Same Parameter with Action
-                    success: function (BatchLst) {
-                        debugger;
-                        $("#Batch_ID").empty();
-                        $("#Indicator_ID").empty();
-                        if (BatchLst.comboBatches.length <= 1 || BatchLst.comboBatches == null) {
-                            $("#Batch_ID").prop("disabled", true);
-                            $("#Batch_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Batch" + '</option>');
-
-
-
-                        } else {
-                            $("#Batch_ID").prop("disabled", false);
-                            $.each(BatchLst.comboBatches, function (i, Aqib) {
-                                $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
-                                    Aqib.BatchName + '</option>');
-                            });
-
-
-
-                        }
-                 },
-                 error: function (ex) {
-                     console.log('Failed to Retrieve Batch Data:  ' + ex);
-                 }
-                });//Ajax_End
-        });
-
-
-
-
-            @*$("#Project_ID").on('change', function () {
-                var _Project_ID = $(this).find("option:selected").val();
-                $.ajax({
-                     type: 'POST',
-                     url: '@Url.Action("ProjectCheckUmbrella","Project")',
-                     dataType: 'json',
-                    data: { ProjectID: _Project_ID },  // Same Parameter with Action
-                    success: function (Value) {
-                        debugger;
-                        if (Value != 1)  // Non-Umbrella
-                        {
-                            $("#SubProject_ID").prop("disabled", true);
-                            $("#Batch_ID").prop("disabled", true);
-
-                            $("#SubProject_ID").empty();
-                            $("#Batch_ID").empty();
-
-                            $("#SubProject_ID").append('<option value="' + 0 + '">' +
-                                "Please Select SubProject" + '</option>');
-                            $("#Batch_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Batch" + '</option>');
-
-                        } else {
-                                      $.ajax({
-                                      //url: "/ManageStock/GetProductNameCombo" + Category_ID,
-                                       type: 'POST',
-                                       url: '@Url.Action("ClickProjectCombo","Project")',
-                                       dataType: 'json',
-                                       data: { Project_ID: _Project_ID },  // Same Parameter with Action
-                                       success: function (SubProjectLst)
-                                       {
-                                           $("#SubProject_ID").prop("disabled", false);
-                                           $("#Batch_ID").prop("disabled", false);
-                                           debugger;
-                                           $("#SubProject_ID").empty();
-                                           $.each(SubProjectLst, function (i, Njaeeb)
-                                           {
-                                               $("#SubProject_ID").append('<option value="' + Njaeeb.SubProjectID + '">' +
-                                                   Njaeeb.SubProjectName + '</option>');
-                                            });
-                                        },
-                                        error: function (ex)
-                                        {
-                                           alert('Failed to Retrieve Sub-Project Data:  ' + ex);
-                                        }
-                                  });
-                        }
-                 },
-                 error: function (ex) {
-                     console.log('Failed to Retrieve Sub-Project Data:  ' + ex);
-                 }
-                });//Ajax_End
-            });
-
-        $("#SubProject_ID").on('change', function () {
-            var _SubProject_ID = $(this).find("option:selected").val();
-
-                $.ajax({
-                     type: 'POST',
-                     url: '@Url.Action("ClickSubProjectCombo","Project")',
-                     dataType: 'json',
-                    data: { SubProject_ID: _SubProject_ID },  // Same Parameter with Action
-                    success: function (BatchLst) {
-                        debugger;
-                        $("#Batch_ID").empty();
-                        if (BatchLst == 0) {
-                            $("#Batch_ID").prop("disabled", true);
-                            $("#Batch_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Batch" + '</option>');
-                        } else {
-                            $("#Batch_ID").prop("disabled", false);
-                            $.each(BatchLst, function (i, Aqib) {
-                                $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
-                                    Aqib.BatchName + '</option>');
-                            });
-                        }
-                 },
-                 error: function (ex) {
-                     console.log('Failed to Retrieve Batch Data:  ' + ex);
-                 }
-                });//Ajax_End
-            });*@
-    </script>
+    <script src="~/Content/Template/js/CustomCode.js"></script>
 }

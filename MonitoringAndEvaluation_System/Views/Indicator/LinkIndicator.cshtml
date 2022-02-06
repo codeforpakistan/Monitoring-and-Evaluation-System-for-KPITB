@@ -23,12 +23,12 @@
                         </div>
                         <div class="col-lg-3">
                             <label for="sel1">Select Batch/Cycle/Cohort</label>
-                            @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), "Please Select Category", new { @class = "select2 form-control " })
-                            @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required", @id = "spanCategory_ID" })
+                            @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"),new { @class = "select2 form-control " })
+                            @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required", @id = "spanBatch_ID" })
                         </div>
                         <div class="col-lg-3">
                             <label for="sel1">Select Indicator</label>
-                            @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Please Select Project Type", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
+                            @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Please Select Indicator", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
                             @Html.ValidationMessageFor(m => m.Indicator_ID, "", new { @class = "parsley-required", @id = "spanProjectType_ID" })
                         </div>
                         <div class="col-lg-3">
@@ -146,30 +146,31 @@
     <script>
         $(document).ready(function ()
         {
-
+            $("#Batch_ID").prop("disabled", true);
         });
- 
       
         $("#Project_ID").on('change', function () {
+            debugger;
             var _Project_ID = $(this).find("option:selected").val();
-
                 $.ajax({
                      type: 'POST',
-                     url: '@Url.Action("ClickProjectComboBox", "Project")',
+                     url: '@Url.Action("ClickProjectComboBox", "Common")',
                      dataType: 'json',
-                    data: { Project_ID: _Project_ID },  // Same Parameter with Action
-                    success: function (BatchLst) {
+                    data: { ProjectID: _Project_ID },  // Same Parameter with Action
+                    success: function (response) {
                         debugger;
                         $("#Batch_ID").empty();
-                        if (BatchLst.comboBatches == 0 || BatchLst.comboBatches ==null) {
+
+                        if (response.comboBatches.length <= 1) {
                             $("#Batch_ID").prop("disabled", true);
                             $("#Batch_ID").append('<option value="' + 0 + '">' +
                                 "Please Select Batch" + '</option>');
-                        } else {
+                        }
+                        else {
                             $("#Batch_ID").prop("disabled", false);
-                            $.each(BatchLst.comboBatches, function (i, Aqib) {
-                                $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
-                                    Aqib.BatchName + '</option>');
+                            $.each(response.comboBatches, function (i, item) {
+                                $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
+                                    item.BatchName + '</option>');
                             });
                         }
                  },

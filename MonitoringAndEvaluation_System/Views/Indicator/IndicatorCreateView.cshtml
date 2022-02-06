@@ -30,14 +30,6 @@
                         <div class="float-right">
                             <button class="btn btn-primary" type="submit">Save</button>
                         </div>
-                        <!--Popup Msg-->
-
-                        @*if (TempData["Message"] != null)
-            {
-                <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
-                    <strong>@TempData["Message"]</strong>
-                </div>
-            }*@
                         <br />
                         <hr />
                     }
@@ -53,11 +45,11 @@
 
                                     <div class="col-lg-1">
                                         <label for="sel1" style="color:transparent">]</label>
-                                        <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Search</button>
+                                        <button class="btn btn-primary form-control" type="button" id="btnSubmit">Search</button>
                                     </div>
                                     <div class="col-lg-1">
                                         <label for="sel1" style="color:transparent">]</label>
-                                        <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
+                                        <button class="btn btn-green form-control" type="reset" id="btnSubmit">Clear</button>
                                     </div>
                                 </div>
 
@@ -122,25 +114,30 @@
 @section Scripts{
     <script>
     //IndicatorName Exist
-    $("#IndicatorName").change(function () {
-        if ($("#IndicatorName").val() != '') {
-              var urllink = '@Url.Action("IsIndicatorNameExists", "Indicator")'
+        $("#IndicatorName").change(function () {
+            debugger;
+            var IndicatorName = $("#IndicatorName").val();
+            if (IndicatorName != '') {
+              var urllink = '@Url.Action("IsIndicatorNameExists", "Common")'
                 $.ajax({
                     url: urllink,
-                    type: "GET",
-                    data: { _IndicatorName: $('#IndicatorName').val() },
-                    success: function (result) {
+                    type: "POST",
+                    data: { _IndicatorName: IndicatorName },
+                    success: function (result)
+                    {
+                        debugger;
                         if (result == "true") {
                             $('#spanIndicatorName').text('Indicator Name Already Exists !');
                             $('#IndicatorName').focus();
+                            return true;
                         }
                       else {
                             $('#spanIndicatorName').text('');
+                            return false;
                         }
                     },
                     error: function (err) {
-                        alert('err');
-                        alert(err.statusText);
+                        console.log('Failed to Retrieve Data:  ' + ex.responseText);
                     }
                 });
             }

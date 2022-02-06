@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Utility;
+using static ModelLayer.ComboModel;
 using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
@@ -19,7 +20,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult IssueCreateView()
         {
             CreateIssueVM issueVM = new CreateIssueVM();
-            getProject(issueVM);
+            ComboProject(issueVM);
             getAllIssue();
             return View(issueVM);
         }
@@ -30,9 +31,8 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
-                    getAllIssue();
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    return View(issueVM);
+                    goto gotoWithModel;
                 }
 
                 issueVM.CreatedByUser_ID = LoginUserID;
@@ -44,14 +44,20 @@ namespace MonitoringAndEvaluation_System.Controllers
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
+                    goto gotoWithModel;
                 }
             }
             catch (Exception ex1)
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                goto gotoWithModel;
             }
-            getAllIssue();
             return RedirectToAction("IssueCreateView");
+          
+            gotoWithModel:
+            ComboProject(issueVM);
+            getAllIssue();
+            return View(issueVM);
         }
         //IssueEdit
         [HttpGet]
@@ -84,7 +90,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 }
                 getProjectEdit(issueVM);
                 issueVM.comboProjects = (List<ComboModel.ComboProject>)ViewBag.LstAllIssues;
-                issueVM.CreatedByUser_ID = Convert.ToInt32(Session["LoginUserID"]);
+                issueVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new IssuesManagementBL().issueEditBL(issueVM);
                 if (status.status)
                 {
@@ -110,10 +116,11 @@ namespace MonitoringAndEvaluation_System.Controllers
 
 
         //Custom Function
-        public void getProject(CreateIssueVM issuesVM)
+        public void ComboProject(CreateIssueVM issuesVM)
         {
-            //Get ProjectType list
             issuesVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            issuesVM.comboBatch.Add(mb); 
         }
         
         private void getAllIssue()

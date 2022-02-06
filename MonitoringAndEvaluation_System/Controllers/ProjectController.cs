@@ -16,6 +16,7 @@ namespace MonitoringAndEvaluation_System.Controllers
     {
         // GET: Project
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
+        FinanceManagementBL ObjFinanceMngBL = new FinanceManagementBL();
         #region Project
 
         [HttpGet]
@@ -146,9 +147,9 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
 
         [HttpGet]
-        public ActionResult ProjectDetails(int ProjectID)
+        public ActionResult ProjectDetails(string ProjectID)
         {
-            GetProjectDetailsVM data = new ProjectManagementBL().getProjectDetailsBL(ProjectID);
+            GetProjectDetailsVM data = new ProjectManagementBL().getProjectDetailsBL(Convert.ToInt32(Utility.Encryption.DecryptURL(ProjectID)));
 
             return View(data);
         }
@@ -210,12 +211,12 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
 
         [HttpGet]
-        public ActionResult RecruitedHREdit(int RecruitedHRID)
+        public ActionResult RecruitedHREdit(string RecruitedHRID)
         {
             EditRecruitedHRVM getRecruitedHR = new EditRecruitedHRVM();
             try
             {
-                getRecruitedHR = new ProjectManagementBL().getSignleRecruitedHRBL(RecruitedHRID);
+                getRecruitedHR = new ProjectManagementBL().getSignleRecruitedHRBL(Convert.ToInt32(Utility.Encryption.DecryptURL(RecruitedHRID)));
                 ComboProjectEdit(getRecruitedHR);
             }
             catch (Exception)
@@ -304,13 +305,13 @@ namespace MonitoringAndEvaluation_System.Controllers
             return View(procurementVM);
         }
         [HttpGet]
-        public ActionResult ProcurementEdit(int AchievedProcurementID)
+        public ActionResult ProcurementEdit(string AchievedProcurementID)
         {
             EditProcurementVM getProcurement = new EditProcurementVM();
 
             try
             {
-                getProcurement = new ProjectManagementBL().getSignleProcurementBL(AchievedProcurementID);
+                getProcurement = new ProjectManagementBL().getSignleProcurementBL(Convert.ToInt32(Utility.Encryption.DecryptURL(AchievedProcurementID)));
                 ComboProjectProcEdit(getProcurement);
             }
             catch (Exception)
@@ -458,7 +459,89 @@ namespace MonitoringAndEvaluation_System.Controllers
         #endregion
         #region JSON
 
-    
+        [HttpGet]
+        public JsonResult IsProjectNamelExists(string _ProjectName)
+        {
+            try
+            {
+                bool isExists = ObjProjectMngBL.IsProjectNameExistsBL(_ProjectName);
+                if (isExists)
+                {
+                    return Json("true", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("false", JsonRequestBehavior.AllowGet);
+                } 
+            }
+            catch (Exception ex1)
+            {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                return Json("false", JsonRequestBehavior.AllowGet);
+            } 
+        }
+
+        [HttpPost]
+        public JsonResult SearchProject(string ProjectName, string ProjectType, string Location)
+        {
+            try
+            {
+                List<GetAllProjectVM> resultList = ObjProjectMngBL.SearchProjectByAttributesBL(ProjectName, ProjectType, Location,LoginUserID,LoginRoleID);
+                return Json(resultList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex1)
+            {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                return Json("false", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        //[HttpPost]
+        //public JsonResult ProjectCheckUmbrella(int ProjectID)
+        //{
+        //    int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
+        //    return Json(val, JsonRequestBehavior.AllowGet);
+        //}
+
+        [HttpPost]
+        public JsonResult ProjectCheckUmbrella(int ProjectID)
+        {
+            try
+            {
+                int[] value = new int[5];
+                int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
+                value[0] = val; 
+                StatusModel status = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(ProjectID, out value[1], out value[2]);
+                StatusModel status2 = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
+                if (status.status )
+                {
+                    return Json(value, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    value[0] = 0;
+                    value[1] = 0;
+                    value[2] = 0;
+                    value[3] = 0;
+                    value[4] = 0;
+                    return Json(value, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex1)
+            {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                return Json("false", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult CheckBatchIsZero(int SubProjectID)
+        {
+            int val = ObjProjectMngBL.checkBatchIsZeroBL(SubProjectID);
+            return Json(val, JsonRequestBehavior.AllowGet);
+        }
+
         //public JsonResult ComparePlannedHR_RecruitedHR(int _ProjectID)
         //{
         //    try

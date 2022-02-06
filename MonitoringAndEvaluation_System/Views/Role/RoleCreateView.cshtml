@@ -107,7 +107,7 @@
                                                                     @item.IsActive
                                                                 </td>
                                                                 <td>
-                                                                    @Html.ActionLink("Edit", "RoleEdit", new { RoleID = item.RoleID }, new { @class = "mb-1 btn btn-warning" })
+                                                                    @Html.ActionLink("Edit", "RoleEdit", new { RoleID = Utility.Encryption.EncryptURL(Convert.ToString(item.RoleID)) }, new { @class = "mb-1 btn btn-warning" })
                                                                 </td>
                                                             </tr>
                                                         }

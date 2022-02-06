@@ -93,7 +93,7 @@
                                                                 @item.IndicatorName
                                                             </td>
                                                             <td>
-                                                                @Html.ActionLink("Edit", "IndicatorEdit", new { IndicatorID = item.IndicatorID }, new { @class = "mb-1 btn btn-warning" })
+                                                                @Html.ActionLink("Edit", "IndicatorEdit", new { IndicatorID = Utility.Encryption.EncryptURL(Convert.ToString(item.IndicatorID)) }, new { @class = "mb-1 btn btn-warning" })
                                                             </td>
                                                         </tr>
                                                     }

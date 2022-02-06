@@ -164,7 +164,7 @@
                                                             </td>
                                                             <td>
 
-                                                                @Html.ActionLink("Edit", "ReleasedBudgetEdit", new { ReleasedBudgetID = item.ReleasedBudgetID }, new { @class = "mb-1 btn btn-warning" })
+                                                                @Html.ActionLink("Edit", "ReleasedBudgetEdit", new { ReleasedBudgetID = Utility.Encryption.EncryptURL(Convert.ToString(item.ReleasedBudgetID)) }, new { @class = "mb-1 btn btn-warning" })
 
                                                             </td>
 

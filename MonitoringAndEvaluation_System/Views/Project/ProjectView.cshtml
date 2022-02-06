@@ -115,8 +115,8 @@
                                                 @item.CityName
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Edit", "ProjectEdit", new { ProjectID = item.ProjectID }, new { @class = "mb-1 btn btn-warning" })
-                                                @Html.ActionLink("Details", "ProjectDetails", new { ProjectID = item.ProjectID }, new { @class = "mb-1 btn btn-primary" })
+                                                @Html.ActionLink("Edit", "ProjectEdit", new { ProjectID = Utility.Encryption.EncryptURL(Convert.ToString(item.ProjectID))}, new { @class = "mb-1 btn btn-warning" })
+                                                @Html.ActionLink("Details", "ProjectDetails", new { ProjectID = Utility.Encryption.EncryptURL(Convert.ToString(item.ProjectID))}, new { @class = "mb-1 btn btn-primary" })
                                                 @*@Html.ActionLink("Detail", "UserDetail", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-primary" })*@
                                             </td>
                                         </tr>
@@ -144,7 +144,7 @@
 
 
         $("#btnSearch").click(function () {
-
+            debugger;
             var obj1 = {};
             obj1.ProjectName = $("#txtProjectName").val();
             obj1.ProjectType = $("#txtProjectType").val();
@@ -177,8 +177,8 @@
                                 + HiddenValue +
                                 '<td class="sorting_1">' + v.ID + '</td>' +
                                 '<td>' + v.ProjectName + '</td>' +
+                                '<td>' + v.categoryName + '</td>' +
                                 '<td>' + v.ProjectTypeName + '</td>' +
-                                '<td>' + v.Funding_Source + '</td>' +
                                 '<td>' + v.PlannedBudget + '</td>' +
                                 '<td>' + v.ApprovedBudget + '</td>' +
                                 '<td>' + v.CityName + '</td>' +

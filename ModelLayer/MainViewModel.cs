@@ -18,39 +18,28 @@ namespace ModelLayer
             {
                 comboRoles = new List<ComboRole>();
             }
-
             public int UserID { get; set; }
-
             [Required(ErrorMessage = "Please Select Role")]
             [Display(Name = "Role")]
             public int Role_ID { get; set; }
             [Required(ErrorMessage = "Please Enter Full name")]
             public string FullName { get; set; }
-
-            //[EmailAddress(ErrorMessage = "Invalid Email Address")]
-
-            //Email
             [Required(ErrorMessage = "Please Fill Email Address")]
             [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Invalid Email")]
             [Display(Name = "Email Address")]
             public string Email { get; set; }
-
-
             [Required(ErrorMessage = "Please Enter Contact No")]
             [StringLength(12, ErrorMessage = "Please Enter Contact without Dashes", MinimumLength = 11)]
             public string ContactNo { get; set; }
-
             //[Required(ErrorMessage = "Please Fill CNIC No")]
             //[StringLength(13, ErrorMessage = "Please Enter CNIC without Dashes.", MinimumLength = 13)]
             //public string CNICNo { get; set; }
-
             [NotMapped] // Does not effect with your database
             [Compare("ConfirmPassword")]
             [Required(ErrorMessage = "Password is not match")]
             [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$", ErrorMessage = "Password must be at least 8 characters and cannot be longer than 12 characters")]
             [StringLength(12, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters and cannot be longer than 12 characters")]
             public string Password { get; set; }
-
             [NotMapped] // Does not effect with your database
             [Compare("Password")]
             [Required(ErrorMessage = "Confirm Password is not match")]
@@ -68,7 +57,6 @@ namespace ModelLayer
             {
                 comboRoles = new List<ComboRole>();
             }
-
             public int UserID { get; set; }
             public int Role_ID { get; set; }
             public string FullName { get; set; }
@@ -136,12 +124,10 @@ namespace ModelLayer
             public string Controller { get; set; }
             public string Action { get; set; }
             public int SubChildSeqNo { get; set; }
-
             public bool IsVisibleSubChild { get; set; }
             public bool IsVisibleChild { get; set; }
             public bool IsVisibleParent { get; set; }
         }
-
         #endregion
         #region ROLEMODEL
         public partial class CreateRoleVM
@@ -373,7 +359,7 @@ namespace ModelLayer
         //GetAllProject
         public partial class GetAllProjectVM
         {
-
+            
             public int ProjectID { get; set; }
             public int ID { get; set; }
             public int Category_ID { get; set; }
@@ -394,6 +380,7 @@ namespace ModelLayer
             public int FemaleBeneficiary { get; set; }
             public int TotalBeneficiary { get; set; }
             public String CostPerBeneficiary { get; set; }
+           
         }
 
         //GetProjectDetails
@@ -698,24 +685,19 @@ namespace ModelLayer
 
             [Range(1, int.MaxValue, ErrorMessage = " Select Project")]
             public int Project_ID { get; set; }
-
             //[Required(ErrorMessage = "Please Select SubProject")]
             public int SubProject_ID { get; set; }
             [Range(1, int.MaxValue, ErrorMessage = " Select Batch")]
             public int Batch_ID { get; set; }
-
             public int CreatedByUser_ID { get; set; }
-
             [Required(ErrorMessage = "Enter From Date")]
             [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
             public DateTime ProcurementFromDate { get; set; }
-
             [Required(ErrorMessage = "Enter To Date")]
             [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
             public DateTime ProcurementToDate { get; set; }
-
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }
             public List<ComboSubProject> comboSubProjects { get; set; }
@@ -733,10 +715,9 @@ namespace ModelLayer
             public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
-
             public int AchievedProcurementID { get; set; }
+            public string ProcurementHeader { get; set; }
             public int AchievedProcurement { get; set; }
-            public double ProcurementPercent { get; set; }
             public System.DateTime ProcurementFromDate { get; set; }
             public System.DateTime ProcurementToDate { get; set; }
             public string Remarks { get; set; }

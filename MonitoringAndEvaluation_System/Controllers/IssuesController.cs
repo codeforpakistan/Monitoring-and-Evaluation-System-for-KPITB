@@ -61,12 +61,12 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         //IssueEdit
         [HttpGet]
-        public ActionResult IssueEdit(int IssuesID)
+        public ActionResult IssueEdit(string IssuesID)
         {
             EditIssueVM getIssues = new EditIssueVM();
             try
             {
-                getIssues = new IssuesManagementBL().getSignleIssueBL(IssuesID);
+                getIssues = new IssuesManagementBL().getSignleIssueBL(Convert.ToInt32(Utility.Encryption.DecryptURL(IssuesID)));
                 getAllIssue();
                 getProjectEdit(getIssues);
             }

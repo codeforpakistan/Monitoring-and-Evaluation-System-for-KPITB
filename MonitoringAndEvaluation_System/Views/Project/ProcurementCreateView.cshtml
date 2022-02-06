@@ -164,7 +164,7 @@
                                                             @item.Remarks
                                                         </td>
                                                         <td>
-                                                            @Html.ActionLink("Edit", "ProcurementEdit", new { AchievedProcurementID = item.AchievedProcurementID }, new { @class = "mb-1 btn btn-warning" })
+                                                            @Html.ActionLink("Edit", "ProcurementEdit", new { AchievedProcurementID = Utility.Encryption.EncryptURL(Convert.ToString(item.AchievedProcurementID))}, new { @class = "mb-1 btn btn-warning" })
                                                         </td>
                                                     </tr>
                                                 }

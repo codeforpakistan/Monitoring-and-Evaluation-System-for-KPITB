@@ -359,7 +359,7 @@ namespace ModelLayer
         //GetAllProject
         public partial class GetAllProjectVM
         {
-
+            
             public int ProjectID { get; set; }
             public int ID { get; set; }
             public int Category_ID { get; set; }
@@ -380,6 +380,7 @@ namespace ModelLayer
             public int FemaleBeneficiary { get; set; }
             public int TotalBeneficiary { get; set; }
             public String CostPerBeneficiary { get; set; }
+           
         }
 
         //GetProjectDetails

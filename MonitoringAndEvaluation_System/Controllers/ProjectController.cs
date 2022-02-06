@@ -16,6 +16,7 @@ namespace MonitoringAndEvaluation_System.Controllers
     {
         // GET: Project
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
+        FinanceManagementBL ObjFinanceMngBL = new FinanceManagementBL();
         #region Project
 
         [HttpGet]
@@ -577,11 +578,12 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
-                int[] value = new int[5];
+                int[] value = new int[7];
                 int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
                 value[0] = val; 
                 StatusModel status = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(ProjectID, out value[1], out value[2]);
                 StatusModel status2 = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
+                StatusModel status3 = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
                 if (status.status )
                 {
                     return Json(value, JsonRequestBehavior.AllowGet);
@@ -593,8 +595,11 @@ namespace MonitoringAndEvaluation_System.Controllers
                     value[2] = 0;
                     value[3] = 0;
                     value[4] = 0;
+                    value[5] = 0;
+                    value[6] = 0;
                     return Json(value, JsonRequestBehavior.AllowGet);
                 }
+
             }
             catch (Exception ex1)
             {
@@ -642,10 +647,11 @@ namespace MonitoringAndEvaluation_System.Controllers
         public int[] CompareValue(int ProjectID)
         {
                 int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
-                 int[] value = new int[5];
+                 int[] value = new int[7];
                 value[0] = val;
                 StatusModel status = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(ProjectID, out value[1], out value[2]);
                 StatusModel status2 = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
+                StatusModel status3 = ObjFinanceMngBL.CompareReleased_ExpenditureBL(ProjectID, out value[5], out value[6]);
             return value;
         }
 

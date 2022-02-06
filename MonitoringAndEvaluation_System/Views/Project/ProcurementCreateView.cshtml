@@ -235,7 +235,7 @@
                     success: function (Value) {
                         debugger;
 
-                        var remainValue = Value[1] - Value[2] ;
+                        var remainValue = Value[3] - Value[4] ;
                         $("#RemaningNoOfProcurement").val(remainValue); //Hidden
                         $("#lblNoOfProcurement").text(remainValue);
                         $("#lblNoOfProcurement").show();
@@ -316,7 +316,7 @@
             debugger;
             var _NoOfProcurement = $("#NoOfProcurement").val();
             var _RemaningNoOfProcurement = $("#lblNoOfProcurement").text();
-            if (parseInt(_RecruitedHR) > parseInt(_RemaningRecruitedHR)) {
+            if (parseInt(_NoOfProcurement) > parseInt(_RemaningNoOfProcurement)) {
                 $("#spanNoOfProcurement").text("Achived Procurement should not be greater than Planned Procurement");
                 $("#spanNoOfProcurement").show();
                 $("#NoOfProcurement").focus();

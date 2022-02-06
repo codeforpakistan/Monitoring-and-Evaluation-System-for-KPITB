@@ -36,7 +36,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 }
                 #region COMPARE_BUDGET
                 int planned, Achived;
-                StatusModel status2 = ObjFinanceMngBL.ComparePlanned_BudgetBL(releasedVM.Project_ID, out planned, out Achived);
+                StatusModel status3 = ObjFinanceMngBL.ComparePlanned_BudgetBL(releasedVM.Project_ID, out planned, out Achived);
                 int rr = planned - Achived;
               
                 var ss = releasedVM.ReleasedBudget - planned;
@@ -48,7 +48,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 #endregion
                 #region INSERTION
                 StatusModel status = new FinanceManagementBL().releasedCreateViewBL(releasedVM);
-                if (status.status)
+                if (status3.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                 }

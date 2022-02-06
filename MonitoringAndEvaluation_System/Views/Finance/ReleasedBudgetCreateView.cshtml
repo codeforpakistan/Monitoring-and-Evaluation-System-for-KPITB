@@ -32,10 +32,10 @@
                         </div>
                         <div class="col-lg-4">
                             <label>Released Budget *</label>
-                            <label class="col-form-label parsley-required" id="lblRemaninBudget"></label>
-                            <input hidden id="RemaningBudget" type="number" name="RemaningBudget" />
+                            <label class="col-form-label parsley-required" id="lblRemaninReleasedBudget"></label>
+                            <input hidden id="RemaningReleasedBudget" type="number" name="RemaningReleasedBudget" />
                             @Html.TextBoxFor(model => model.ReleasedBudget, new { @class = "form-control", @type = "number", @placeholder = "Released Budget in KPR" })
-                            @Html.ValidationMessageFor(m => m.ReleasedBudget, "", new { @class = "parsley-required", @id = "spanRecruitedHR" })
+                            @Html.ValidationMessageFor(m => m.ReleasedBudget, "", new { @class = "parsley-required", @id = "spanReleasedBudget" })
 
                         </div>
                     </div>
@@ -236,6 +236,7 @@
                     data: { Project_ID: _Project_ID },  // Same Parameter with Action
                     success: function (BatchLst) {
                         debugger;
+                        
                         $("#Batch_ID").empty();
                         $("#Indicator_ID").empty();
                         if (BatchLst.comboBatches.length <= 1 || BatchLst.comboBatches == null) {
@@ -260,94 +261,7 @@
 
 
 
-        @*$("#Project_ID").on('change', function () {
-                var _Project_ID = $(this).find("option:selected").val();
-                $.ajax({
-                     type: 'POST',
-                     url: '@Url.Action("ProjectCheckUmbrella")',
-                     dataType: 'json',
-                    data: { ProjectID: _Project_ID },  // Same Parameter with Action
-                    success: function (Value) {
-                        debugger;
-
-                        var remainValue = Value[1] - Value[2];
-                        $("#RemaningBudget").val(remainValue); //Hidden
-                        $("#lblRemaninBudget").text(remainValue);
-                        $("#lblRemaningBudget").show();
-
-                        if (Value != 1)  // Non-Umbrella
-                        {
-                            $("#Project_ID").prop("disabled", true);
-                            $("#Batch_ID").prop("disabled", true);
-
-                            $("#Project_ID").empty();
-                            $("#Batch_ID").empty();
-
-                            $("#Project_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Project" + '</option>');
-                            $("#Batch_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Batch" + '</option>');
-
-                        }
-                        else {
-                                      $.ajax({
-                                      //url: "/ManageStock/GetProductNameCombo" + Category_ID,
-                                       type: 'POST',
-                                       url: '@Url.Action("ClickProjectCombo")',
-                                       dataType: 'json',
-                                       data: { Project_ID: _Project_ID },  // Same Parameter with Action
-                                       success: function (SubProjectLst)
-                                       {
-                                           $("#SubProject_ID").prop("disabled", false);
-                                           $("#Batch_ID").prop("disabled", false);
-                                           $("#SubProject_ID").empty();
-                                           $.each(SubProjectLst, function (i, Njaeeb)
-                                           {
-                                               $("#SubProject_ID").append('<option value="' + Njaeeb.SubProjectID + '">' +
-                                                   Njaeeb.SubProjectName + '</option>');
-                                            });
-                                        },
-                                        error: function (ex)
-                                        {
-                                           alert('Failed to Retrieve Sub-Project Data:  ' + ex);
-                                        }
-                                  });
-                        }
-                 },
-                 error: function (ex) {
-                     console.log('Failed to Retrieve Sub-Project Data:  ' + ex);
-                 }
-                });//Ajax_End
-            });
-
-        $("#SubProject_ID").on('change', function () {
-            var _SubProject_ID = $(this).find("option:selected").val();
-
-                $.ajax({
-                     type: 'POST',
-                     url: '@Url.Action("ClickSubProjectCombo")',
-                     dataType: 'json',
-                    data: { SubProject_ID: _SubProject_ID },  // Same Parameter with Action
-                    success: function (BatchLst) {
-                        debugger;
-                        $("#Batch_ID").empty();
-                        if (BatchLst == 0) {
-                            $("#Batch_ID").prop("disabled", true);
-                            $("#Batch_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Batch" + '</option>');
-                        } else {
-                            $("#Batch_ID").prop("disabled", false);
-                            $.each(BatchLst, function (i, Aqib) {
-                                $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
-                                    Aqib.BatchName + '</option>');
-                            });
-                        }
-                 },
-                 error: function (ex) {
-                     console.log('Failed to Retrieve Batch Data:  ' + ex);
-                 }
-                });//Ajax_End
-        });*@
+       
 
         $("#ReleasedBudget").on('change', function () {
             CheckHRRemaningValue();
@@ -355,9 +269,9 @@
 
         function CheckHRRemaningValue() {
             debugger;
-            var _RecruitedHR = $("#ReleasedBudget").val();
-            var _RemaningRecruitedHR = $("#lblRemaningBudget").text();
-            if (parseInt(_RecruitedHR) > parseInt(_RemaningRecruitedHR)) {
+            var _ReleasedBudget = $("#ReleasedBudget").val();
+            var _RemaningReleasedBudget = $("#lblRemaningBudget").text();
+            if (parseInt(_ReleasedBudget) > parseInt(_RemaningReleasedBudget)) {
                 $("#spanReleasedBudget").text("ReleasedBudget should not be greater than Approved");
                 $("#spanReleasedBudget").show();
                 $("#ReleasedBudget").focus();

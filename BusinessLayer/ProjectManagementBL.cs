@@ -20,6 +20,10 @@ namespace BusinessLayer
         {
             return ProjectManagementDL.SearchProjectByAttributesDL(ProjectName.Trim(), ProjectType.Trim(), Location.Trim(), UserID,  RoleID);
         }
+        public List<GetAllRecruitedHRVM> SearchRecruitedHRByAttributesBL(string ProjectName, string BatchName, string FromDate, string ToDate, int UserID, int RoleID)
+        {
+            return ProjectManagementDL.SearchRecruitedHRByAttributesDL(ProjectName.Trim(), BatchName.Trim(), FromDate.Trim(), ToDate.Trim(), UserID, RoleID);
+        }
         //JSON
         public bool IsProjectNameExistsBL(string _ProjectName)
         {

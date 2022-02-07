@@ -480,7 +480,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 return Json("false", JsonRequestBehavior.AllowGet);
             } 
         }
-
+        //Search Project
         [HttpPost]
         public JsonResult SearchProject(string ProjectName, string ProjectType, string Location)
         {
@@ -496,7 +496,21 @@ namespace MonitoringAndEvaluation_System.Controllers
             }
         }
 
-
+        //Search RecruitedHR
+        [HttpPost]
+        public JsonResult SearchRecruitedHR(string ProjectName, string BatchName, string FromDate, string ToDate)
+        {
+            try
+            {
+                List<GetAllRecruitedHRVM> resultList = ObjProjectMngBL.SearchRecruitedHRByAttributesBL(ProjectName, BatchName, FromDate, ToDate, LoginUserID, LoginRoleID);
+                return Json(resultList, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex1)
+            {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                return Json("false", JsonRequestBehavior.AllowGet);
+            }
+        }
         //[HttpPost]
         //public JsonResult ProjectCheckUmbrella(int ProjectID)
         //{

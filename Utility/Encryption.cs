@@ -9,7 +9,7 @@ namespace Utility
 {
     public class Encryption
     {
-        public string Encrypt(string clearText)
+        public static string Encrypt(string clearText)
         {
             string EncryptionKey = "MAKV2SPBNI99212";
             byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
@@ -31,7 +31,7 @@ namespace Utility
             return clearText;
         }
 
-        public string Decrypt(string cipherText)
+        public static string Decrypt(string cipherText)
         {
             string EncryptionKey = "MAKV2SPBNI99212";
 
@@ -200,9 +200,10 @@ namespace Utility
         #endregion
 
         #region User
-        static String keys = "w395$Jl73#2K";
+      
         public static string DecryptUser(string textToDecrypt)
         {
+             String keys = "w395$Jl73#2K";
             RijndaelManaged rijndaelCipher = new RijndaelManaged();
             rijndaelCipher.Mode = CipherMode.CBC;
             rijndaelCipher.Padding = PaddingMode.PKCS7;
@@ -225,6 +226,7 @@ namespace Utility
         }
         public static string EncryptUser(string textToEncrypt)
         {
+            String keys = "w395$Jl73#2K";
             RijndaelManaged rijndaelCipher = new RijndaelManaged();
             rijndaelCipher.Mode = CipherMode.CBC;
             rijndaelCipher.Padding = PaddingMode.PKCS7;

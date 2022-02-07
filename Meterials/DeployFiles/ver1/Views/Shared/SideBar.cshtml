@@ -1,0 +1,84 @@
+﻿@using System.Linq;
+
+<!-- END user info-->
+<!-- Iterates over all sidebar items-->
+
+<li class="nav-heading ">
+    <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
+</li>
+
+<li class=" ">
+    <a href="@Url.Content("~/Dashboard/Admin")" title="Home">
+        <em class="fa fa-windows"></em>
+        <span data-localize="sidebar.nav.element.BUTTON">Dashboard</span>
+    </a>
+</li>
+
+
+<!--DYNAMIC_MENU-->
+
+@{
+    List<ModelLayer.MainModel.NavParentMenu> MasterMenu = Session["NavMenus"] as List<ModelLayer.MainModel.NavParentMenu>; //Main
+    List<ModelLayer.MainModel.NavChildMenu> ChildMenu = Session["NavChildMenus"] as List<ModelLayer.MainModel.NavChildMenu>; //ChildMain
+    List<ModelLayer.MainModel.NavSubChild> SubChildMenuLst = Session["NavSubChildMenus"] as List<ModelLayer.MainModel.NavSubChild>; //SubChild
+
+
+
+    foreach (ModelLayer.MainModel.NavParentMenu ItemParent in MasterMenu)
+    {
+
+        <li class="nav-heading ">
+            <span data-localize="sidebar.heading.COMPONENTS">@ItemParent.NavParentMenuTitle</span>
+        </li>
+
+        //Child
+        var _ChildMenu = ChildMenu.Where(child => child.NavParentMenu_ID == ItemParent.NavParentMenuID).OrderBy(child => child.ChildSeqNo).ToList();
+        foreach (var ItemChild in _ChildMenu)
+        {
+
+            @*if (ItemChild.ChildMenuName.Equals("Dashboard"))
+                {
+                    <li class=" ">
+                        <a href="#dashboard" title="Dashboard" data-toggle="collapse">
+
+                            <em class="icon-speedometer"></em>
+                            <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
+                        </a>
+                    </li>
+                }*@
+            //else
+            //{
+
+            <li class=" ">
+                <a href="#elements-@ItemChild.NavChildMenuID" title="Elements" data-toggle="collapse" id="@ItemChild.NavChildMenuID">
+                    <em class="icon-user"></em>
+                    <span data-localize="sidebar.nav.element.ELEMENTS">@ItemChild.ChildMenuName</span>
+                </a>
+
+                <ul class="sidebar-nav sidebar-subnav collapse" id="elements-@ItemChild.NavChildMenuID">
+
+                    @{
+                        var _SubChildMenuLst = SubChildMenuLst.Where(suChild => suChild.NavChild_ID == ItemChild.NavChildMenuID).OrderBy(suChild => suChild.SubChildSeqNo).ToList();
+                        foreach (var ItemSubChild in _SubChildMenuLst)
+                        {
+                            <li class=" ">
+                                @*<a href="@Url.Content("~/Users/UserCreate")" title="Notifications">
+                                        <span data-localize="sidebar.nav.element.NOTIFICATION">Add User</span>
+                                    </a>*@
+                                <a href="@Url.Action(ItemSubChild.Action, ItemChild.Controller)" title="Notifications">
+                                    <span data-localize="sidebar.nav.element.NOTIFICATION">@ItemSubChild.NavSubChildName</span>
+                                </a>
+
+                            </li>
+                        }<!--SubChild_Loop-->
+                    }
+
+                </ul>
+            </li>
+        }<!--Child_Loop-->
+
+    }<!--Main_Loop-->
+
+}
+
+

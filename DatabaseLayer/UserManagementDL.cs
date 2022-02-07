@@ -79,7 +79,7 @@ namespace DatabaseLayer
                 return userRoleLst;
             }
         }
-        public static LoginReturnDataVM userLoginDL(LoginVM m)
+        public static LoginReturnDataVM userLoginDL(LoginVM m, LoginAttemptes login)
         {
             LoginReturnDataVM model = new LoginReturnDataVM();
             IDbConnection Con = null;
@@ -92,6 +92,13 @@ namespace DatabaseLayer
                 ObjParm.Add("@Email", m.Email);
                 ObjParm.Add("@Password", m.Password);
                 model = Con.Query<LoginReturnDataVM>("sp_GetLoginData", ObjParm, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                if(model != null)
+                {
+                    DynamicParameters ObjParm2 = new DynamicParameters();
+                    ObjParm2.Add("@MACAddress", login.MACAddress);
+                    ObjParm2.Add("@BrowserName", login.BrowserName);
+                    Con.Execute("sp_LoginDeviceUpdate", ObjParm2, commandType: CommandType.StoredProcedure);
+                }
             }
             catch (Exception ex)
             {
@@ -188,7 +195,7 @@ namespace DatabaseLayer
                         ObjParm.Add("@FullName", m.FullName);
                         ObjParm.Add("@Email", m.Email);
                         ObjParm.Add("@ContactNo", m.ContactNo);
-                        ObjParm.Add("@Password", Utility.Encryption.EncryptUser(m.Password));
+                        ObjParm.Add("@Password", m.Password);
                         //ObjParm.Add("@CNICNo", m.CNICNo);
                         //ObjParm.Add("@Photo", m.Photo);
                         ObjParm.Add("@ADDRESS", m.Address);

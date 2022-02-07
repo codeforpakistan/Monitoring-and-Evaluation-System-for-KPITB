@@ -687,7 +687,7 @@ namespace ModelLayer
             public int Project_ID { get; set; }
             //[Required(ErrorMessage = "Please Select SubProject")]
             public int SubProject_ID { get; set; }
-            [Range(1, int.MaxValue, ErrorMessage = " Select Batch")]
+            [Range(0, int.MaxValue, ErrorMessage = " Select Batch")]
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
             [Required(ErrorMessage = "Enter From Date")]

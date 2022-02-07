@@ -38,8 +38,7 @@ namespace DatabaseLayer
             }
             catch (Exception ex)
             {
-
-                throw;
+                return 0;
             }
         }
         public static List<GetAllProjectVM> SearchProjectByAttributesDL(string ProjectName, string ProjectType, string Location,int UserID,int RoleID)
@@ -129,31 +128,17 @@ namespace DatabaseLayer
             }
             return isTrue;
         }
-        public static StatusModel ComparePlannedHR_RecruitedHRDL(int _ProjectID, out int PlannedHR, out int RecruitedHR)
+        public static RemainingValues RemainingValuesDL(int _ProjectID)
         {
-            PlannedHR = 0;
-            RecruitedHR = 0;
-
-            StatusModel status = new StatusModel();
+            RemainingValues remainingValues = new RemainingValues();
             IDbConnection Con = null;
             try
             {
                 Con = new SqlConnection(Common.ConnectionString);
                 Con.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
-
                 ObjParm.Add("@ProjectID", _ProjectID);
-                ObjParm.Add("@PlannedHR", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                ObjParm.Add("@RecruitedHR", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                Con.Execute("sp_ComparePlannedHR_With_RecruitedHR", ObjParm, commandType: CommandType.StoredProcedure);
-
-                PlannedHR = Convert.ToInt32(ObjParm.Get<int>("@PlannedHR"));
-                RecruitedHR = Convert.ToInt32(ObjParm.Get<int>("@RecruitedHR"));
-                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
-                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
-           
+                remainingValues = Con.Query<RemainingValues>("sp_RemainingValues", ObjParm, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -162,9 +147,7 @@ namespace DatabaseLayer
             {
                 Con.Close();
             }
-
-           
-            return status;
+            return remainingValues;
         }
         public static StatusModel ComparePlanned_PrucrementDL(int _ProjectID, out int PlannedProcurement, out int AchievedProcurement)
         {

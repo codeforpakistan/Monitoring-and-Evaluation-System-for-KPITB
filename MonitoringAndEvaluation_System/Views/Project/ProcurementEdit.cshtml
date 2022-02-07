@@ -129,7 +129,7 @@
                 var _Project_ID = $(this).find("option:selected").val();
                 $.ajax({
                      type: 'POST',
-                     url: '@Url.Action("ProjectCheckUmbrella")',
+                     url: '@Url.Action("ProjectCheckUmbrella", "Common")',
                      dataType: 'json',
                     data: { ProjectID: _Project_ID },  // Same Parameter with Action
                     success: function (Value) {
@@ -143,7 +143,7 @@
                                       $.ajax({
                                       //url: "/ManageStock/GetProductNameCombo" + Category_ID,
                                        type: 'POST',
-                                       url: '@Url.Action("ClickProjectComboBox")',
+                                       url: '@Url.Action("ClickProjectCombo", "Common")',
                                        dataType: 'json',
                                        data: { Project_ID: _Project_ID },  // Same Parameter with Action
                                        success: function (response)
@@ -184,7 +184,7 @@
 
                 $.ajax({
                      type: 'POST',
-                     url: '@Url.Action("ClickSubProjectCombo")',
+                     url: '@Url.Action("ClickSubProjectCombo", "Common")',
                      dataType: 'json',
                     data: { SubProject_ID: _SubProject_ID },  // Same Parameter with Action
                     success: function (BatchLst) {

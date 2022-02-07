@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Utility;
 using static ModelLayer.ComboModel;
 using static ModelLayer.MainViewModel;
 
@@ -31,27 +32,31 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
-                    //getAllIssue();
-                    return View(batchVM);
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
+                    goto gotowithModel;
                 }
 
                 batchVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new BatchManagementBL().batchCreateBL(batchVM);
                 if (status.status)
                 {
-                    TempData["Message"] = "Record Saved Successfully.";
+                    ShowMessage(MessageBox.Success, OperationType.Saved, "Record Saved Successfully");
+                    return RedirectToAction("BatchCreateView");
                 }
                 else
                 {
-                    TempData["Message"] = status.statusDetail;
+                    ShowMessage(MessageBox.Error, OperationType.Error, status.statusDetail);
                 }
             }
             catch (Exception ex1)
             {
-                TempData["Message"] = "Exeption: " + ex1.Message;
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
-          
-            return RedirectToAction("BatchCreateView");
+
+            gotowithModel:
+            ComboProject(batchVM);
+            getAllBatch();
+            return View(batchVM); 
         }
 
         private void getAllBatch()
@@ -64,7 +69,6 @@ namespace MonitoringAndEvaluation_System.Controllers
             batchVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
             ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
             batchVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
-           
         }
     }
 }

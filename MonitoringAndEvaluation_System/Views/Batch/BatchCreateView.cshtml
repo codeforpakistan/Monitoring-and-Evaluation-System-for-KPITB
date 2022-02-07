@@ -19,7 +19,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <label for="sel1">Select Project </label>
-                                @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
+                                @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control " })
                                 @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                             </div>
                             @*<div class="col-lg-4">
@@ -151,7 +151,7 @@
                 var _Project_ID = $(this).find("option:selected").val();
                 $.ajax({
                      type: 'POST',
-                     url: '@Url.Action("ProjectCheckUmbrella","Project")',
+                     url: '@Url.Action("ProjectCheckUmbrella", "Common")',
                      dataType: 'json',
                     data: { ProjectID: _Project_ID },  // Same Parameter with Action
                     success: function (Value) {
@@ -173,7 +173,7 @@
                                       $.ajax({
                                       //url: "/ManageStock/GetProductNameCombo" + Category_ID,
                                        type: 'POST',
-                                       url: '@Url.Action("ClickProjectCombo","Project")',
+                                       url: '@Url.Action("ClickProjectCombo", "Common")',
                                        dataType: 'json',
                                        data: { Project_ID: _Project_ID },  // Same Parameter with Action
                                        success: function (SubProjectLst)
@@ -206,7 +206,7 @@
 
                 $.ajax({
                      type: 'POST',
-                     url: '@Url.Action("ClickSubProjectCombo","Project")',
+                     url: '@Url.Action("ClickSubProjectCombo", "Common")',
                      dataType: 'json',
                     data: { SubProject_ID: _SubProject_ID },  // Same Parameter with Action
                     success: function (BatchLst) {

@@ -64,7 +64,7 @@ namespace ModelLayer
         #endregion
         #region Project
         public partial class ComboProject
-        {
+        { 
             public int ProjectID { get; set; }
             public string ProjectName { get; set; }
         }
@@ -82,6 +82,16 @@ namespace ModelLayer
         {
             public int IndicatorID { get; set; }
             public string IndicatorName { get; set; }
+        }
+
+        public partial class RemainingValues
+        {
+            public int RemainingPlannedHR { get; set; }
+            public int RemainingProcurement { get; set; }
+            public int RemainingBudget { get; set; }
+            public int ApprovedBudget { get; set; }
+            public int ReleasedBudget { get; set; }
+
         }
         public partial class ComboIndicatorDataType
         {

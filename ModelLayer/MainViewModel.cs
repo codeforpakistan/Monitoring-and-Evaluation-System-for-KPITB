@@ -541,12 +541,11 @@ namespace ModelLayer
                 comboBatch = new List<ComboBatch>();
             }
             //Common Filed
-            [Range(1, int.MaxValue, ErrorMessage = "Please Select Project")]
+            [Range(1, int.MaxValue, ErrorMessage = " Select Project")]
             public int Project_ID { get; set; }
 
-            [Required(ErrorMessage = "Please Select SubProject")]
             public int SubProject_ID { get; set; }
-            [Required(ErrorMessage = "Please Select Batch")]
+            [Range(0, int.MaxValue, ErrorMessage = " Select Batch")]
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
 
@@ -681,12 +680,14 @@ namespace ModelLayer
                 comboBatch = new List<ComboBatch>();
             }
             public string ProcurementHeader { get; set; }
-            [Range(1, int.MaxValue, ErrorMessage = "Please Ener Procurement-Value")]
+            [Range(1, int.MaxValue, ErrorMessage = "Enter Procurement-Value")]
             public int NoOfProcurement { get; set; }
-            [Range(1, int.MaxValue, ErrorMessage = "Please Select Project")]
+
+            [Range(1, int.MaxValue, ErrorMessage = " Select Project")]
             public int Project_ID { get; set; }
             //[Required(ErrorMessage = "Please Select SubProject")]
             public int SubProject_ID { get; set; }
+            [Range(1, int.MaxValue, ErrorMessage = " Select Batch")]
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
             [Required(ErrorMessage = "Enter From Date")]
@@ -755,12 +756,17 @@ namespace ModelLayer
                 comboBatch = new List<ComboBatch>();
             }
 
+            [Range(1, int.MaxValue, ErrorMessage = "Select Project")]
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
+
+            [Range(0, int.MaxValue, ErrorMessage = "Select Batch")]
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
             public string IssueDescription { get; set; }
             public DateTime IssueDate { get; set; }
+
+            [Required(ErrorMessage = "Enter ActionTaken")]
             public string ActionTaken { get; set; }
             public string Solution { get; set; }
             public string Remarks { get; set; }
@@ -1010,10 +1016,13 @@ namespace ModelLayer
                 comboProjects = new List<ComboProject>();
                 comboSubProjects = new List<ComboSubProject>();
             }
+
+            [Range(1, int.MaxValue, ErrorMessage = "Select Project")]
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
             public int BatchID { get; set; }
             public int CreatedByUser_ID { get; set; }
+            [Required(ErrorMessage = "Enter Batch Name")]
             public string BatchName { get; set; }
             public List<ComboProject> comboProjects { get; set; }
             public List<ComboSubProject> comboSubProjects { get; set; }
@@ -1035,6 +1044,7 @@ namespace ModelLayer
         {
             public List<ComboBatch> comboBatches { get; set; }
             public List<ComboIndicator> comboIndicators { get; set; }
+            public RemainingValues remainingValues { get; set; }
             public int[] value = new int[5];
             public ComboIndicatorBatchIndicatorVM()
             {

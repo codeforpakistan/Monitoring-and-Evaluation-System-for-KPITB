@@ -20,9 +20,6 @@ namespace MonitoringAndEvaluation_System.Controllers
 {
     public class UsersController : BaseController
     {
-        // GET: Users
-        UserManagementBL ObjUserMngBL = new UserManagementBL();
-
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Login()
@@ -49,7 +46,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                     login.Email = model.Email;
                   
                     //login.Password = Utility.Encryption.Decrypt(model.Password);
-                    StatusModel s = ObjUserMngBL.userAttemptBL(login);  //Get UserLogin Data
+                    StatusModel s = new UserManagementBL().userAttemptBL(login);  //Get UserLogin Data
                    if( s.status == false)
                      {
                         ShowMessage(MessageBox.Warning, OperationType.Warning, s.statusDetail);
@@ -64,7 +61,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 }
 
                 #region LoginAttemps
-                LoginReturnDataVM loginUserDataModel = ObjUserMngBL.userLoginBL(model);  //Get UserLogin Data
+                LoginReturnDataVM loginUserDataModel = new UserManagementBL().userLoginBL(model);  //Get UserLogin Data
                 #endregion
 
                 
@@ -106,7 +103,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult UserCreate()
         {
             CreateUserVM userVM = new CreateUserVM();
-            userVM.comboRoles = ObjUserMngBL.getRoleBL();
+            userVM.comboRoles = new UserManagementBL().getRoleBL();
             return View(userVM);
         }
         [HttpPost]
@@ -114,20 +111,20 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
-                userVM.comboRoles = ObjUserMngBL.getRoleBL();
+                userVM.comboRoles = new UserManagementBL().getRoleBL();
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return View(userVM);
                 }
 
-                bool isExists = ObjUserMngBL.IsEmailExistsBL(userVM.Email);  //Check DuplicateEmail
+                bool isExists = new UserManagementBL().IsEmailExistsBL(userVM.Email);  //Check DuplicateEmail
                 if (isExists)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, "Email Already Exists");
                     return View(userVM);
                 }
-                StatusModel status = ObjUserMngBL.userCreateBL(userVM);
+                StatusModel status = new UserManagementBL().userCreateBL(userVM);
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
@@ -163,13 +160,13 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
-                userEditVM.comboRoles = ObjUserMngBL.getRoleBL();
+                userEditVM.comboRoles = new UserManagementBL().getRoleBL();
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                     return View(userEditVM);
                 }
-                StatusModel status = ObjUserMngBL.userEditBL(userEditVM);
+                StatusModel status = new UserManagementBL().userEditBL(userEditVM);
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.UpdateSuccessfully);
@@ -198,32 +195,12 @@ namespace MonitoringAndEvaluation_System.Controllers
         private void getAllRoles()
         {
 
-            ViewBag.LstAllRoles = ObjUserMngBL.getRoleBL();
+            ViewBag.LstAllRoles = new UserManagementBL().getRoleBL();
 
         }
         #endregion
         #region JSON
      
-        public JsonResult IsEmailExists(string _Email)
-        {
-            try
-            {
-                bool isExists = ObjUserMngBL.IsEmailExistsBL(_Email);
-                if (isExists)
-                {
-                    return Json("true", JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json("false", JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex1)
-            {
-                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
-                return Json("false", JsonRequestBehavior.AllowGet);
-            }
-        }
-        #endregion
+       #endregion
     }
 }

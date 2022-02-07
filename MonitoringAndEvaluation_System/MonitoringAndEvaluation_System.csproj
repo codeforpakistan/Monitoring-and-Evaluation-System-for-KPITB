@@ -147,6 +147,7 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="CommonUse\CommonController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -206,6 +207,7 @@
     <Content Include="Content\Template\img\user\12.jpg" />
     <Content Include="Content\Template\img\user\13.jpg" />
     <Content Include="Content\Template\js\app.js" />
+    <Content Include="Content\Template\js\CustomCode.js" />
     <Content Include="Content\Template\vendor\ttskch\select2-bootstrap4-theme\dist\select2-bootstrap4.css" />
     <Content Include="Content\Template\vendor\animate.css\animate.css" />
     <Content Include="Content\Template\vendor\animo\animo.js" />
@@ -416,6 +418,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Common\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -432,11 +435,11 @@
       <Name>BusinessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModelLayer\ModelLayer.csproj">
-      <Project>{82D48388-F45F-4827-BE68-A1DB700300E7}</Project>
+      <Project>{82d48388-f45f-4827-be68-a1db700300e7}</Project>
       <Name>ModelLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
-      <Project>{0ED5E692-52B0-4A31-AD09-5D0616DFE961}</Project>
+      <Project>{0ed5e692-52b0-4a31-ad09-5d0616dfe961}</Project>
       <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>

@@ -442,7 +442,7 @@
 //Project Exist
  $("#ProjectName").change(function () {
             if ($("#ProjectName").val() != '') {
-                       var urllink = '@Url.Action("IsProjectNamelExists", "Project")'
+                       var urllink = '@Url.Action("IsProjectNamelExists", "Common")'
                        $.ajax({
                            url: urllink,
                            type: "GET",

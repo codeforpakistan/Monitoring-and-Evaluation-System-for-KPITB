@@ -31,23 +31,15 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 if (ModelState.IsValid == false)
                 {
-                    getAllIndicator();
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    return View(indicatorVM);
+                    goto gotoWithModel;
                 }
-                bool isExists = ObjIndicatorMngBL.IsIndicatorNameExistsBL(indicatorVM.IndicatorName);  //Check DuplicateIndicatorName
+                bool isExists = new IndicatorBL().IsIndicatorNameExistsBL(indicatorVM.IndicatorName);  //Check DuplicateIndicatorName
                 if (isExists)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, "IndicatorName Already Exists");
-                    getAllIndicator();
-                    return View(indicatorVM);
+                    goto gotoWithModel;
                 }
-                //bool isExists = ObjIndicatorMngBL.IsIndicatorNameExistsBL(indicatorVM.IndicatorName);  //ProjectName Check
-                //if (isExists)
-                //{
-                //    ShowMessage(MessageBox.Warning, OperationType.Warning, "Indicator Name Already Exists !");
-                //    return View("~/Views/Indicator/IndicatorCreateView.cshtml", indicatorVM);
-                //}
                 StatusModel status = new IndicatorBL().indicatorCreateBL(indicatorVM);
                 if (status.status)
                 {
@@ -56,14 +48,19 @@ namespace MonitoringAndEvaluation_System.Controllers
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
+                    goto gotoWithModel;
                 }
             }
             catch (Exception ex1)
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                goto gotoWithModel;
             }
-            getAllIndicator();
             return RedirectToAction("IndicatorCreateView");
+            gotoWithModel:
+            getAllIndicator();
+            return View(indicatorVM);
+
         }
         [HttpGet]
         public ActionResult IndicatorFieldCreate()
@@ -133,27 +130,32 @@ namespace MonitoringAndEvaluation_System.Controllers
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    return View(linkIndicatorVM);
+                    goto gotoWithModel;
                 }
                 StatusModel status = new IndicatorBL().linkIndicatorCreateBL(linkIndicatorVM);
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
-
                 }
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
+                    goto gotoWithModel;
                 }
             }
             catch (Exception ex1)
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                goto gotoWithModel;
             }
-            getAllIndicator();
             return RedirectToAction("LinkIndicator");
+
+            gotoWithModel:
+            getAllIndicator();
+            return View(linkIndicatorVM);
+
         }
-       
+
         [HttpGet]
         public ActionResult IndicatorFieldValue()
         {
@@ -229,42 +231,13 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         #region ComboSetting
 
-        [HttpPost]
-        public JsonResult ClickIndicatorComboBox(string Project_ID, string IndicatorID) 
-        { 
-            CreateIndicatorValueVM m = new CreateIndicatorValueVM();
-            
-            m.dataTypeVMLst = new IndicatorBL().getndicatorDataTypeBL(Convert.ToInt32(IndicatorID));
-            m.dataTypeCommonVMLst = new IndicatorBL().getIndicatorInsertedFieldBaseOnIndicatorBL(Convert.ToInt32(Project_ID),Convert.ToInt32(IndicatorID));
-            return Json(m, JsonRequestBehavior.AllowGet);
-        }
-
+     
         private void getAllLinkIndicator()
         {
             ViewBag.LstAllLinkIndicator = new IndicatorBL().getALLLinkIndicatorBL();
         }
         #endregion
         #region Json
-        public JsonResult IsIndicatorNameExists(string _IndicatorName)
-        {
-            try
-            {
-                bool isExists = ObjIndicatorMngBL.IsIndicatorNameExistsBL(_IndicatorName);
-                if (isExists)
-                {
-                    return Json("true", JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json("false", JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex1)
-            {
-                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
-                return Json("false", JsonRequestBehavior.AllowGet);
-            }
-        }
-        #endregion
+      #endregion
     }
 }

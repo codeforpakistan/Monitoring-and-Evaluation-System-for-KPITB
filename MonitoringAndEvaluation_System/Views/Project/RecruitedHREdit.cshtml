@@ -13,7 +13,7 @@
             <div class="card-header">
                 <div class="card-title">
                     <h4> Edit Recruited HR</h4>
-               </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="form-group">
@@ -37,24 +37,26 @@
                             @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
                         </div>
                         <div class="col-lg-4">
-                            <label>No of Recruited -HR *</label>
+                            <label class="">No of Recruited -HR *</label>
+                            <input hidden id="hdnRemaningHR" name="hdnRemaningHR"></input>
+                            <label class="col-form-label parsley-required" id="lblRemaningHR" name="lblRemaningHR" for="lblRemaningHR"></label>
                             @Html.TextBoxFor(model => model.RecruitedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Recruited -HR" })
-                            @Html.ValidationMessageFor(m => m.RecruitedHR, "", new { @class = "parsley-required" })
-
+                            @Html.ValidationMessageFor(m => m.RecruitedHR, "", new { @class = "parsley-required", @id = "spanRecruitedHR" })
                         </div>
+                     
                     </div>
                         <div class="row">
-                            
+
                             <div class="col-lg-4">
                                 <label class="col-form-label">HR From Date *</label>
                                 <input type="text" data-provide="datepicker" class="form-control date-Future datepicker" name="RecruitedFromHRDate" id="RecruitedFromHRDate" value="@Model.RecruitedFromHRDate.ToShortDateString()">
-                   
+
 
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">HR To Date *</label>
                                 <input type="text" data-provide="datepicker" class="form-control date-Future datepicker" name="RecruitedToHRDate" id="RecruitedToHRDate" value="@Model.RecruitedToHRDate.ToShortDateString()">
-                              
+
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Remarks *</label>
@@ -66,7 +68,7 @@
 
                         <br />
                         <div class="required">* Required fields</div>
-                       
+
                         <hr />
                         <div class="float-right">
                             <button class="btn btn-primary" type="submit">Update</button>
@@ -79,18 +81,17 @@
         <!-- END card-->
     </div>
 </div>
- 
+
+
+<div id="ProjectComboLink"
+     url-Val="@Url.Action("ClickProjectComboBox", "Common")">
+</div>
 
 @section Scripts{
+    <script src="~/Content/Template/js/CustomCode.js"></script>
+
     <script>
 
-        //$(function () {
-        //    $("#RecruitedToHRDate").datepicker({
-        //        dateFormat: "dd-mm-yy",
-        //        changeMonth: true,
-        //        changeYear: true,
-        //        yearRange: "-60:+0"
-        //    });
 
         $(document).ready(function ()
         {
@@ -127,7 +128,7 @@
 
                 $.ajax({
                      type: 'POST',
-                     url: '@Url.Action("ClickProjectComboBox", "Project")',
+                     url: '@Url.Action("ClickProjectComboBox", "Common")',
                      dataType: 'json',
                     data: { Project_ID: _Project_ID },  // Same Parameter with Action
                     success: function (BatchLst) {
@@ -150,84 +151,5 @@
                 });//Ajax_End
         });
 
-            @*$("#Project_ID").on('change', function () {
-                var _Project_ID = $(this).find("option:selected").val();
-                $.ajax({
-                     type: 'POST',
-                     url: '@Url.Action("ProjectCheckUmbrella")',
-                     dataType: 'json',
-                    data: { ProjectID: _Project_ID },  // Same Parameter with Action
-                    success: function (Value) {
-                        if (Value != 1)  // Non-Umbrella
-                        {
-                            $("#SubProject_ID").prop("disabled", true);
-                            $("#Batch_ID").prop("disabled", true);
-
-                            $("#SubProject_ID").empty();
-                            $("#Batch_ID").empty();
-
-                            $("#SubProject_ID").append('<option value="' + 0 + '">' +
-                                "Please Select SubProject" + '</option>');
-                            $("#Batch_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Batch" + '</option>');
-
-                        } else {
-                                      $.ajax({
-                                      //url: "/ManageStock/GetProductNameCombo" + Category_ID,
-                                       type: 'POST',
-                                       url: '@Url.Action("ClickProjectCombo")',
-                                       dataType: 'json',
-                                       data: { Project_ID: _Project_ID },  // Same Parameter with Action
-                                       success: function (SubProjectLst)
-                                       {
-                                           $("#SubProject_ID").prop("disabled", false);
-                                           $("#Batch_ID").prop("disabled", false);
-                                           $("#SubProject_ID").empty();
-                                           $.each(SubProjectLst, function (i, Njaeeb)
-                                           {
-                                               $("#SubProject_ID").append('<option value="' + Njaeeb.SubProjectID + '">' +
-                                                   Njaeeb.SubProjectName + '</option>');
-                                            });
-                                        },
-                                        error: function (ex)
-                                        {
-                                           alert('Failed to Retrieve Sub-Project Data:  ' + ex);
-                                        }
-                                  });
-                        }
-                 },
-                 error: function (ex) {
-                     console.log('Failed to Retrieve Sub-Project Data:  ' + ex);
-                 }
-                });//Ajax_End
-            });
-
-        $("#SubProject_ID").on('change', function () {
-            var _SubProject_ID = $(this).find("option:selected").val();
-
-                $.ajax({
-                     type: 'POST',
-                     url: '@Url.Action("ClickSubProjectCombo")',
-                     dataType: 'json',
-                    data: { SubProject_ID: _SubProject_ID },  // Same Parameter with Action
-                    success: function (BatchLst) {
-                        $("#Batch_ID").empty();
-                        if (BatchLst == 0) {
-                            $("#Batch_ID").prop("disabled", true);
-                            $("#Batch_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Batch" + '</option>');
-                        } else {
-                            $("#Batch_ID").prop("disabled", false);
-                            $.each(BatchLst, function (i, Aqib) {
-                                $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
-                                    Aqib.BatchName + '</option>');
-                            });
-                        }
-                 },
-                 error: function (ex) {
-                     console.log('Failed to Retrieve Batch Data:  ' + ex);
-                 }
-                });//Ajax_End
-            });*@
     </script>
 }

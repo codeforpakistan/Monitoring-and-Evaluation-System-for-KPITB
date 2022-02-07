@@ -21,7 +21,6 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         [HttpGet]
         public ActionResult ProjectCreate()
-
         {
             CreateProjectVM projectVM = new CreateProjectVM();
 
@@ -167,41 +166,25 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         }
         [HttpPost]
-        public ActionResult RecruitedHRCreate(CreateRecruitedHRVM recruitedHRVM, FormCollection fm)
+        public ActionResult RecruitedHRCreate(CreateRecruitedHRVM recruitedHRVM, FormCollection form)
         {
             try
             {
                 List<ComboBatch> cb = ObjProjectMngBL.getComboBatchBL(recruitedHRVM.Project_ID, LoginRoleID);
-                //int valBatch = ObjProjectMngBL.checkUmberlaBL(recruitedHRVM.Project_ID);
-                //if (cb.Count() < 1)
-                //{
-                //    recruitedHRVM.Batch_ID = 0;
-                //}
-
-                //int val = ObjProjectMngBL.checkUmberlaBL(recruitedHRVM.Project_ID);
-                //if(val != 1) //Non-Umbrella
-                //{
-                //    recruitedHRVM.SubProject_ID = 0;
-                //    recruitedHRVM.Batch_ID = 0;
-                //}
+                
 
                 if (ModelState.IsValid == false)
                 {
-                    ComboProject(recruitedHRVM);
-
-                    getAllRecruitedHR();
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    return View(recruitedHRVM);
-                
+                    goto gotoWithModel;
                 }
-                int[] value = new int[2];
-                StatusModel status1 = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(recruitedHRVM.Project_ID, out value[0], out value[1]);
-                int rr = value[0]- value[1];
 
-                if (recruitedHRVM.RecruitedHR > rr)
+               string hdnRemaningHR = form["hdnRemaningHR"];
+
+                if (recruitedHRVM.RecruitedHR > Convert.ToInt32(hdnRemaningHR))
                 {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Recruited-HR should not be greater than Planned-HR:  " + rr);
-                    goto end;
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Recruited-HR should not be greater than Planned-HR:  " + Convert.ToInt32(hdnRemaningHR));
+                    goto gotoWithModel;
                 }
 
                 recruitedHRVM.CreatedByUser_ID=LoginUserID;
@@ -220,8 +203,9 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
             return RedirectToAction("RecruitedHRCreate");
-          
-            end: getAllRecruitedHR();
+
+            gotoWithModel:
+            getAllRecruitedHR();
             ComboProject(recruitedHRVM);
             return View(recruitedHRVM);
         }
@@ -281,52 +265,44 @@ namespace MonitoringAndEvaluation_System.Controllers
             return View(procurementVM);
         }
         [HttpPost]
-        public ActionResult ProcurementCreateView(CreateProcurementVM procurementVM)
+        public ActionResult ProcurementCreateView(CreateProcurementVM procurementVM, FormCollection form)
         {
             try
             {
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    ComboProjectProc(procurementVM);
-                    getAllProcurement();
-                    return View(procurementVM);
+                    
+                    goto gotoWithModel; 
                 }
-
-                int planned, Achived;
-                StatusModel status2 = ObjProjectMngBL.ComparePlanned_PrucrementBL(procurementVM.Project_ID, out planned, out Achived);
-                int rr = planned - Achived;
-
-                var ss =procurementVM.NoOfProcurement - planned;
-                if (procurementVM.NoOfProcurement >rr )
+                if (procurementVM.NoOfProcurement > Convert.ToInt32(form["hdnRemainingProcurement"]))
                 {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Procurement should not be greater than Planned Procurement");
-                    ComboProjectProc(procurementVM);
-                    getAllProcurement();
-                    return View(procurementVM);
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Procurement should not be greater than Planned Procurement: " + form["hdnRemainingProcurement"]);
+                    goto gotoWithModel;
                 }
-
                 procurementVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new ProjectManagementBL().procurementCreateBL(procurementVM);
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
-                    return RedirectToAction("ProcurementCreateView");
                 }
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
-                    ComboProjectProc(procurementVM);
-                    getAllProcurement();
-                    return View(procurementVM);
+                    goto gotoWithModel;
                 }
             }
             catch (Exception ex1)
             {
-                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message); 
-                return View(procurementVM);
+                ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+                goto gotoWithModel;
             }
-            //return View();
+            return RedirectToAction("ProcurementCreateView");
+
+            gotoWithModel:
+            ComboProjectProc(procurementVM);
+            getAllProcurement();
+            return View(procurementVM);
         }
         [HttpGet]
         public ActionResult ProcurementEdit(string AchievedProcurementID)
@@ -417,10 +393,8 @@ namespace MonitoringAndEvaluation_System.Controllers
         public void ComboProjectProc(CreateProcurementVM procurementVM)
         {
             procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-
-            //procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            //ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            //procurementVM.comboBatch.Add(mb);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            procurementVM.comboBatch.Add(mb);
 
         }
         public void ComboProjectProcEdit(EditProcurementVM procurementEditVM)
@@ -478,50 +452,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         #endregion
         #region CoboBoxes
-        [HttpPost]
-        public JsonResult ClickSubProjectCombo(int SubProject_ID)
-        {
-            List<ComboBatch> cb = ObjProjectMngBL.getComboBatchBL(SubProject_ID, LoginRoleID);
-            if (cb.Count() < 1)
-            {
-                return Json(cb, JsonRequestBehavior.AllowGet);
-            }
-            cb.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
-            return Json(cb, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public JsonResult ClickProjectComboBox(int Project_ID)
-        {
-            ComboIndicatorBatchIndicatorVM batchIndicatorVM = new ComboIndicatorBatchIndicatorVM();
-            batchIndicatorVM.comboBatches = ObjProjectMngBL.getComboBoxBatchBL(Project_ID, LoginRoleID);
-            batchIndicatorVM.comboIndicators = ObjProjectMngBL.getComboIndicatorBL(Convert.ToInt32(Project_ID), 0);
-         
-            batchIndicatorVM.comboBatches.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
-            batchIndicatorVM.comboIndicators.Insert(0, new ComboIndicator { IndicatorID = 0, IndicatorName = "Please Select Indicator" });
-
-            batchIndicatorVM.value =  CompareValue(Project_ID);
-
-            return Json(batchIndicatorVM, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public JsonResult ClickBatchComboBox(string Project_ID, string Batch_ID)
-        {
-            List<ComboIndicator> cb = ObjProjectMngBL.getComboIndicatorBL(Convert.ToInt32(Project_ID), Convert.ToInt32(Batch_ID));// Batch, LoginRoleID);
-            //if (cb.Count > 0)
-            //{
-            //    return Json(cb, JsonRequestBehavior.AllowGet);
-            //}
-            cb.Insert(0, new ComboIndicator { IndicatorID = 0, IndicatorName = "Please Select Indicator" });
-            return Json(cb, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public JsonResult ClickProjectCombo(int Project_ID)
-        {
-            List<ComboSubProject> cb = ObjProjectMngBL.getComboSubProjectBL(Project_ID, LoginRoleID);
-            cb.Insert(0, new ComboSubProject { SubProjectID = 0, SubProjectName = "Please Select SubProject" });
-            return Json(cb, JsonRequestBehavior.AllowGet);
-        }
-
+        
 
    
 
@@ -592,12 +523,11 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
-                int[] value = new int[7];
+                int[] value = new int[5];
                 int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
                 value[0] = val; 
                 StatusModel status = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(ProjectID, out value[1], out value[2]);
                 StatusModel status2 = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
-                StatusModel status3 = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
                 if (status.status )
                 {
                     return Json(value, JsonRequestBehavior.AllowGet);
@@ -609,11 +539,8 @@ namespace MonitoringAndEvaluation_System.Controllers
                     value[2] = 0;
                     value[3] = 0;
                     value[4] = 0;
-                    value[5] = 0;
-                    value[6] = 0;
                     return Json(value, JsonRequestBehavior.AllowGet);
                 }
-
             }
             catch (Exception ex1)
             {
@@ -658,17 +585,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         #endregion
         #region CUSTOMFUNCATION
 
-        public int[] CompareValue(int ProjectID)
-        {
-                int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
-                 int[] value = new int[7];
-                value[0] = val;
-                StatusModel status = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(ProjectID, out value[1], out value[2]);
-                StatusModel status2 = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
-                StatusModel status3 = ObjFinanceMngBL.CompareReleased_ExpenditureBL(ProjectID, out value[5], out value[6]);
-            return value;
-        }
-
+       
         #endregion
 
     }

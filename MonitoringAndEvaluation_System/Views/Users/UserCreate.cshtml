@@ -87,7 +87,7 @@
     //IndicatorName Exist
     $("#Email").change(function () {
         if ($("#Email").val() != '') {
-              var urllink = '@Url.Action("IsEmailExists", "Users")'
+              var urllink = '@Url.Action("IsEmailExists", "Common")'
                 $.ajax({
                     url: urllink,
                     type: "GET",

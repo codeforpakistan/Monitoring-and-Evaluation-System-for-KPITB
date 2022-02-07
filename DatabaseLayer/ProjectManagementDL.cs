@@ -70,6 +70,35 @@ namespace DatabaseLayer
             }
             return getAllProjectLst;
         }
+        public static List<GetAllRecruitedHRVM> SearchRecruitedHRByAttributesDL(string ProjectName, string BatchName, string FromDate, string ToDate, int UserID, int RoleID)
+        {
+            List<GetAllRecruitedHRVM> getAllRecruitedHRLst = new List<GetAllRecruitedHRVM>();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@LoginRoleID", RoleID);
+                ObjParm.Add("@LoginUserID", UserID);
+                ObjParm.Add("@ProjectName", ProjectName = ProjectName == "" ? null : ProjectName);
+                ObjParm.Add("@BatchName", BatchName = BatchName == "" ? null : BatchName);
+                ObjParm.Add("@FromDate", FromDate = FromDate == "" ? null : FromDate);
+                ObjParm.Add("@ToDate", ToDate = ToDate == "" ? null : ToDate);
+                getAllRecruitedHRLst = Con.Query<GetAllRecruitedHRVM>("sp_SearchRecruitedHRByAttributes", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                Con.Close();
+                Con.Dispose();
+                return getAllRecruitedHRLst;
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return getAllRecruitedHRLst;
+        }
 
         public static bool IsProjectNameExistsDL(string _ProjectName)
         {

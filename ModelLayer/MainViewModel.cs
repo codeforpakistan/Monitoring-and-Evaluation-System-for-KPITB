@@ -130,6 +130,37 @@ namespace ModelLayer
         }
         #endregion
         #region ROLEMODEL
+        public partial class ClsUserRole
+        {
+            [Key]
+            [Display(Name = "Role")]
+            public string RoleID { get; set; }
+            [StringLength(100)]
+            public string RoleName { get; set; }
+            public List<ClsWebPages> AllWebPages { get; set; }
+        }
+        public class ClsWebPages
+        {
+            public int WebPageID { get; set; }
+            public int Parent_ID { get; set; }
+            public int PageOrder { get; set; }
+            public bool IsVisible { get; set; }
+            public string PageTitle { get; set; }
+            public string MainTitle { get; set; }
+            public int OrderSeq { get; set; }
+            public string PageIcon { get; set; }
+            public string Controller { get; set; }
+            public string Action { get; set; }
+            public string NormalIcon { get; set; }
+            public string ViewName { get; set; }
+            public bool IsChecked { get; set; }
+            public string Description { get; set; }
+            public List<ClsWebPages> Childs { get; set; }
+            public string Url { get; set; }
+        }
+
+
+
         public partial class CreateRoleVM
         {
             public int RoleID { get; set; }
@@ -157,7 +188,6 @@ namespace ModelLayer
             public string RoleName { get; set; }
             public bool IsActive { get; set; }
         }
-
         public class RolePermissionVM
         {
             public int ParentMenuID { get; set; }
@@ -173,7 +203,6 @@ namespace ModelLayer
             public bool IsChecked { get; set; }
             public StatusModel statusModel { get; set; }
         }
-
         public class RolePermissionTempVM
         {
             public int NavParent_ID { get; set; }
@@ -183,9 +212,6 @@ namespace ModelLayer
             public int NavSubChild_ID { get; set; }
             public bool SubChildIsVisible { get; set; }
         }
-
-
-
         public class RolePermissionWithRolVM
         {
             public int RoleID { get; set; }

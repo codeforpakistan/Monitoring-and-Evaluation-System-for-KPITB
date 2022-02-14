@@ -12,36 +12,13 @@
            <!-- START card-->
             <div class="card card-default">
                 <div class="card-header">
-                    <div class="card-title"><h4>Role Form</h4></div>
+                    <div class="card-title"><h4>Role List</h4></div>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        @using (Html.BeginForm("RoleCreateView", "Role", FormMethod.Post, new { @class = "form-horizontal" }))
-                        {
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    @Html.DisplayFor(m => m.RoleName, new { @class = "col-form-label" })
-                                    @Html.TextBoxFor(m => m.RoleName, new { @class = "form-control", @placeholder = "Please Enter RoleName" })
-                                    @Html.ValidationMessageFor(m => m.RoleName, "", new { @class = "parsley-required" })
-                                </div>
-                            </div>
-
-                            <br />
-                            <div class="required float-left">* Required fields</div>
-                            <div class="float-right">
-                                <button class="btn btn-primary" type="submit">Save</button>
-                            </div>
-                            <!--Popup Msg-->
-
-                            @*if (TempData["Message"] != null)
-            {
-                <div id="divMessage" class="alert alert-success d-inline-flex" role="alert">
-                    <strong>@TempData["Message"]</strong>
-                </div>
-            }*@
-                            <br />
-                            <hr />
-                        }
+                  
+                        <div>@Html.ActionLink("Add New Role", "CreateRole", "Role", new { @class = "btn btn-primary" })</div>
+                        <br/>
                         <!-- START card-->
                         <div class="card card-default">
                             <div class="card-body">

@@ -14,6 +14,47 @@ namespace MonitoringAndEvaluation_System.Controllers
     {
 
         [HttpGet]
+        public ActionResult CreateRole()
+        {
+            ClsUserRole cls = new RoleManagementBL().getUserRolePagesByIDBL(0);
+            return View(cls);
+        }
+
+        [HttpPost]
+        public ActionResult SaveRole(List<ClsWebPages> activies, ClsUserRole role)
+        {
+            StatusModel statusModel = new StatusModel();
+            try
+            {
+                 statusModel = new RoleManagementBL().SaveRoleBL(activies, role, LoginUserID);
+                if (statusModel.status)
+                {
+                    ShowMessage(MessageBox.Success, OperationType.Saved, statusModel.statusDetail);
+                }
+                else
+                {
+                    ShowMessage(MessageBox.Error, OperationType.Error, statusModel.statusDetail);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowMessage(MessageBox.Error, OperationType.Error, ex.Message);
+            }
+            return Json(statusModel, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        [HttpGet]
         public ActionResult RoleCreateView()
         {
             CreateRoleVM roleVM = new CreateRoleVM();
@@ -54,30 +95,26 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpGet]
         public ActionResult RoleEdit(string RoleID)
         {
-            EditRoleVM getRole = new EditRoleVM();
+
+            ClsUserRole cls = new ClsUserRole();
             try
             {
-                 getRole = new RoleManagementBL().getSignleRoleBL(Convert.ToInt32(Utility.Encryption.DecryptURL(RoleID)));
+                cls = new RoleManagementBL().getUserRolePagesByIDBL(Convert.ToInt32(Utility.Encryption.DecryptURL(RoleID)));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
             }
-
-            return View(getRole);
+            return View(cls);
         }
         [HttpPost]
-        public ActionResult RoleEdit(EditRoleVM editRoleVM)
+        public ActionResult RoleEdit(List<ClsWebPages> activies, ClsUserRole role)
         {
+            StatusModel statusModel = new StatusModel();
             try
             {
-                if (ModelState.IsValid == false)
-                {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    return View(editRoleVM);
-                }
-
-                StatusModel status = new RoleManagementBL().roleEditBL(editRoleVM);
-                if (status.status)
+                role .RoleID =Utility.Encryption.DecryptURL(role.RoleID);
+                statusModel = new RoleManagementBL().UpdateRoleBL(activies, role);
+                if (statusModel.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Updated, CommonMsg.UpdateSuccessfully);
                 }
@@ -90,8 +127,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
             }
-            getAllRoles();
-            return RedirectToAction("RoleCreateView");
+            return Json(statusModel, JsonRequestBehavior.AllowGet);
         }
         public ActionResult RolePermission()
         {

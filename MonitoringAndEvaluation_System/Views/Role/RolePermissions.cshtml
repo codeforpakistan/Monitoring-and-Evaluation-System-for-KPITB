@@ -29,7 +29,7 @@
                 //var parentGroup = (from p in Model.LstRolePermission select new { p.ParentMenuID, p.ParentMenuName, p.IsChecked, p.HasParent }).Distinct();
                 List<ModelLayer.MainViewModel.RolePermissionVM> singleParentGroup = Model.LstRolePermission.Select(m => new ModelLayer.MainViewModel.RolePermissionVM { ParentMenuID = m.ParentMenuID, ParentMenuName = m.ParentMenuName, IsChecked = m.IsChecked, HasParent = m.HasParent }).Distinct().ToList();
                 ModelLayer.MainViewModel.RolePermissionWithRolVM parentGroup = new ModelLayer.MainViewModel.RolePermissionWithRolVM(); //ListFilter
-                parentGroup.LstRolePermission = singleParentGroup.Select(m => new ModelLayer.MainViewModel.RolePermissionVM { ParentMenuID = m.ParentMenuID, ParentMenuName = m.ParentMenuName, IsChecked = m.IsChecked, HasParent = m.HasParent }).ToList(); ;
+                parentGroup.LstRolePermission = singleParentGroup.Select(m => new ModelLayer.MainViewModel.RolePermissionVM { ParentMenuID = m.ParentMenuID, ParentMenuName = m.ParentMenuName, IsChecked = m.IsChecked, HasParent = m.HasParent }).ToList();
                 foreach (var Parent in parentGroup.LstRolePermission)
                 {
                     <div class="col-lg-12">

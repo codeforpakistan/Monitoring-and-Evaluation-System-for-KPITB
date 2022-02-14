@@ -69,9 +69,9 @@ namespace BusinessLayer
             return UserManagementDL.getUserDL();
         }
         //UserLogin
-        public LoginReturnDataVM userLoginBL(LoginVM m)
+        public LoginReturnDataVM userLoginBL(LoginVM m, LoginAttemptes login)
         {
-            return UserManagementDL.userLoginDL(m);
+            return UserManagementDL.userLoginDL(m, login);
         }
         //UserLoginAttempts
         public StatusModel userAttemptBL(LoginAttemptes login)

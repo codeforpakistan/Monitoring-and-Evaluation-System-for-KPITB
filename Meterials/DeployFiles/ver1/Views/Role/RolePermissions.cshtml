@@ -1,0 +1,263 @@
+﻿@using system.Linq;
+@model ModelLayer.MainViewModel.RolePermissionWithRolVM
+@{
+    ViewBag.Title = "RolePermissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>RolePermissions</h4>
+
+
+@using (Html.BeginForm("RolePermissions", "Role", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="container-fluid">
+
+        <div class="form-row">
+            <div class="col-lg-5">
+                <label for="validationServer04">Select Role</label>
+                @Html.DropDownListFor(m => m.RoleID, new SelectList(Model.comboRole, "RoleID", "RoleName"), "Please Select Role", new { @class = "select2 form-control ", @placeholder = "Select Role" })
+                @Html.ValidationMessageFor(m => m.RoleID, "", new { @class = "parsley-required" })
+            </div>
+        </div>
+        <br />
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+        <!-- START row-->
+        <div class="row">
+            <!--=============================OUTER_START==============================-->
+            @{
+                //var parentGroup = (from p in Model.LstRolePermission select new { p.ParentMenuID, p.ParentMenuName, p.IsChecked, p.HasParent }).Distinct();
+                List<ModelLayer.MainViewModel.RolePermissionVM> singleParentGroup = Model.LstRolePermission.Select(m => new ModelLayer.MainViewModel.RolePermissionVM { ParentMenuID = m.ParentMenuID, ParentMenuName = m.ParentMenuName, IsChecked = m.IsChecked, HasParent = m.HasParent }).Distinct().ToList();
+                ModelLayer.MainViewModel.RolePermissionWithRolVM parentGroup = new ModelLayer.MainViewModel.RolePermissionWithRolVM(); //ListFilter
+                parentGroup.LstRolePermission = singleParentGroup.Select(m => new ModelLayer.MainViewModel.RolePermissionVM { ParentMenuID = m.ParentMenuID, ParentMenuName = m.ParentMenuName, IsChecked = m.IsChecked, HasParent = m.HasParent }).ToList(); ;
+                foreach (var Parent in parentGroup.LstRolePermission)
+                {
+                    <div class="col-lg-12">
+                        <!-- START card-->
+                        <div class="card card-default" id="cardDemo1">
+
+                            <div class="card-header H-@Parent.ParentMenuID">
+                                <!--CheckBox-->
+                                <div class="">
+                                    <label>
+                                        @if (Parent.HasParent)
+                                        {
+                                            <input type="checkbox" id="@Parent.ParentMenuID" name="@Parent.ParentMenuID" class="chkbox" checked="checked"> <!--Parent-->
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="@Parent.ParentMenuID" name="@Parent.ParentMenuID" class="chkbox" />
+                                        }
+                                    </label>
+                                </div>
+                                <!--Title-->
+                                @Parent.ParentMenuName
+
+                                <!--Mnimize-->
+                                <a class="float-right" href="#p-@Parent.ParentMenuID" data-tool="card-collapse" data-toggle="tooltip" title="Collapse Card">
+                                    <em class="fa fa-minus"></em>
+                                </a>
+                            </div>
+
+                            <!--Body1-->
+                            <div class="card-wrapper collapse show" id="p-@Parent.ParentMenuID">
+                                <div class="card-body ">
+
+                                    <div class="row">
+                                        <!--=============================INNER_START==============================-->
+                                        @{
+                                            int loop = 0;
+                                            //var childGroup = (from cc in Model.LstRolePermission where cc.ParentMenuID == Parent.ParentMenuID select new { cc.ChildMenuID, cc.ChildMenuName, cc.IsChecked, cc.HasChild }).Distinct();
+                                            List<ModelLayer.MainViewModel.RolePermissionVM> singleChildGroup = Model.LstRolePermission.Where(cc => cc.ParentMenuID == Parent.ParentMenuID).ToList();
+                                            ModelLayer.MainViewModel.RolePermissionWithRolVM childGroup = new ModelLayer.MainViewModel.RolePermissionWithRolVM();
+                                            childGroup.LstRolePermission = singleChildGroup.Select(m => new ModelLayer.MainViewModel.RolePermissionVM { ChildMenuID = m.ChildMenuID, ChildMenuName = m.ChildMenuName, IsChecked = m.IsChecked, HasChild = m.HasChild }).Distinct().ToList();
+                                            foreach (var child in childGroup.LstRolePermission)
+                                            {
+                                                loop += 1;
+                                                <div class="col-lg-4">
+                                                    <!-- START card-->
+                                                    <div class="card card-default  child-@Parent.ParentMenuID" id="p-@Parent.ParentMenuID">
+
+                                                        <td class="i-@child.ChildMenuID  card-header">
+                                                            <!--CheckBox-->
+                                                            <label>
+                                                                @if (child.HasChild)
+                                                                {
+                                                                    <input type="checkbox" class="chkPage p-@Parent.ParentMenuID" id="i-@child.ChildMenuID" checked="checked" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="checkbox" class="chkPage p-@Parent.ParentMenuID" id="i-@child.ChildMenuID" />
+                                                                }
+                                                                <!--Hidden-->
+                                                                <input type="hidden" class="IsChecked i-@child.ChildMenuID" name="LstRolePermission[@loop].IsChecked" value="@child.IsChecked" /><!--CheckBox-->
+                                                                <input type="hidden" name="LstRolePermission[@loop].ChildMenuID" value="@child.ChildMenuID" /><!--ID-->
+                                                            </label>
+                                                            <!--Title-->
+                                                            @child.ChildMenuName
+
+                                                            <!--Close-->
+                                                            <a class="float-right" href="#i-@child.ChildMenuID" data-tool="card-collapse" data-toggle="tooltip" title="Collapse Card">
+                                                                <em class="fa fa-minus"></em>
+                                                            </a>
+                                                        </td>
+
+                                                        <!--Body-->
+                                                        <span class="card-wrapper collapse show">
+                                                            <span class="card-body">
+                                                                <!--==========SUBINNER_START========-->
+                                                                <span class="card card-default">
+                                                                    <!-- ROW-->
+                                                                    @{
+                                                                        int innerloop = 50;
+                                                                        //var subChildGroup = (from sc in Model.LstRolePermission where sc.ParentMenuID == Parent.ParentMenuID && sc.ChildMenuID == child.ChildMenuID select new { sc.SubChildMenuID, sc.SubChildName, sc.IsChecked, sc.HasSubChild }).Distinct();
+                                                                        List<ModelLayer.MainViewModel.RolePermissionVM> singleSubChildGroup = Model.LstRolePermission.Where(sc => sc.ParentMenuID == Parent.ParentMenuID && sc.ChildMenuID == child.ChildMenuID).ToList();
+                                                                        ModelLayer.MainViewModel.RolePermissionWithRolVM subChildGroup = new ModelLayer.MainViewModel.RolePermissionWithRolVM();
+                                                                        subChildGroup.LstRolePermission = singleSubChildGroup.Select(m => new ModelLayer.MainViewModel.RolePermissionVM { SubChildMenuID = m.SubChildMenuID, SubChildName = m.SubChildName, IsChecked = m.IsChecked, HasSubChild = m.HasSubChild }).Distinct().ToList();
+                                                                        foreach (var subChild in subChildGroup.LstRolePermission)
+                                                                        {
+                                                                            innerloop += 1;
+                                                                            <span class="table-responsive">
+                                                                                <table class="table table-striped table-bordered table-hover">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <label class="m-0">
+                                                                                                    @if (@subChild.HasSubChild)
+                                                                                                    {
+                                                                                                        <input type="checkbox" class="chkp i-@child.ChildMenuID" checked="checked" />
+                                                                                                        <!--Hidden-->
+                                                                                                        <input type="hidden" class="chkOp i-@child.ChildMenuID" name="LstRolePermission[@innerloop].HasSubChild" value="true" />
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        <input type="checkbox" class="chkp i-@child.ChildMenuID" />
+                                                                                                        <!--Hidden-->
+                                                                                                        <input type="hidden" class="chkOp i-@child.ChildMenuID" name="LstRolePermission[@innerloop].HasSubChild" value="false" />
+                                                                                                    }
+                                                                                                </label>
+                                                                                                <!--Hidden-->
+                                                                                                @*<input type="checkbox" class="IsChecked i-@child.ChildMenuID" name="LstRolePermission[@innerloop].IsChecked" value="@Model.LstRolePermission[@innerloop].IsChecked" />
+                                                                                                    <input type="text" name="LstRolePermission[@innerloop].SubChildMenuID" value="@subChild.SubChildMenuID" />*@
+                                                                                            </td>
+                                                                                            <td>@subChild.SubChildName</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </span>
+                                                                        }
+                                                                    }
+                                                                </span>
+                                                                <!--==========SUBINNER_END========-->
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    <!-- END card-->
+                                                </div>
+                                            }
+                                        }
+                                        <!--=============================INNER_END==============================-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END card-->
+                    </div>
+                }
+            }
+            <!--=============================OUTER_END==============================-->
+        </div>
+        <!-- END row-->
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+            $(document).ready(function () {
+                //$('#1').addClass('active open');
+                //$('#1 div.collapsible-body').attr('style', 'display: block;');
+                //$('#2').addClass('active');
+                //$('#2 a').addClass('active');
+
+                $('input[type="checkbox"]').click(function (e)
+                {
+                    debugger;
+                    var $this = $(this),
+                        $thisClass = $this.attr('class'),
+                        $thisVal = $this.is(':checked'),
+                        $thisID = $this.attr('id');
+
+                    if ($thisClass == "chkbox")   //PARENT
+                    {
+                        $('div.child-' + $thisID).find('input[type="checkbox"]')
+                            .attr('checked', 'checked')
+                            .prop('checked', $thisVal);
+
+                        $('div.child-' + $thisID).find('input.chkOp').attr('value', $thisVal);
+                        $('div.child-' + $thisID).find('input.IsChecked').attr('value', $thisVal);
+
+                    }
+                    else if ($this.hasClass("chkPage"))   //CHILD
+                    {
+                        $('input[type="checkbox"].' + $thisID).attr('checked', 'checked').prop('checked', $thisVal);
+                        //Hidden
+                          $('input[type="hidden"].' + $thisID).attr('value', $thisVal);
+                          var $arr = $thisClass.toString().split(' ');
+                          // chkPage id >>> 2 classes
+
+                          $thisClass = $arr[1];
+                          if ($thisVal) {
+                              $('.' + $arr[1]).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+                              $('.' + $arr[1].replace('p', 'H')).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+
+                          } else
+                          {
+                              //var selectedSiblings = $('.' + $arr[1]).find('input.chkPage:checked').length;
+                              var selectedSiblings = ($('input.' + $arr[1] + ':checked').length);
+                              if (selectedSiblings == 0)
+                              {
+                                  $('.' + $arr[1]).find('input.chkbox').removeAttr('checked').prop('checked', $thisVal);
+                                  $('.' + $arr[1].replace('p', 'H')).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+                              }
+                          }
+                    }
+                    else if ($this.hasClass("chkp"))  //SUBCHILD
+                    {
+                        var $arr = $thisClass.toString().split(' ');
+                        $thisClass = 'chkp.' + $arr[1];
+                        var selectedSiblings = ($('input.' + $thisClass + ':checked').length);
+                        if ($thisVal && selectedSiblings == 1)
+                        {
+                            $('td.' + $arr[1]).find('input.chkPage').attr('checked', 'checked').prop('checked', $thisVal);
+                            $('td.' + $arr[1]).find('input.IsChecked').attr('value', $thisVal);
+                            $this.closest('td').find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+                        }
+                        else if (!$thisVal && selectedSiblings == 0)
+                        {
+                            $this.parents('td').siblings().find('input.chkPage').attr('checked', 'checked').prop('checked', $thisVal);
+                            $this.parents('td').siblings().find('input.IsChecked').attr('value', $thisVal);
+                            if ($this.find('input.chkPage:checked').length == 0)
+                                $this.find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+                        }
+                    }
+                });
+
+            });
+
+            @*$("#RoleID").change(function (e) {
+                e.preventDefault();
+                var _RoleID = $("#RoleID").val();
+                var route = '@Url.Action("GetRoleBasePermissionCombo","Role")?RoleID=' + _RoleID
+                window.location.href = route;
+            });*@
+
+
+    </script>
+}
+
+
+
+
+
+
+

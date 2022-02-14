@@ -1,0 +1,219 @@
+﻿@model ModelLayer.MainViewModel.CreateIndicatorFieldVM
+@{
+    ViewBag.Title = "Create Indicator Field";
+
+}
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
+
+<!-- START row-->
+<div class="row">
+    <div class="col-xl-12">
+        @using (Html.BeginForm("IndicatorFieldCreate", "Indicator", FormMethod.Post, new { @id = "SubmitFromBtnCreate", @class = "form-horizontal" }))
+        {
+            <!-- START card-->
+
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h4> Add Indicator Field </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Select Indicator *</label>
+                                @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Select IndicatorName", new { @class = " form-control ", @placeholder = "Select Indicator", @id = "idIndicatorName", @name = "IndicatorName" })
+                                @Html.ValidationMessageFor(m => m.Indicator_ID, "", new { @class = "parsley-required" })
+                                <span name="spanidIndicatorName" id="spanidIndicatorName" class="text-danger"></span>
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Select Data Type *</label>
+                                @Html.DropDownListFor(m => m.IndicatorDataType_ID, new SelectList(Model.comboIndicatorDataTypes, "IndicatorDataTypeID", "IndicatorDataType"), "Select Indicator Value Type", new { @class = " form-control " , @id = "IndicatorDataType_ID", @name = "IndicatorDataType_ID" })
+                                @Html.ValidationMessageFor(m => m.IndicatorDataType_ID, "", new { @class = "parsley-required" })
+                                <span name="spanidIndicatorName" id="spanidIndicatorDataType_ID" class="text-danger"></span>
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Indicator Field Name *</label>
+                                <input class="form-control" id="idIndicatorFieldName" type="text" name="IndicatorFieldName" placeholder="Enter Indicator Field Name">
+                                <span name="spanidIndicatorFieldName" id="spanidIndicatorFieldName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <br />
+                        <div class="float-right"><input type="button" id="AddIndicatorField" value="Add IndicatorField" class="btn btn-primary" /></div>
+                        <br />
+                        <br />
+                        <table class="table table-striped" id="tblIndicatorField">
+                            <thead class="table-info">
+                                <tr>
+                                    <th data-column-id="id" data-type="numeric">ID</th>
+                                    <th data-column-id="IndicatorName">Indicator Name</th>
+                                    <th data-column-id="IndicatorDataType_ID">Value Type</th>
+                                    <th data-column-id="IndicatorFieldName">Indicator Field</th>
+                                    <th data-column-id="action">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="required">* Required fields</div>
+                <br />
+                <div class="card-footer">
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <div class="checkbox c-checkbox">
+                                <label>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="float-right">
+                            <button class="btn btn-primary" type="submit" id="btnCreate"> Create</button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- END card-->
+            </div>
+        }
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="~/Content/Template/vendor/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+        });//Ready
+
+        $("#AddIndicatorField").click(function () {
+            debugger;
+            if ($('#idIndicatorName').val() == 0) {
+                $('#spanidIndicatorName').text('Indicator should not be blank');
+                $('#spanidIndicatorName').show();
+                $('#idIndicatorName').focus();
+                return true;
+            }
+            if ($('#IndicatorDataType_ID').val() == 0) {
+                $('#spanidIndicatorDataType_ID').text('Indicator Value should not be blank');
+                $('#spanidIndicatorDataType_ID').show();
+                $('#IndicatorDataType_ID').focus();
+                return true;
+            }   
+            if ($('#idIndicatorFieldName').val() == "") {
+                $('#spanidIndicatorFieldName').text('Indicator Field Name should not be blank');
+                $('#spanidIndicatorFieldName').show();
+                $('#idIndicatorFieldName').focus();
+                return true;
+            }
+           
+            var trcount = $("#tblIndicatorField tr").length;
+            $("#tblIndicatorField").append("<tr>  <td>" + trcount + "</td>    <td id='" + $("#idIndicatorName").val() + "' >" + $("#idIndicatorName").find("option:selected").text() + "</td> <td id='" + $("#IndicatorDataType_ID").val() + "' >" + $("#IndicatorDataType_ID").find("option:selected").text() + "</td> <td>" + $("#idIndicatorFieldName").val() + "</td>  <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#idIndicatorFieldName").val('');
+            $("#idIndicatorName").val('');
+            $("#IndicatorDataType_ID").val('');
+            
+        });
+
+        function RemoveDemerits(row) {
+            $(row).parent().parent().remove();
+        }
+
+        $("#idIndicatorFieldName").on('change', function () {
+            debugger;
+            if ($('#idIndicatorFieldName').val() != "") {
+                $('#spanidIndicatorFieldName').hide();
+                return true;
+            }
+        });
+        $("#IndicatorDataType_ID").on('change', function () {
+            debugger;
+            if ($('#IndicatorDataType_ID').val() != "") {
+                $('#spanidIndicatorDataType_ID').hide();
+                return true;
+            }
+        });
+        
+
+        $("#idIndicatorName").on('change', function () {
+            debugger;
+            if ($('#idIndicatorName').val() != "") {
+                $('#spanidIndicatorName').hide();
+                return true;
+            }
+        });
+
+
+        $("#btnCreate").click(function (e) {
+            e.preventDefault();
+            debugger;
+
+            var formAllData = new FormData();
+            
+
+            //StackHolder
+            var IndFieldRows = new Array();   //ArrayList
+            $('#tblIndicatorField tr').each(function () {
+                if ($(this).find('td:eq(0)').text() != '') {
+                    //Risk
+                    debugger;
+                    $row = $(this).find('td:eq(0)').text() +
+                        "|" + $(this).find('td:eq(1)').attr('id') +
+                        "|" + $(this).find('td:eq(2)').attr('id') +
+                        "|" + $(this).find('td:eq(3)').text();
+                    IndFieldRows.push($row);
+                }
+            });
+            formAllData.append("_IndicatorFields", IndFieldRows);
+            var urllink = '@Url.Action("IndicatorFieldCreate", "Indicator")'
+            $.ajax({
+                url: urllink,
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: formAllData,
+                success: function (result) {
+                    debugger;
+                    if (result == 'false') {
+                       var route = '@Url.Action("IndicatorFieldCreate", "Indicator")'
+                         window.location.href = route;
+                    }
+                    else if (result == 'true') {
+                        //ViewForm
+                         var route = '@Url.Action("IndicatorFieldCreate", "Indicator")'
+                         window.location.href = route;
+                    }
+
+                },
+                error: function (err) {
+                    //For Failure notification
+                    alert(err.statusText);
+                }
+            });
+
+        });
+
+        //function  validationBeforeSubmit() {
+
+
+
+
+        //}
+
+    </script>
+}

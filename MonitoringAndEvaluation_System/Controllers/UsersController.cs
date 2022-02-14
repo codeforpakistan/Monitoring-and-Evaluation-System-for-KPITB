@@ -40,11 +40,12 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
+                LoginAttemptes login = new LoginAttemptes();
                 if (model.Clicked == "Clicked")
                 { 
-                  LoginAttemptes login = new LoginAttemptes();
                     login.Email = model.Email;
-                  
+                    //login.Password = Utility.Encryption.EncryptUser(model.Password).ToString();
+                    
                     //login.Password = Utility.Encryption.Decrypt(model.Password);
                     StatusModel s = new UserManagementBL().userAttemptBL(login);  //Get UserLogin Data
                    if( s.status == false)
@@ -59,10 +60,8 @@ namespace MonitoringAndEvaluation_System.Controllers
                 {
                     goto errorreturn;
                 }
-
-                #region LoginAttemps
-                LoginReturnDataVM loginUserDataModel = new UserManagementBL().userLoginBL(model);  //Get UserLogin Data
-                #endregion
+                //model.Password = Utility.Encryption.EncryptUser(model.Password).ToString();
+                LoginReturnDataVM loginUserDataModel = new UserManagementBL().userLoginBL(model, login);  //Get UserLogin Data
 
                 
                 if (loginUserDataModel != null)
@@ -111,6 +110,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
+                //userVM.Password =Utility.Encryption.EncryptUser(userVM.Password);
                 userVM.comboRoles = new UserManagementBL().getRoleBL();
                 if (ModelState.IsValid == false)
                 {

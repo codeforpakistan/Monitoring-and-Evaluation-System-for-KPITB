@@ -527,20 +527,9 @@ namespace MonitoringAndEvaluation_System.Controllers
                 int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
                 value[0] = val; 
                 //StatusModel status = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(ProjectID, out value[1], out value[2]);
-                StatusModel status = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
-                if (status.status )
-                {
-                    return Json(value, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    value[0] = 0;
-                    value[1] = 0;
-                    value[2] = 0;
-                    value[3] = 0;
-                    value[4] = 0;
-                    return Json(value, JsonRequestBehavior.AllowGet);
-                }
+                StatusModel status2 = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
+                return Json(value, JsonRequestBehavior.AllowGet);
+                
             }
             catch (Exception ex1)
             {

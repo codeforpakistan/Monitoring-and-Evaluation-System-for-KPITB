@@ -14,6 +14,176 @@ namespace DatabaseLayer
 {
     public class RoleManagementDL
     {
+
+        public static ClsUserRole getUserRolePagesByIDDL(int RoleID)
+        {
+            ClsUserRole mdl = new ClsUserRole();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@Role_ID", RoleID);
+                using (var multi = Con.QueryMultiple("Users_GetUserRolePagesByID", ObjParm, commandType: CommandType.StoredProcedure))
+                {
+                    var allWebPages = multi.Read<ClsWebPages>().ToList();
+                    mdl.AllWebPages = allWebPages;
+                    var Roledata = multi.Read<ClsUserRole>().FirstOrDefault();
+                    if (Roledata != null) {
+                        mdl.RoleID = Roledata.RoleID;
+                        mdl.RoleName = Roledata.RoleName;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return mdl;
+        }
+
+        public static StatusModel SaveRoleDL(DataTable dt)
+        {
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@udt_BulkEntry", dt.AsTableValuedParameter("udt_BulkEntry"));
+
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_RoleMapWithWebPageMulti", ObjParm, commandType: CommandType.StoredProcedure);
+
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+
+
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return status;
+        }
+        public static StatusModel UpdateRoleDL(DataTable dt,int RoleID)
+        {
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@RoleID", RoleID);
+                ObjParm.Add("@udt_BulkEntry", dt.AsTableValuedParameter("udt_BulkEntry"));
+
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_UpdateRoleMapWithWebPageMulti1", ObjParm, commandType: CommandType.StoredProcedure);
+
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return status;
+        }
+
+        public static StatusModel InsertRoleOnlyDL(ClsUserRole Role, out int RoleID)
+        {
+            RoleID = 0;
+            StatusModel statusmodel = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@RoleName", Role.RoleName);
+
+                ObjParm.Add("@RoleID", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_roleCreateOnly", ObjParm, commandType: CommandType.StoredProcedure);
+
+                RoleID = Convert.ToInt32(ObjParm.Get<int>("@RoleID"));
+                statusmodel.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                statusmodel.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+
+            }
+            return statusmodel;
+        }
+        public static StatusModel UpdateRoleOnlyDL(ClsUserRole Role)
+        {
+            StatusModel statusmodel = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@RoleID", Role.RoleID);
+                ObjParm.Add("@RoleName", Role.RoleName);
+
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                Con.Execute("sp_roleUpdateOnly", ObjParm, commandType: CommandType.StoredProcedure);
+
+                statusmodel.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                statusmodel.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                Con.Close();
+
+            }
+            return statusmodel;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public static StatusModel roleCreateDL(CreateRoleVM m)
         {
             StatusModel status = new StatusModel();
@@ -37,7 +207,7 @@ namespace DatabaseLayer
 
                     status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
                     status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
-                    m .RoleID = Convert.ToInt32(ObjParm.Get<int>("@RoleID"));
+                    m.RoleID = Convert.ToInt32(ObjParm.Get<int>("@RoleID"));
 
                     Con.Close();
 
@@ -151,7 +321,7 @@ namespace DatabaseLayer
             try
             {
                 conn = new SqlConnection(Common.ConnectionString);
-               
+
                 cmd = new SqlCommand("sp_getRoleBasePermissionCombo", conn);
                 cmd.Parameters.AddWithValue("@RoleID", RoleID);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -219,8 +389,8 @@ namespace DatabaseLayer
                     p.ChildMenuName = Convert.ToString(dr["ChildMenuName"]);
                     p.SubChildMenuID = Convert.ToInt32(dr["NavSubChildID"]);
                     p.SubChildName = Convert.ToString(dr["NavSubChildName"]);
-                    p.HasParent = Convert.ToBoolean( dr["HasParent"]);
-                    p.HasChild = Convert.ToBoolean( dr["HasChild"]);
+                    p.HasParent = Convert.ToBoolean(dr["HasParent"]);
+                    p.HasChild = Convert.ToBoolean(dr["HasChild"]);
                     p.HasSubChild = Convert.ToBoolean(dr["HasSubChild"]);
                     PermissionLst.Add(p);
                 }
@@ -244,7 +414,7 @@ namespace DatabaseLayer
             try
             {
                 Con = new SqlConnection(Common.ConnectionString);
-                
+
                 foreach (var item in rolePermission.LstRolePermission)
                 {
                     Con.Open();
@@ -272,6 +442,6 @@ namespace DatabaseLayer
             return status;
         }
 
-        
+
     }
 }

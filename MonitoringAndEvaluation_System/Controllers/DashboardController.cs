@@ -23,31 +23,38 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         public ActionResult Menus()
         {
+            #region NEW
 
-            List<NavParentMenu> ParentLst = new List<NavParentMenu>(); //Parent
-            List<NavChildMenu> ChildLst = new List<NavChildMenu>(); //Child
-            List<NavSubChild> SubChildLst = new List<NavSubChild>(); //SubChild
-            try
-            {
+            ClsUserRole cls = new RoleManagementBL().getUserRolePagesByIDBL(LoginRoleID);
+            cls.AllWebPages= cls.AllWebPages.Where(x => x.IsChecked == true).ToList();
+            Session["WebPagesMenu"] = cls;
+            #endregion
+            #region OLD
+            //List<NavParentMenu> ParentLst = new List<NavParentMenu>(); //Parent
+            //List<NavChildMenu> ChildLst = new List<NavChildMenu>(); //Child
+            //List<NavSubChild> SubChildLst = new List<NavSubChild>(); //SubChild
+            //try
+            //{
 
-                LoginReturnDataVM loginUserDataModel = (LoginReturnDataVM)Session["LoginUser"];// Session["LoginUserData"];
-                //ClsUsers user = (ClsUsers)HttpContext.Current.Session["LoginUserData"];
-               
-                ParentLst = ObjuserMngBL.getParentMenuBL(loginUserDataModel.RoleID); //Parent
-                Session["NavMenus"] = ParentLst;
+            //    LoginReturnDataVM loginUserDataModel = (LoginReturnDataVM)Session["LoginUser"];// Session["LoginUserData"];
+            //                                                                                   //ClsUsers user = (ClsUsers)HttpContext.Current.Session["LoginUserData"];
 
-                ChildLst = ObjuserMngBL.getChildMenuBL(loginUserDataModel.RoleID); //Child
-                Session["NavChildMenus"] = ChildLst;
+            //    ParentLst = ObjuserMngBL.getParentMenuBL(loginUserDataModel.RoleID); //Parent
+            //    Session["NavMenus"] = ParentLst;
 
-                SubChildLst = ObjuserMngBL.getSubChildMenuBL(loginUserDataModel.RoleID); //SubChild  GetAll
-                Session["NavSubChildMenus"] = SubChildLst;
-               
+            //    ChildLst = ObjuserMngBL.getChildMenuBL(loginUserDataModel.RoleID); //Child
+            //    Session["NavChildMenus"] = ChildLst;
 
-            }
-            catch (Exception ex)
-            {
+            //    SubChildLst = ObjuserMngBL.getSubChildMenuBL(loginUserDataModel.RoleID); //SubChild  GetAll
+            //    Session["NavSubChildMenus"] = SubChildLst;
 
-            }
+
+            //}
+            //catch (Exception ex)
+            //{
+
+            //} 
+            #endregion
             return PartialView("SideBar");
         }
 

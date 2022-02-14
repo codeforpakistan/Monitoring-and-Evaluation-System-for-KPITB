@@ -1,0 +1,146 @@
+﻿@model ModelLayer.MainViewModel.CreateIndicatorVM
+@{
+    ViewBag.Title = "RoleCreateView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ModelLayer.MainViewModel.GetAllIndicatorVM> _LstAllIndicators = (List<ModelLayer.MainViewModel.GetAllIndicatorVM>)ViewBag.LstAllIndicators;
+}
+
+<!-- START row-->
+<div class="row">
+    <div class="col-xl-12">
+        <!-- START card-->
+        <div class="card card-default">
+            <div class="card-header">
+                <div class="card-title"><h4>Add New Indicator</h4></div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    @using (Html.BeginForm("IndicatorCreateView", "Indicator", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="col-form-label">Indicator Name </label>
+                                @Html.TextBoxFor(m => m.IndicatorName, new { @class = "form-control", @placeholder = "Please Enter Indicator Name" })
+                                @Html.ValidationMessageFor(m => m.IndicatorName, "", new { @class = "parsley-required", @id = "spanIndicatorName" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="required float-left">* Required fields</div>
+                        <div class="float-right">
+                            <button class="btn btn-primary" type="submit">Save</button>
+                        </div>
+                        <br />
+                        <hr />
+                    }
+                    <!-- START card-->
+                    <div class="card card-default">
+                        <div class="card-body">
+                            <form class="form-horizontal">
+                                <div class="form-row ">
+                                    <div class="col-lg-10">
+                                        <label for="sel1">Search By Indicator Name</label>
+                                        <input class="select2 form-control" type="text" placeholder="Search By Indicator Name">
+                                    </div>
+
+                                    <div class="col-lg-1">
+                                        <label for="sel1" style="color:transparent">]</label>
+                                        <button class="btn btn-primary form-control" type="button" id="btnSubmit">Search</button>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="sel1" style="color:transparent">]</label>
+                                        <button class="btn btn-green form-control" type="reset" id="btnSubmit">Clear</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END card-->
+                 
+                    <br />
+                    <div class="card card-default">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table class="table table-striped my-4 w-100  table-hover" id="datatable2">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>
+                                                        ID
+                                                    </th>
+                                                    <th>
+                                                        Indicator Name
+                                                    </th>
+
+                                                    <th class="col-lg-1">
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    foreach (var item in _LstAllIndicators)
+                                                    {
+                                                        <tr>
+                                                            @Html.HiddenFor(m => item.IndicatorID)
+                                                            <td>
+                                                                @item.ID
+                                                            </td>
+                                                            <td>
+                                                                @item.IndicatorName
+                                                            </td>
+                                                            <td>
+                                                                @Html.ActionLink("Edit", "IndicatorEdit", new { IndicatorID = Utility.Encryption.EncryptURL(Convert.ToString(item.IndicatorID)) }, new { @class = "mb-1 btn btn-warning" })
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END card-->
+    </div>
+</div>
+@section Scripts{
+    <script>
+    //IndicatorName Exist
+        $("#IndicatorName").change(function () {
+            debugger;
+            var IndicatorName = $("#IndicatorName").val();
+            if (IndicatorName != '') {
+              var urllink = '@Url.Action("IsIndicatorNameExists", "Common")'
+                $.ajax({
+                    url: urllink,
+                    type: "POST",
+                    data: { _IndicatorName: IndicatorName },
+                    success: function (result)
+                    {
+                        debugger;
+                        if (result == "true") {
+                            $('#spanIndicatorName').text('Indicator Name Already Exists !');
+                            $('#IndicatorName').focus();
+                            return true;
+                        }
+                      else {
+                            $('#spanIndicatorName').text('');
+                            return false;
+                        }
+                    },
+                    error: function (err) {
+                        console.log('Failed to Retrieve Data:  ' + ex.responseText);
+                    }
+                });
+            }
+        });//Change
+    </script>
+    }

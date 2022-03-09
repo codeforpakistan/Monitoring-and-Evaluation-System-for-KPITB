@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,7 +52,6 @@ namespace ModelLayer
             public bool IsActive { get; set; }
             public string Address { get; set; }
         }
-
         public partial class Role
         {
             public int RoleID { get; set; }
@@ -72,30 +72,88 @@ namespace ModelLayer
             public int DigitalPolicyID { get; set; }
             public string DigitalPolicyName { get; set; }
         }
-        public partial class Expenditure_Budget
-    {
-        public int ExpenditureBudgetID { get; set; }
-        public int Project_ID { get; set; }
-        public int SubProject_ID { get; set; }
-        public int Batch_ID { get; set; }
-        public System.DateTime ExpenditureDate { get; set; }
-        public long ExpenditureBudget { get; set; }
-        public string Remarks { get; set; }
-        public int User_ID { get; set; }
-    }
-        public partial class Issues
+        public partial class SDGS
         {
-            public int IssuesID { get; set; }
+            public int SDGSID { get; set; }
+            public string SDGSName { get; set; }
+        }
+        public partial class ProjectStatus
+        {
+            public int ProjectStatusID { get; set; }
+            public string ProjectStatusName { get; set; }
+        }
+        public partial class ProjectObjective
+        {
+            public int ObjectiveID { get; set; }
+            public int Project_ID { get; set; }
+            
+            public string ObjectiveName { get; set; }
+            public int CreatedByUser_ID { get; set; }
+        }
+        public partial class ProjectKPIs
+        {
+            //Project KPIs\
+            public int IndicatorID { get; set; }
+            public string IndicatorDescription { get; set; }
+            public int Target { get; set; }
+            public System.DateTime TimeLine { get; set; }
+        }
+        public partial class Schedule
+        {
+            public int ScheduleID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public System.DateTime PlannedDate { get; set; }
+            public System.DateTime StartDate { get; set; }
+            public System.DateTime EndDate { get; set; }
+            public int User_ID { get; set; }
+        }
+        public partial class PlannedProcurement
+        {
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
-            public string IssueDescription { get; set; }
-            public DateTime IssuesDate { get; set; }
-            public string ActionTaken { get; set; }
-            public string Solution { get; set; }
-            public string Remarks { get; set; }
+
+            public int ProcurementID { get; set; }
+            public string ProcrumetHeader { get; set; }
+            public int PlannedProcrumentNo { get; set; }
+            public int PlannedPerCostItem { get; set; }
+            public int AchivedCost { get; set; }
+
         }
+        public partial class Risk
+        {
+            public int RiskID { get; set; }
+            public int RiskStatus_ID { get; set; }
+            public int RiskMitigation_ID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public string RiskName { get; set; }
+            public string RiskStatus { get; set; }
+            public int CreatedByUser_ID { get; set; }
+        }
+        public partial class Stackholder
+        {
+
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            public int StackholderID { get; set; }
+            public int TypeOfStakeholder_ID { get; set; }
+            
+            public string StackholderName { get; set; }
+            public string StackholderDepartment { get; set; }
+            public string StackholderContact { get; set; }
+            public string StackholderEmail { get; set; }
+
+        }
+
+        
         public partial class ProjectType
         {
             public int ProjectTypeID { get; set; }
@@ -113,40 +171,56 @@ namespace ModelLayer
             public long PlannedBudget { get; set; }
             public long ApprovedBudget { get; set; }
             public string Funding_Source { get; set; }
-            public string PlannedProcurement { get; set; }
             public int PlannedHR { get; set; }
-            public long CostPerBeneficiary { get; set; }
-            public int MaleBeneficiary { get; set; }
-            public int FemalBeneficiary { get; set; }
-            public String TotalBeneficiary { get; set; }
-            public string Objective { get; set; }
+            public string ProjectGoal { get; set; }
         }
         public partial class Released_Budget
         {
-            public int ReleasedBudgetID { get; set; }
+            
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
-            public System.DateTime ReleasedDate { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public int ReleasedBudgetID { get; set; }
             public long ReleasedBudget { get; set; }
+            public System.DateTime ReleasedDate { get; set; }
             public string Remarks { get; set; }
-            public int User_ID { get; set; }
+           
         }
         public partial class RiskStatus
         {
             public int RiskStatusID { get; set; }
             public string RiskStatusName { get; set; }    
         }
-        public partial class Risk
+        public partial class RiskMitigation
         {
-            public int RiskID { get; set; }
-            public int RiskStatus_ID { get; set; }
+            public int RiskMitigationID { get; set; }
+            public string RiskMitigationName { get; set; }
+        }
+
+        public partial class Expenditure_Budget
+        {
+            public int ExpenditureBudgetID { get; set; }
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
-            public string RiskName { get; set; }
-            public string RiskStatus { get; set; }
+            public System.DateTime ExpenditureDate { get; set; }
+            public long ExpenditureBudget { get; set; }
+            public string Remarks { get; set; }
+            public int User_ID { get; set; }
+        }
+        public partial class Issues
+        {
+            public int IssuesID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
+            public string IssueDescription { get; set; }
+            public DateTime IssuesDate { get; set; }
+            public string ActionTaken { get; set; }
+            public string Solution { get; set; }
+            public string Remarks { get; set; }
         }
         public partial class RecruitedHR
         {
@@ -159,6 +233,7 @@ namespace ModelLayer
             public double RecruitedHRPercent { get; set; }
             public System.DateTime RecruitedHRDate { get; set; }
         }
+
         public partial class Procurement
         {
             public int AchievedProcurementID { get; set; }
@@ -170,29 +245,8 @@ namespace ModelLayer
             public double ProcurementPercent { get; set; }
             public System.DateTime ProcurementDate_ { get; set; }
         }
-        public partial class Schedule
-        {
-            public int ScheduleID { get; set; }
-            public int Project_ID { get; set; }
-            public int SubProject_ID { get; set; }
-            public int Batch_ID { get; set; }
-            public System.DateTime PlannedDate{ get; set; }
-            public System.DateTime StartDate { get; set; }
-            public System.DateTime EndDate { get; set; }
-            public int User_ID { get; set; }
-        }
+     
 
-        public partial class Stackholder
-        {
-            public int StackholderID { get; set; }
-            public int Project_ID { get; set; }
-            public int SubProject_ID { get; set; }
-            public int Batch_ID { get; set; }
-            public string StackholderName { get; set; }
-            public string StackholderDepartment { get; set; }
-            public string StackholderContact { get; set; }
-            public string StackholderEmail { get; set; }
-            public int CreatedByUser_ID { get; set; }
-        }
+     
     }
 }

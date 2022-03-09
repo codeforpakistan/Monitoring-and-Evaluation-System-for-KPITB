@@ -40,24 +40,17 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.DigitalPolicy_ID = Convert.ToInt32(Request.Form["txtDigitalPolicy_ID"]);
                 ProjectVM.City_ID = Convert.ToInt32(Request.Form["txtCity_ID"]);
                 ProjectVM.ProjectName = Convert.ToString(Request.Form["txtProjectName"]);
-                ProjectVM.MaleBeneficiary = Convert.ToInt32(Request.Form["txtMaleBeneficiary"]);
-                ProjectVM.FemaleBeneficiary = Convert.ToInt32(Request.Form["txtFemaleBeneficiary"]);
-                ProjectVM.TotalBeneficiary = Convert.ToInt32(Request.Form["txtTotalBeneficiary"]);
-                ProjectVM.CostPerBeneficiary = Convert.ToInt32(Request.Form["txtCostPerBeneficiary"]);
                 ProjectVM.Objective = Convert.ToString(Request.Form["txtObjective"]);
                 ProjectVM.PlannedDate = Convert.ToDateTime(Request.Form["txtPlannedDate"]);
                 ProjectVM.StartDate = Convert.ToDateTime(Request.Form["txtStartDate"]);
                 ProjectVM.EndDate = Convert.ToDateTime(Request.Form["txtEndDate"]);
                 ProjectVM.PlannedHR = Convert.ToInt32(Request.Form["txtPlannedHR"]);
-                ProjectVM.RecruitedHR = Convert.ToInt32(Request.Form["txtRecruitedHR"]);
-                ProjectVM.RecruitedHRPercent = Convert.ToDouble(Request.Form["txtRecruitedHRPercent"]);
+                //ProjectVM.RecruitedHR = Convert.ToInt32(Request.Form["txtRecruitedHR"]);
+                //ProjectVM.RecruitedHRPercent = Convert.ToDouble(Request.Form["txtRecruitedHRPercent"]);
                 ProjectVM.PlannedBudget = Convert.ToInt32(Request.Form["txtPlannedBudget"]);
                 ProjectVM.ApprovedBudget = Convert.ToInt32(Request.Form["txtApprovedBudget"]);
                 ProjectVM.ReleasedBudget = Convert.ToInt32(Request.Form["txtReleasedBudget"]);
-                ProjectVM.PlannedProcurement = Convert.ToInt32(Request.Form["txtPlannedProcurement"]);
-                ProjectVM.Headers = Convert.ToString(Request.Form["txtHeaders"]);
-                ProjectVM.AchievedProcurement = Convert.ToInt32(Request.Form["txtAchievedProcurement"]);
-                ProjectVM.ProcurementPercent = Convert.ToDouble(Request.Form["txtProcurementPercent"]);
+               
                 ProjectVM.User_ID = LoginUserID;//Convert.ToInt32(Session["LoginUserID"]);
                 #endregion
                 #region FundingArray
@@ -369,7 +362,18 @@ namespace MonitoringAndEvaluation_System.Controllers
             projectVM.comboCities = ObjProjectMngBL.getCityBL();
             //Get Location/ City list
             projectVM.comboRiskStatus = ObjProjectMngBL.getRiskStatusBL();
+            //Get FundingSource list
             projectVM.comboFundingSource = ObjProjectMngBL.getFudingSourceBL();
+            //Get SDGS list
+            projectVM.comboSDGS = ObjProjectMngBL.getSDGSBL();
+            //Get Project Status list
+            projectVM.comboProjectStatus = ObjProjectMngBL.getProjectStatusBL();
+            //Get RiskStatus list
+            projectVM.comboRiskStatus = ObjProjectMngBL.getRiskStatusBL();
+            //Get RiskMitigation list
+            projectVM.comboRiskMitigation = ObjProjectMngBL.getRiskMitigationBL();
+            //Get Type of Stakeholder list
+            projectVM.comboTypeOfStakeholder = ObjProjectMngBL.getTypeOfStakeholderBL();
         }
         public void ComboProject(CreateRecruitedHRVM recruitedHRVM)
         {

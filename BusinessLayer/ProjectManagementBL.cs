@@ -106,9 +106,30 @@ namespace BusinessLayer
         {
             return ProjectManagementDL.getCityDL();
         }
+        //Get Project SDGS
+        public List<ComboSDGS> getSDGSBL()
+        {
+            return ProjectManagementDL.getSDGSDL();
+        }
+        //Get ProjectStatus
+        public List<ComboProjectStatus> getProjectStatusBL()
+        {
+            return ProjectManagementDL.getProjectStatusDL();
+        }
+
         public List<ComboRiskStatus> getRiskStatusBL()
         {
             return ProjectManagementDL.getRiskStatusDL();
+        }
+        //Get RiskMitigation
+        public List<ComboRiskMitigation> getRiskMitigationBL()
+        {
+            return ProjectManagementDL.getRiskMitigationDL();
+        }
+        //Get TypeOfStakeholder
+        public List<ComboTypeOfStakeholder> getTypeOfStakeholderBL()
+        {
+            return ProjectManagementDL.getTypeOfStakeholderDL();
         }
         #endregion
         #region ProjectCreate

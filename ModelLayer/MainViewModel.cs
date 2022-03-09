@@ -231,7 +231,12 @@ namespace ModelLayer
                 comboProjectTypes = new List<ComboProjectType>();
                 comboDigitalPolicies = new List<ComboDigitalPolicy>();
                 comboCities = new List<ComboCity>();
+                comboSDGS = new List<ComboSDGS>();
+                comboProjectStatus = new List<ComboProjectStatus>();
                 comboRiskStatus = new List<ComboRiskStatus>();
+                comboRiskMitigation = new List<ComboRiskMitigation>();
+                comboTypeOfStakeholder = new List<ComboTypeOfStakeholder>();
+
             }
 
             public int ProjectID { get; set; }
@@ -249,6 +254,8 @@ namespace ModelLayer
             [Range(1, int.MaxValue, ErrorMessage = "Please Select")]
             public int City_ID { get; set; }
 
+            public int SDGS_ID { get; set; }
+            public int ProjectStatus_ID { get; set; }
             public int User_ID { get; set; }
             [Required(ErrorMessage = "Please Enter Project Name")]
             [Display(Name = "Project Name")]
@@ -266,56 +273,44 @@ namespace ModelLayer
             public string Funding_Source { get; set; }
 
             public List<string> Funding_SourceArray { get; set; }
-
             //[Required(ErrorMessage = "Please Enter Planned HR")]
             [Display(Name = "Planned-HR")]
             [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
             public int PlannedHR { get; set; }
-
-            //[Required(ErrorMessage = "Please Enter Planned Procurement")]
-            [Display(Name = "Planned Procurement")]
-            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
-            public int PlannedProcurement { get; set; }
-
-            //[Required(ErrorMessage = "Please Enter No of Male")]
-            [Range(0, int.MaxValue, ErrorMessage = "Value is not Valid")]
-            [Display(Name = "No of Male")]
-            public int MaleBeneficiary { get; set; }
-
-            //[Required(ErrorMessage = "Please Enter No of Female")]
-            [Range(0, int.MaxValue, ErrorMessage = "Value is not Valid")]
-            [Display(Name = "No of Female")]
-            public int FemaleBeneficiary { get; set; }
-
-            //[Required(ErrorMessage = "Please Enter Total No of Beneficiary")]
-            [Range(0, int.MaxValue, ErrorMessage = "Value is not Valid")]
-            [Display(Name = "Total Beneficiary")]
-            public int TotalBeneficiary { get; set; }
-
-            //[Required(ErrorMessage = "Please Enter Cost per Beneficiary")]
-            [Range(0, int.MaxValue, ErrorMessage = "Value is not Valid")]
-            [Display(Name = "Cost Per Beneficiary")]
-            public int CostPerBeneficiary { get; set; }
-
             [Required(ErrorMessage = "Please Enter Project Objective")]
             [Display(Name = "Project Objective")]
+            public string ProjectGoal { get; set; }
+
+            //Project Objective multiple add
             public string Objective { get; set; }
 
-            //Procurent
-            public string AchievedProcurement_ID { get; set; }
 
+            //Project KPIs
+            [Display(Name = "Indicator Description")]
+            public string IndicatorDescription { get; set; }
+
+            [Display(Name = "Target")]
+            public int Target { get; set; }
+            [Display(Name = "TimeLine")]
+            public System.DateTime TimeLine { get; set; }
+           
+
+            //Procurement
+            public string ProcrumetHeader { get; set; }
             //[Required(ErrorMessage = "Please Enter Achieved Procurement")]
             [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
-            [Display(Name = "Achieved Procurement")]
-            public int AchievedProcurement { get; set; }
-
-            //[Required(ErrorMessage = "Please Enter Achieved Procurement %")]
+            [Display(Name = "No of Planned Procurement")]
+            public int PlannedProcrumentNo { get; set; }
             [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
-            [Display(Name = "Procurement %")]
-            public double ProcurementPercent { get; set; }
+            [Display(Name = "Planned Per Cost Procurement")]
+            public int PlannedPerCostItem { get; set; }
+            //[Required(ErrorMessage = "Please Enter Achieved Procurement")]
+            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            [Display(Name = "Achived Cost")]
+            public int AchivedCost { get; set; }
 
-            public string AchievedProcurementDate { get; set; }
-            public string Headers { get; set; }
+            
+           
 
             //ReleasedBudget
             public long ReleasedBudget { get; set; }
@@ -325,19 +320,19 @@ namespace ModelLayer
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
             public DateTime ReleasedDate { get; set; }
 
-            //Recruted-HR
-            public int RecruitedHR_ID { get; set; }
+            ////Recruted-HR
+            //public int RecruitedHR_ID { get; set; }
 
-            ////[Required(ErrorMessage = "Please Enter Recruited HR")]
-            [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
-            public int RecruitedHR { get; set; }
+            //////[Required(ErrorMessage = "Please Enter Recruited HR")]
+            //[Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            //public int RecruitedHR { get; set; }
 
-            public double RecruitedHRPercent { get; set; }
+            //public double RecruitedHRPercent { get; set; }
 
-            [Required(ErrorMessage = "Select Date")]
-            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public System.DateTime RecruitedHRDate { get; set; }
+            //[Required(ErrorMessage = "Select Date")]
+            //[DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            //public System.DateTime RecruitedHRDate { get; set; }
 
             //Schedule
             public int Schedule_ID { get; set; }
@@ -363,11 +358,12 @@ namespace ModelLayer
             public int RiskID { get; set; }
             //[Required(ErrorMessage = "Please Select Risk Status")]
             public int RiskStatus_ID { get; set; }
+            public int RiskMitigation_ID { get; set; }
             public string RiskName { get; set; }
 
             //Stackholder
             public int Stackholder_ID { get; set; }
-            public string StackholderName { get; set; }
+            public int TypeOfStakeholder_ID { get; set; }
             public string StackholderDepartment { get; set; }
             public string StackholderContact { get; set; }
             public string StackholderEmail { get; set; }
@@ -376,9 +372,16 @@ namespace ModelLayer
             public List<ComboProjectType> comboProjectTypes { get; set; }
             public List<ComboDigitalPolicy> comboDigitalPolicies { get; set; }
             public List<ComboCity> comboCities { get; set; }
-            public List<ComboRiskStatus> comboRiskStatus { get; set; }
             public List<ComboFundingSource> comboFundingSource { get; set; }
+            public List<ComboSDGS> comboSDGS { get; set; }
+            public List<ComboProjectStatus> comboProjectStatus { get; set; }
+            public List<ComboRiskStatus> comboRiskStatus { get; set; }
+            public List<ComboRiskMitigation> comboRiskMitigation { get; set; }
+            public List<ComboTypeOfStakeholder> comboTypeOfStakeholder { get; set; }
 
+            public List<ProjectObjective> AssignObjectiveList { get; set; }
+            public List<ProjectKPIs> AssignProjectPlannedKPIsList { get; set; }
+            public List<PlannedProcurement> AssignPlannedProcurementList { get; set; }
             public List<Risk> AssignRiskList { get; set; }
             public List<Stackholder> AssignStackholderList { get; set; }
         }
@@ -839,7 +842,7 @@ namespace ModelLayer
 
         }
         #endregion
-        #region Project KPIS
+        #region Inside Project KPIS
         //CreateIndicator
         public partial class CreateIndicatorVM
         {

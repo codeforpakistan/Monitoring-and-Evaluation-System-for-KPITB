@@ -30,21 +30,16 @@
                                 @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
                                 @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                             </div>
-
+                            <div class="col-lg-4">
+                                <label>Select Sub Project</label>
+                                @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
+                                @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
+                            </div>
                             <div class="col-lg-4">
                                 <label>Select Cycle/Batch</label>
                                 @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
-                                @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" }) 
+                                @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
                             </div>
-
-                            <div class="col-lg-4">
-                                <label>No of Procurement *</label>
-                                <label class="col-form-label parsley-required" id="lblRemainingProcurement"></label>
-                                <input hidden id="hdnRemainingProcurement" name="hdnRemainingProcurement" type="number" />
-                                @Html.TextBoxFor(model => model.NoOfProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" })
-                                @Html.ValidationMessageFor(m => m.NoOfProcurement, "", new { @class = "parsley-required", @id = "spanNoOfProcurement" })
-                            </div>
-
                         </div>
 
                         <div class="row">
@@ -54,23 +49,37 @@
                                 @Html.ValidationMessageFor(m => m.ProcurementHeader, "", new { @class = "parsley-required", @id = "spanHeaders" })
                             </div>
                             <div class="col-lg-4">
-                                <label class="col-form-label">Procurement From Date *</label>
-                                @Html.TextBoxFor(model => model.ProcurementFromDate, new { @class = "form-control", @type = "date", @id = "ProcurementFromDate", @placeholder = "Enter No of Recruited -HR" })
-                                @Html.ValidationMessageFor(m => m.ProcurementFromDate, "", new { @class = "parsley-required", @id = "spanProcurementFromDate" })
+                                <label class="col-form-label">No of Items *</label>
+                                <label class="col-form-label parsley-required" id="lblRemainingProcurement"></label>
+                                <input hidden id="hdnRemainingProcurement" name="hdnRemainingProcurement" type="number" />
+                                @Html.TextBoxFor(model => model.NoOfProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" })
+                                @Html.ValidationMessageFor(m => m.NoOfProcurement, "", new { @class = "parsley-required", @id = "spanNoOfProcurement" })
                             </div>
                             <div class="col-lg-4">
-                                <label class="col-form-label">Procurement To Date *</label>
+                                <label class="col-form-label">Approved Cost *</label>
+                                <label class="col-form-label parsley-required" id="lblRemainingProcurement"></label>
+                                @Html.TextBoxFor(model => model.NoOfProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement" ,@readonly = "readonly" })
+                                @Html.ValidationMessageFor(m => m.NoOfProcurement, "", new { @class = "parsley-required", @id = "spanNoOfProcurement" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Actual Cost *</label>
+                                <label class="col-form-label parsley-required" id="lblRemainingProcurement"></label>
+                                @Html.TextBoxFor(model => model.NoOfProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement",})
+                                @Html.ValidationMessageFor(m => m.NoOfProcurement, "", new { @class = "parsley-required", @id = "spanNoOfProcurement" })
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Procurement TimeLine *</label>
                                 @Html.TextBoxFor(model => model.ProcurementToDate, new { @class = "form-control", @type = "date", @id = "ProcurementToDate", @placeholder = "Enter No of Recruited -HR" })
                                 @Html.ValidationMessageFor(m => m.ProcurementToDate, "", new { @class = "parsley-required", @id = "spanProcurementFromDate" })
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-4">
                                 <label class="col-form-label">Remarks </label>
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
                                 @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
                             </div>
                         </div>
+                        
                         <br />
                         <div class="required float-left">* Required fields</div>
                         <div class="float-right">

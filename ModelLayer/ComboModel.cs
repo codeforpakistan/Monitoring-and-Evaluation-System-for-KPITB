@@ -107,10 +107,25 @@ namespace ModelLayer
             public int BatchID { get; set; }
             public string BatchName { get; set; }
         }
+        public partial class ComboPlannedKPIs
+        {
+           public int ProjectPlannedKPIsID { get; set; }
+           public string IndicatorDescription { get; set; }
+           public int Target { get; set; }
+           public System.DateTime TimeLine { get; set; }
+            
+        }
         public partial class ComboIndicator
         {
             public int IndicatorID { get; set; }
             public string IndicatorName { get; set; }
+        }
+        public partial class ComboProcurementHead
+        {
+            public int PlannedProcurementID { get; set; }
+            public string ProcrumetHeader { get; set; }
+            public int PlannedPerCostItem { get; set; }
+            
         }
 
         public partial class RemainingValues
@@ -122,10 +137,10 @@ namespace ModelLayer
             public int ReleasedBudget { get; set; }
 
         }
-        public partial class ComboIndicatorDataType
+        public partial class ComboInsightIndicatorDataType
         {
-            public int IndicatorDataTypeID { get; set; }
-            public string IndicatorDataType { get; set; }
+            public int InsightIndicatorDataTypeID { get; set; }
+            public string InsightIndicatorDataType { get; set; }
         }
         #endregion
 

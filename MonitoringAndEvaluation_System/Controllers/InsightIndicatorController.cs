@@ -11,11 +11,23 @@ using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
 {
-    public class IndicatorController : BaseController
+    public class InsightIndicatorController : BaseController
     {
         // GET: Indicator
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
         IndicatorBL ObjIndicatorMngBL = new IndicatorBL();
+        //InsightIndicatorCreate
+        [HttpGet]
+        public ActionResult InsightIndicatorCreate()
+        {
+            CreateInsightIndicatorVM insightIndicatorVM = new CreateInsightIndicatorVM();
+            ComboForInsightIndicator(insightIndicatorVM);
+            return View(insightIndicatorVM);
+        }
+
+        #region Insight Indicator
+
+        #endregion
         //IndicatorCreate
         [HttpGet]
         public ActionResult IndicatorCreateView()
@@ -225,13 +237,21 @@ namespace MonitoringAndEvaluation_System.Controllers
         public void ComboForField(CreateIndicatorFieldVM indicatorFieldVM)
         {
             indicatorFieldVM.comboIndicator = ObjProjectMngBL.getComboIndicatorBL();
-            indicatorFieldVM.comboIndicatorDataTypes = ObjProjectMngBL.getComboDataTypeBL();
+            indicatorFieldVM.comboInsightIndicatorDataTypes = ObjProjectMngBL.getComboDataTypeBL();
         }
 
-
+        //Combo For InsightIndicator 
+        public void ComboForInsightIndicator(CreateInsightIndicatorVM insightIndicatorVM)
+        {
+            //Get ProjectType list
+            insightIndicatorVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            insightIndicatorVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+            insightIndicatorVM.comboInsightIndicatorDataTypes = ObjProjectMngBL.getComboDataTypeBL();
+        }
         #region ComboSetting
 
-     
+
         private void getAllLinkIndicator()
         {
             ViewBag.LstAllLinkIndicator = new IndicatorBL().getALLLinkIndicatorBL();

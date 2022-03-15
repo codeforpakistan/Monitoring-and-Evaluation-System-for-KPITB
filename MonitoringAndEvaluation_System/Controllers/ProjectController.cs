@@ -172,13 +172,13 @@ namespace MonitoringAndEvaluation_System.Controllers
                     goto gotoWithModel;
                 }
 
-               string hdnRemaningHR = form["hdnRemaningHR"];
+               //string hdnRemaningHR = form["hdnRemaningHR"];
 
-                if (recruitedHRVM.RecruitedHR > Convert.ToInt32(hdnRemaningHR))
-                {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Recruited-HR should not be greater than Planned-HR:  " + Convert.ToInt32(hdnRemaningHR));
-                    goto gotoWithModel;
-                }
+               // if (recruitedHRVM.RecruitedHR > Convert.ToInt32(hdnRemaningHR))
+               // {
+               //     ShowMessage(MessageBox.Warning, OperationType.Warning, "Recruited-HR should not be greater than Planned-HR:  " + Convert.ToInt32(hdnRemaningHR));
+               //     goto gotoWithModel;
+               // }
 
                 recruitedHRVM.CreatedByUser_ID=LoginUserID;
                 StatusModel status = new ProjectManagementBL().recruitedCreateBL(recruitedHRVM);
@@ -268,11 +268,11 @@ namespace MonitoringAndEvaluation_System.Controllers
                     
                     goto gotoWithModel; 
                 }
-                if (procurementVM.NoOfProcurement > Convert.ToInt32(form["hdnRemainingProcurement"]))
-                {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Procurement should not be greater than Planned Procurement: " + form["hdnRemainingProcurement"]);
-                    goto gotoWithModel;
-                }
+                //if (procurementVM.NoOfProcurement > Convert.ToInt32(form["hdnRemainingProcurement"]))
+                //{
+                //    ShowMessage(MessageBox.Warning, OperationType.Warning, "Procurement should not be greater than Planned Procurement: " + form["hdnRemainingProcurement"]);
+                //    goto gotoWithModel;
+                //}
                 procurementVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new ProjectManagementBL().procurementCreateBL(procurementVM);
                 if (status.status)

@@ -90,13 +90,23 @@ namespace ModelLayer
             public string ObjectiveName { get; set; }
             public int CreatedByUser_ID { get; set; }
         }
-        public partial class ProjectKPIs
+        public partial class ProjectPlannedKPIs
         {
             //Project KPIs\
-            public int IndicatorID { get; set; }
+            public int ProjectPlannedKPIsID { get; set; }
             public string IndicatorDescription { get; set; }
             public int Target { get; set; }
             public System.DateTime TimeLine { get; set; }
+        }
+        public partial class ProjectKPIsStatus
+        {
+            //Project KPIs\
+            public int ProjectKPIsStatusID { get; set; }
+            public int ProjectPlannedKPIs_ID { get; set; }
+            public int Target { get; set; }
+            public int ProjectKPIsAchived { get; set; }
+            public System.DateTime TimeLine { get; set; }
+            public string Remarks { get; set; }
         }
         public partial class Schedule
         {
@@ -222,28 +232,52 @@ namespace ModelLayer
             public string Solution { get; set; }
             public string Remarks { get; set; }
         }
-        public partial class RecruitedHR
+        public partial class Recruited_HR
         {
             public int RecruitedHRID { get; set; }
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
+            [Required(ErrorMessage = "Please Select Batch")]
             public int Batch_ID { get; set; }
-            public int User_ID { get; set; }
-           // public int RecruitedHR { get; set; }
-            public double RecruitedHRPercent { get; set; }
-            public System.DateTime RecruitedHRDate { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public string PositionTitle { get; set; }
+            public int Grade { get; set; }
+            public int RecruitedHR { get; set; }
+            [Required(ErrorMessage = "Enter From Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime RecruitedFromHRDate { get; set; }
+            [Required(ErrorMessage = "Enter To Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime RecruitedToHRDate { get; set; }
+            public string Remarks { get; set; }
+
         }
 
-        public partial class Procurement
+        public partial class AchievedProcurements
         {
-            public int AchievedProcurementID { get; set; }
             public int Project_ID { get; set; }
+            //[Required(ErrorMessage = "Please Select SubProject")]
             public int SubProject_ID { get; set; }
+            [Range(0, int.MaxValue, ErrorMessage = " Select Batch")]
             public int Batch_ID { get; set; }
-            public int User_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public int PlannedProcurement_ID { get; set; }
+            public int ApproveCostPerItem { get; set; }
+
+            [Required(ErrorMessage = "Enter From Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime ProcurementDate { get; set; }
+            [Range(1, int.MaxValue, ErrorMessage = "Enter Procurement-Value")]
             public int AchievedProcurement { get; set; }
-            public double ProcurementPercent { get; set; }
-            public System.DateTime ProcurementDate_ { get; set; }
+
+            public int ActualCostPerItem { get; set; }
+            public int TotalCost { get; set; }
+            [Required(ErrorMessage = "Enter From Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime EntryDate { get; set; }
+            public string Remarks { get; set; }
         }
      
 

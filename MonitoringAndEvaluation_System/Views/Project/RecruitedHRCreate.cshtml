@@ -38,20 +38,20 @@
                             <div class="col-lg-4">
                                 <label class="col-form-label">Aproved As Per PC1 </label>
                                 <input hidden id="hdnRemaningHR" name="hdnRemaningHR">
-                                <div class="form-control">
-                                    <label  id="lblRemaningHR" name="lblRemaningHR" for="lblRemaningHR"></label>
+                                <div>
+                                    <label  id="lblRemaningHR" name="lblRemaningHR" for="lblRemaningHR" class="form-control">0</label>
                                 </div>
    
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Position Title *</label>
-                                @Html.TextBoxFor(model => model.RecruitedFromHRDate, new { @class = "form-control", @type = "text" })
-                                @Html.ValidationMessageFor(m => m.RecruitedFromHRDate, "", new { @class = "parsley-required", @id = "spanRecruitedFromHRDate" })
+                                @Html.TextBoxFor(model => model.PositionTitle, new { @class = "form-control", @type = "text" })
+                                @Html.ValidationMessageFor(m => m.PositionTitle, "", new { @class = "parsley-required", @id = "spanPositionTitle" })
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Grade *</label>
-                                @Html.TextBoxFor(model => model.RecruitedFromHRDate, new { @class = "form-control", @type = "number" })
-                                @Html.ValidationMessageFor(m => m.RecruitedFromHRDate, "", new { @class = "parsley-required", @id = "spanRecruitedFromHRDate" })
+                                @Html.TextBoxFor(model => model.Grade, new { @class = "form-control", @type = "number" })
+                                @Html.ValidationMessageFor(m => m.Grade, "", new { @class = "parsley-required", @id = "spanGrade" })
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">No of Recruited HR</label>
@@ -71,7 +71,13 @@
                                 @Html.ValidationMessageFor(m => m.RecruitedToHRDate, "", new { @class = "parsley-required", @id = "spanRecruitedToHRDate" })
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="col-form-label">Remarks</label>
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @type = "text" })
+                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required", @id = "spanRemarks" })
+                            </div>
+                        </div>
                         <br />
 
                         <div class="required float-left">* Required fields</div>
@@ -151,23 +157,26 @@
                                                         foreach (var item in _LstAllRecruitedHR)
                                                         {
                                                             <tr>
+                                                                
                                                                 @Html.HiddenFor(m => item.RecruitedHRID)
                                                                 <td>
                                                                     @item.ID
                                                                 </td>
 
                                                                 <td>
-                                                                    @item.RecruitedHR
+                                                                    @item.PositionTitle
+                                                                </td>
+                                                                <td>
+                                                                    @item.Grade
                                                                 </td>
                                                                 <td>
                                                                     @item.RecruitedHR
                                                                 </td>
                                                                 <td>
+
                                                                     @item.RecruitedFromHRDate.ToShortDateString()
                                                                 </td>
-                                                                <td>
-                                                                    @item.Remarks
-                                                                </td>
+                                                               
                                                                 <td>
                                                                     @Html.ActionLink("Edit", "RecruitedHREdit", new { RecruitedHRID = Utility.Encryption.EncryptURL(Convert.ToString(item.RecruitedHRID))}, new { @class = "mb-1 btn btn-warning" })
                                                                 </td>
@@ -195,8 +204,6 @@
 <div id="ProjectComboLink"
      url-Val="@Url.Action("ClickProjectComboBox", "Common")">
 </div>
-
-
 
 @section Scripts{
     <script src="~/Content/Template/js/CustomCode.js"></script>

@@ -41,7 +41,7 @@ $("#Project_ID").on('change', function () {
             $("#NoOfProcurement").val('');
             $("#ReleasedBudget").val('');
             $("#ExpenditureBudget").val('');
-   
+
             $("#lblRemaningHR").text(response.remainingValues.RemainingPlannedHR);
             $("#hdnRemaningHR").val(response.remainingValues.RemainingPlannedHR);//Hidden
 

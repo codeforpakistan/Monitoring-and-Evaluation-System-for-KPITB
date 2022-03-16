@@ -220,7 +220,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             linkIndicatorVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
             ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
             linkIndicatorVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
-            linkIndicatorVM.comboIndicator = ObjProjectMngBL.getComboIndicatorBL();
+            
         }
         public void ComboForValue(CreateIndicatorValueVM IndicatorValueVM)
         {

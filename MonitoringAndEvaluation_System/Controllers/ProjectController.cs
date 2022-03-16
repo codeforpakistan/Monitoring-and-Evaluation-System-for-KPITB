@@ -252,8 +252,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult ProcurementCreateView()
         {
             CreateProcurementVM procurementVM = new CreateProcurementVM();
-      
-            ComboProjectProc(procurementVM);
+            ComboForProcurement(procurementVM);
             getAllProcurement();
             return View(procurementVM);
         }
@@ -293,7 +292,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             return RedirectToAction("ProcurementCreateView");
 
             gotoWithModel:
-            ComboProjectProc(procurementVM);
+            ComboForProcurement(procurementVM);
             getAllProcurement();
             return View(procurementVM);
         }
@@ -397,8 +396,8 @@ namespace MonitoringAndEvaluation_System.Controllers
         public void ComboProjectProc(CreateProcurementVM procurementVM)
         {
             procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            procurementVM.comboBatch.Add(mb);
+            ComboSubProject mb = new ComboSubProject() { SubProjectID = 0, SubProjectName ="Please Select Sub Project" };
+            procurementVM.comboSubProjects.Add(mb);
 
         }
         public void ComboProjectProcEdit(EditProcurementVM procurementEditVM)
@@ -407,6 +406,16 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         #endregion
         #region GetComo_Ignnor
+
+        public void ComboForProcurement(CreateProcurementVM procurementVM)
+        {
+            //Get ProjectType list
+            procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboSubProject mb = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select Batch" };
+            procurementVM.comboSubProjects.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+           
+
+        }
         //public void ComboProjectEdit(EditRecruitedHRVM recruitedHRVM)
         //{
         //    //Get ProjectType list

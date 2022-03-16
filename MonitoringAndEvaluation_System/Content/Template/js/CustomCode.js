@@ -38,7 +38,7 @@ $("#Project_ID").on('change', function () {
             debugger;
             //RemainingVaues
             $("#RecruitedHR").val('');
-            $("#NoOfProcurement").val('');
+            $("#PlannedProcrumentNo").val('');
             $("#ReleasedBudget").val('');
             $("#ExpenditureBudget").val('');
 
@@ -107,21 +107,21 @@ function CheckHRRemaningValue() {
 }
 
 //Procurement
-$("#NoOfProcurement").on('change', function () {
+$("#PlannedProcrumentNo").on('change', function () {
     CheckProcurementRemaningValue();
 });
 function CheckProcurementRemaningValue() {
     debugger;
-    var _Procurement = $("#NoOfProcurement").val();
+    var _Procurement = $("#PlannedProcrumentNo").val();
     var _RemaningProcurement = $("#lblRemainingProcurement").text();
     if (parseInt(_Procurement) > parseInt(_RemaningProcurement)) {
-        $("#spanNoOfProcurement").text("Procurement should not be greater than AchivedProcurement");
-        $("#spanNoOfProcurement").show();
-        $("#NoOfProcurement").focus();
+        $("#spanProcurementHead").text("Procurement should not be greater than AchivedProcurement");
+        $("#spanProcurementHead").show();
+        $("#ProcurementHead").focus();
         return true;
     } else {
-        $("#spanNoOfProcurement").text("");
-        $("#spanNoOfProcurement").hide();
+        $("#spanProcurementHead").text("");
+        $("#spanProcurementHead").hide();
         return true;
     }
 }
@@ -147,14 +147,14 @@ function ProcurementDateCompare() {
 }
 
 //ReleasedBudget
-$("#ReleasedFromDate").on('change', function () {
+$("#ReleasedDate").on('change', function () {
     debugger
     ReleasedDateCompare();
 });
-$("#ReleasedToDate").on('change', function () {
-    debugger
-    ReleasedDateCompare();
-});
+//$("#ReleasedDate").on('change', function () {
+//    debugger
+//    ReleasedDateCompare();
+//});
 function ReleasedDateCompare() {
     var _ReleasedFromDate = $('#ReleasedFromDate').val();
     var _ReleasedToDate = $('#ReleasedToDate').val();

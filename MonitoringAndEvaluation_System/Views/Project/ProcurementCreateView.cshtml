@@ -34,36 +34,32 @@
                                 @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
                                 @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
                             </div>
-                            <div class="col-lg-4">
-                                <label>Select Cycle/Batch</label>
-                                @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
-                                @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
-                            </div>
-                        </div>
-                        <div class="row">
+                            @*<div class="col-lg-4">
+                                    <label>Select Cycle/Batch</label>
+                                    @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
+                                    @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
+                                </div>*@
                             <div class="col-lg-4">
                                 <label class="col-form-label">Procurement Header</label>
                                 @Html.DropDownListFor(m => m.PlannedProcurement_ID, new SelectList(Model.comboProcurementHead, "PlannedProcurementID", "ProcrumetHeader"), new { @class = " form-control" })
                                 @Html.ValidationMessageFor(m => m.PlannedProcurement_ID, "", new { @class = "parsley-required" })
                             </div>
+                        </div>
+                        <div class="row">
+
 
                             <div class="col-lg-4">
                                 <label class="col-form-label">Aproved Per Item Cost</label>
-                                @Html.TextBoxFor(model => model.ApproveCostPerItem, new { @class = "form-control", @type = "text", @readonly = "readonly" })
-                                @Html.ValidationMessageFor(m => m.ApproveCostPerItem, "", new { @class = "parsley-required", @id = "spanHeaders" })
+                                <input hidden id="hdnRemainingProcurement" name="hdnRemainingProcurement">
+                                <div>
+                                    <label id="lblRemainingProcurement" name="lblRemainingProcurement" for="lblRemainingProcurement" class="form-control">0</label>
+                                </div>
+
+
+
                             </div>
-                            <div class="col-lg-4">
-                                <label class="col-form-label">Procurement TimeLine *</label>
-                                @Html.TextBoxFor(model => model.ProcurementDate, new { @class = "form-control", @type = "date", @id = "ProcurementDate" })
-                                @Html.ValidationMessageFor(m => m.ProcurementDate, "", new { @class = "parsley-required", @id = "spanProcurementDate" })
-                            </div>
 
 
-
-
-
-                        </div>
-                        <div class="row">
                             <div class="col-lg-4">
                                 <label class="col-form-label">No of Items *</label>
                                 <label class="col-form-label parsley-required" id="lblRemainingProcurement"></label>
@@ -77,20 +73,30 @@
                                 @Html.TextBoxFor(model => model.ActualCostPerItem, new { @class = "form-control", @type = "number", @placeholder = "Enter Actual Cost Per Item " })
                                 @Html.ValidationMessageFor(m => m.ActualCostPerItem, "", new { @class = "parsley-required", @id = "spanActualCostPerItem" })
                             </div>
+
+
+
+                        </div>
+                        <div class="row">
+
                             <div class="col-lg-4">
                                 <label class="col-form-label">Total Cost *</label>
                                 <label class="col-form-label parsley-required" id="lblRemainingProcurement"></label>
                                 @Html.TextBoxFor(model => model.TotalCost, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Procurement", })
                                 @Html.ValidationMessageFor(m => m.TotalCost, "", new { @class = "parsley-required", @id = "spanTotalCost" })
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Procurement TimeLine *</label>
+                                @Html.TextBoxFor(model => model.ProcurementDate, new { @class = "form-control", @type = "date", @id = "ProcurementDate" })
+                                @Html.ValidationMessageFor(m => m.ProcurementDate, "", new { @class = "parsley-required", @id = "spanProcurementDate" })
+                            </div>
+                            <div class="col-lg-4">
                                 <label class="col-form-label">Remarks</label>
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @type = "text", @placeholder = "Enter Remarks", })
                                 @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required", @id = "spanidRemarks" })
                             </div>
                         </div>
+
                         <br />
                         <div class="required float-left">* Required fields</div>
                         <div class="float-right">
@@ -217,10 +223,9 @@
     </div>
 </div>
 
-
 @section Scripts{
-   
-        <script>
+
+    <script>
        $(document).ready(function ()
         {
 
@@ -247,7 +252,7 @@
                                 $("#PlannedProcurementID").prop("disabled", true);
                                 $("#PlannedProcurement_ID").append('<option value="' + 0 + '">' +
                                     "Please Select Procurement Head" + '</option>');
-                              
+
                             } else {
                                 $.each(SubProjectLst.comboProcurementHeads, function (i, Aqib2) {
                                     $("#PlannedProcurement_ID").prop("disabled", false);
@@ -273,20 +278,26 @@
                             }
 
                         }
+                        debugger;
+                        //RemainingVaues
+
+                        $("#PlannedProcrumentNo").val('');
+                        $("#lblRemainingProcurement").text(response.remainingValues.RemainingProcurement);
+                        $("#hdnRemainingProcurement").val(response.remainingValues.RemainingProcurement); //Hidden
                  },
                  error: function (ex) {
                      console.log('Failed to Retrieve Batch Data:  ' + ex);
                  }
                 });//Ajax_End
 
-           
+
 
         });
-        $("#Batch_ID").on('change', function () {
+        @*$("#SubProject_ID").on('change', function () {
 
             var obj = {};
             obj.Project_ID = $("#Project_ID").find("option:selected").val();
-            obj.Batch_ID = $("#Batch_ID").find("option:selected").val();
+            obj.SubProject_ID = $("#SubProject_ID").find("option:selected").val();
 
             //var Stock = { Project_ID: $("#Project_ID").find("option:selected").val(), Batch_ID: $("#Batch_ID").find("option:selected").val() };
                 $.ajax({
@@ -296,113 +307,40 @@
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
 
-                    success: function (IndicatorLst) {
+                    success: function (ProcurementHeadLst) {
                         debugger;
-                        $("#Indicator_ID").empty();
-                        if (IndicatorLst.length <= 1 || IndicatorLst == null) {
-                            $("#Indicator_ID").prop("disabled", true);
-                            $("#Indicator_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Indicator" + '</option>');
+                        $("#PlannedProcurement_ID").empty();
+                        if (ProcurementHeadLst.length <= 1 || ProcurementHeadLst == null) {
+                            $("#PlannedProcurement_ID").prop("disabled", true);
+                            $("#PlannedProcurement_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Procurement Head" + '</option>');
                         } else {
-                            $("#Indicator_ID").prop("disabled", false);
-                            $.each(IndicatorLst, function (i, Aqib) {
-                                $("#Indicator_ID").append('<option value="' + Aqib.IndicatorID + '">' +
-                                    Aqib.IndicatorName + '</option>');
+                            $("#PlannedProcurement_ID").prop("disabled", false);
+                            $.each(ProcurementHeadLst, function (i, Aqib) {
+                                $("#PlannedProcurement_ID").append('<option value="' + Aqib.PlannedProcurementID + '">' +
+                                    Aqib.ProcrumetHeader + '</option>');
                             });
                         }
+                        debugger;
+                        //RemainingVaues
+
+                        $("#PlannedProcrumentNo").val('');
+                        $("#lblRemainingProcurement").text(response.remainingValues.RemainingProcurement);
+                        $("#hdnRemainingProcurement").val(response.remainingValues.RemainingProcurement); //Hidden
                  },
                     error: function (ex) {
                         console.log('Failed to Retrieve Indicator Data:  ' + ex.responseText);
                  }
                 });//Ajax_End
-            });
-        $("#Indicator_ID").on('change', function () {
-
-            var obj1 = {};
-            obj1.Project_ID = $("#Project_ID").find("option:selected").val();
-            obj1.IndicatorID = $(this).find("option:selected").val();
-            debugger;
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("ClickIndicatorComboBox", "Common")',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                data: JSON.stringify(obj1),  // Same Parameter with Action
-                success: function (IndicatorTypeLst) {
-                    $("#tblBodyIndicator").empty();
-                    $("#tblBodyIndicator2").empty();
-                    debugger;
-
-                    var counter = 0;
-                    var loop = 0;
-                    $.each(IndicatorTypeLst.dataTypeVMLst, function (index, v) {
-                        /// do stuff
-
-                        debugger;
-                        var IndicatorFieldID = '<td style="display:none";><input  name="dataTypeVMLst['+loop+'].IndicatorFieldID" value="' + v.IndicatorFieldID + '" type="text"  /></td>';
-                        var HiddenValue = '';
-                        var ResultString = '';
-
-                        ResultString = '<td>';
-                        HiddenValue = '<td>';
-
-                        if (v.IndicatorDataType_ID == 1) {
-                            ResultString += '<input  class="form-control"    name="dataTypeVMLst['+loop+'].TEXT"     type="text"  placeholder="Enter Indicator Text" required />'
-                            HiddenValue += '<input class="form-control"   name="dataTypeVMLst['+loop+'].IndicatorDataType_ID" value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
-                        }else if(v.IndicatorDataType_ID == 2) {
-                            ResultString += '<input class="form-control"    name="dataTypeVMLst['+loop+'].INTEGER" type="number"  placeholder="Enter Indicator Value" required />'
-                            HiddenValue += '<input class="form-control"   name="dataTypeVMLst['+loop+ '].IndicatorDataType_ID" value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
-                        } else if (v.IndicatorDataType_ID == 3) {
-                            ResultString += '<input class="form-control"  name="dataTypeVMLst['+loop+'].FLOAT" type="number" placeholder="Enter Indicator Percentage %"  required />'
-                            HiddenValue += '<input class="form-control"  name="dataTypeVMLst['+loop+'].IndicatorDataType_ID"  value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
-                        } else if (v.IndicatorDataType_ID == 4) {
-                            ResultString += '<select class="form-control" name="dataTypeVMLst['+loop+'].BOOL" required >'
-                            ResultString += '<option value="">Select Yes/No</option>'
-                            ResultString += '<option value="true">Yes</option>'
-                            ResultString += '<option value="false">No</option>'
-                            ResultString += '</select>'
-                            HiddenValue += '<input class="form-control"  name="dataTypeVMLst['+loop+'].IndicatorDataType_ID"  value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
-                        }
-
-                        ResultString += '</td>';
-                        HiddenValue += '</td>';
-
-                        $('<tr id="tblIndicatorRow'+loop+'">' +
-                            '<td>'+loop+'</td>' +
-                            IndicatorFieldID +
-                              '<td>' + v.IndicatorFieldName + '</td>' +
-                            ResultString +
-                            HiddenValue +
-                            '</tr>').appendTo('#tblIndicator');
-                        counter++;
-                        loop++;
-                    });
-
-                    var counter2 = 1;
-                    $.each(IndicatorTypeLst.dataTypeCommonVMLst, function (index, v)
-                    {
-
-                        $('<tr><td>' + counter2 + '</td><td>' + v.IndicatorFieldName + '</td><td>' + v.CommonValue + '</td><tr>').appendTo('#tblIndicator2');
-                        counter2++;
-                    });
-
-
-                },
-                    error: function (ex) {
-                        debugger;
-                        console.log('Failed to Retrieve IndicatorDataTypeCommonValue List Data:  ' + ex.responseText);
-                 }
-                });//Ajax_End
-            });
-
-
+            });*@
+       
 
         function RemoveDemerits(row) {
             $(row).parent().parent().remove();
         }
 
 
-        </script>
+    </script>
    
 }
 

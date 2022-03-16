@@ -585,12 +585,7 @@ namespace ModelLayer
             [Required(ErrorMessage = "Select From Date")]
             [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public System.DateTime ReleasedFromDate { get; set; }
-
-            [Required(ErrorMessage = "Select To Date")]
-            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public System.DateTime ReleasedToDate { get; set; }
+            public System.DateTime ReleasedDate { get; set; }
             [Range(1, int.MaxValue, ErrorMessage = "Please Enetr Released-Budget")]
             public long ReleasedBudget { get; set; }
             public string Remarks { get; set; }
@@ -707,26 +702,18 @@ namespace ModelLayer
             {
                 comboProjects = new List<ComboProject>();
                 comboSubProjects = new List<ComboSubProject>();
-                comboBatch = new List<ComboBatch>();
                 comboProcurementHead = new List<ComboProcurementHead>();
             }
-            
-
-            [Range(1, int.MaxValue, ErrorMessage = " Select Project")]
             public int Project_ID { get; set; }
-            //[Required(ErrorMessage = "Please Select SubProject")]
+            [Range(0, int.MaxValue, ErrorMessage = "Enter Procurement-Value")]
             public int SubProject_ID { get; set; }
-            [Range(0, int.MaxValue, ErrorMessage = " Select Batch")]
-            public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
             public int PlannedProcurement_ID { get; set; }
-            public int ApproveCostPerItem { get; set; }
-
             [Required(ErrorMessage = "Enter From Date")]
             [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
             public DateTime ProcurementDate { get; set; }
-            [Range(1, int.MaxValue, ErrorMessage = "Enter Procurement-Value")]
+            
             public int AchievedProcurement { get; set; }
 
             public int ActualCostPerItem { get; set; }
@@ -734,7 +721,7 @@ namespace ModelLayer
             [Required(ErrorMessage = "Enter From Date")]
             [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public DateTime EntryDate { get; set; }
+            //public DateTime EntryDate { get; set; }
             public string Remarks { get; set; }
             public List<ComboProject> comboProjects { get; set; }
             public List<ComboSubProject> comboSubProjects { get; set; }

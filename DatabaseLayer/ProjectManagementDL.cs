@@ -290,7 +290,7 @@ namespace DatabaseLayer
                 return ComboLst;
             }
         }
-        public static List<ComboProcurementHead> getComboProcurementDL(int Project_ID)
+        public static List<ComboProcurementHead> getComboProcurementHeadDL(int Project_ID,int SubProject_ID)
         {
             List<ComboProcurementHead> ComboLst = new List<ComboProcurementHead>();
 
@@ -299,7 +299,7 @@ namespace DatabaseLayer
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
                 ObjParm.Add("@Project_ID", Project_ID);
-                //ObjParm.Add("@Batch_ID", BatchID);
+                ObjParm.Add("@SubProject_ID", SubProject_ID);
                 ComboLst = conn.Query<ComboProcurementHead>("sp_GetProcurementHeadBaseOnProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
@@ -845,7 +845,7 @@ namespace DatabaseLayer
 
                 ObjParm.Add("@Project_ID", m.Project_ID);
                 ObjParm.Add("@SubProject_ID", m.SubProject_ID);
-                ObjParm.Add("@Batch_ID", m.Batch_ID);
+                //ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
                 ObjParm.Add("@PlannedProcurement_ID", m.PlannedProcurement_ID);
                 ObjParm.Add("@ProcurementDate", m.ProcurementDate);

@@ -100,8 +100,7 @@ namespace DatabaseLayer
                 ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
                 ObjParm.Add("@ReleasedBudget", m.ReleasedBudget);
-                ObjParm.Add("@ReleasedFromDate", m.ReleasedFromDate);
-                ObjParm.Add("@ReleasedToDate", m.ReleasedToDate);
+                ObjParm.Add("@ReleasedDate", m.ReleasedDate);
                 ObjParm.Add("@Remarks", m.Remarks);
 
                 ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);

@@ -60,6 +60,7 @@
                                 @Html.TextBoxFor(model => model.RecruitedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Recruited -HR" })
                                 @Html.ValidationMessageFor(m => m.RecruitedHR, "", new { @class = "parsley-required", @id = "spanRecruitedHR" })
                             </div>
+
                             <div class="col-lg-4">
                                 <label class="col-form-label">From HR Date *</label>
                                 @Html.TextBoxFor(model => model.RecruitedFromHRDate, new { @class = "form-control", @type = "date" })

@@ -46,8 +46,8 @@
                         </div>
                         <div class="col-lg-4">
                             <label class="col-form-label">Released Date *</label>
-                            @Html.TextBoxFor(model => model.ReleasedFromDate, new { @class = "form-control", @type = "date", @id = "ReleasedFromDate", @placeholder = "dd/mm/yyyy" })
-                            @Html.ValidationMessageFor(m => m.ReleasedFromDate, "", new { @class = "parsley-required", @id = "spanReleasedFromDate" })
+                            @Html.TextBoxFor(model => model.ReleasedDate, new { @class = "form-control", @type = "date", @id = "ReleasedFromDate", @placeholder = "dd/mm/yyyy" })
+                            @Html.ValidationMessageFor(m => m.ReleasedDate, "", new { @class = "parsley-required", @id = "spanReleasedFromDate" })
                         </div>
                         
                         <div class="col-lg-4">
@@ -80,8 +80,8 @@
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="sel1">Search By Date</label>
-                                        @Html.TextBoxFor(model => model.ReleasedFromDate, new { @class = "select2 form-control", @type = "date", @id = "ProcurementFromDate" })
-                                        @Html.ValidationMessageFor(m => m.ReleasedFromDate, "", new { @class = "parsley-required", @id = "spanProcurementFromDate" })
+                                        @Html.TextBoxFor(model => model.ReleasedDate, new { @class = "select2 form-control", @type = "date", @id = "ProcurementFromDate" })
+                                        @Html.ValidationMessageFor(m => m.ReleasedDate, "", new { @class = "parsley-required", @id = "spanProcurementFromDate" })
                                     </div>
 
                                     <div class="col-lg-1">

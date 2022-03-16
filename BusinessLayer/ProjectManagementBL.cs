@@ -76,9 +76,9 @@ namespace BusinessLayer
         {
             return ProjectManagementDL.getComboIndicatorDL(Project_ID, BatchID);
         }
-        public List<ComboProcurementHead> getComboProcurementBL(int Project_ID)
+        public List<ComboProcurementHead> getComboProcurementHeadBL(int Project_ID, int SubProject_ID)
         {
-            return ProjectManagementDL.getComboProcurementDL(Project_ID);
+            return ProjectManagementDL.getComboProcurementHeadDL(Project_ID, SubProject_ID);
         }
         public List<ComboInsightIndicatorDataType> getComboDataTypeBL()
         {

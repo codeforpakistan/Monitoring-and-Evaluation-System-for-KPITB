@@ -35,11 +35,11 @@ namespace MonitoringAndEvaluation_System.Controllers
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     goto gotoWithModel;
                 }
-              
-                int hdnRemaningHR = Convert.ToInt32( form["hdnRemaningBudget"]);
+
+                int hdnRemaningHR = Convert.ToInt32(form["hdnRemaningBudget"]);
                 if (releasedVM.ReleasedBudget > hdnRemaningHR)
                 {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Released Budget should not be greater than Approved Budget: "+ hdnRemaningHR);
+                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Released Budget should not be greater than Approved Budget: " + hdnRemaningHR);
                     goto gotoWithModel;
                 }
                 releasedVM.CreatedByUser_ID = LoginUserID; 

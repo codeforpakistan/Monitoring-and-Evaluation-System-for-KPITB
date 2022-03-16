@@ -1,18 +1,18 @@
-﻿@model ModelLayer.MainViewModel.CreateIssueVM
+﻿@model ModelLayer.MainViewModel.CreateProjectKPIsStatusVM
 @{
-    ViewBag.Title = "Add New Issue";
-    List<ModelLayer.MainViewModel.GetAllIssue> _LstAllIssues = (List<ModelLayer.MainViewModel.GetAllIssue>)ViewBag.LstAllIssues;
+    ViewBag.Title = "Project KPIs Status";
+    //List<ModelLayer.MainViewModel.GetAllIssue> _LstAllIssues = (List<ModelLayer.MainViewModel.GetAllIssue>)ViewBag.LstAllIssues;
 }
 
 <!-- START row-->
 <div class="row">
     <div class="col-xl-12">
-        @using (Html.BeginForm("IssueCreateView", "Issues", FormMethod.Post, new { @class = "form-horizontal" }))
+        @using (Html.BeginForm("ProjectKPIsStatusCreateView", "ProjectKPIsStatus", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             <!-- START card-->
             <div class="card card-default">
                 <div class="card-header">
-                    <div class="card-title"><h4>Project Issue Log</h4></div>
+                    <div class="card-title"><h4>Project KPIs Status</h4></div>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
@@ -32,31 +32,36 @@
                                 @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
                                 @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
                             </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Planned KPIs</label>
+                                @Html.DropDownListFor(m => m.ProjectPlannedKPIs_ID, new SelectList(Model.comboPlannedKPIs, "ProjectPlannedKPIsID", "ProjectPlannedKPIsName"), new { @class = " form-control" })
+                                @Html.ValidationMessageFor(m => m.ProjectPlannedKPIs_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Target</label>
+                                @Html.TextBoxFor(model => model.Target, new { @class = "form-control", @type = "text" ,@readonly="readonly"})
+                                @Html.ValidationMessageFor(m => m.Target, "", new { @class = "parsley-required", @id = "spanIssueDate" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Achived No. *</label>
+                                @Html.TextBoxFor(model => model.ProjectKPIsAchived, new { @class = "form-control", @placeholder = "Enter Achived KPIs No." })
+                                @Html.ValidationMessageFor(m => m.ProjectKPIsAchived, "", new { @class = "parsley-required", @id = "spanProjectKPIsAchived" })
+                            </div>
                             
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label class="col-form-label">Issue Date *</label>
-                                @Html.TextBoxFor(model => model.IssueDate, new { @class = "form-control", @type = "date", @placeholder = "dd/mm/yyyy" })
-                                @Html.ValidationMessageFor(m => m.IssueDate, "", new { @class = "parsley-required", @id = "spanIssueDate" })
+                                <label class="col-form-label">Timeline *</label>
+                                @Html.TextBoxFor(model => model.TimeLine, new { @class = "form-control", @type = "date" })
+                                @Html.ValidationMessageFor(m => m.TimeLine, "", new { @class = "parsley-required", @id = "spanTimeLine" })
                             </div>
-                            <div class="col-lg-4">
-                                <label class="col-form-label">Issue Description *</label>
-                                @Html.TextBoxFor(model => model.IssueDescription, new { @class = "form-control", @placeholder = "Enter Issue Details" })
-                                @Html.ValidationMessageFor(m => m.IssueDescription, "", new { @class = "parsley-required", @id = "spanIssueDescription" })
-                            </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-8">
                                 <label class="col-form-label">Solution/Remarks </label>
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Enter Solution/Remarks" })
                                 @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
-                            </div>
-                        </div>
-                        <div class="row">
-                            
-                            <div class="col-lg-12">
-                                <label class="col-form-label">Status/ActionTaken *</label>
-                                @Html.TextBoxFor(model => model.ActionTaken, new { @class = "form-control", @placeholder = "Enter Status/ActionTaken" })
-                                @Html.ValidationMessageFor(m => m.ActionTaken, "", new { @class = "parsley-required", @id = "spanActionTaken" })
                             </div>
                         </div>
                         <br />
@@ -75,16 +80,20 @@
                                 <div class="form-row ">
                                     <div class="col-lg-3">
                                         <label for="sel1">Search By Project</label>
-                                        <input class="select2 form-control" type="text" placeholder="Select Project Name">
+                                        @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
+                                        @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required", @id = "spanProjectID" })
+                                        @*<input class="select2 form-control" type="text" placeholder="Select Project Name">*@
                                     </div>
                                     <div class="col-lg-3">
-                                        <label for="sel1">Search By Batch</label>
-                                        <input class="select2 form-control" type="text" placeholder="Select Batch Name">
+                                        <label for="sel1">Search By Sub Project</label>
+                                        @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = " form-control" })
+                                        @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required", @id = "spanSubProjectID" })
+                                        @*<input class="select2 form-control" type="text" placeholder="Select Batch Name">*@
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="sel1">Search By Date</label>
-                                        @Html.TextBoxFor(model => model.IssueDate, new { @class = "select2 form-control", @type = "date", @id = "ProcurementFromDate", @placeholder = "Enter No of Recruited -HR" })
-                                        @Html.ValidationMessageFor(m => m.IssueDate, "", new { @class = "parsley-required", @id = "spanProcurementFromDate" })
+                                        @Html.TextBoxFor(model => model.TimeLine, new { @class = "select2 form-control", @type = "date", @id = "ProcurementFromDate", @placeholder = "Enter No of Recruited -HR" })
+                                        @Html.ValidationMessageFor(m => m.TimeLine, "", new { @class = "parsley-required", @id = "spanProcurementFromDate" })
                                     </div>
 
                                     <div class="col-lg-1">
@@ -113,17 +122,20 @@
                                                         ID
                                                     </th>
                                                     <th>
-                                                        Issue Description
+                                                        KPIs Description
                                                     </th>
                                                     <th>
-                                                        Issue Date
+                                                        Target No.
                                                     </th>
 
                                                     <th>
-                                                        Action Taken
+                                                        Achived No.
                                                     </th>
                                                     <th>
-                                                        Solution/Remarks
+                                                        Timeline
+                                                    </th>
+                                                    <th>
+                                                        Remarks
                                                     </th>
                                                     <th>
                                                         Action
@@ -131,7 +143,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @{
+                                                @*@{
                                                     foreach (var item in _LstAllIssues)
                                                     {
                                                         <tr>
@@ -160,7 +172,7 @@
 
                                                         </tr>
                                                     }
-                                                }
+                                                }*@
                                             </tbody>
                                         </table>
                                     </div>

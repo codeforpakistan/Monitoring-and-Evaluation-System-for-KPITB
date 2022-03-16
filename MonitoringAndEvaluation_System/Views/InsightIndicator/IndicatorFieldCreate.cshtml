@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Select Data Type *</label>
-                                @Html.DropDownListFor(m => m.IndicatorDataType_ID, new SelectList(Model.comboIndicatorDataTypes, "IndicatorDataTypeID", "IndicatorDataType"), "Select Indicator Value Type", new { @class = " form-control " , @id = "IndicatorDataType_ID", @name = "IndicatorDataType_ID" })
+                                @Html.DropDownListFor(m => m.IndicatorDataType_ID, new SelectList(Model.comboInsightIndicatorDataTypes, "IndicatorDataTypeID", "IndicatorDataType"), "Select Indicator Value Type", new { @class = " form-control " , @id = "IndicatorDataType_ID", @name = "IndicatorDataType_ID" })
                                 @Html.ValidationMessageFor(m => m.IndicatorDataType_ID, "", new { @class = "parsley-required" })
                                 <span name="spanidIndicatorName" id="spanidIndicatorDataType_ID" class="text-danger"></span>
 

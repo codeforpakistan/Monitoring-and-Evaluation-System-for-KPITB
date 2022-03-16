@@ -22,25 +22,45 @@
                                 @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control " })
                                 @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                             </div>
-                            @*<div class="col-lg-4">
+                            <div class="col-lg-4">
                                  <label>Select Sub Project</label>
                                  @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
                                  @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
-                                </div>*@
+                            </div>
                             <div class="col-lg-4">
                                 <label>Select Cycle/Batch</label>
                                 @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
                                 @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
                             </div>
+                            
+                        </div>
+                        <div class="row">
                             <div class="col-lg-4">
-                                <label class="">No of Recruited -HR *</label>
-                                <input hidden id="hdnRemaningHR" name="hdnRemaningHR"></input>
+                                <label class="col-form-label">Aproved As Per PC1 </label>
+                                <input hidden id="hdnRemaningHR" name="hdnRemaningHR">
+                                <div>
+                                    <label  id="lblRemaningHR" name="lblRemaningHR" for="lblRemaningHR" class="form-control">0</label>
+                                </div>
+   
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Position Title *</label>
+                                @Html.TextBoxFor(model => model.PositionTitle, new { @class = "form-control", @type = "text" })
+                                @Html.ValidationMessageFor(m => m.PositionTitle, "", new { @class = "parsley-required", @id = "spanPositionTitle" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Grade *</label>
+                                @Html.TextBoxFor(model => model.Grade, new { @class = "form-control", @type = "number" })
+                                @Html.ValidationMessageFor(m => m.Grade, "", new { @class = "parsley-required", @id = "spanGrade" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">No of Recruited HR</label>
+                                <input hidden id="hdnRemaningHR" name="hdnRemaningHR">
                                 <label class="col-form-label parsley-required" id="lblRemaningHR" name="lblRemaningHR" for="lblRemaningHR"></label>
                                 @Html.TextBoxFor(model => model.RecruitedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Recruited -HR" })
                                 @Html.ValidationMessageFor(m => m.RecruitedHR, "", new { @class = "parsley-required", @id = "spanRecruitedHR" })
                             </div>
-                        </div>
-                        <div class="row">
+
                             <div class="col-lg-4">
                                 <label class="col-form-label">From HR Date *</label>
                                 @Html.TextBoxFor(model => model.RecruitedFromHRDate, new { @class = "form-control", @type = "date" })
@@ -51,14 +71,14 @@
                                 @Html.TextBoxFor(model => model.RecruitedToHRDate, new { @class = "form-control", @type = "date" })
                                 @Html.ValidationMessageFor(m => m.RecruitedToHRDate, "", new { @class = "parsley-required", @id = "spanRecruitedToHRDate" })
                             </div>
-                            <div class="col-lg-4">
-                                <label class="col-form-label">Remarks </label>
-                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Remarks Optional" })
-                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
-                                @*a*@
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="col-form-label">Remarks</label>
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @type = "text" })
+                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required", @id = "spanRemarks" })
                             </div>
                         </div>
-
                         <br />
 
                         <div class="required float-left">* Required fields</div>
@@ -117,13 +137,16 @@
                                                         </th>
 
                                                         <th>
-                                                            Recruited-HR
+                                                            Position Title
                                                         </th>
                                                         <th>
-                                                            Recruited Date
+                                                            Grade
+                                                        </th>
+                                                        <th>
+                                                            No of Hired 
                                                         </th>
                                                         <th class="col-lg-4">
-                                                            Remarks
+                                                            Hired Date
                                                         </th>
                                                         <th>
                                                             Action
@@ -135,21 +158,26 @@
                                                         foreach (var item in _LstAllRecruitedHR)
                                                         {
                                                             <tr>
+                                                                
                                                                 @Html.HiddenFor(m => item.RecruitedHRID)
                                                                 <td>
                                                                     @item.ID
                                                                 </td>
 
                                                                 <td>
+                                                                    @item.PositionTitle
+                                                                </td>
+                                                                <td>
+                                                                    @item.Grade
+                                                                </td>
+                                                                <td>
                                                                     @item.RecruitedHR
                                                                 </td>
-
                                                                 <td>
+
                                                                     @item.RecruitedFromHRDate.ToShortDateString()
                                                                 </td>
-                                                                <td>
-                                                                    @item.Remarks
-                                                                </td>
+                                                               
                                                                 <td>
                                                                     @Html.ActionLink("Edit", "RecruitedHREdit", new { RecruitedHRID = Utility.Encryption.EncryptURL(Convert.ToString(item.RecruitedHRID))}, new { @class = "mb-1 btn btn-warning" })
                                                                 </td>
@@ -177,8 +205,6 @@
 <div id="ProjectComboLink"
      url-Val="@Url.Action("ClickProjectComboBox", "Common")">
 </div>
-
-
 
 @section Scripts{
     <script src="~/Content/Template/js/CustomCode.js"></script>

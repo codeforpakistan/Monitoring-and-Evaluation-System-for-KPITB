@@ -290,7 +290,22 @@ namespace DatabaseLayer
                 return ComboLst;
             }
         }
+        public static List<ComboProcurementHead> getComboProcurementHeadDL(int Project_ID,int SubProject_ID)
+        {
+            List<ComboProcurementHead> ComboLst = new List<ComboProcurementHead>();
 
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@Project_ID", Project_ID);
+                ObjParm.Add("@SubProject_ID", SubProject_ID);
+                ComboLst = conn.Query<ComboProcurementHead>("sp_GetProcurementHeadBaseOnProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return ComboLst;
+            }
+        }
 
         public static List<ComboBatch> getComboBoxBatchDL(int Project_ID, int Role_ID)
         {
@@ -309,15 +324,15 @@ namespace DatabaseLayer
             }
         }
         //ComboIndicatorDataType
-        public static List<ComboIndicatorDataType> getComboDataTypeDL()
+        public static List<ComboInsightIndicatorDataType> getComboDataTypeDL()
         {
-            List<ComboIndicatorDataType> ComboLst = new List<ComboIndicatorDataType>();
+            List<ComboInsightIndicatorDataType> ComboLst = new List<ComboInsightIndicatorDataType>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
-                ComboLst = conn.Query<ComboIndicatorDataType>("sp_GetIndicatorDataType", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                ComboLst = conn.Query<ComboInsightIndicatorDataType>("sp_GetIndicatorDataType", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return ComboLst;
@@ -414,6 +429,34 @@ namespace DatabaseLayer
             }
         }
 
+        //Project SDGS
+        public static List<ComboSDGS> getSDGSDL()
+        {
+            List<ComboSDGS> SDGSLst = new List<ComboSDGS>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                SDGSLst = conn.Query<ComboSDGS>("sp_GetAllSDGS", commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return SDGSLst;
+            }
+        }
+        //ProjectStuatus
+        public static List<ComboProjectStatus> getProjectStatusDL()
+        {
+            List<ComboProjectStatus> ProjectStatusLst = new List<ComboProjectStatus>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                ProjectStatusLst = conn.Query<ComboProjectStatus>("sp_GetAllProjectStatus", commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return ProjectStatusLst;
+            }
+        }
         //RiskkStatus
         public static List<ComboRiskStatus> getRiskStatusDL()
         {
@@ -426,6 +469,33 @@ namespace DatabaseLayer
                 conn.Close();
                 conn.Dispose();
                 return RiskStatusLst;
+            }
+        }
+        //RiskMitigation
+        public static List<ComboRiskMitigation> getRiskMitigationDL()
+        {
+            List<ComboRiskMitigation> RiskMitigationLst = new List<ComboRiskMitigation>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                RiskMitigationLst = conn.Query<ComboRiskMitigation>("sp_GetAllRiskMitigation", commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return RiskMitigationLst;
+            }
+        }
+        public static List<ComboTypeOfStakeholder> getTypeOfStakeholderDL()
+        {
+            List<ComboTypeOfStakeholder> TypeOfStakeholderLst = new List<ComboTypeOfStakeholder>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                TypeOfStakeholderLst = conn.Query<ComboTypeOfStakeholder>("sp_GetAllTypeOfStakeholder", commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return TypeOfStakeholderLst;
             }
         }
         #endregion
@@ -460,12 +530,12 @@ namespace DatabaseLayer
                     ObjParm.Add("@PlannedBudget", m.PlannedBudget);
                     ObjParm.Add("@ApprovedBudget", m.ApprovedBudget);
                     ObjParm.Add("@Funding_Source", m.Funding_Source);
-                    ObjParm.Add("@PlannedProcurement", m.PlannedProcurement);
+                    //ObjParm.Add("@PlannedProcurement", m.PlannedProcurement);
                     ObjParm.Add("@PlannedHR", m.PlannedHR);
-                    ObjParm.Add("@CostPerBeneficiary", m.CostPerBeneficiary);
-                    ObjParm.Add("@MaleBeneficiary", m.MaleBeneficiary);
-                    ObjParm.Add("@FemaleBeneficiary", m.FemaleBeneficiary);
-                    ObjParm.Add("@TotalBeneficiary", m.TotalBeneficiary);
+                    //ObjParm.Add("@CostPerBeneficiary", m.CostPerBeneficiary);
+                    //ObjParm.Add("@MaleBeneficiary", m.MaleBeneficiary);
+                    //ObjParm.Add("@FemaleBeneficiary", m.FemaleBeneficiary);
+                    //ObjParm.Add("@TotalBeneficiary", m.TotalBeneficiary);
                     ObjParm.Add("@Objective", m.Objective);
 
                     //Risk
@@ -478,10 +548,10 @@ namespace DatabaseLayer
                     ObjParm.Add("@EndDate", m.EndDate);
 
                     //Procurement
-                    ObjParm.Add("@AchievedProcurement", m.AchievedProcurement);
-                    ObjParm.Add("@ProcurementPercent", m.ProcurementPercent);
-                    ObjParm.Add("@ProcurementDate", DateTime.Now);
-                    ObjParm.Add("@ProcurmentHeader", m.Headers);
+                    //ObjParm.Add("@AchievedProcurement", m.AchievedProcurement);
+                    //ObjParm.Add("@ProcurementPercent", m.ProcurementPercent);
+                    //ObjParm.Add("@ProcurementDate", DateTime.Now);
+                    //ObjParm.Add("@ProcurmentHeader", m.Headers);
 
                     //StackHolder
                     //ObjParm.Add("@StackholderName", m.StackholderName);
@@ -490,8 +560,8 @@ namespace DatabaseLayer
                     //ObjParm.Add("@StackholderEmail", m.StackholderEmail);
 
                     //StackHolder
-                    ObjParm.Add("@RecruitedHR", m.RecruitedHR);
-                    ObjParm.Add("@RecruitedHRPercent", m.RecruitedHRPercent);
+                   // ObjParm.Add("@RecruitedHR", m.RecruitedHR);
+                   // ObjParm.Add("@RecruitedHRPercent", m.RecruitedHRPercent);
                     ObjParm.Add("@RecruitedHRDate", DateTime.Now);
 
                     //ReleasedBudget
@@ -668,6 +738,8 @@ namespace DatabaseLayer
                 ObjParm.Add("@SubProject_ID", m.SubProject_ID);
                 ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
+                ObjParm.Add("@PositionTitle", m.PositionTitle);
+                ObjParm.Add("@Grade", m.Grade);
                 ObjParm.Add("@RecruitedHR", m.RecruitedHR);
                 ObjParm.Add("@RecruitedFromHRDate", m.RecruitedFromHRDate);
                 ObjParm.Add("@RecruitedToHRDate", m.RecruitedToHRDate);
@@ -773,12 +845,13 @@ namespace DatabaseLayer
 
                 ObjParm.Add("@Project_ID", m.Project_ID);
                 ObjParm.Add("@SubProject_ID", m.SubProject_ID);
-                ObjParm.Add("@Batch_ID", m.Batch_ID);
+                //ObjParm.Add("@Batch_ID", m.Batch_ID);
                 ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
-                ObjParm.Add("@ProcurementHeader", m.ProcurementHeader);
-                ObjParm.Add("@AchievedProcurement", m.NoOfProcurement);
-                ObjParm.Add("@ProcurementFromDate", m.ProcurementFromDate);
-                ObjParm.Add("@ProcurementToDate", m.ProcurementToDate);
+                ObjParm.Add("@PlannedProcurement_ID", m.PlannedProcurement_ID);
+                ObjParm.Add("@ProcurementDate", m.ProcurementDate);
+                ObjParm.Add("@AchievedProcurement", m.AchievedProcurement);
+                ObjParm.Add("@ActualCostPerItem", m.ActualCostPerItem);
+                ObjParm.Add("@TotalCost", m.TotalCost);
                 ObjParm.Add("@Remarks", m.Remarks);
                 ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                 ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);

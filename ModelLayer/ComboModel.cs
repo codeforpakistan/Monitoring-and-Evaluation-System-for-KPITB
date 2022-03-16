@@ -32,12 +32,26 @@ namespace ModelLayer
             public string ProjectTypeName { get; set; }
         }
         #endregion
-
+        #region Project Status
+        public partial class ComboProjectStatus
+        {
+            public int ProjectStatusID { get; set; }
+            public string ProjectStatusName { get; set; }
+        }
+        #endregion
         #region ComboCity
         public partial class ComboCity
         {
             public int CityID { get; set; }
             public string CityName { get; set; }
+        }
+        #endregion
+        
+        #region SDGS
+        public partial class ComboSDGS
+        {
+            public int SDGSID { get; set; }
+            public string SDGSName { get; set; }
         }
         #endregion
         #region ComboDigitalPolicy
@@ -47,12 +61,19 @@ namespace ModelLayer
             public string DigitalPolicyName { get; set; }
         }
         #endregion
-        #region RiskStatus
+
+        #region RiskStatus/Mitigation
         public partial class ComboRiskStatus
         {
             public int RiskStatusID { get; set; }
             public string RiskStatusName { get; set; }
         }
+        public partial class ComboRiskMitigation
+        {
+            public int RiskMitigationID { get; set; }
+            public string RiskMitigationName { get; set; }
+        }
+
         #endregion
 
         #region FundingSource
@@ -61,6 +82,14 @@ namespace ModelLayer
             public int FundingSourceID { get; set; }
             public string FundingSourceName { get; set; }
         }
+        #endregion
+        #region TypeOfStakeholder
+        public partial class ComboTypeOfStakeholder
+        {
+            public int TypeOfStakeholderID { get; set; }
+            public string TypeOfStakeholderName { get; set; }
+        }
+        
         #endregion
         #region Project
         public partial class ComboProject
@@ -78,10 +107,25 @@ namespace ModelLayer
             public int BatchID { get; set; }
             public string BatchName { get; set; }
         }
+        public partial class ComboPlannedKPIs
+        {
+           public int ProjectPlannedKPIsID { get; set; }
+           public string IndicatorDescription { get; set; }
+           public int Target { get; set; }
+           public System.DateTime TimeLine { get; set; }
+            
+        }
         public partial class ComboIndicator
         {
             public int IndicatorID { get; set; }
             public string IndicatorName { get; set; }
+        }
+        public partial class ComboProcurementHead
+        {
+            public int PlannedProcurementID { get; set; }
+            public string ProcrumetHeader { get; set; }
+            public int PlannedPerCostItem { get; set; }
+            
         }
 
         public partial class RemainingValues
@@ -93,10 +137,10 @@ namespace ModelLayer
             public int ReleasedBudget { get; set; }
 
         }
-        public partial class ComboIndicatorDataType
+        public partial class ComboInsightIndicatorDataType
         {
-            public int IndicatorDataTypeID { get; set; }
-            public string IndicatorDataType { get; set; }
+            public int InsightIndicatorDataTypeID { get; set; }
+            public string InsightIndicatorDataType { get; set; }
         }
         #endregion
 

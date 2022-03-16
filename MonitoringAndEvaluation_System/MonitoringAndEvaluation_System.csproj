@@ -152,9 +152,10 @@
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FinanceController.cs" />
-    <Compile Include="Controllers\IndicatorController.cs" />
+    <Compile Include="Controllers\InsightIndicatorController.cs" />
     <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ProjectKPIsStatusController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -409,13 +410,15 @@
     <Content Include="Views\Finance\ReleasedBudgetCreateView.cshtml" />
     <Content Include="Views\Finance\ExpenditureBudgetCreateView.cshtml" />
     <Content Include="Views\Project\ProjectDetails.cshtml" />
-    <Content Include="Views\Indicator\IndicatorCreateView.cshtml" />
-    <Content Include="Views\Indicator\IndicatorFieldCreate.cshtml" />
-    <Content Include="Views\Indicator\LinkIndicator.cshtml" />
-    <Content Include="Views\Indicator\IndicatorFieldValue.cshtml" />
+    <Content Include="Views\InsightIndicator\IndicatorCreateView.cshtml" />
+    <Content Include="Views\InsightIndicator\IndicatorFieldCreate.cshtml" />
+    <Content Include="Views\InsightIndicator\LinkIndicator.cshtml" />
+    <Content Include="Views\InsightIndicator\IndicatorFieldValue.cshtml" />
     <Content Include="Views\Batch\BatchCreateView.cshtml" />
     <Content Include="Views\Role\CreateRole.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\ProjectKPIsStatus\ProjectKPIsStatusCreateView.cshtml" />
+    <Content Include="Views\InsightIndicator\InsightIndicatorCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

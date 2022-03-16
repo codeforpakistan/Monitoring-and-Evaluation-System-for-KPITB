@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
+
 }
 
 <!-- START row-->
@@ -37,7 +38,6 @@
                                 <div class="card-body">
 
                                     <div class="row">
-
                                         <div class="col-lg-4 ">
                                             <label class="col-form-label">Project Name *</label>
                                             @Html.TextBoxFor(model => model.ProjectName, new { @class = "form-control", @placeholder = "Enter Project Name" })
@@ -67,47 +67,40 @@
 
                                         <div class="col-lg-4 ">
                                             <label for="sel1" class="col-form-label">Select Location</label>
+
                                             @Html.DropDownListFor(m => m.City_ID, new SelectList(Model.comboCities, "CityID", "CityName"), "Please Select City Name", new { @class = "select2 form-control ", @placeholder = "Select City" })
                                             @Html.ValidationMessageFor(m => m.City_ID, "", new { @class = "parsley-required", @id = "spanCity_ID" })
+
+                                            @*@Html.DropDownListFor(m => m.City_ID, new SelectList(Model.comboCities, "CityID", "CityName"), "Please Select City Name", new { @class = "select2 form-control ", @placeholder = "Select City" })
+                                            @Html.ValidationMessageFor(m => m.City_ID, "", new { @class = "parsley-required", @id = "spanCity_ID" })*@
                                         </div>
                                         <div class="col-lg-4 ">
-                                            <label for="sel1">Select Digital Policy</label>
-                                            @Html.DropDownListFor(m => m.DigitalPolicy_ID, new SelectList(Model.comboDigitalPolicies, "DigitalPolicyID", "DigitalPolicyName"), "Please Select Digital Policy", new { @class = "select2 form-control ", @placeholder = "Select Digital Policy" })
+                                            <label for="sel1">Select Policy Pillars</label>
+                                            @Html.DropDownListFor(m => m.DigitalPolicy_ID, new SelectList(Model.comboDigitalPolicies, "DigitalPolicyID", "DigitalPolicyName"), "Please Select Policy Pillars", new { @class = "select2 form-control ", @placeholder = "Select Digital Policy" })
                                             @Html.ValidationMessageFor(m => m.DigitalPolicy_ID, "", new { @class = "parsley-required", @id = "spanDigitalPolicy_ID" })
                                         </div>
 
                                     </div>
                                     <br />
                                     <div class="row">
-                                        <div class="col-lg-2 ">
-                                            <label class="col-form-label">Planned Male Beneficiary</label>
-                                            @Html.TextBoxFor(model => model.MaleBeneficiary, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Male" })
-                                            @Html.ValidationMessageFor(m => m.MaleBeneficiary, "", new { @class = "parsley-required", @id = "spanMaleBeneficiary" })
-                                        </div>
-                                        <div class="col-lg-2 ">
-                                            <label class="col-form-label">Planned Female Beneficiary</label>
-                                            @Html.TextBoxFor(model => model.FemaleBeneficiary, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Female" })
-                                            @Html.ValidationMessageFor(m => m.FemaleBeneficiary, "", new { @class = "parsley-required", @id = "spanFemaleBeneficiary" })
+                                        <div class="col-lg-4 ">
+                                            <label for="sel1">Select SDGS</label>
+                                            @Html.DropDownListFor(m => m.SDGS_ID, new SelectList(Model.comboSDGS, "SDGSID", "SDGSName"), "Please Select SDGS", new { @class = "select2 form-control ", @placeholder = "Select Policy Pillar" })
+                                            @Html.ValidationMessageFor(m => m.SDGS_ID, "", new { @class = "parsley-required", @id = "spanSDGS_ID" })
                                         </div>
                                         <div class="col-lg-4 ">
-                                            <label class="col-form-label">Total Planned Beneficiary</label>
-                                            @Html.TextBoxFor(model => model.TotalBeneficiary, new { @class = "form-control", @type = "number", @placeholder = "Total Beneficiary", @readonly = "readonly" })
-                                            @Html.ValidationMessageFor(m => m.TotalBeneficiary, "", new { @class = "parsley-required", @id = "spanTotalBeneficiary" })
-                                            @*<input class="form-control" id="idtotalcpb" type="number" name="idtotalcpb" placeholder="Total Beneficiary" readonly>*@
-                                        </div>
-                                        <div class="col-lg-4 ">
-                                            <label class="col-form-label">Cost per Beneficiary</label>
-                                            @Html.TextBoxFor(model => model.CostPerBeneficiary, new { @class = "form-control", @placeholder = "Enter Cost per Beneficiary" })
-                                            @Html.ValidationMessageFor(m => m.CostPerBeneficiary, "", new { @class = "parsley-required", @id = "spanCostPerBeneficiary" })
+                                            <label for="sel1">Select Project Status</label>
+                                            @Html.DropDownListFor(m => m.ProjectStatus_ID, new SelectList(Model.comboProjectStatus, "ProjectStatus_ID", "ProjectStatusName"), "Please Select Project Status", new { @class = "select2 form-control ", @placeholder = "Select Digital Policy" })
+                                            @Html.ValidationMessageFor(m => m.ProjectStatus_ID, "", new { @class = "parsley-required", @id = "spanProjectStatus_ID" })
                                         </div>
                                     </div>
                                     <br />
 
                                     <div class="row">
                                         <div class="col-lg-12 ">
-                                            <label class="col-form-label">Project Objective </label>
-                                            @Html.TextAreaFor(model => model.Objective, new { @class = "form-control", @placeholder = "Text here" })
-                                            @Html.ValidationMessageFor(m => m.Objective, "", new { @class = "parsley-required", @id = "spanObjective" })
+                                            <label class="col-form-label">Project Goal </label>
+                                            @Html.TextAreaFor(model => model.ProjectGoal, new { @class = "form-control", @placeholder = "Text here" })
+                                            @Html.ValidationMessageFor(m => m.ProjectGoal, "", new { @class = "parsley-required", @id = "spanObjective" })
 
                                         </div>
                                     </div>
@@ -115,7 +108,95 @@
                             </div>
                         </div>
                     </div>
+                    @*Project KPIs*@
+                    <div class="card card-default" id="cardDemo1">
+                        <div class="card-header">
+                            <br />
+                            <h4>
+                                Project Objectives
+                            </h4>
 
+                        </div>
+                        <div class="card-wrapper collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <label class="col-form-label">Project Objective</label>
+                                        <input class="form-control" id="idObjective" type="text" name="Objective" value="@Model.Objective" placeholder="Enter Project Objective">
+                                        <span name="spanidObjective" id="spanidObjective" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label class="col-form-label text-white">Add Objective</label>
+                                        <input type="button" id="AddObjective" value="Add Objective" class="btn btn-primary form-control" />
+                                    </div>
+                                </div>
+                                <br />
+                                
+                                <br />
+                                <br />
+                                <table class="table table-striped" id="tblObjective">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric">ID</th>
+                                            <th data-column-id="Indicator">Project Objective</th>
+                                            <th data-column-id="action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    @*Project KPIs*@
+                    <div class="card card-default" id="cardDemo1">
+                        <div class="card-header">
+                            <br />
+                            <h4>
+                                Project KPIs
+                            </h4>
+
+                        </div>
+                        <div class="card-wrapper collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="col-form-label">Indicator Description *</label>
+                                        <input class="form-control" id="idInducatorDesc" type="text" name="InducatorDesc" value="@Model.IndicatorDescription" placeholder="Enter Indicator Description">
+                                        <span name="spanidInducatorDesc" id="spanidInducatorDesc" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="col-form-label">Indicator Target *</label>
+                                        <input class="form-control" id="idTarget" type="number" name="Target" value="@Model.Target" placeholder="Enter Target No">
+                                        <span name="spanidTarget" id="spanidTarget" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="sel1" class="col-form-label">Indicator TimeLine</label>
+                                        <input class="form-control" id="idTimeline" type="date" name="Timeline" value="@Model.TimeLine">
+                                        <span name="spanidTimeline" id="spanidTimeline" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="float-right"><input type="button" id="AddKPIs" value="Add KPIs" class="btn btn-primary" /></div>
+                                <br />
+                                <br />
+                                <table class="table table-striped" id="tblKPIs">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric">ID</th>
+                                            <th data-column-id="Indicator">Indicator Description</th>
+                                            <th data-column-id="Target">Target No.</th>
+                                            <th data-column-id="Date">TimeLine</th>
+                                            <th data-column-id="action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     @*Project Schedule*@
                     <div class="card card-default" id="cardDemo1">
                         <div class="card-header">
@@ -136,7 +217,7 @@
                                         <input class="form-control Select-date" id="StartDate" type="date" name="StartDate">
                                     </div>
                                     <div class="col-lg-4 ">
-                                        <label class="col-form-label">Planned End Date *</label>
+                                        <label class="col-form-label">End Date *</label>
                                         <input class="form-control Select-date" id="EndDate" type="date" name="EndDate">
                                     </div>
                                 </div>
@@ -159,16 +240,7 @@
                                         @Html.TextBoxFor(model => model.PlannedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter Planned-HR No" })
                                         @Html.ValidationMessageFor(m => m.PlannedHR, "", new { @class = "parsley-required", @id = "spanPlannedHR" })
                                     </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Recruited-HR *</label>
-                                        @Html.TextBoxFor(model => model.RecruitedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter Recruited-HR No" })
-                                        @Html.ValidationMessageFor(m => m.RecruitedHR, "", new { @class = "parsley-required", @id = "spanRecruitedHR" })
-                                    </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Recruited-HR % *</label>
-                                        @Html.TextBoxFor(model => model.RecruitedHRPercent, new { @class = "form-control", @type = "number", @placeholder = "Enter Recruited-HR No", @readonly = "readonly" })
-                                        @Html.ValidationMessageFor(m => m.RecruitedHRPercent, "", new { @class = "parsley-required", @id = "spanRecruitedHRPercent" })
-                                    </div>
+
                                 </div>
 
                             </div>
@@ -219,35 +291,50 @@
                         <div class="card-wrapper collapse show">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-12 ">
-                                        <label class="col-form-label">Headers</label>
-                                        @Html.TextBoxFor(model => model.Headers, new { @class = "form-control", @type = "text", @placeholder = "Enter No of Headers" })
-                                        @Html.ValidationMessageFor(m => m.Headers, "", new { @class = "parsley-required", @id = "spanHeaders" })
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">Header *</label>
+                                        <input class="form-control" id="idHeader" type="text" name="Header" value="@Model.ProcrumetHeader" placeholder="Enter Procurement Header">
+                                        <span name="spanidHeader" id="spanidHeader" class="text-danger"></span>
                                     </div>
-                                </div>
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">Planned Per Cost Item *</label>
+                                        <input class="form-control" id="idPlannedPCP" type="number" name="PlannedPCP" value="@Model.PlannedPerCostItem" placeholder="Enter Planned Per Cost Procrument">
+                                        <span name="spanidPlannedPCP" id="spanidPlannedPCP" class="text-danger"></span>
+                                    </div>
 
+                                </div>
                                 <div class="row">
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">
-                                            Planned Procurement ( No of Item )*
-                                        </label>
-                                        @Html.TextBoxFor(model => model.PlannedProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No of Planned Procurement" })
-                                        @Html.ValidationMessageFor(m => m.PlannedProcurement, "", new { @class = "parsley-required", @id = "spanPlannedProcurement" })
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">Achived Cost *</label>
+                                        <input class="form-control" id="idAchivedCost" type="number" name="AchivedCost" value="@Model.AchivedCost" placeholder="Enter AchivedCost">
+                                        <span name="spanidAchivedCost" id="spanidAchivedCost" class="text-danger"></span>
                                     </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Achieved Procurement *</label>
-                                        @Html.TextBoxFor(model => model.AchievedProcurement, new { @class = "form-control", @type = "number", @placeholder = "Enter No fo Achieved Procurement" })
-                                        @Html.ValidationMessageFor(m => m.AchievedProcurement, "", new { @class = "parsley-required", @id = "spanAchievedProcurement" })
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">No of Planned Procurement *</label>
+                                        <input class="form-control" id="idNoPlannedProcrument" type="number" name="NoPlannedProcrument" value="@Model.PlannedProcrumentNo" placeholder="Enter No of Planned Procrument">
+                                        <span name="spanidNoPlannedProcrument" id="spanidNoPlannedProcrument" class="text-danger"></span>
                                     </div>
-                                    <div class="col-lg-4 ">
-                                        <label class="col-form-label">Procurement% *</label>
-                                        @Html.TextBoxFor(model => model.ProcurementPercent, new { @class = "form-control", @type = "number", @placeholder = "Enter Procurement%", @readonly = "readonly" })
-                                        @Html.ValidationMessageFor(m => m.ProcurementPercent, "", new { @class = "parsley-required", @id = "spanProcurementPercent" })
-                                    </div>
+
                                 </div>
-
+                                <br />
+                                <div class="float-right"><input type="button" id="AddProcrument" value="Add Procrument" class="btn btn-primary" /></div>
+                                <br />
+                                <br />
+                                <table class="table table-striped" id="tblProcrument">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric">ID</th>
+                                            <th data-column-id="Indicator">Header</th>
+                                            <th data-column-id="Target">Planned Per Cost</th>
+                                            <th data-column-id="Date">Achived Cost</th>
+                                            <th data-column-id="Date">Planned Procrument</th>
+                                            <th data-column-id="action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
-
                         </div>
                     </div>
                     @*Risk*@
@@ -262,12 +349,18 @@
                         <div class="card-wrapper collapse show">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-lg-6 ">
+                                    <div class="col-lg-4">
                                         <label class="col-form-label">Risk Name *</label>
                                         <input class="form-control" id="idRiskName" type="text" name="RiskName" value="@Model.RiskName" placeholder="Enter Risk Name">
                                         <span name="spanidRiskName" id="spanidRiskName" class="text-danger"></span>
                                     </div>
-                                    <div class="col-lg-6 ">
+                                    <div class="col-lg-4">
+                                        <label for="sel1" class="col-form-label">Risk Mitigation</label>
+                                        @Html.DropDownListFor(m => m.RiskMitigation_ID, new SelectList(Model.comboRiskMitigation, "RiskMitigationID", "RiskMitigationName"), "Please Select Risk Mitigation", new { @class = " form-control ", @placeholder = "Select RiskStatus", @id = "idRiskMitigation", @name = "RiskMitigation" })
+                                        @Html.ValidationMessageFor(m => m.RiskMitigation_ID, "", new { @class = "parsley-required" })
+                                        <span name="spanidRiskMitigation" id="spanidRiskMitigation" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4">
                                         <label for="sel1" class="col-form-label">Risk Status</label>
                                         @Html.DropDownListFor(m => m.RiskStatus_ID, new SelectList(Model.comboRiskStatus, "RiskStatusID", "RiskStatusName"), "Please Select Risk Status", new { @class = " form-control ", @placeholder = "Select RiskStatus", @id = "idRiskStatus", @name = "RiskStatus" })
                                         @Html.ValidationMessageFor(m => m.RiskStatus_ID, "", new { @class = "parsley-required" })
@@ -283,6 +376,7 @@
                                         <tr>
                                             <th data-column-id="id" data-type="numeric">ID</th>
                                             <th data-column-id="RiskName">Risk Name</th>
+                                            <th data-column-id="Risk">Risk Mitigation</th>
                                             <th data-column-id="Risk">Risk Status</th>
                                             <th data-column-id="action">Action</th>
                                         </tr>
@@ -314,8 +408,10 @@
                                     </div>
                                     <div class="col-lg-6 ">
                                         <label class="col-form-label">Type of Stakeholder *</label>
-                                        <input class="form-control" id="idDepartmentName" type="text" name="DepartmentName" placeholder="Type of Stakeholder">
+                                        @Html.DropDownListFor(m => m.TypeOfStakeholder_ID, new SelectList(Model.comboTypeOfStakeholder, "TypeOfStakeholderID", "TypeOfStakeholderName"), "Please Select Type Of Stakeholder", new { @class = " form-control ", @placeholder = "Select RiskStatus", @id = "idDepartmentName", @name = "DepartmentName" })
+                                        @Html.ValidationMessageFor(m => m.TypeOfStakeholder_ID, "", new { @class = "parsley-required" })
                                         <span name="spanTermsAndConditions" id="spanidDepartmentName" class="text-danger"></span>
+                                        
                                     </div>
                                 </div>
                                 <div class="row">
@@ -464,8 +560,162 @@
                    }
                });//Change
 
+        //Project Objective
+        $("#AddObjective").click(function () {
+            debugger;
+            if ($('#idObjective').val() == "") {
+                $('#spanidObjective').text('Objective should not be blank');
+                $('#spanidObjective').show();
+                $('#idObjective').focus();
+                return true;
+            }
+            var trcount = $("#tblObjective tr").length;
+            $("#tblObjective").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idObjective").val() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#idObjective").val('');
+           
+        });
+
+        function RemoveDemerits(row) {
+            $(row).parent().parent().remove();
+        }
+
+        $("#idObjective").on('change', function () {
+            debugger;
+            if ($('#idObjective').val() != "") {
+                $('#spanidObjective').hide();
+                return true;
+            }
+        });
+      
 
 
+        //Project KPIs
+        $("#AddKPIs").click(function () {
+            debugger;
+            if ($('#idInducatorDesc').val() == "") {
+                $('#spanidInducatorDesc').text('Inducator Description should not be blank');
+                $('#spanidInducatorDesc').show();
+                $('#idInducatorDesc').focus();
+                return true;
+            }
+            if ($('#idTarget').val() == 0) {
+                $('#spanidTarget').text('Target should not be blank');
+                $('#spanidTarget').show();
+                $('#ididTarget').focus();
+                return true;
+            }
+            if ($('#idTimeline').val() == 0) {
+                $('#spanidTimeline').text('Timeline should not be blank');
+                $('#spanidTimeline').show();
+                $('#ididTimeline').focus();
+                return true;
+            }
+            var trcount = $("#tblKPIs tr").length;
+            $("#tblKPIs").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idInducatorDesc").val() + "</td>  <td>" + $("#idTarget").val() + "</td>   <td id='" + $("#idTimeline").val() + "' >" + $("#idTimeline").find("option:selected").text() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#idInducatorDesc").val('');
+            $("#idTarget").val('');
+            $("#idTimeline").val('');
+        });
+
+        function RemoveDemerits(row) {
+            $(row).parent().parent().remove();
+        }
+
+        $("#idInducatorDesc").on('change', function () {
+            debugger;
+            if ($('#idInducatorDesc').val() != "") {
+                $('#spanidInducatorDesc').hide();
+                return true;
+            }
+        });
+        $("#idTarget").on('change', function () {
+            debugger;
+            if ($('#idTarget').val() != "") {
+                $('#spanidTarget').hide();
+                return true;
+            }
+        });
+        $("#idTimeline").on('change', function () {
+            debugger;
+            if ($('#idTimeline').val() != "") {
+                $('#spanidTimeline').hide();
+                return true;
+            }
+        });
+
+
+        //Procrument
+
+        $("#AddProcrument").click(function () {
+            debugger;
+            if ($('#idHeader').val() == "") {
+                $('#spanidHeader').text('Procrument Header should not be blank');
+                $('#spanidHeader').show();
+                $('#idHeader').focus();
+                return true;
+            }
+            if ($('#idPlannedPCP').val() == 0) {
+                $('#spanidPlannedPCP').text('Planned Per Cost Procrument should not be blank');
+                $('#spanidPlannedPCP').show();
+                $('#ididPlannedPCP').focus();
+                return true;
+            }
+            if ($('#idAchivedCost').val() == 0) {
+                $('#spanidAchivedCost').text(' Achived Cost should not be blank');
+                $('#spanidAchivedCost').show();
+                $('#ididAchivedCost').focus();
+                return true;
+            }
+            if ($('#idNoPlannedProcrument').val() == 0) {
+                $('#spanidNoPlannedProcrument').text('No Planned Procrument should not be blank');
+                $('#spanidNoPlannedProcrument').show();
+                $('#ididNoPlannedProcrument').focus();
+                return true;
+            }
+            var trcount = $("#tblProcrument tr").length;
+            $("#tblProcrument").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idHeader").val() + "</td> <td>" + $("#idPlannedPCP").val() + "</td> <td>" + $("#idAchivedCost").val() + "</td> <td>" + $("#idNoPlannedProcrument").val() + "</td>    <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#idHeader").val('');
+            $("#idPlannedPCP").val('');
+            $("#idAchivedCost").val('');
+            $("#idNoPlannedProcrument").val('');
+        });
+
+        function RemoveDemerits(row) {
+            $(row).parent().parent().remove();
+        }
+
+        $("#idHeader").on('change', function () {
+            debugger;
+            if ($('#idHeader').val() != "") {
+                $('#spanidHeader').hide();
+                return true;
+            }
+        });
+        $("#idPlannedPCP").on('change', function () {
+            debugger;
+            if ($('#idPlannedPCP').val() != "") {
+                $('#spanidPlannedPCP').hide();
+                return true;
+            }
+        });
+        $("#idAchivedCost").on('change', function () {
+            debugger;
+            if ($('#idAchivedCost').val() != "") {
+                $('#spanidAchivedCost').hide();
+                return true;
+            }
+        });
+        $("#idNoPlannedProcrument").on('change', function () {
+            debugger;
+            if ($('#idNoPlannedProcrument').val() != "") {
+                $('#spanidNoPlannedProcrument').hide();
+                return true;
+            }
+        });
+
+
+
+        //Risk 
 
         $("#AddRisk").click(function () {
             debugger;
@@ -475,6 +725,12 @@
                 $('#idRiskName').focus();
                 return true;
             }
+            if ($('#idRiskMitigation').val() == 0) {
+                $('#spanidRiskMitigation').text('Risk Status should not be blank');
+                $('#spanidRiskMitigation').show();
+                $('#ididRiskMitigation').focus();
+                return true;
+            }
             if ($('#idRiskStatus').val() == 0) {
                 $('#spanidRiskStatus').text('Risk Status should not be blank');
                 $('#spanidRiskStatus').show();
@@ -482,8 +738,9 @@
                 return true;
             }
             var trcount = $("#tblRisk tr").length;
-            $("#tblRisk").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idRiskName").val() + "</td>     <td id='" + $("#idRiskStatus").val() + "' >" + $("#idRiskStatus").find("option:selected").text() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#tblRisk").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idRiskName").val() + "</td>  <td id='" + $("#idRiskMitigation").val() + "' >" + $("#idRiskMitigation").find("option:selected").text() + "</td>  <td id='" + $("#idRiskStatus").val() + "' >" + $("#idRiskStatus").find("option:selected").text() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
             $("#idRiskName").val('');
+            $("#idRiskMitigation").val('');
             $("#idRiskStatus").val('');
         });
 
@@ -495,6 +752,13 @@
             debugger;
             if ($('#idRiskName').val() != "") {
                 $('#spanidRiskName').hide();
+                return true;
+            }
+        });
+        $("#idRiskMitigation").on('change', function () {
+            debugger;
+            if ($('#idRiskMitigation').val() != "") {
+                $('#spanidRiskMitigation').hide();
                 return true;
             }
         });
@@ -831,6 +1095,21 @@
             formAllData.append('txtProcurementPercent', $("#ProcurementPercent").val());
             formAllData.append('FundingSourceArray', $("#Funding_SourceArray").val());
 
+             //KPIs
+             var KPIsRows = new Array();   //ArrayList
+                $('#tblKPIs tr').each(function () {
+                 if ($(this).find('td:eq(0)').text() != '') {
+                     //KPIs
+                     debugger;
+                     $KPIsRow = $(this).find('td:eq(0)').text() +
+                         "|" + $(this).find('td:eq(1)').text() +
+                         "|" + $(this).find('td:eq(2)').text() +
+                         "|" + $(this).find('td:eq(3)').attr('id');
+                     KPIsRows.push($KPIsRow);
+                 }
+             });
+                formAllData.append("_$KPIsRows", $KPIsRow);
+
             //Risk
             var RiskRows = new Array();   //ArrayList
             $('#tblRisk tr').each(function ()
@@ -945,13 +1224,5 @@
             _ProcurementPercent = _AchievedProcurement / _PlannedProcurement * 100;
             $('#ProcurementPercent').val(_ProcurementPercent);
         }
-
-        //function  validationBeforeSubmit() {
-
-
-
-
-        //}
-
     </script>
 }

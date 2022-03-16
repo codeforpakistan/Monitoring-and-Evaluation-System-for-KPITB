@@ -1,0 +1,60 @@
+﻿@using System.Linq;
+
+<!-- END user info-->
+<!-- Iterates over all sidebar items-->
+
+<li class="nav-heading ">
+    <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
+</li>
+
+<li class=" ">
+    <a href="@Url.Content("~/Dashboard/Admin")" title="Home">
+        <em class="fa fa-windows"></em>
+        <span data-localize="sidebar.nav.element.BUTTON">Dashboard</span>
+    </a>
+</li>
+<!--DYNAMIC_MENU-->
+@{
+    ModelLayer.MainViewModel.ClsUserRole WebPagesMenu = Session["WebPagesMenu"] as ModelLayer.MainViewModel.ClsUserRole;
+    List<ModelLayer.MainViewModel.ClsWebPages> Parents = WebPagesMenu.AllWebPages.Where(d => d.Parent_ID == 0).ToList();
+    //List<ModelLayer.MainViewModel.ClsWebPages> singleParentGroup = WebPagesMenu.AllWebPages.Select(m => new ModelLayer.MainViewModel.ClsWebPages {MainTitle=m.MainTitle }).Distinct().ToList();
+
+    string lastName = null;
+    foreach (ModelLayer.MainViewModel.ClsWebPages ItemParent in Parents)
+    {
+        //ItemParent.Childs = WebPagesMenu.AllWebPages.Where(d => d.Parent_ID == ItemParent.WebPageID).ToList(); //Check
+        if (@ItemParent.MainTitle != lastName)
+        {
+            lastName = @ItemParent.MainTitle;
+            <li class="nav-heading ">
+                <span data-localize="sidebar.heading.COMPONENTS">@ItemParent.MainTitle</span>
+            </li>
+        }
+        //Child
+        <li class=" ">
+            <a href="#elements-@ItemParent.WebPageID" title="Elements" data-toggle="collapse" id="@ItemParent.WebPageID">
+                <em class="@ItemParent.NormalIcon"></em>
+                <span data-localize="sidebar.nav.element.ELEMENTS">@ItemParent.PageTitle</span>
+            </a>
+
+            <ul class="sidebar-nav sidebar-subnav collapse" id="elements-@ItemParent.WebPageID">
+                @{
+                    foreach (var ItemChild in ItemParent.Childs)
+                    {
+                        <li class=" ">
+                            @*<a href="@Url.Content("~/Users/UserCreate")" title="Notifications">
+                                    <span data-localize="sidebar.nav.element.NOTIFICATION">Add User</span>
+                                </a>*@
+                            <a href="@Url.Action(ItemChild.Action, ItemChild.Controller)" title="Notifications">
+                            @*<a href="@ItemChild.Url">*@
+                                <span data-localize="sidebar.nav.element.NOTIFICATION">@ItemChild.PageTitle</span>
+                            </a>
+                        </li>
+                    }<!--SubChild_Loop-->
+                }
+            </ul>
+        </li>
+    }<!--Main_Loop-->
+}
+
+

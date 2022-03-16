@@ -1,0 +1,292 @@
+﻿@model ModelLayer.MainViewModel.CreateIndicatorValueVM
+@{
+    ViewBag.Title = "Indicator Entry";
+}
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
+<!-- START row-->
+<div class="row">
+    <div class="col-xl-12">
+        @using (Html.BeginForm("IndicatorFieldValue", "Indicator", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <!-- START card-->
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">
+                        <br />
+                        <h4> Add Indicator Value </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Project *</label>
+                                @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control " })
+                                @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required", @id = "spanCategory_ID" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Batch/Cycle *</label>
+                                @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), "Please Select Batch", new { @class = "select2 form-control " })
+                                @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Indicator *</label>
+                                @Html.DropDownListFor(m => m.Indicator_ID, new SelectList(Model.comboIndicator, "IndicatorID", "IndicatorName"), "Please Select Indicator", new { @class = "select2 form-control " })
+                                @Html.ValidationMessageFor(m => m.Indicator_ID, "", new { @class = "parsley-required", @id = "spanIndicatorID" })
+                            </div>
+                        </div>
+
+                        <br />
+                        @*<div class="float-right"><input type="button" id="AddStackHolder" value="Add Field" class="btn btn-primary" /></div>*@
+                       
+                    
+                        <div class="row">
+
+                            <!--Insert-->
+                            <div class="col-lg-6">
+                                <strong>New Entries</strong>
+                                <table class="table table-striped" name="tblIndicator" id="tblIndicator">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric">ID</th>
+                                            <th data-column-id="Department">Indicator Field Name</th>
+                                            <th data-column-id="ContactNo">Indicator Value</th>
+                                            <th data-column-id="action"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblBodyIndicator">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--Fetch-->
+                            <div class="col-lg-6">
+                                <strong>Previous History</strong>
+                                <table class="table table-striped" name="tblIndicator2" id="tblIndicator2">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric">ID</th>
+                                            <th data-column-id="Department">Indicator Field Name</th>
+                                            <th data-column-id="ContactNo">Indicator Value</th>
+                                            <th data-column-id="action"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblBodyIndicator2">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                <div class="required">* Required fields</div>
+                <br />
+                <div class="card-footer">
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <div class="checkbox c-checkbox">
+                                <label>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="float-right">
+                            <button class="btn btn-primary" type="submit" > Create</button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- END card-->
+            </div>
+        }
+    </div>
+</div>
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="~/Content/Template/vendor/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>
+    <script>
+       $(document).ready(function ()
+        {
+
+        });
+
+        $("#Project_ID").on('change', function () {
+            var _Project_ID = $(this).find("option:selected").val();
+          
+                $.ajax({
+                     type: 'POST',
+                     url: '@Url.Action("ClickProjectComboBox", "Common")',
+                     dataType: 'json',
+                    data: { ProjectID: _Project_ID },  // Same Parameter with Action
+                    success: function (BatchLst) {
+                        debugger;
+                        $("#Batch_ID").empty();
+                        $("#Indicator_ID").empty();
+                        if (BatchLst.comboBatches.length <= 1 || BatchLst.comboBatches == null) {
+                            $("#Batch_ID").prop("disabled", true);
+                            $("#Batch_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Batch" + '</option>');
+
+                            if (BatchLst.comboIndicators.length <= 1 || BatchLst.comboIndicators == null) {
+                                $("#Indicator_ID").prop("disabled", true);
+                                $("#Indicator_ID").append('<option value="' + 0 + '">' +
+                                    "Please Select Indicator" + '</option>');
+                                $("#tblBodyIndicator").empty();
+                            } else {
+                                $.each(BatchLst.comboIndicators, function (i, Aqib2) {
+                                    $("#Indicator_ID").prop("disabled", false);
+                                    $("#Indicator_ID").append('<option value="' + Aqib2.IndicatorID + '">' +
+                                        Aqib2.IndicatorName + '</option>');
+                                });
+                            }
+
+                        } else {
+                            $("#Batch_ID").prop("disabled", false);
+                            $.each(BatchLst.comboBatches, function (i, Aqib) {
+                                $("#Batch_ID").append('<option value="' + Aqib.BatchID + '">' +
+                                    Aqib.BatchName + '</option>');
+                            });
+
+                            if (BatchLst.comboIndicators.length > 1)
+                            {
+                                $.each(BatchLst.comboIndicators, function (i, Aqib2) {
+                                    $("#Indicator_ID").prop("disabled", false);
+                                    $("#Indicator_ID").append('<option value="' + Aqib2.IndicatorID + '">' +
+                                        Aqib2.IndicatorName + '</option>');
+                                });
+                            }
+
+                        }
+                 },
+                 error: function (ex) {
+                     console.log('Failed to Retrieve Batch Data:  ' + ex);
+                 }
+                });//Ajax_End
+
+            $("#tblBodyIndicator").empty();
+            $("#tblBodyIndicator2").empty();
+
+        });
+        $("#Batch_ID").on('change', function () {
+
+            var obj = {};
+            obj.Project_ID = $("#Project_ID").find("option:selected").val();
+            obj.Batch_ID = $("#Batch_ID").find("option:selected").val();
+
+            //var Stock = { Project_ID: $("#Project_ID").find("option:selected").val(), Batch_ID: $("#Batch_ID").find("option:selected").val() };
+                $.ajax({
+                     type: 'POST',
+                     url: '@Url.Action("ClickBatchComboBox", "Common")',
+                    data: JSON.stringify(obj),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+
+                    success: function (IndicatorLst) {
+                        debugger;
+                        $("#Indicator_ID").empty();
+                        if (IndicatorLst.length <= 1 || IndicatorLst == null) {
+                            $("#Indicator_ID").prop("disabled", true);
+                            $("#Indicator_ID").append('<option value="' + 0 + '">' +
+                                "Please Select Indicator" + '</option>');
+                        } else {
+                            $("#Indicator_ID").prop("disabled", false);
+                            $.each(IndicatorLst, function (i, Aqib) {
+                                $("#Indicator_ID").append('<option value="' + Aqib.IndicatorID + '">' +
+                                    Aqib.IndicatorName + '</option>');
+                            });
+                        }
+                 },
+                    error: function (ex) {
+                        console.log('Failed to Retrieve Indicator Data:  ' + ex.responseText);
+                 }
+                });//Ajax_End
+            });
+        $("#Indicator_ID").on('change', function () {
+            
+            var obj1 = {};
+            obj1.Project_ID = $("#Project_ID").find("option:selected").val();
+            obj1.IndicatorID = $(this).find("option:selected").val();
+            debugger;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ClickIndicatorComboBox", "Common")',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(obj1),  // Same Parameter with Action
+                success: function (IndicatorTypeLst) {
+                    $("#tblBodyIndicator").empty();
+                    $("#tblBodyIndicator2").empty();
+                    debugger;
+
+                    var counter = 0;
+                    var loop = 0;
+                    $.each(IndicatorTypeLst.dataTypeVMLst, function (index, v) {
+                        /// do stuff
+                    
+                        debugger;
+                        var IndicatorFieldID = '<td style="display:none";><input  name="dataTypeVMLst['+loop+'].IndicatorFieldID" value="' + v.IndicatorFieldID + '" type="text"  /></td>';
+                        var HiddenValue = '';
+                        var ResultString = '';
+
+                        ResultString = '<td>';
+                        HiddenValue = '<td>';
+
+                        if (v.IndicatorDataType_ID == 1) {
+                            ResultString += '<input  class="form-control"    name="dataTypeVMLst['+loop+'].TEXT"     type="text"  placeholder="Enter Indicator Text" required />'
+                            HiddenValue += '<input class="form-control"   name="dataTypeVMLst['+loop+'].IndicatorDataType_ID" value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                        }else if(v.IndicatorDataType_ID == 2) {
+                            ResultString += '<input class="form-control"    name="dataTypeVMLst['+loop+'].INTEGER" type="number"  placeholder="Enter Indicator Value" required />'
+                            HiddenValue += '<input class="form-control"   name="dataTypeVMLst['+loop+ '].IndicatorDataType_ID" value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                        } else if (v.IndicatorDataType_ID == 3) {
+                            ResultString += '<input class="form-control"  name="dataTypeVMLst['+loop+'].FLOAT" type="number" placeholder="Enter Indicator Percentage %"  required />'
+                            HiddenValue += '<input class="form-control"  name="dataTypeVMLst['+loop+'].IndicatorDataType_ID"  value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                        } else if (v.IndicatorDataType_ID == 4) {
+                            ResultString += '<select class="form-control" name="dataTypeVMLst['+loop+'].BOOL" required >'
+                            ResultString += '<option value="">Select Yes/No</option>'
+                            ResultString += '<option value="true">Yes</option>'
+                            ResultString += '<option value="false">No</option>'
+                            ResultString += '</select>'
+                            HiddenValue += '<input class="form-control"  name="dataTypeVMLst['+loop+'].IndicatorDataType_ID"  value="' + v.IndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                        }
+
+                        ResultString += '</td>';
+                        HiddenValue += '</td>';
+
+                        $('<tr id="tblIndicatorRow'+loop+'">' +
+                            '<td>'+loop+'</td>' +
+                            IndicatorFieldID +
+                              '<td>' + v.IndicatorFieldName + '</td>' +
+                            ResultString +
+                            HiddenValue +
+                            '</tr>').appendTo('#tblIndicator');
+                        counter++;
+                        loop++;
+                    });
+
+                    var counter2 = 1;
+                    $.each(IndicatorTypeLst.dataTypeCommonVMLst, function (index, v)
+                    {
+                     
+                        $('<tr><td>' + counter2 + '</td><td>' + v.IndicatorFieldName + '</td><td>' + v.CommonValue + '</td><tr>').appendTo('#tblIndicator2');
+                        counter2++;
+                    });
+
+
+                },
+                    error: function (ex) {
+                        debugger;
+                        console.log('Failed to Retrieve IndicatorDataTypeCommonValue List Data:  ' + ex.responseText);
+                 }
+                });//Ajax_End
+            });
+
+
+      
+        function RemoveDemerits(row) {
+            $(row).parent().parent().remove();
+        }
+    
+
+    </script>
+}
+

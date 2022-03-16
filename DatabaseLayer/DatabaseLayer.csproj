@@ -83,6 +83,7 @@
     <Compile Include="ProjectManagementDL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManagementDL.cs" />
+    <Compile Include="Test.cs" />
     <Compile Include="UserManagementDL.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,202 @@
+﻿
+@{
+    ViewBag.Title = "RolePermissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>RolePermissions</h4>
+
+
+<div class="container">
+    <!-- START row-->
+    <div class="row">
+        <!--=============================OUTER_START==============================-->
+        <div class="col-lg-12">
+            <!-- START card-->
+            <div class="card card-default" id="cardDemo1">
+
+                <div class="card-header H-51">
+                    <!--CheckBox-->
+                    <div class="checkbox c-checkbox">
+                        <label>
+                            <input type="checkbox" id="51" name="Parent" class="chkbox"> <!--Parent-->
+                            <span class="fa fa-check"></span>
+                        </label>
+                    </div>
+                    <!--Title-->
+                    Parent Title
+
+                    <!--Mnimize-->
+                    <a class="float-right" href="#p-51" data-tool="card-collapse" data-toggle="tooltip" title="Collapse Card">
+                        <em class="fa fa-minus"></em>
+                    </a>
+
+                </div>
+
+                <!--Body1-->
+                <div class="card-wrapper collapse show" id="p-51">
+                    <div class="card-body ">
+
+                        <div class="row">
+                            <!--=============================INNER_START==============================-->
+                            <div class="col-lg-4">
+                                <!-- START card-->
+                                <div class="card card-default" id="cardDemo2">
+
+                                    <div class="card-header i-52">
+                                        <!--CheckBox-->
+                                        <div class="checkbox c-checkbox">
+                                            <label>
+                                                <input type="checkbox" class="chkPage p-51" id="i-52" checked="checked">
+                                                <span class="fa fa-check"></span>
+                                            </label>
+                                        </div>
+                                        <!--Title-->
+                                        Child Title
+
+                                        <!--Close-->
+                                        <a class="float-right" href="#i-52" data-tool="card-collapse" data-toggle="tooltip" title="Collapse Card">
+                                            <em class="fa fa-minus"></em>
+                                        </a>
+                                    </div>
+
+                                    <!--Body-->
+                                    <div class="card-wrapper collapse show">
+                                        <div class="card-body">
+                                            <!--==========SUBINNER_START========-->
+                                            <div class="card card-default">
+                                                <!-- START table-responsive-->
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered table-hover">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="checkbox c-checkbox H-1">
+                                                                        <label class="m-0">
+                                                                            <input type="checkbox" class="chkp i-52">
+                                                                            <span class="fa fa-check"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </td>
+                                                                <td>SubChild</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="checkbox c-checkbox H-1">
+                                                                        <label class="m-0">
+                                                                            <input type="checkbox" class="chkp i-52">
+                                                                            <span class="fa fa-check"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </td>
+                                                                <td>SubChild</td>
+                                                            </tr>
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                            <!--==========SUBINNER_END========-->
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END card-->
+                            </div>
+                            <!--=============================INNER_END==============================-->
+                        </div>
+                    </div>
+                </div>
+
+            
+
+
+            </div>
+            <!-- END card-->
+        </div> <!--=============================OUTER_START==============================-->
+
+    </div>
+    <!-- END row-->
+</div>
+
+
+
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+            $('#1').addClass('active open');
+            $('#1 div.collapsible-body').attr('style', 'display: block;');
+            $('#2').addClass('active');
+            $('#2 a').addClass('active');
+
+
+            $('input[type="checkbox"]').click(function (e) {
+                var $this = $(this),
+                    $thisClass = $this.attr('class'),
+                    $thisVal = $this.is(':checked'),
+                    $thisID = $this.attr('id');
+
+                if ($thisClass == "chkbox") {
+
+                    $('div.child-' + $thisID).find('input[type="checkbox"]')
+                        .attr('checked', 'checked')
+                        .prop('checked', $thisVal);
+
+                    $('div.child-' + $thisID).find('input.chkOp').attr('value', $thisVal);
+
+                    $('div.child-' + $thisID).find('input.IsChecked').attr('value', $thisVal);
+
+                } else if ($this.hasClass("chkPage")) {
+                    $('input[type="checkbox"].' + $thisID).attr('checked', 'checked').prop('checked', $thisVal);
+                    $('input[type="hidden"].' + $thisID).attr('value', $thisVal);
+                    var $arr = $thisClass.toString().split(' ');
+                    // chkPage id >>> 2 classes
+
+                    $thisClass = $arr[1];
+                    if ($thisVal) {
+                        $('.' + $arr[1]).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+                        $('.' + $arr[1].replace('p', 'H')).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+
+                    } else {
+
+                        //var selectedSiblings = $('.' + $arr[1]).find('input.chkPage:checked').length;
+                        var selectedSiblings = ($('input.' + $arr[1] + ':checked').length);
+
+                        if (selectedSiblings == 0) {
+                            $('.' + $arr[1]).find('input.chkbox').removeAttr('checked').prop('checked', $thisVal);
+                            $('.' + $arr[1].replace('p', 'H')).find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+
+                        }
+                    }
+                } else if ($this.hasClass("chkp")) {
+                    var $arr = $thisClass.toString().split(' ');
+                    $thisClass = 'chkp.' + $arr[1];
+                    var selectedSiblings = ($('input.' + $thisClass + ':checked').length);
+                    if ($thisVal && selectedSiblings == 1) {
+                        $('td.' + $arr[1]).find('input.chkPage').attr('checked', 'checked').prop('checked', $thisVal);
+                        $('td.' + $arr[1]).find('input.IsChecked').attr('value', $thisVal);
+                        $this.closest('td').find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+                    } else if (!$thisVal && selectedSiblings == 0) {
+                        $this.parents('td').siblings().find('input.chkPage').attr('checked', 'checked').prop('checked', $thisVal);
+                        $this.parents('td').siblings().find('input.IsChecked').attr('value', $thisVal);
+                        if ($this.find('input.chkPage:checked').length == 0)
+                            $this.find('input.chkbox').attr('checked', 'checked').prop('checked', $thisVal);
+                    }
+                }
+            });
+
+        });
+
+    </script>
+}
+
+
+
+
+
+
+

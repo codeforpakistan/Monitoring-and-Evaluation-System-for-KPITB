@@ -4,7 +4,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_PublishTargetUrl>D:\Application\Web\ASP.NET\MVC\Monitoring-and-Evaluation-System-for-KPITB\Meterials\DeployFiles\ver1</_PublishTargetUrl>
+    <_PublishTargetUrl>D:\Application\Web\ASP.NET\MVC\Monitoring-and-Evaluation-System-for-KPITB\Meterials\DeployFiles\ver2</_PublishTargetUrl>
     <History>True|2022-02-07T08:04:15.9345880Z;True|2022-01-18T13:39:20.7820751+05:00;</History>
   </PropertyGroup>
   <ItemGroup>
@@ -15,13 +15,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/10/2021 14:23:30</publishTime>
     </File>
     <File Include="bin/BusinessLayer.dll">
-      <publishTime>02/07/2022 13:04:12</publishTime>
+      <publishTime>02/14/2022 12:37:45</publishTime>
     </File>
     <File Include="bin/BusinessLayer.pdb">
-      <publishTime>02/07/2022 13:04:12</publishTime>
+      <publishTime>02/14/2022 12:37:45</publishTime>
     </File>
     <File Include="bin/Dapper.dll">
-      <publishTime>05/06/2015 18:05:20</publishTime>
+      <publishTime>02/14/2022 12:03:43</publishTime>
     </File>
     <File Include="bin/Dapper.pdb">
       <publishTime>05/06/2015 18:05:20</publishTime>
@@ -39,13 +39,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/17/2022 10:04:05</publishTime>
     </File>
     <File Include="bin/DatabaseLayer.dll">
-      <publishTime>02/07/2022 13:04:12</publishTime>
+      <publishTime>02/14/2022 12:37:45</publishTime>
     </File>
     <File Include="bin/DatabaseLayer.dll.config">
       <publishTime>01/18/2022 13:28:22</publishTime>
     </File>
     <File Include="bin/DatabaseLayer.pdb">
-      <publishTime>02/07/2022 13:04:12</publishTime>
+      <publishTime>02/14/2022 12:37:45</publishTime>
     </File>
     <File Include="bin/Intertech.Facade.DapperParameters.dll">
       <publishTime>01/17/2022 10:04:05</publishTime>
@@ -60,16 +60,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/10/2021 14:23:31</publishTime>
     </File>
     <File Include="bin/ModelLayer.dll">
-      <publishTime>02/07/2022 13:04:12</publishTime>
+      <publishTime>02/14/2022 12:37:44</publishTime>
     </File>
     <File Include="bin/ModelLayer.pdb">
-      <publishTime>02/07/2022 13:04:12</publishTime>
+      <publishTime>02/14/2022 12:37:44</publishTime>
     </File>
     <File Include="bin/MonitoringAndEvaluation_System.dll">
-      <publishTime>02/07/2022 13:04:12</publishTime>
+      <publishTime>02/14/2022 12:37:46</publishTime>
     </File>
     <File Include="bin/MonitoringAndEvaluation_System.pdb">
-      <publishTime>02/07/2022 13:04:12</publishTime>
+      <publishTime>02/14/2022 12:37:46</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>03/17/2021 20:03:36</publishTime>
@@ -252,10 +252,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/10/2021 14:23:30</publishTime>
     </File>
     <File Include="bin/Utility.dll">
-      <publishTime>02/07/2022 13:04:11</publishTime>
+      <publishTime>02/14/2022 12:37:44</publishTime>
     </File>
     <File Include="bin/Utility.pdb">
-      <publishTime>02/07/2022 13:04:11</publishTime>
+      <publishTime>02/14/2022 12:37:44</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>11/10/2021 14:23:31</publishTime>
@@ -927,7 +927,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/04/2022 10:38:00</publishTime>
     </File>
     <File Include="Views/Indicator/IndicatorFieldValue.cshtml">
-      <publishTime>02/07/2022 01:44:51</publishTime>
+      <publishTime>02/07/2022 14:04:08</publishTime>
     </File>
     <File Include="Views/Indicator/IndicatorLink.cshtml">
       <publishTime>01/18/2022 12:56:26</publishTime>
@@ -963,28 +963,34 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/07/2022 02:06:19</publishTime>
     </File>
     <File Include="Views/Project/RecruitedHRCreate.cshtml">
-      <publishTime>02/07/2022 02:18:05</publishTime>
+      <publishTime>02/07/2022 15:32:02</publishTime>
     </File>
     <File Include="Views/Project/RecruitedHREdit.cshtml">
       <publishTime>02/06/2022 22:44:14</publishTime>
     </File>
+    <File Include="Views/Reports/Index.cshtml">
+      <publishTime>02/14/2022 11:56:04</publishTime>
+    </File>
+    <File Include="Views/Role/CreateRole.cshtml">
+      <publishTime>02/14/2022 01:20:23</publishTime>
+    </File>
     <File Include="Views/Role/RoleCreateView.cshtml">
-      <publishTime>02/07/2022 02:06:19</publishTime>
+      <publishTime>02/14/2022 03:01:52</publishTime>
     </File>
     <File Include="Views/Role/RoleEdit.cshtml">
-      <publishTime>02/04/2022 10:38:00</publishTime>
+      <publishTime>02/14/2022 04:18:13</publishTime>
     </File>
     <File Include="Views/Role/RolePermission.cshtml">
       <publishTime>02/04/2022 10:38:00</publishTime>
     </File>
     <File Include="Views/Role/RolePermissions.cshtml">
-      <publishTime>02/04/2022 10:38:00</publishTime>
+      <publishTime>02/14/2022 02:17:21</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>11/10/2021 14:23:30</publishTime>
     </File>
     <File Include="Views/Shared/SideBar.cshtml">
-      <publishTime>02/04/2022 10:38:00</publishTime>
+      <publishTime>02/14/2022 11:32:12</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>02/07/2022 02:06:19</publishTime>
@@ -1008,7 +1014,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/28/2022 12:51:09</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/07/2022 13:04:13</publishTime>
+      <publishTime>02/14/2022 12:37:47</publishTime>
     </File>
   </ItemGroup>
 </Project>

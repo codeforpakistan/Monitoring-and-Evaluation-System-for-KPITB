@@ -51,7 +51,6 @@ namespace ModelLayer
             public bool IsActive { get; set; }
             public string Address { get; set; }
         }
-
         public partial class Role
         {
             public int RoleID { get; set; }

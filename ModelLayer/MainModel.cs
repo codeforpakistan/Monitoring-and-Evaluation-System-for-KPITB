@@ -210,14 +210,20 @@ namespace ModelLayer
 
         public partial class Expenditure_Budget
         {
-            public int ExpenditureBudgetID { get; set; }
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
-            public System.DateTime ExpenditureDate { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            //Expenditure
+            public int ExpenditureBudgetID { get; set; }
+            [Required(ErrorMessage = "Select To Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime ExpenditureDate { get; set; }
+            public string BudgetHead { get; set; }
+            public long ApprovedCost { get; set; }
             public long ExpenditureBudget { get; set; }
-            public string Remarks { get; set; }
-            public int User_ID { get; set; }
         }
         public partial class Issues
         {

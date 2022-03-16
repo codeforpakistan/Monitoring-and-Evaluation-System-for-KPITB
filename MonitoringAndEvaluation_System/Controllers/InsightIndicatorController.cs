@@ -18,6 +18,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         IndicatorBL ObjIndicatorMngBL = new IndicatorBL();
         //InsightIndicatorCreate
         [HttpGet]
+        #region Insight Indicator
         public ActionResult InsightIndicatorCreate()
         {
             CreateInsightIndicatorVM insightIndicatorVM = new CreateInsightIndicatorVM();
@@ -25,17 +26,17 @@ namespace MonitoringAndEvaluation_System.Controllers
             return View(insightIndicatorVM);
         }
 
-        #region Insight Indicator
 
-        #endregion
-        //IndicatorCreate
         [HttpGet]
-        public ActionResult IndicatorCreateView()
+        public ActionResult InsightIndicatorView()
         {
             CreateIndicatorVM indicatorVM = new CreateIndicatorVM();
             getAllIndicator();
             return View(indicatorVM);
         }
+        #endregion
+
+
         [HttpPost]
         public ActionResult IndicatorCreateView(CreateIndicatorVM indicatorVM)
         {

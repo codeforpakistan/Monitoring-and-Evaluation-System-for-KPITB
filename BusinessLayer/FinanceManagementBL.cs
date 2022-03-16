@@ -2,6 +2,7 @@
 using ModelLayer;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,9 +44,26 @@ namespace BusinessLayer
             return FinanceManagementDL.getAllReleasedBudgetDL(LoginRoleID, LoginUserID);
         }
         //ExpenditureCreateView
-        public StatusModel expenditureCreateViewBL(CreateViewExpenditureBudgetVM m)
+        //public StatusModel expenditureCreateViewBL(CreateViewExpenditureBudgetVM m)
+        //{
+        //    return FinanceManagementDL.expenditureCreateViewDL(m);
+        //}
+        public StatusModel expenditureCreateViewBL(List<CreateViewExpenditureBudgetVM> Lst)
         {
-            return FinanceManagementDL.expenditureCreateViewDL(m);
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Project_ID", typeof(int));
+            dt.Columns.Add("SubProject_ID", typeof(int));
+            dt.Columns.Add("Batch_ID", typeof(int));
+            dt.Columns.Add("ExpenditureDate", typeof(DateTime));
+            dt.Columns.Add("BudgetHead", typeof(string));
+            dt.Columns.Add("ApprovedCost", typeof(int));
+            dt.Columns.Add("ExpenditureBudget", typeof(int));
+           
+            for (int i = 0; i < Lst.Count; i++)
+            {
+                dt.Rows.Add(Lst[i].Project_ID, Lst[i].SubProject_ID, Lst[i].Batch_ID, Lst[i].ExpenditureDate=DateTime.Now, Lst[i].BudgetHead, Lst[i].ApprovedCost, Lst[i].ExpenditureBudget);
+            }
+            return FinanceManagementDL.expenditureCreateViewDL(dt);
         }
         //GetAllExpenditureBudget
         public List<GetAllExpenditureBudgetVM> getAllExpenditureBudgetBL(int LoginRoleID, int LoginUserID)

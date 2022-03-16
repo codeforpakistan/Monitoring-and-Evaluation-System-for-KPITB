@@ -32,23 +32,23 @@
                             @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
                         </div>
                         <div class="col-lg-4">
-                            <label>Total Approved Budget *</label>
+                            <label class="col-form-label">Total Approved Budget *</label>
                             <input hidden id="hdnExpenditureBudget" name="hdnExpenditureBudget" />
-                            <label class="col-form-label parsley-required" id="lblExpenditureBudget" name="lblExpenditureBudget" for="lblExpenditureBudget"></label>
-                            @Html.TextBoxFor(model => model.ExpenditureBudget, new { @class = "form-control", @type = "number", @placeholder = "Enter Expensive Amount KPR" })
-                            @Html.ValidationMessageFor(m => m.ExpenditureBudget, "", new { @class = "parsley-required", @id = "spanExpenditureBudget" })
+                            <div>
+                                <label class="form-control" id="lblExpenditureBudget" name="lblExpenditureBudget" for="lblExpenditureBudget">0</label>
+                            </div>
 
                         </div>
                         <div class="col-lg-4">
-                            <label>Total Released Budget *</label>
+                            <label class="col-form-label">Total Released Budget *</label>
                             <input hidden id="hdnExpenditureBudget" name="hdnExpenditureBudget" />
-                            <label class="col-form-label parsley-required" id="lblExpenditureBudget" name="lblExpenditureBudget" for="lblExpenditureBudget"></label>
-                            @Html.TextBoxFor(model => model.ExpenditureBudget, new { @class = "form-control", @type = "number", @placeholder = "Enter Expensive Amount KPR" })
-                            @Html.ValidationMessageFor(m => m.ExpenditureBudget, "", new { @class = "parsley-required", @id = "spanExpenditureBudget" })
+                            <div>
+                                <label class="form-control" id="lblExpenditureBudget" name="lblExpenditureBudget" for="lblExpenditureBudget">0</label>
+                            </div>
 
                         </div>
                         <div class="col-lg-4">
-                            <label>Total Expenditure Budget </label>
+                            <label class="col-form-label">Total Expenditure Budget </label>
                             @Html.TextBoxFor(model => model.ExpenditureBudget, new { @class = "form-control", @type = "number", @placeholder = "Enter Expensive Amount KPR", @readonly = "readonly" })
                             @Html.ValidationMessageFor(m => m.ExpenditureBudget, "", new { @class = "parsley-required", @id = "spanExpenditureBudget" })
 
@@ -163,66 +163,32 @@
             $(row).parent().parent().remove();
         }
 
-        $("#idRiskName").on('change', function () {
-            debugger;
-            if ($('#idRiskName').val() != "") {
-                $('#spanidRiskName').hide();
-                return true;
-            }
-        });
-        $("#idRiskMitigation").on('change', function () {
-            debugger;
-            if ($('#idRiskMitigation').val() != "") {
-                $('#spanidRiskMitigation').hide();
-                return true;
-            }
-        });
-        $("#idRiskStatus").on('change', function () {
-            debugger;
-            if ($('#idRiskStatus').val() != "") {
-                $('#spanidRiskStatus').hide();
-                return true;
-            }
-        });
-
-
+      
 
 
             $("#btnCreate").click(function (e) {
                 e.preventDefault();
 
-            debugger;
-
-            if ($('#ProjectName').val() == '') {
-                $('#spanProjectName').text('Please Fill This Field');
-                $('#ProjectName').focus();
-                return true;
-            }
-
-
-
             var formAllData = new FormData();
-
-
-            formAllData.append('txtProjectName', $("#ProjectName").val());
-
-            //Risk
-            var RiskRows = new Array();   //ArrayList
-            $('#tblRisk tr').each(function ()
+           
+            //Expenditure
+            var ExpenditureRows = new Array();   //ArrayList
+                $('#tblExpenditureBudget tr').each(function ()
             {
                 if ($(this).find('td:eq(0)').text() != '')
                 {
-                    //Risk
+                    //Expenditure
                     debugger;
-                    $RiskRow = $(this).find('td:eq(0)').text() +
-                                "|" + $(this).find('td:eq(1)').text() +
-                                "|" + $(this).find('td:eq(2)').attr('id');
-                    RiskRows.push($RiskRow);
+                    $ExpenditureRow = $(this).find('td:eq(0)').text() +
+                        "|" + $(this).find('td:eq(1)').text() +
+                        "|" + $(this).find('td:eq(2)').text() +
+                        "|" + $(this).find('td:eq(3)').text();
+                    ExpenditureRows.push($ExpenditureRow);
                 }
             });
-            formAllData.append("_RiskRows", RiskRows);
+                formAllData.append("_ExpenditureRows", ExpenditureRows);
 
-            var urllink = '@Url.Action("ProjectCreate", "Project")'
+            var urllink = '@Url.Action("ExpenditureBudgetCreateView", "Finance")'
             $.ajax({
                 url: urllink,
                 type: "POST",
@@ -232,11 +198,11 @@
                 success: function (result) {
                     debugger;
                     if (result == 'false') {
-                       var route = '@Url.Action("ProjectCreate", "Project")'
+                       var route = '@Url.Action("ExpenditureBudgetCreateView", "Finance")'
                          window.location.href = route;
                     }
                     else if (result == 'true') {
-                         var route = '@Url.Action("ProjectView", "Project")'
+                         var route = '@Url.Action("ExpenditureBudgetCreateView", "Finance")'
                          window.location.href = route;
                     }
 
@@ -248,8 +214,5 @@
             });
 
         });
-
-
-
     </script>
 }

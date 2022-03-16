@@ -40,7 +40,9 @@ $("#Project_ID").on('change', function () {
             $("#RecruitedHR").val('');
             $("#PlannedProcrumentNo").val('');
             $("#ReleasedBudget").val('');
-            $("#ExpenditureBudget").val('');
+            $("#ApprovedBudget").val('');
+            $("#ReleasedBudget").val('');
+
 
             $("#lblRemaningHR").text(response.remainingValues.RemainingPlannedHR);
             $("#hdnRemaningHR").val(response.remainingValues.RemainingPlannedHR);//Hidden
@@ -51,8 +53,11 @@ $("#Project_ID").on('change', function () {
             $("#lblRemaningBudget").text(response.remainingValues.RemainingBudget);
             $("#hdnRemaningBudget").val(response.remainingValues.RemainingBudget); //Hidden
 
-            $("#lblExpenditureBudget").text(response.remainingValues.RemainingBudget);
-            $("#hdnExpenditureBudget").val(response.remainingValues.RemainingBudget); //Hidden
+            $("#lblExpenditureBudget").text(response.remainingValues.ApprovedBudget);
+            $("#hdnExpenditureBudget").val(response.remainingValues.ApprovedBudget); //Hidden
+
+            $("#lblTotalReleasedBudget").text(response.remainingValues.ReleasedBudget);
+            $("#hdnTotalReleasedBudget").val(response.remainingValues.ReleasedBudget); //Hidden
             /* }*/
         },
         error: function (ex) {

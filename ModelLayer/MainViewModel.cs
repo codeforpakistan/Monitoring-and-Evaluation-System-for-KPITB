@@ -666,10 +666,14 @@ namespace ModelLayer
 
             //Expenditure
             public int ExpenditureBudgetID { get; set; }
-            public DateTime ExpenditureFromDate { get; set; }
-            public DateTime ExpenditureToDate { get; set; }
+            [Required(ErrorMessage = "Select To Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime ExpenditureDate { get; set; }
+            public string BudgetHead { get; set; }
+            public long ApprovedCost { get; set; }
             public long ExpenditureBudget { get; set; }
-            public string Remarks { get; set; }
+            public List<Expenditure_Budget> AssignExpenditureList { get; set; }
             public List<ComboProject> comboProjects { get; set; }
             public List<ComboSubProject> comboSubProjects { get; set; }
             public List<ComboBatch> comboBatch { get; set; }
@@ -789,6 +793,9 @@ namespace ModelLayer
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
             public string IssueDescription { get; set; }
+            [Required(ErrorMessage = "Select From Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
             public DateTime IssueDate { get; set; }
 
             [Required(ErrorMessage = "Enter ActionTaken")]

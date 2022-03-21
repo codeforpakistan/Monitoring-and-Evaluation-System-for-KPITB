@@ -1,20 +1,16 @@
-﻿using DatabaseLayer;
-using ModelLayer;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public class Repo
+    public class Repose
     {
         public static object batchCreateViewDL<T>(T model, List<SqlParameter> parm)
         {
-            
+
             IDbConnection Con = null;
             try
             {

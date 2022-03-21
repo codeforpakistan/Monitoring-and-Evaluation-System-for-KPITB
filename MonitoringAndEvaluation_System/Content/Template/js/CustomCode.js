@@ -21,20 +21,36 @@ $("#Project_ID").on('change', function () {
         success: function (response) {
             debugger;
             $("#Batch_ID").empty();
+            $("#SubProject_ID").empty();
 
             //ComboBatch
             if (response.comboBatches.length <= 1) {
                 $("#Batch_ID").prop("disabled", true);
                 $("#Batch_ID").append('<option value="' + 0 + '">' +
                     "Please Select Batch" + '</option>');
-            }
-            else {
+            }else {
                 $("#Batch_ID").prop("disabled", false);
                 $.each(response.comboBatches, function (i, item) {
                     $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
                         item.BatchName + '</option>');
                 });
             }
+
+            //SubProject
+            if (response.comboSubProjects.length <= 1) {
+                $("#SubProject_ID").prop("disabled", true);
+                $("#SubProject_ID").append('<option value="' + 0 + '">' +
+                    "Please Select SubProject" + '</option>');
+            }else {
+                $("#SubProject_ID").prop("disabled", false);
+                $.each(response.comboSubProjects, function (i, item) {
+                    $("#SubProject_ID").append('<option value="' + item.SubProjectID + '">' +
+                        item.SubProjectName + '</option>');
+                });
+            }
+
+
+
             debugger;
             //RemainingVaues
             $("#RecruitedHR").val('');
@@ -257,6 +273,49 @@ function IssueDateCompare() {
         }
     }
 }
+
+// $("#SubProject_ID").on('change', function () {
+//    var obj = {};
+//    obj.Project_ID = $("#Project_ID").find("option:selected").val();
+//    obj.SubProject_ID = $("#SubProject_ID").find("option:selected").val();
+
+//    //var Stock = { Project_ID: $("#Project_ID").find("option:selected").val(), Batch_ID: $("#Batch_ID").find("option:selected").val() };
+//    $.ajax({
+//        type: 'POST',
+//        url: '@Url.Action("ClickBatchComboBox", "Common")',
+//        data: JSON.stringify(obj),
+//        contentType: 'application/json; charset=utf-8',
+//        dataType: 'json',
+
+//        success: function (ProcurementHeadLst) {
+//            debugger;
+//            $("#PlannedProcurement_ID").empty();
+//            if (ProcurementHeadLst.length <= 1 || ProcurementHeadLst == null) {
+//                $("#PlannedProcurement_ID").prop("disabled", true);
+//                $("#PlannedProcurement_ID").append('<option value="' + 0 + '">' +
+//                    "Please Select Procurement Head" + '</option>');
+//            } else {
+//                $("#PlannedProcurement_ID").prop("disabled", false);
+//                $.each(ProcurementHeadLst, function (i, Aqib) {
+//                    $("#PlannedProcurement_ID").append('<option value="' + Aqib.PlannedProcurementID + '">' +
+//                        Aqib.ProcrumetHeader + '</option>');
+//                });
+//            }
+//            debugger;
+//            //RemainingVaues
+
+//            $("#PlannedProcrumentNo").val('');
+//            $("#lblRemainingProcurement").text(response.remainingValues.RemainingProcurement);
+//            $("#hdnRemainingProcurement").val(response.remainingValues.RemainingProcurement); //Hidden
+//        },
+//        error: function (ex) {
+//            console.log('Failed to Retrieve Indicator Data:  ' + ex.responseText);
+//        }
+//    });//Ajax_End
+//});
+
+
+
 
 
 

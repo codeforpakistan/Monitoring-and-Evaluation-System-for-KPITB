@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Utility;
 using static ModelLayer.ComboModel;
+using static ModelLayer.MainModel;
 using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
@@ -79,46 +80,110 @@ namespace MonitoringAndEvaluation_System.Controllers
            
         }
         [HttpPost]
-        public ActionResult ExpenditureBudgetCreateView(CreateViewExpenditureBudgetVM expenditureVM, FormCollection form)
+        public ActionResult ExpenditureBudgetCreateView(CreateViewExpenditureBudgetVM model)
         {
             try
             {
-                if (ModelState.IsValid == false)
+                List<CreateViewExpenditureBudgetVM> expenditureLst = new List<CreateViewExpenditureBudgetVM>();
+                string[] _ExpenditureLst = Request.Form["_ExpenditureLst"].Split(',');
+                for (int i = 0; i < _ExpenditureLst.Length; i++)
                 {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    goto gotoWithModel;
+                    if (_ExpenditureLst[0].Trim() != "")
+                    {
+                        string[] ItemArray = _ExpenditureLst[i].Split('|');
+                        expenditureLst.Add(new CreateViewExpenditureBudgetVM()
+                        {
+                            Project_ID = Convert.ToInt32(ItemArray[1]),
+                            SubProject_ID = Convert.ToInt32(ItemArray[2]),
+                            Batch_ID = Convert.ToInt32(ItemArray[3]),
+                            ExpenditureDate = Convert.ToDateTime(ItemArray[4]),
+                            BudgetHead = Convert.ToString(ItemArray[5]),
+                            ApprovedCost = Convert.ToInt32(ItemArray[6]),
+                            ExpenditureBudget = Convert.ToInt32(ItemArray[7])
+                        });
+                    }
                 }
-                int hdnExpenditureBudget = Convert.ToInt32(form["hdnExpenditureBudget"]);
-                if (expenditureVM.ExpenditureBudget > hdnExpenditureBudget)
-                {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, "ExpenditureBudget Budget should not be greater than Released Budget: "+ hdnExpenditureBudget);
-                    goto gotoWithModel; 
-                }
-                expenditureVM.CreatedByUser_ID = LoginUserID;
-                StatusModel status = new FinanceManagementBL().expenditureCreateViewBL(expenditureVM);
+                StatusModel status = new FinanceManagementBL().expenditureCreateViewBL(expenditureLst);
                 if (status.status)
                 {
+                    //TempData["Message"] = status.statusDetail;
+                    //TempData.Keep("Message");
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
                 }
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
-                    goto gotoWithModel;
+                    return Json("false");
                 }
+
             }
             catch (Exception ex1)
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
-                goto gotoWithModel;
+                return Json("false");
             }
-            return RedirectToAction("ExpenditureBudgetCreateView");
+            return Json("true");
 
-            gotoWithModel:
-            expenditureVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            expenditureVM.comboBatch.Add(mb);
-            getAllExpenditureBudget();
-            return View(expenditureVM);
+
+
+            //    #region SingleValues
+
+            //    //expenditureVM.ExpenditureDate = Convert.ToDateTime(Request.Form["txtCategory_ID"]);
+            //    expenditureVM.CreatedByUser_ID = LoginUserID;//Convert.ToInt32(Session["LoginUserID"]);
+            //    #endregion
+
+            //    #region Expenditure
+            //    //From Expenditure GridView
+            //    List<Expenditure_Budget> _lstExpenditure = new List<Expenditure_Budget>();
+            //    string[] _ExpenditureRows = Request.Form["_ExpenditureRows"].Split(',');
+            //    for (int i = 0; i < _ExpenditureRows.Length; i++)
+            //    {
+            //        if (_ExpenditureRows[0].Trim() != "")
+            //        {
+            //            Expenditure_Budget m = new Expenditure_Budget();
+            //            string[] ItemArray = _ExpenditureRows[i].Split('|');
+            //            m.BudgetHead = Convert.ToString(ItemArray[1]);
+            //            m.ApprovedCost = Convert.ToInt32(ItemArray[2]);
+            //            m.ExpenditureBudget = Convert.ToInt32(ItemArray[3]);
+            //            m.CreatedByUser_ID = LoginUserID;
+            //            _lstExpenditure.Add(m);
+            //        }
+            //    }
+            //    expenditureVM.AssignExpenditureList = _lstExpenditure;
+            //    #endregion
+
+
+
+
+            //    // ModelState.Remove("RiskStatus_ID");
+            //    //if (ModelState.IsValid == false)
+            //    //{
+            //    //    Combo(ProjectVM);
+            //    //   return View(ProjectVM);
+            //    List<CreateIndicatorFieldVM> fieldIndicatorLst = new List<CreateIndicatorFieldVM>();
+            //    //}
+
+            //    StatusModel status = new FinanceManagementBL().expenditureCreateViewBL(lstExpenditure);
+            //    if (status.status)
+            //    {
+            //        ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
+            //    }
+            //    else
+            //    {
+            //        ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
+            //        return Json("false");
+            //    }
+
+            //}
+            //catch (Exception ex1)
+            //{
+            //    ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
+            //    return Json("false");
+            //}
+            //return Json("true");
+            ////return View("ProjectView");
+            ////return View("~/Views/Project/ProjectView.cshtml", new ProjectManagementBL().getAllProjectBL());
+
         }
 
 

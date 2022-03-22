@@ -32,7 +32,6 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
-
                 #region SingleValues
 
                 ProjectVM.Category_ID = Convert.ToInt32(Request.Form["txtCategory_ID"]);
@@ -54,9 +53,17 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.User_ID = LoginUserID;//Convert.ToInt32(Session["LoginUserID"]);
                 #endregion
                 #region FundingArray
-                string aaa = Convert.ToString(Request.Form["FundingSourceArray"]);
-                ProjectVM.Funding_Source = string.Join(",", aaa);
+                //string aaa = Convert.ToString(Request.Form["FundingSourceArray"]);
+                //ProjectVM.Funding_Source = string.Join(",", aaa);
                 #endregion
+                ProjectVM.Funding_SourceArray = Request.Form["FundingSourceArray"].Split(',').ToList().Select(int.Parse).ToList();
+                ProjectVM.ProjectTypeArray = Request.Form["ProjectTypeArray"].Split(',').ToList().Select(int.Parse).ToList();
+                ProjectVM.CityArray = Request.Form["CityArray"].Split(',').ToList().Select(int.Parse).ToList();
+                ProjectVM.DigitalPolicyArray = Request.Form["DigitalPolicyArray"].Split(',').ToList().Select(int.Parse).ToList();
+                ProjectVM.SDGSArray = Request.Form["SDGSArray"].Split(',').ToList().Select(int.Parse).ToList();
+
+                ///
+
                 #region Risk
                 //From Risk GridView
                 List<Risk> _lstRisk = new List<Risk>();

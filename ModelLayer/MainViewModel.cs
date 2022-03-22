@@ -246,15 +246,20 @@ namespace ModelLayer
             public int Category_ID { get; set; }
             [Range(1, int.MaxValue, ErrorMessage = "Please Select")]
             public int ProjectType_ID { get; set; }
+            public List<int> ProjectTypeArray { get; set; }
+
             //[Required(ErrorMessage = "Please Select Select Digital Policy")]
             [Range(1, int.MaxValue, ErrorMessage = "Please Select")]
             public int DigitalPolicy_ID { get; set; }
+            public List<int> DigitalPolicyArray { get; set; }
 
             //[Required(ErrorMessage = "Please Select Select Location")]
             [Range(1, int.MaxValue, ErrorMessage = "Please Select")]
             public int City_ID { get; set; }
-
+            public List<int> CityArray { get; set; }
             public int SDGS_ID { get; set; }
+            public List<int> SDGSArray { get; set; }
+            
             public int ProjectStatus_ID { get; set; }
             public int User_ID { get; set; }
             [Required(ErrorMessage = "Please Enter Project Name")]
@@ -272,7 +277,7 @@ namespace ModelLayer
             [Display(Name = "Funding Source")]
             public string Funding_Source { get; set; }
 
-            public List<string> Funding_SourceArray { get; set; }
+            public List<int> Funding_SourceArray { get; set; }
             //[Required(ErrorMessage = "Please Enter Planned HR")]
             [Display(Name = "Planned-HR")]
             [Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]

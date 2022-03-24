@@ -322,10 +322,10 @@
                                     <thead class="table-info">
                                         <tr>
                                             <th data-column-id="id" data-type="numeric">ID</th>
-                                            <th data-column-id="Indicator">Header</th>
-                                            <th data-column-id="Target">Planned Per Cost</th>
-                                            <th data-column-id="Date">Achived Cost</th>
-                                            <th data-column-id="Date">Planned Procrument</th>
+                                            <th data-column-id="Header">Header</th>
+                                            <th data-column-id="PlannedPerCost">Planned Per Cost</th>
+                                            <th data-column-id="AchivedCost">Achived Cost</th>
+                                            <th data-column-id="PlannedProcrument">Planned Procrument</th>
                                             <th data-column-id="action">Action</th>
                                         </tr>
                                     </thead>
@@ -1107,15 +1107,35 @@
             formAllData.append('txtPlannedBudget', $("#PlannedBudget").val());
             formAllData.append('txtApprovedBudget', $("#ApprovedBudget").val());
             formAllData.append('txtReleasedBudget', $("#ReleasedBudget").val());
-            formAllData.append('txtPlannedProcurement', $("#PlannedProcurement").val());
-            formAllData.append('txtHeaders', $("#Headers").val());
-            formAllData.append('txtAchievedProcurement', $("#AchievedProcurement").val());
-            formAllData.append('txtProcurementPercent', $("#ProcurementPercent").val());
+            //    formAllData.append('txtPlannedProcurement', $("#PlannedProcurement").val());
+            //    formAllData.append('txtAchievedProcurement', $("#AchievedProcurement").val());
+            //    formAllData.append('txtProcurementPercent', $("#ProcurementPercent").val());
+            //formAllData.append('txtHeaders', $("#Headers").val());
+        
             formAllData.append('FundingSourceArray', $("#Funding_SourceArray").val());
             formAllData.append('ProjectTypeArray', $("#ProjectTypeArray").val());
             formAllData.append('CityArray', $("#CityArray").val());
             formAllData.append('DigitalPolicyArray', $("#DigitalPolicyArray").val());
             formAllData.append('SDGSArray', $("#SDGSArray").val());
+
+
+                
+           
+
+                //Objective
+                var ObjectiveRows = new Array();   //ArrayList
+                $('#tblObjective tr').each(function () {
+                    if ($(this).find('td:eq(0)').text() != '') {
+                        debugger;
+                        $ObjectiveRow = $(this).find('td:eq(1)').text();
+                        ObjectiveRows.push($ObjectiveRow);
+                    }
+                });
+                formAllData.append("_ObjectiveRows", ObjectiveRows);
+
+
+  
+
 
              //KPIs
              var KPIsRows = new Array();   //ArrayList
@@ -1130,7 +1150,22 @@
                      KPIsRows.push($KPIsRow);
                  }
              });
-                formAllData.append("_$KPIsRows", $KPIsRow);
+                formAllData.append("_KPIsRows", KPIsRows);
+
+                //Procurement 
+                var ProcrumentRows = new Array();   //ArrayList
+                $('#tblProcrument tr').each(function () {
+                    if ($(this).find('td:eq(0)').text() != '') {
+                        debugger;
+                        $ProcrumentRow = $(this).find('td:eq(1)').text() +
+                            "|" + $(this).find('td:eq(2)').text() +
+                            "|" + $(this).find('td:eq(3)').text() +
+                            "|" + $(this).find('td:eq(4)').text();
+                        ProcrumentRows.push($ProcrumentRow);
+                    }
+                });
+                formAllData.append("_ProcrumentRows", ProcrumentRows);
+
 
             //Risk
             var RiskRows = new Array();   //ArrayList

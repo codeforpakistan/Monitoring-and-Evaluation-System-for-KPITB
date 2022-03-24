@@ -39,7 +39,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.DigitalPolicy_ID = Convert.ToInt32(Request.Form["txtDigitalPolicy_ID"]);
                 ProjectVM.City_ID = Convert.ToInt32(Request.Form["txtCity_ID"]);
                 ProjectVM.ProjectName = Convert.ToString(Request.Form["txtProjectName"]);
-                ProjectVM.Objective = Convert.ToString(Request.Form["txtObjective"]);
+              
                 ProjectVM.PlannedDate = Convert.ToDateTime(Request.Form["txtPlannedDate"]);
                 ProjectVM.StartDate = Convert.ToDateTime(Request.Form["txtStartDate"]);
                 ProjectVM.EndDate = Convert.ToDateTime(Request.Form["txtEndDate"]);
@@ -62,7 +62,45 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.DigitalPolicyArray = Request.Form["DigitalPolicyArray"].Split(',').ToList().Select(int.Parse).ToList();
                 ProjectVM.SDGSArray = Request.Form["SDGSArray"].Split(',').ToList().Select(int.Parse).ToList();
 
-                ///
+                ProjectVM.Objective = Convert.ToString(Request.Form["txtObjective"]);
+
+                #region Objective
+                //From Procrument
+                List<PlannedProcurement> _lstProProcurement = new List<PlannedProcurement>();
+                string[] _ProcrumentRows = Request.Form["_ProcrumentRows"].Split(',');
+                for (int i = 0; i < _ProcrumentRows.Length; i++)
+                {
+                    if (_ProcrumentRows[0].Trim() != "")
+                    {
+                        PlannedProcurement m = new PlannedProcurement();
+                        string[] ItemArray = _ProcrumentRows[i].Split('|');
+                        m.ProcrumetHeader = Convert.ToString(ItemArray[0]);
+                        m.PlannedProcrumentNo = Convert.ToInt32(ItemArray[1]);
+                        m.PlannedPerCostItem = Convert.ToInt32(ItemArray[2]);
+                        m.AchivedCost = Convert.ToInt32(ItemArray[3]);
+                        _lstProProcurement.Add(m);
+                    }
+                }
+                ProjectVM.AssignPlannedProcurementList = _lstProProcurement;
+                #endregion
+
+                #region Objective
+                //From Objective GridView
+                List<ProjectObjective> _lstProObjective = new List<ProjectObjective>();
+                string[] _ObjectiveRows = Request.Form["_ObjectiveRows"].Split(',');
+                for (int i = 0; i < _ObjectiveRows.Length; i++)
+                {
+                    if (_ObjectiveRows[0].Trim() != "")
+                    {
+                        ProjectObjective m = new ProjectObjective();
+                        string[] ItemArray = _ObjectiveRows[i].Split('|');
+                        m.ObjectiveName = Convert.ToString(ItemArray[0]);
+                        m.SubProject_ID = 0;
+                        _lstProObjective.Add(m);
+                    }
+                }
+                ProjectVM.AssignObjectiveList = _lstProObjective;
+                #endregion
 
                 #region Risk
                 //From Risk GridView

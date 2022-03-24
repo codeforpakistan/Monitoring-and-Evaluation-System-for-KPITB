@@ -86,7 +86,8 @@ namespace ModelLayer
         {
             public int ObjectiveID { get; set; }
             public int Project_ID { get; set; }
-            
+            public int SubProject_ID { get; set; }
+
             public string ObjectiveName { get; set; }
             public int CreatedByUser_ID { get; set; }
         }

@@ -75,7 +75,8 @@ namespace MonitoringAndEvaluation_System.Controllers
                         Risk m = new Risk();
                         string[] ItemArray = _RiskRows[i].Split('|');
                         m.RiskName = Convert.ToString(ItemArray[1]);
-                        m.RiskStatus_ID = Convert.ToInt32(ItemArray[2]);
+                        m.RiskMitigation_ID = Convert.ToInt32(ItemArray[2]);
+                        m.RiskStatus_ID = Convert.ToInt32(ItemArray[3]);
                         m.CreatedByUser_ID = LoginUserID;
                         _lstRisk.Add(m);
                     }
@@ -92,7 +93,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                     {
                         Stackholder mm = new Stackholder();
                         string[] ItemArray = _StackholderRows[i].Split('|');
-                        mm.StackholderName = Convert.ToString(ItemArray[1]);
+                        mm.TypeOfStakeholder_ID = Convert.ToInt32(ItemArray[1]);
                         mm.StackholderDepartment = Convert.ToString(ItemArray[2]);
                         mm.StackholderContact = Convert.ToString(ItemArray[3]);
                         mm.StackholderEmail = Convert.ToString(ItemArray[4]);

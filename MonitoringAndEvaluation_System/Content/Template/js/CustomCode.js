@@ -1,10 +1,10 @@
-﻿//RecruitedHRCreate
+﻿//ALL
 $(document).ready(function () {
     $("#RecruitedHR").val('');
     $("#NoOfProcurement").val('');
     $("#ReleasedBudget").val('');
     $("#ExpenditureBudget").val('');
-
+    $("#SubProject_ID").prop("disabled", true);
     $("#Batch_ID").prop("disabled", true);
 });
 
@@ -19,9 +19,21 @@ $("#Project_ID").on('change', function () {
         dataType: 'json',
         data: { ProjectID: _Project_ID },
         success: function (response) {
-            debugger;
             $("#Batch_ID").empty();
             $("#SubProject_ID").empty();
+
+            //ComboSubProject
+            if (response.comboSubProjects.length <= 1) {
+                $("#SubProject_ID").prop("disabled", true);
+                $("#SubProject_ID").append('<option value="' + 0 + '">' +
+                    "Please Select SubProject" + '</option>');
+            } else {
+                $("#SubProject_ID").prop("disabled", false);
+                $.each(response.comboSubProjects, function (i, item) {
+                    $("#SubProject_ID").append('<option value="' + item.SubProjectID + '">' +
+                        item.SubProjectName + '</option>');
+                });
+            }
 
             //ComboBatch
             if (response.comboBatches.length <= 1) {
@@ -36,29 +48,12 @@ $("#Project_ID").on('change', function () {
                 });
             }
 
-            //SubProject
-            if (response.comboSubProjects.length <= 1) {
-                $("#SubProject_ID").prop("disabled", true);
-                $("#SubProject_ID").append('<option value="' + 0 + '">' +
-                    "Please Select SubProject" + '</option>');
-            }else {
-                $("#SubProject_ID").prop("disabled", false);
-                $.each(response.comboSubProjects, function (i, item) {
-                    $("#SubProject_ID").append('<option value="' + item.SubProjectID + '">' +
-                        item.SubProjectName + '</option>');
-                });
-            }
-
-
-
-            debugger;
             //RemainingVaues
             $("#RecruitedHR").val('');
             $("#PlannedProcrumentNo").val('');
             $("#ReleasedBudget").val('');
             $("#ApprovedBudget").val('');
             $("#ReleasedBudget").val('');
-
 
             $("#lblRemaningHR").text(response.remainingValues.RemainingPlannedHR);
             $("#hdnRemaningHR").val(response.remainingValues.RemainingPlannedHR);//Hidden

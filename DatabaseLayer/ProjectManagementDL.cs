@@ -655,18 +655,65 @@ namespace DatabaseLayer
                         status.status = (bool)_StatusParm2.Value;
                         status.statusDetail = (string)_StatusDetailsParm2.Value;
                     }
-                        #endregion
-                        conn.Dispose();
-                        cmd.Dispose();
+                    #endregion
 
-                        transactionScope.Complete();
-                        transactionScope.Dispose();
+                    #region Region3
+
+                    Con = new SqlConnection(Common.ConnectionString);
+                    Con.Open();
+
+                    DynamicParameters ObjParm3 = new DynamicParameters();
+                   
+
+                    var _dtObjective = m.AssignObjectiveList.Select(p => new { Project_ID,p.SubProject_ID, p.ObjectiveName}).ToList();
+                    DataTable dtObjective = Utility.Conversion.ConvertListToDataTable(_dtObjective);  
+
+                    var _dtProjectWithCity = m.comboCities.Select(p => new { Project_ID, p.CityID }).ToList();
+                    DataTable dtProjectWithCity = Utility.Conversion.ConvertListToDataTable(_dtProjectWithCity);
+                    dtProjectWithCity.Columns["CityID"].ColumnName = "City_ID";
+
+                    var _dtFundingSource = m.comboFundingSource.Select(p => new { Project_ID, p.FundingSourceID }).ToList();
+                    DataTable dtFundingSource = Utility.Conversion.ConvertListToDataTable(_dtFundingSource);
+                    dtProjectWithCity.Columns["FundingSourceID"].ColumnName = "FundingSource_ID";
+
+                    var _dtProjectWithPolicy = m.comboDigitalPolicies.Select(p => new { Project_ID, p.DigitalPolicyID}).ToList();
+                    DataTable dtProjectWithPolicy = Utility.Conversion.ConvertListToDataTable(_dtProjectWithPolicy);
+                    dtProjectWithCity.Columns["DigitalPolicyID"].ColumnName = "DigitalPolicy_ID";
+
+                    var _dtProjectWithProjectType = m.comboProjectTypes.Select(p => new { Project_ID, p.ProjectTypeID }).ToList();
+                    DataTable dtProjectWithProjectType = Utility.Conversion.ConvertListToDataTable(_dtProjectWithProjectType);
+                    dtProjectWithCity.Columns["ProjectTypeID"].ColumnName = "ProjectType_ID";
+
+                    var _dtProjectWithSDGS = m.comboSDGS.Select(p => new { Project_ID, p.SDGSID }).ToList();
+                    DataTable dtProjectWithSDGS = Utility.Conversion.ConvertListToDataTable(_dtProjectWithSDGS);
+                    dtProjectWithCity.Columns["SDGSID"].ColumnName = "SDGS_ID";
+
+                    ObjParm3.Add("@ProjectWithCityTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithCity "));
+                    ObjParm3.Add("@ProjectWIthFundingSourceTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWIthFundingSource"));
+                    ObjParm3.Add("@ProjectWithPolicyTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithPolicy"));
+                    ObjParm3.Add("@ProjectWithProjectTypeTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithProjectType"));
+                    ObjParm3.Add("@ProjectWithSDGSTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithSDG"));
+
+                    ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                    Con.Execute("sp_ProjectBulkEntry", ObjParm, commandType: CommandType.StoredProcedure);
+
+                    status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                    status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+
+                    #endregion
+
+                    conn.Dispose();
+                    cmd.Dispose();
+
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
                     }
                 }
             catch (Exception ex)
             {
-                _Status = false;
-                _StatusDetails = ex.Message;
+                status.status = false;
+                status.statusDetail = ex.Message;
 
             }
             finally

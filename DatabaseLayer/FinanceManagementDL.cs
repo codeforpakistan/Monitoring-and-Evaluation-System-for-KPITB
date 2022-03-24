@@ -14,7 +14,7 @@ namespace DatabaseLayer
 {
     public class FinanceManagementDL
     {
-        #region Finance
+        
         //ComparePlanned_BudgetDL
         public static StatusModel ComparePlanned_BudgetDL(int _ProjectID, out int ApprovedBudget, out int ReleasedBudget)
         {
@@ -53,7 +53,7 @@ namespace DatabaseLayer
         //ComparePlanned_BudgetDL
         public static StatusModel CompareReleased_ExpenditureDL(int _ProjectID, out int ReleasedBudget, out int ExpenditureBudget)
         {
-           
+
             ReleasedBudget = 0;
             ExpenditureBudget = 0;
 
@@ -135,28 +135,106 @@ namespace DatabaseLayer
             }
             return model;
         }
-        //public static StatusModel expenditureCreateViewDL(CreateViewExpenditureBudgetVM m)
+        public static StatusModel expenditureCreateViewDL(CreateViewExpenditureBudgetVM m)
+        {
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+
+
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+
+            int Project_ID = 0;
+
+            try
+            {
+                using (TransactionScope transactionScope = new TransactionScope())
+                {
+                    //Con = new SqlConnection(Common.ConnectionString);
+                    //Con.Open();
+                    //DynamicParameters ObjParm = new DynamicParameters();
+                    ////LoginUser
+                    //ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);   //LoginUser
+                    //ObjParm.Add("@Project_ID", m.Project_ID);
+                    //ObjParm.Add("@SubProject_ID", m.SubProject_ID);
+                    //ObjParm.Add("@Batch_ID", m.Batch_ID);
+                    
+                    //ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    //ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                    //ObjParm.Add("@Project_ID", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+
+                    //Con.Execute("sp_ProjectCeate", ObjParm, commandType: CommandType.StoredProcedure);
+
+                    //status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                    //status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                    //Project_ID = Convert.ToInt32(ObjParm.Get<Int32>("@Project_ID"));
+                    //Con.Close();
+
+                    #region NO
+                    
+                    conn = new SqlConnection(Common.ConnectionString);
+                    cmd = new SqlCommand("sp_ExpenditureCreateMulti", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    var _AssignExpenditureList = m.AssignExpenditureList.Select(p => new {p.Project_ID,p.SubProject_ID, p.Batch_ID,p.ExpenditureDate, p.BudgetHead, p.ApprovedCost,p.ExpenditureBudget, p.CreatedByUser_ID }).ToList();
+                    
+                    if (_AssignExpenditureList.Count > 0)
+                    {
+                        DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignExpenditureList);
+                        cmd.Parameters.AddWithValue("@ExpenditureTable", dt).SqlDbType = SqlDbType.Structured;
+
+                        SqlParameter _StatusParm = new SqlParameter("@Status", SqlDbType.Bit);
+                        _StatusParm.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(_StatusParm);
+                        SqlParameter _StatusDetailsParm = new SqlParameter("@StatusDetails", SqlDbType.VarChar, 100);
+                        _StatusDetailsParm.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(_StatusDetailsParm);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+
+                        status.status = (bool)_StatusParm.Value;
+                        status.statusDetail = (string)_StatusDetailsParm.Value;
+                    }
+
+                   
+                    conn.Dispose();
+                    cmd.Dispose();
+
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                status.status = false;
+                status.statusDetail = ex.Message;
+
+            }
+            finally
+            {
+
+            }
+#endregion
+            return status;
+        }
+        //public static StatusModel expenditureCreateViewDL(DataTable  dt)
         //{
+
         //    StatusModel status = new StatusModel();
         //    IDbConnection Con = null;
         //    try
         //    {
         //        Con = new SqlConnection(Common.ConnectionString);
         //        Con.Open();
+
         //        DynamicParameters ObjParm = new DynamicParameters();
-
-        //        ObjParm.Add("@Project_ID", m.Project_ID);
-        //        ObjParm.Add("@SubProject_ID", m.SubProject_ID);
-        //        ObjParm.Add("@Batch_ID", m.Batch_ID);
-        //        ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);
-        //        ObjParm.Add("@ExpenditureFromDate", m.ExpenditureFromDate);
-        //        ObjParm.Add("@ExpenditureToDate", m.ExpenditureToDate);
-        //        ObjParm.Add("@ExpenditureBudget", m.ExpenditureBudget);
-        //        ObjParm.Add("@Remarks", m.Remarks);
-
+        //        ObjParm.Add("@ExpenditureTable", dt.AsTableValuedParameter("udt_ExpenditureBuget"));
         //        ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
         //        ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-        //        Con.Execute("sp_ExpenditureBudgetCreate", ObjParm, commandType: CommandType.StoredProcedure);
+        //        Con.Execute("sp_ExpenditureCreateMulti", ObjParm, commandType: CommandType.StoredProcedure);
 
         //        status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
         //        status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
@@ -169,113 +247,85 @@ namespace DatabaseLayer
         //        Con.Close();
         //    }
         //    return status;
+
+
+        //    //StatusModel status = new StatusModel();
+        //    //IDbConnection Con = null;
+
+        //    //bool _Status = false;
+        //    //string _StatusDetails = null;
+
+        //    //SqlConnection conn = null;
+        //    //SqlCommand cmd = null;
+
+        //    //int Project_ID = 0;
+
+        //    //try
+        //    //{
+        //    //    using (TransactionScope transactionScope = new TransactionScope())
+        //    //    {
+        //    //        //Con = new SqlConnection(Common.ConnectionString);
+        //    //        //Con.Open();
+        //    //        //DynamicParameters ObjParm = new DynamicParameters();
+        //    //        ////LoginUser
+
+        //    //        //ObjParm.Add("@RecruitedHRDate", DateTime.Now);
+        //    //        //ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+        //    //        //ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+        //    //        //ObjParm.Add("@Project_ID", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+        //    //        //Con.Execute("sp_ProjectCeate", ObjParm, commandType: CommandType.StoredProcedure);
+
+        //    //        //status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+        //    //        //status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+        //    //        //Project_ID = Convert.ToInt32(ObjParm.Get<Int32>("@Project_ID"));
+        //    //        //Con.Close();
+
+        //    //        conn = new SqlConnection(Common.ConnectionString);
+        //    //        cmd = new SqlCommand("sp_ExpenditureCreateMulti", conn);
+        //    //        cmd.CommandType = CommandType.StoredProcedure;
+        //    //        m.ExpenditureDate = DateTime.Now;
+
+        //    //        var _AssignExpenditureList = m.AssignExpenditureList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID,p.ExpenditureDate ,p.BudgetHead, p.ApprovedCost, p.ExpenditureBudget, p.CreatedByUser_ID }).ToList();
+        //    //        if (_AssignExpenditureList.Count > 0)
+        //    //        {
+        //    //            DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignExpenditureList);
+        //    //            cmd.Parameters.AddWithValue("@ExpenditureTable", dt).SqlDbType = SqlDbType.Structured;
+
+        //    //            SqlParameter _StatusParm = new SqlParameter("@Status", SqlDbType.Bit);
+        //    //            _StatusParm.Direction = ParameterDirection.Output;
+        //    //            cmd.Parameters.Add(_StatusParm);
+        //    //            SqlParameter _StatusDetailsParm = new SqlParameter("@StatusDetails", SqlDbType.VarChar, 100);
+        //    //            _StatusDetailsParm.Direction = ParameterDirection.Output;
+        //    //            cmd.Parameters.Add(_StatusDetailsParm);
+
+        //    //            conn.Open();
+        //    //            cmd.ExecuteNonQuery();
+        //    //            conn.Close();
+
+        //    //            _Status = (bool)_StatusParm.Value;
+        //    //            _StatusDetails = (string)_StatusDetailsParm.Value;
+        //    //        }
+        //    //        conn.Dispose();
+        //    //        cmd.Dispose();
+
+        //    //        transactionScope.Complete();
+        //    //        transactionScope.Dispose();
+        //    //    }
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    _Status = false;
+        //    //    _StatusDetails = ex.Message;
+
+        //    //}
+        //    //finally
+        //    //{
+
+        //    //}
+        //   #endregion
+        //    //return status;
         //}
-        public static StatusModel expenditureCreateViewDL(DataTable  dt)
-        {
-
-            StatusModel status = new StatusModel();
-            IDbConnection Con = null;
-            try
-            {
-                Con = new SqlConnection(Common.ConnectionString);
-                Con.Open();
-
-                DynamicParameters ObjParm = new DynamicParameters();
-                ObjParm.Add("@ExpenditureTable", dt.AsTableValuedParameter("udt_ExpenditureBuget"));
-                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                Con.Execute("sp_ExpenditureCreateMulti", ObjParm, commandType: CommandType.StoredProcedure);
-
-                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
-                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
-            }
-            catch (Exception ex)
-            {
-            }
-            finally
-            {
-                Con.Close();
-            }
-            return status;
-
-
-            //StatusModel status = new StatusModel();
-            //IDbConnection Con = null;
-
-            //bool _Status = false;
-            //string _StatusDetails = null;
-
-            //SqlConnection conn = null;
-            //SqlCommand cmd = null;
-
-            //int Project_ID = 0;
-
-            //try
-            //{
-            //    using (TransactionScope transactionScope = new TransactionScope())
-            //    {
-            //        //Con = new SqlConnection(Common.ConnectionString);
-            //        //Con.Open();
-            //        //DynamicParameters ObjParm = new DynamicParameters();
-            //        ////LoginUser
-
-            //        //ObjParm.Add("@RecruitedHRDate", DateTime.Now);
-            //        //ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-            //        //ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-            //        //ObjParm.Add("@Project_ID", dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-            //        //Con.Execute("sp_ProjectCeate", ObjParm, commandType: CommandType.StoredProcedure);
-
-            //        //status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
-            //        //status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
-            //        //Project_ID = Convert.ToInt32(ObjParm.Get<Int32>("@Project_ID"));
-            //        //Con.Close();
-
-            //        conn = new SqlConnection(Common.ConnectionString);
-            //        cmd = new SqlCommand("sp_ExpenditureCreateMulti", conn);
-            //        cmd.CommandType = CommandType.StoredProcedure;
-            //        m.ExpenditureDate = DateTime.Now;
-
-            //        var _AssignExpenditureList = m.AssignExpenditureList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID,p.ExpenditureDate ,p.BudgetHead, p.ApprovedCost, p.ExpenditureBudget, p.CreatedByUser_ID }).ToList();
-            //        if (_AssignExpenditureList.Count > 0)
-            //        {
-            //            DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignExpenditureList);
-            //            cmd.Parameters.AddWithValue("@ExpenditureTable", dt).SqlDbType = SqlDbType.Structured;
-
-            //            SqlParameter _StatusParm = new SqlParameter("@Status", SqlDbType.Bit);
-            //            _StatusParm.Direction = ParameterDirection.Output;
-            //            cmd.Parameters.Add(_StatusParm);
-            //            SqlParameter _StatusDetailsParm = new SqlParameter("@StatusDetails", SqlDbType.VarChar, 100);
-            //            _StatusDetailsParm.Direction = ParameterDirection.Output;
-            //            cmd.Parameters.Add(_StatusDetailsParm);
-
-            //            conn.Open();
-            //            cmd.ExecuteNonQuery();
-            //            conn.Close();
-
-            //            _Status = (bool)_StatusParm.Value;
-            //            _StatusDetails = (string)_StatusDetailsParm.Value;
-            //        }
-            //        conn.Dispose();
-            //        cmd.Dispose();
-
-            //        transactionScope.Complete();
-            //        transactionScope.Dispose();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    _Status = false;
-            //    _StatusDetails = ex.Message;
-
-            //}
-            //finally
-            //{
-
-            //}
-           #endregion
-            //return status;
-        }
         //GetALLFinance
         public static List<GetAllReleasedBudgetVM> getAllReleasedBudgetDL(int LoginRoleID, int LoginUserID)
         {
@@ -287,7 +337,7 @@ namespace DatabaseLayer
                 DynamicParameters ObjParm = new DynamicParameters();
                 ObjParm.Add("@LoginRoleID", LoginRoleID);
                 ObjParm.Add("@LoginUserID", LoginUserID);
-                getAllReleasedBudgetVMLst = conn.Query<GetAllReleasedBudgetVM>("sp_GetAllReleasedBudget", ObjParm,commandType: CommandType.StoredProcedure).ToList();
+                getAllReleasedBudgetVMLst = conn.Query<GetAllReleasedBudgetVM>("sp_GetAllReleasedBudget", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return getAllReleasedBudgetVMLst;
@@ -309,6 +359,7 @@ namespace DatabaseLayer
                 return getAllExpenditureBudgetVMLst;
             }
         }
-      
+
+
     }
 }

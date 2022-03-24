@@ -170,7 +170,12 @@
                 e.preventDefault();
 
             var formAllData = new FormData();
-           
+               
+                formAllData.append('txtProject_ID', $("#Project_ID").val());
+                formAllData.append('txtSubProject_ID', $("#SubProject_ID").val());
+                formAllData.append('txtBatch_ID', $("#Batch_ID").val());
+               
+               
             //Expenditure
             var ExpenditureRows = new Array();   //ArrayList
                 $('#tblExpenditureBudget tr').each(function ()

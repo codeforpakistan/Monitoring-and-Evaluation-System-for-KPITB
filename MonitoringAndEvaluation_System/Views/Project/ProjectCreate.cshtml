@@ -88,11 +88,11 @@
                                             @Html.DropDownListFor(m => m.SDGS_ID, new SelectList(Model.comboSDGS, "SDGSID", "SDGSName"), "Please Select SDGS", new { @class = "select2 form-control ", @placeholder = "Select Policy Pillar" })
                                             @Html.ValidationMessageFor(m => m.SDGS_ID, "", new { @class = "parsley-required", @id = "spanSDGS_ID" })
                                         </div>
-                                        <div class="col-lg-4 ">
+                                        @*<div class="col-lg-4 ">
                                             <label for="sel1">Select Project Status</label>
                                             @Html.DropDownListFor(m => m.ProjectStatus_ID, new SelectList(Model.comboProjectStatus, "ProjectStatus_ID", "ProjectStatusName"), "Please Select Project Status", new { @class = "select2 form-control ", @placeholder = "Select Digital Policy" })
                                             @Html.ValidationMessageFor(m => m.ProjectStatus_ID, "", new { @class = "parsley-required", @id = "spanProjectStatus_ID" })
-                                        </div>
+                                        </div>*@
                                     </div>
                                     <br />
 
@@ -153,7 +153,7 @@
                         <div class="card-header">
                             <br />
                             <h4>
-                                Project KPIs
+                                RBM Based KPIs
                             </h4>
 
                         </div>

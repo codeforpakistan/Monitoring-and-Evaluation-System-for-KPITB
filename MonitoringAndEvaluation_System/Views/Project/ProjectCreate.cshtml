@@ -50,8 +50,9 @@
                                         </div>
                                         <div class="col-lg-4 ">
                                             <label for="sel1">Select Project Type</label>
-                                            @Html.DropDownListFor(m => m.ProjectType_ID, new SelectList(Model.comboProjectTypes, "ProjectTypeID", "ProjectTypeName"), "Please Select Project Type", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
-                                            @Html.ValidationMessageFor(m => m.ProjectType_ID, "", new { @class = "parsley-required", @id = "spanProjectType_ID" })
+                                            @*@Html.DropDownListFor(m => m.ProjectType_ID, new SelectList(Model.comboProjectTypes, "ProjectTypeID", "ProjectTypeName"), "Please Select Project Type", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })*@
+                                            @Html.DropDownListFor(model => model.ProjectTypeArray, new MultiSelectList(Model.comboProjectTypes, "ProjectTypeID", "ProjectTypeName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-4" })
+                                            @Html.ValidationMessageFor(m => m.ProjectTypeArray, "", new { @class = "parsley-required", @id = "spanProjectType_ID" })
                                         </div>
                                         <!---->
 
@@ -61,22 +62,19 @@
 
                                         <div class="col-lg-4 ">
                                             <label for="sel1" class="col-form-label">Funding Source</label>
-                                            @Html.DropDownListFor(model => model.Funding_SourceArray, new MultiSelectList(Model.comboFundingSource, "FundingSourceName", "FundingSourceName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-3" })
+                                            @Html.DropDownListFor(model => model.Funding_SourceArray, new MultiSelectList(Model.comboFundingSource, "FundingSourceID", "FundingSourceName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-3" })
                                             @Html.ValidationMessageFor(model => model.Funding_SourceArray, "", new { @class = "text-danger", @id = "spanFunding_SourceArray" })
                                         </div>
 
                                         <div class="col-lg-4 ">
                                             <label for="sel1" class="col-form-label">Select Location</label>
+                                            @Html.DropDownListFor(model => model.CityArray, new MultiSelectList(Model.comboCities, "CityID", "CityName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-1" })
+                                            @Html.ValidationMessageFor(m => m.CityArray, "", new { @class = "parsley-required", @id = "spanCity_ID" })
 
-                                            @Html.DropDownListFor(m => m.City_ID, new SelectList(Model.comboCities, "CityID", "CityName"), "Please Select City Name", new { @class = "select2 form-control ", @placeholder = "Select City" })
-                                            @Html.ValidationMessageFor(m => m.City_ID, "", new { @class = "parsley-required", @id = "spanCity_ID" })
-
-                                            @*@Html.DropDownListFor(m => m.City_ID, new SelectList(Model.comboCities, "CityID", "CityName"), "Please Select City Name", new { @class = "select2 form-control ", @placeholder = "Select City" })
-                                            @Html.ValidationMessageFor(m => m.City_ID, "", new { @class = "parsley-required", @id = "spanCity_ID" })*@
                                         </div>
                                         <div class="col-lg-4 ">
                                             <label for="sel1">Select Policy Pillars</label>
-                                            @Html.DropDownListFor(m => m.DigitalPolicy_ID, new SelectList(Model.comboDigitalPolicies, "DigitalPolicyID", "DigitalPolicyName"), "Please Select Policy Pillars", new { @class = "select2 form-control ", @placeholder = "Select Digital Policy" })
+                                            @Html.DropDownListFor(model => model.DigitalPolicyArray, new MultiSelectList(Model.comboDigitalPolicies, "DigitalPolicyID", "DigitalPolicyName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-2" })
                                             @Html.ValidationMessageFor(m => m.DigitalPolicy_ID, "", new { @class = "parsley-required", @id = "spanDigitalPolicy_ID" })
                                         </div>
 
@@ -85,14 +83,14 @@
                                     <div class="row">
                                         <div class="col-lg-4 ">
                                             <label for="sel1">Select SDGS</label>
-                                            @Html.DropDownListFor(m => m.SDGS_ID, new SelectList(Model.comboSDGS, "SDGSID", "SDGSName"), "Please Select SDGS", new { @class = "select2 form-control ", @placeholder = "Select Policy Pillar" })
+                                            @Html.DropDownListFor(model => model.SDGSArray, new MultiSelectList(Model.comboSDGS, "SDGSID", "SDGSName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-5" })
                                             @Html.ValidationMessageFor(m => m.SDGS_ID, "", new { @class = "parsley-required", @id = "spanSDGS_ID" })
                                         </div>
                                         @*<div class="col-lg-4 ">
-                                            <label for="sel1">Select Project Status</label>
-                                            @Html.DropDownListFor(m => m.ProjectStatus_ID, new SelectList(Model.comboProjectStatus, "ProjectStatus_ID", "ProjectStatusName"), "Please Select Project Status", new { @class = "select2 form-control ", @placeholder = "Select Digital Policy" })
-                                            @Html.ValidationMessageFor(m => m.ProjectStatus_ID, "", new { @class = "parsley-required", @id = "spanProjectStatus_ID" })
-                                        </div>*@
+                                                <label for="sel1">Select Project Status</label>
+                                                @Html.DropDownListFor(m => m.ProjectStatus_ID, new SelectList(Model.comboProjectStatus, "ProjectStatus_ID", "ProjectStatusName"), "Please Select Project Status", new { @class = "select2 form-control ", @placeholder = "Select Digital Policy" })
+                                                @Html.ValidationMessageFor(m => m.ProjectStatus_ID, "", new { @class = "parsley-required", @id = "spanProjectStatus_ID" })
+                                            </div>*@
                                     </div>
                                     <br />
 
@@ -131,7 +129,7 @@
                                     </div>
                                 </div>
                                 <br />
-                                
+
                                 <br />
                                 <br />
                                 <table class="table table-striped" id="tblObjective">
@@ -411,7 +409,7 @@
                                         @Html.DropDownListFor(m => m.TypeOfStakeholder_ID, new SelectList(Model.comboTypeOfStakeholder, "TypeOfStakeholderID", "TypeOfStakeholderName"), "Please Select Type Of Stakeholder", new { @class = " form-control ", @placeholder = "Select RiskStatus", @id = "idDepartmentName", @name = "DepartmentName" })
                                         @Html.ValidationMessageFor(m => m.TypeOfStakeholder_ID, "", new { @class = "parsley-required" })
                                         <span name="spanTermsAndConditions" id="spanidDepartmentName" class="text-danger"></span>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -572,7 +570,7 @@
             var trcount = $("#tblObjective tr").length;
             $("#tblObjective").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idObjective").val() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
             $("#idObjective").val('');
-           
+
         });
 
         function RemoveDemerits(row) {
@@ -586,7 +584,7 @@
                 return true;
             }
         });
-      
+
 
 
         //Project KPIs
@@ -715,7 +713,7 @@
 
 
 
-        //Risk 
+        //Risk
 
         $("#AddRisk").click(function () {
             debugger;
@@ -900,15 +898,35 @@
                 $('#spanFunding_SourceArray').text('Please Fill This Field');
                 $('#Funding_SourceArray').focus();
                 return true;
-            }
+                }
+                if ($('#ProjectTypeArray').val() == '') {
+                    $('#ProjectTypeArray').text('Please Fill This Field');
+                    $('#ProjectTypeArray').focus();
+                    return true;
+                }
+                if ($('#CityArray').val() == '') {
+                    $('#spanCity_ID').text('Please Fill This Field');
+                    $('#CityArray').focus();
+                    return true;
+                }
+                if ($('#DigitalPolicyArray').val() == '') {
+                    $('#spanDigitalPolicy_ID').text('Please Fill This Field');
+                    $('#DigitalPolicyArray').focus();
+                    return true;
+                }
             if ($('#City_ID').val() == '') {
                 $('#spanCity_ID').text('Please Fill This Field');
                 $('#City_ID').focus();
                 return true;
-            }
-            if ($('#DigitalPolicy_ID').val() == '') {
-                $('#spanDigitalPolicy_ID').text('Please Fill This Field');
-                $('#DigitalPolicy_ID').focus();
+                }
+                if ($('#City_ID').val() == '') {
+                    $('#spanCity_ID').text('Please Fill This Field');
+                    $('#City_ID').focus();
+                    return true;
+                }
+                if ($('#SDGSArray').val() == '') {
+                    $('#spanSDGS_ID').text('Please Fill This Field');
+                    $('#SDGSArray').focus();
                 return true;
             }
             //if ($('#MaleBeneficiary').val() == '' || $('#MaleBeneficiary').val() == 0) {
@@ -1071,7 +1089,7 @@
             var formAllData = new FormData();
 
             formAllData.append('txtCategory_ID', $("#Category_ID").val());
-            formAllData.append('txtProjectType_ID', $("#ProjectType_ID").val());
+           /* formAllData.append('txtProjectType_ID', $("#ProjectType_ID").val());*/
             formAllData.append('txtDigitalPolicy_ID', $("#DigitalPolicy_ID").val());
             formAllData.append('txtCity_ID', $("#City_ID").val());
             formAllData.append('txtProjectName', $("#ProjectName").val());
@@ -1094,6 +1112,10 @@
             formAllData.append('txtAchievedProcurement', $("#AchievedProcurement").val());
             formAllData.append('txtProcurementPercent', $("#ProcurementPercent").val());
             formAllData.append('FundingSourceArray', $("#Funding_SourceArray").val());
+            formAllData.append('ProjectTypeArray', $("#ProjectTypeArray").val());
+            formAllData.append('CityArray', $("#CityArray").val());
+            formAllData.append('DigitalPolicyArray', $("#DigitalPolicyArray").val());
+            formAllData.append('SDGSArray', $("#SDGSArray").val());
 
              //KPIs
              var KPIsRows = new Array();   //ArrayList

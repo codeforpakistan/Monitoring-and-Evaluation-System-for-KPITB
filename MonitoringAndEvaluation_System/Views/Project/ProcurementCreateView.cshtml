@@ -225,13 +225,11 @@
 
 @section Scripts{
 
+        <script src="~/Content/Template/js/CustomCode.js"></script>
+
     <script>
-       $(document).ready(function ()
-        {
 
-        });
-
-        $("#Project_ID").on('change', function () {
+        @*$("#Project_ID").on('change', function () {
             var _Project_ID = $(this).find("option:selected").val();
 
                 $.ajax({
@@ -247,12 +245,10 @@
                             $("#SubProject_ID").prop("disabled", true);
                             $("#SubProject_ID").append('<option value="' + 0 + '">' +
                                 "Please Select SubProject" + '</option>');
-
                             if (SubProjectLst.comboProcurementHeads.length <= 1 || SubProjectLst.comboProcurementHeads == null) {
                                 $("#PlannedProcurementID").prop("disabled", true);
                                 $("#PlannedProcurement_ID").append('<option value="' + 0 + '">' +
                                     "Please Select Procurement Head" + '</option>');
-
                             } else {
                                 $.each(SubProjectLst.comboProcurementHeads, function (i, Aqib2) {
                                     $("#PlannedProcurement_ID").prop("disabled", false);
@@ -260,7 +256,6 @@
                                         Aqib2.ProcrumetHeader + '</option>');
                                 });
                             }
-
                         } else {
                             $("#SubProject_ID").prop("disabled", false);
                             $.each(SubProjectLst.comboSubProjects, function (i, Aqib) {
@@ -276,11 +271,9 @@
                                         Aqib2.ProcrumetHeader + '</option>');
                                 });
                             }
-
                         }
                         debugger;
                         //RemainingVaues
-
                         $("#PlannedProcrumentNo").val('');
                         $("#lblRemainingProcurement").text(response.remainingValues.RemainingProcurement);
                         $("#hdnRemainingProcurement").val(response.remainingValues.RemainingProcurement); //Hidden
@@ -289,59 +282,9 @@
                      console.log('Failed to Retrieve Batch Data:  ' + ex);
                  }
                 });//Ajax_End
-
-
-
-        });
-        @*$("#SubProject_ID").on('change', function () {
-
-            var obj = {};
-            obj.Project_ID = $("#Project_ID").find("option:selected").val();
-            obj.SubProject_ID = $("#SubProject_ID").find("option:selected").val();
-
-            //var Stock = { Project_ID: $("#Project_ID").find("option:selected").val(), Batch_ID: $("#Batch_ID").find("option:selected").val() };
-                $.ajax({
-                     type: 'POST',
-                     url: '@Url.Action("ClickBatchComboBox", "Common")',
-                    data: JSON.stringify(obj),
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-
-                    success: function (ProcurementHeadLst) {
-                        debugger;
-                        $("#PlannedProcurement_ID").empty();
-                        if (ProcurementHeadLst.length <= 1 || ProcurementHeadLst == null) {
-                            $("#PlannedProcurement_ID").prop("disabled", true);
-                            $("#PlannedProcurement_ID").append('<option value="' + 0 + '">' +
-                                "Please Select Procurement Head" + '</option>');
-                        } else {
-                            $("#PlannedProcurement_ID").prop("disabled", false);
-                            $.each(ProcurementHeadLst, function (i, Aqib) {
-                                $("#PlannedProcurement_ID").append('<option value="' + Aqib.PlannedProcurementID + '">' +
-                                    Aqib.ProcrumetHeader + '</option>');
-                            });
-                        }
-                        debugger;
-                        //RemainingVaues
-
-                        $("#PlannedProcrumentNo").val('');
-                        $("#lblRemainingProcurement").text(response.remainingValues.RemainingProcurement);
-                        $("#hdnRemainingProcurement").val(response.remainingValues.RemainingProcurement); //Hidden
-                 },
-                    error: function (ex) {
-                        console.log('Failed to Retrieve Indicator Data:  ' + ex.responseText);
-                 }
-                });//Ajax_End
-            });*@
-       
-
-        function RemoveDemerits(row) {
-            $(row).parent().parent().remove();
-        }
-
+        });*@
 
     </script>
-   
 }
 
 

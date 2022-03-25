@@ -7,11 +7,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using static ModelLayer.MainViewModel;
 
 namespace DatabaseLayer
 {
-    public static class IndicatorDL
+    public static class InsightIndicatorDL
     {
         #region IndicatorFieldDL
         public static StatusModel indicatorFeildCreateDL(DataTable dt)
@@ -73,42 +74,101 @@ namespace DatabaseLayer
             return isTrue;
         }
         //IndicatorCreate
-        public static StatusModel indicatorCreateDL(CreateIndicatorVM m)
+        public static StatusModel insightIndicatorCreateDL(CreateInsightIndicatorVM m)
         {
             StatusModel status = new StatusModel();
             IDbConnection Con = null;
+
+
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+
+            int InsightIndicator_ID = 0;
+
             try
             {
-                Con = new SqlConnection(Common.ConnectionString);
-                Con.Open();
-                DynamicParameters ObjParm = new DynamicParameters();
+                using (TransactionScope transactionScope = new TransactionScope())
+                {
+                    Con = new SqlConnection(Common.ConnectionString);
+                    Con.Open();
+                    DynamicParameters ObjParm = new DynamicParameters();
+                    //LoginUser
+                 
+                    ObjParm.Add("@Project_ID", m.Project_ID);
+                    ObjParm.Add("@SubProject_ID", m.SubProject_ID);
+                    ObjParm.Add("@Batch_ID", m.Batch_ID);
+                    ObjParm.Add("@InsightIndicatorName", m.InsightIndicatorName);
+                    ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                    ObjParm.Add("@InsightIndicator_ID", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-                ObjParm.Add("@IndicatorName", m.IndicatorName);
-                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                Con.Execute("sp_IndicatorCreate", ObjParm, commandType: CommandType.StoredProcedure);
 
-                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
-                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                    Con.Execute("sp_InsightIndicatorCreate", ObjParm, commandType: CommandType.StoredProcedure);
+
+                    status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                    status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                    InsightIndicator_ID = Convert.ToInt32(ObjParm.Get<Int32>("@InsightIndicator_ID"));
+                    Con.Close();
+
+                    #region NO
+
+                    conn = new SqlConnection(Common.ConnectionString);
+                    cmd = new SqlCommand("sp_InsightIndicatorFieldCeateMulti", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    var _AssignInsightIndicatorFieldList = m.AssignInsightIndicatorFieldList.Select(p => new { p.InsightIndicator_ID, p.InsightIndicatorDataType_ID,p.InsightIndicatorFieldName }).ToList();
+
+                    if (_AssignInsightIndicatorFieldList.Count > 0)
+                    {
+                        DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignInsightIndicatorFieldList);
+                        cmd.Parameters.AddWithValue("@InsightIndicatorFieldTable", dt).SqlDbType = SqlDbType.Structured;
+
+                        SqlParameter _StatusParm = new SqlParameter("@Status", SqlDbType.Bit);
+                        _StatusParm.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(_StatusParm);
+                        SqlParameter _StatusDetailsParm = new SqlParameter("@StatusDetails", SqlDbType.VarChar, 100);
+                        _StatusDetailsParm.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(_StatusDetailsParm);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+
+                        status.status = (bool)_StatusParm.Value;
+                        status.statusDetail = (string)_StatusDetailsParm.Value;
+                    }
+
+
+                    conn.Dispose();
+                    cmd.Dispose();
+
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
+                }
             }
             catch (Exception ex)
             {
+                status.status = false;
+                status.statusDetail = ex.Message;
+
             }
             finally
             {
-                Con.Close();
+
             }
+            #endregion
             return status;
-        }
+        
+    }
         //GetALLIndicator
-        public static List<GetAllIndicatorVM> getAllIndicatorDL()
+        public static List<GetAllInsightIndicatorVM> getAllInsightIndicatorDL()
         {
-            List<GetAllIndicatorVM> getAllVMLst = new List<GetAllIndicatorVM>();
+            List<GetAllInsightIndicatorVM> getAllVMLst = new List<GetAllInsightIndicatorVM>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
-                getAllVMLst = conn.Query<GetAllIndicatorVM>("sp_GetAllIndicator", commandType: CommandType.StoredProcedure).ToList();
+                getAllVMLst = conn.Query<GetAllInsightIndicatorVM>("sp_GetAllIndicator", commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return getAllVMLst;

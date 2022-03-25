@@ -286,8 +286,15 @@ namespace ModelLayer
             public DateTime EntryDate { get; set; }
             public string Remarks { get; set; }
         }
-     
+        public partial class InsightIndicatorField
+        {
+            public int InsightIndicator_ID { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
+            public int InsightIndicatorDataType_ID { get; set; }
+          
 
-     
+        }
+
+
     }
 }

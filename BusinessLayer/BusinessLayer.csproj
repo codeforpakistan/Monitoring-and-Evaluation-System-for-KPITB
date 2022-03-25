@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="BatchManagementBL.cs" />
     <Compile Include="FinanceManagementBL.cs" />
-    <Compile Include="IndicatorBL.cs" />
+    <Compile Include="InsightIndicatorBL.cs" />
     <Compile Include="IssuesManagementBL.cs" />
     <Compile Include="ProjectManagementBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

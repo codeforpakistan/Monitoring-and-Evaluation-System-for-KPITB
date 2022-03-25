@@ -10,7 +10,7 @@ using static ModelLayer.MainViewModel;
 
 namespace BusinessLayer
 {
-    public class IndicatorBL
+    public class InsightIndicatorBL
     {
 
         #region IndicatorFieldBL
@@ -24,42 +24,42 @@ namespace BusinessLayer
             {
                 dt.Rows.Add(Lst[i].Indicator_ID, Lst[i].IndicatorDataType_ID, Lst[i].IndicatorFieldName);
             }
-            return IndicatorDL.indicatorFeildCreateDL(dt);
+            return InsightIndicatorDL.indicatorFeildCreateDL(dt);
         }
         #endregion
 
         //JSON
         public bool IsIndicatorNameExistsBL(string _IndicatorName)
         {
-            return IndicatorDL.IsIndicatorNameExistsDL(_IndicatorName.Trim());
+            return InsightIndicatorDL.IsIndicatorNameExistsDL(_IndicatorName.Trim());
         }
         //Createindicator
-        public StatusModel indicatorCreateBL(CreateIndicatorVM m)
+        public StatusModel insightIndicatorCreateBL(CreateInsightIndicatorVM m)
         {
-            return IndicatorDL.indicatorCreateDL(m);
+            return InsightIndicatorDL.insightIndicatorCreateDL(m);
         }
         //GetAllIndicator
-        public List<GetAllIndicatorVM> getAllIndicatorBL()
+        public List<GetAllInsightIndicatorVM> getAllInsightIndicatorBL()
         {
-            return IndicatorDL.getAllIndicatorDL();
+            return InsightIndicatorDL.getAllInsightIndicatorDL();
         }
         //CreateLinkIndicator
         public StatusModel linkIndicatorCreateBL(CreateLinkIndicatorVM m)
         {
-            return IndicatorDL.linkIndicatorCreateDL(m);
+            return InsightIndicatorDL.linkIndicatorCreateDL(m);
         }
         //GetAllLinkIndicator
         public List<GetAllLinkIndicatorVM> getALLLinkIndicatorBL()
         {
-            return IndicatorDL.getALLLinkIndicatorDL();
+            return InsightIndicatorDL.getALLLinkIndicatorDL();
         }
         public List<IndicatorDataTypeVM> getndicatorDataTypeBL(int IndicatorID)
         {
-            return IndicatorDL.getndicatorDataTypeDL(IndicatorID);
+            return InsightIndicatorDL.getndicatorDataTypeDL(IndicatorID);
         }
         public List<IndicatorDataTypeCommonValueVM> getIndicatorInsertedFieldBaseOnIndicatorBL(int Project_ID,int IndicatorID)
         {
-            List <IndicatorDataTypeConvertVM> lst = IndicatorDL.getIndicatorInsertedFieldBaseOnIndicatorDL(Project_ID,IndicatorID);
+            List <IndicatorDataTypeConvertVM> lst = InsightIndicatorDL.getIndicatorInsertedFieldBaseOnIndicatorDL(Project_ID,IndicatorID);
             List<IndicatorDataTypeCommonValueVM> mLst = new List<IndicatorDataTypeCommonValueVM>();
             IndicatorDataTypeCommonValueVM m = new IndicatorDataTypeCommonValueVM();
      
@@ -101,7 +101,7 @@ namespace BusinessLayer
                 dt.Rows.Add(m.dataTypeVMLst[i].IndicatorFieldID,m.dataTypeVMLst[i].TEXT, m.dataTypeVMLst[i].INTEGER, m.dataTypeVMLst[i].FLOAT, m.dataTypeVMLst[i].BOOL);
             }
            
-            return IndicatorDL.indicatorFieldValueCreateDL(dt, m);
+            return InsightIndicatorDL.indicatorFieldValueCreateDL(dt, m);
         }
         #endregion
 

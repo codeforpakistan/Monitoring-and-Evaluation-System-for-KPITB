@@ -410,7 +410,6 @@
     <Content Include="Views\Finance\ReleasedBudgetCreateView.cshtml" />
     <Content Include="Views\Finance\ExpenditureBudgetCreateView.cshtml" />
     <Content Include="Views\Project\ProjectDetails.cshtml" />
-    <Content Include="Views\InsightIndicator\IndicatorCreateView.cshtml" />
     <Content Include="Views\InsightIndicator\IndicatorFieldCreate.cshtml" />
     <Content Include="Views\InsightIndicator\LinkIndicator.cshtml" />
     <Content Include="Views\InsightIndicator\IndicatorFieldValue.cshtml" />

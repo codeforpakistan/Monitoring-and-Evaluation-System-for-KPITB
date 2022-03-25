@@ -904,9 +904,9 @@ namespace ModelLayer
             public string InsightIndicatorName { get; set; }
 
             //InsightIndicatorField
-            public string InsightIndicator_ID { get; set; }
             public int InsightIndicatorDataType_ID { get; set; }
-            public string InsightIndicatorFieldName { get; set; }
+     
+            public List<InsightIndicatorField> AssignInsightIndicatorFieldList { get; set; }
             public List<ComboInsightIndicatorDataType> comboInsightIndicatorDataTypes { get; set; }
             public List<ComboProject> comboProjects { get; set; }
             public List<ComboSubProject> comboSubProjects { get; set; }
@@ -920,7 +920,7 @@ namespace ModelLayer
             public string IndicatorName { get; set; }
         }
         //Get All Indicator
-        public partial class GetAllIndicatorVM
+        public partial class GetAllInsightIndicatorVM
         {
             public int ID { get; set; }
             public int IndicatorID { get; set; }

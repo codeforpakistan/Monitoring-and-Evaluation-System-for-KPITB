@@ -20,8 +20,8 @@ namespace MonitoringAndEvaluation_System.CommonUse
         {
             CreateIndicatorValueVM m = new CreateIndicatorValueVM();
 
-            m.dataTypeVMLst = new IndicatorBL().getndicatorDataTypeBL(Convert.ToInt32(IndicatorID));
-            m.dataTypeCommonVMLst = new IndicatorBL().getIndicatorInsertedFieldBaseOnIndicatorBL(Convert.ToInt32(Project_ID), Convert.ToInt32(IndicatorID));
+            m.dataTypeVMLst = new InsightIndicatorBL().getndicatorDataTypeBL(Convert.ToInt32(IndicatorID));
+            m.dataTypeCommonVMLst = new InsightIndicatorBL().getIndicatorInsertedFieldBaseOnIndicatorBL(Convert.ToInt32(Project_ID), Convert.ToInt32(IndicatorID));
             return Json(m, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -29,7 +29,7 @@ namespace MonitoringAndEvaluation_System.CommonUse
         {
             try
             {
-                bool isExists = new IndicatorBL().IsIndicatorNameExistsBL(_IndicatorName);
+                bool isExists = new InsightIndicatorBL().IsIndicatorNameExistsBL(_IndicatorName);
                 if (isExists)
                 {
                     return Json("true", JsonRequestBehavior.AllowGet);

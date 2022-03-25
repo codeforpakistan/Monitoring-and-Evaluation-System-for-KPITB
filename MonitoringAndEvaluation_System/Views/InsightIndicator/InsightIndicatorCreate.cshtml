@@ -42,7 +42,7 @@
                         <br />
                         <div class="required float-left">* Required fields</div>
                         <br />
-                   
+
                     </div>
                     <div class="card card-default" id="cardDemo1">
                         <div class="card-wrapper collapse show">
@@ -55,27 +55,27 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <label class="col-form-label">Insight Indicator DataType *</label>
-                                        <label class="col-form-label">Select Data Type *</label>
                                         @Html.DropDownListFor(m => m.InsightIndicatorDataType_ID, new SelectList(Model.comboInsightIndicatorDataTypes, "InsightIndicatorDataTypeID", "InsightIndicatorDataType"), "Select Indicator Value Type", new { @class = " form-control ", @id = "IndicatorDataType_ID", @name = "IndicatorDataType_ID" })
                                         @Html.ValidationMessageFor(m => m.InsightIndicatorDataType_ID, "", new { @class = "parsley-required" })
                                         <span name="spanidIndicatorName" id="spanidIndicatorDataType_ID" class="text-danger"></span>
-                                        
+
                                     </div>
-                                    <div class="col-lg-4">
-                                        <label class="col-form-label">Insight Indicator DataType *</label>
-                                        
-                                        <div class="float-right"><input type="button" id="AddDataType" value="Add AddDataType" class="btn btn-primary" /></div>
+                                    <div class="col-lg-3">
+                                        <label class="col-form-label text-white"> Add DataType btn</label>
+
+                                        <div class="float-right"><input type="button" id="AddInsightIndicatorField" value=" Add Insight Indicator Field " class="btn btn-primary" /></div>
                                     </div>
                                 </div>
                                 <br />
-                                
+
                                 <br />
                                 <br />
-                                <table class="table table-striped" id="tblDataType">
+                                <table class="table table-striped" id="tblInsightIndicatorField">
                                     <thead class="table-info">
                                         <tr>
                                             <th data-column-id="id" data-type="numeric">ID</th>
-                                            <th data-column-id="BudgetHead">Insight Indicator DataType</th>
+                                            <th data-column-id="InsightIndicatorField">InsightIndicator Field Name</th>
+                                            <th data-column-id="InsightIndicatorDataType">Insight Indicator DataType</th>
                                             <th data-column-id="action">Action</th>
                                         </tr>
                                     </thead>
@@ -84,6 +84,9 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <div class="float-right">
+                        <button class="btn btn-success" type="submit" id="btnCreate"> Create</button>
                     </div>
                 </div>
             </div>
@@ -98,4 +101,88 @@
 
 @section Scripts{
     <script src="~/Content/Template/js/CustomCode.js"></script>
+    <script>
+
+        $("#AddInsightIndicatorField").click(function () {
+            debugger;
+            if ($('#idInsightIndicatorField').val() == "") {
+                $('#spanidInsightIndicatorField').text('InsightIndicator Field Name should not be blank');
+                $('#spanidInsightIndicatorField').show();
+                $('#idInsightIndicatorField').focus();
+                return true;
+            }
+            if ($('#IndicatorDataType_ID').val() == "") {
+                $('#spanidIndicatorDataType_ID').text('Select Data type of Insight Indicator Filed');
+                $('#spanidIndicatorDataType_ID').show();
+                $('#IndicatorDataType_ID').focus();
+                return true;
+            }
+
+            var trcount = $("#tblInsightIndicatorField tr").length;
+            $("#tblInsightIndicatorField").append("<tr>  <td>" + trcount + "</td>  <td>" + $("#idInsightIndicatorField").val() + "</td> <td>" + $("#IndicatorDataType_ID").val() + "</td>  <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#idInsightIndicatorField").val('');
+            $("#idInsightIndicatorField").val('');
+           
+        });
+
+        function RemoveDemerits(row) {
+            $(row).parent().parent().remove();
+        }
+
+
+
+
+            $("#btnCreate").click(function (e) {
+                e.preventDefault();
+
+            var formAllData = new FormData();
+
+                formAllData.append('txtProject_ID', $("#Project_ID").val());
+                formAllData.append('txtSubProject_ID', $("#SubProject_ID").val());
+                formAllData.append('txtBatch_ID', $("#Batch_ID").val());
+                formAllData.append('txtInsightIndicatorName', $("#InsightIndicatorName").val());
+                
+            //Expenditure
+            var InsightIndicatorFieldRows = new Array();   //ArrayList
+                $('#tblInsightIndicatorField tr').each(function ()
+            {
+                if ($(this).find('td:eq(0)').text() != '')
+                {
+                    //InsightIndicatorField
+                    debugger;
+                    $InsightIndicatorFieldRow = $(this).find('td:eq(0)').text() +
+                        "|" + $(this).find('td:eq(1)').text() +
+                        "|" + $(this).find('td:eq(2)').text();
+                    InsightIndicatorFieldRows.push($InsightIndicatorFieldRow);
+                }
+            });
+                formAllData.append("_InsightIndicatorFieldRows", InsightIndicatorFieldRows);
+
+            var urllink = '@Url.Action("InsightIndicatorCreate", "InsightIndicator")'
+            $.ajax({
+                url: urllink,
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: formAllData,
+                success: function (result) {
+                    debugger;
+                    if (result == 'false') {
+                       var route = '@Url.Action("InsightIndicatorCreate", "InsightIndicator")'
+                         window.location.href = route;
+                    }
+                    else if (result == 'true') {
+                         var route = '@Url.Action("InsightIndicatorCreate", "InsightIndicator")'
+                         window.location.href = route;
+                    }
+
+                },
+                error: function (err) {
+                    //For Failure notification
+                    alert(err.statusText);
+                }
+            });
+
+        });
+    </script>
 }

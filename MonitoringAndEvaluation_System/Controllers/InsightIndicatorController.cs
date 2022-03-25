@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Utility;
 using static ModelLayer.ComboModel;
+using static ModelLayer.MainModel;
 using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
@@ -15,7 +16,7 @@ namespace MonitoringAndEvaluation_System.Controllers
     {
         // GET: Indicator
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
-        IndicatorBL ObjIndicatorMngBL = new IndicatorBL();
+        InsightIndicatorBL ObjInsightIndicatorMngBL = new InsightIndicatorBL();
         //InsightIndicatorCreate
         [HttpGet]
         #region Insight Indicator
@@ -31,29 +32,42 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult InsightIndicatorView()
         {
             CreateIndicatorVM indicatorVM = new CreateIndicatorVM();
-            getAllIndicator();
+            getAllInsightIndicator();
             return View(indicatorVM);
         }
         #endregion
 
 
         [HttpPost]
-        public ActionResult IndicatorCreateView(CreateIndicatorVM indicatorVM)
+        public ActionResult InsightIndicatorCreate(CreateInsightIndicatorVM insightIndicatorVM)
         {
             try
             {
-                if (ModelState.IsValid == false)
+                #region InsightIndicator
+                insightIndicatorVM.Project_ID = Convert.ToInt32(Request.Form["txtProject_ID"]);
+                insightIndicatorVM.SubProject_ID = Convert.ToInt32(Request.Form["txtSubProject_ID"]);
+                insightIndicatorVM.Batch_ID = Convert.ToInt32(Request.Form["txtBatch_ID"]);
+                #region Expenditure
+                //From Risk GridView
+                List<InsightIndicatorField> _lstInsightIndicatorField = new List<InsightIndicatorField>();
+                string[] InsightIndicatorFieldRows = Request.Form["_InsightIndicatorFieldRows"].Split(',');
+                for (int i = 0; i < InsightIndicatorFieldRows.Length; i++)
                 {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    goto gotoWithModel;
+                    if (InsightIndicatorFieldRows[0].Trim() != "")
+                    {
+                        InsightIndicatorField mm = new InsightIndicatorField();
+                        string[] ItemArray = InsightIndicatorFieldRows[i].Split('|');
+                        mm.InsightIndicatorFieldName = Convert.ToString(ItemArray[1]);
+                        mm.InsightIndicatorDataType_ID = Convert.ToInt32(ItemArray[2]);
+                        _lstInsightIndicatorField.Add(mm);
+                    }
                 }
-                bool isExists = new IndicatorBL().IsIndicatorNameExistsBL(indicatorVM.IndicatorName);  //Check DuplicateIndicatorName
-                if (isExists)
-                {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, "IndicatorName Already Exists");
-                    goto gotoWithModel;
-                }
-                StatusModel status = new IndicatorBL().indicatorCreateBL(indicatorVM);
+                insightIndicatorVM.AssignInsightIndicatorFieldList = _lstInsightIndicatorField;
+
+                #endregion
+
+
+                StatusModel status = ObjInsightIndicatorMngBL.insightIndicatorCreateBL(insightIndicatorVM);
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
@@ -61,18 +75,22 @@ namespace MonitoringAndEvaluation_System.Controllers
                 else
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
-                    goto gotoWithModel;
+                    return Json("false");
                 }
+               
+                #endregion
+
             }
             catch (Exception ex1)
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
-                goto gotoWithModel;
+                return Json("false");
             }
-            return RedirectToAction("IndicatorCreateView");
-            gotoWithModel:
-            getAllIndicator();
-            return View(indicatorVM);
+            return Json("true");
+            //return View("ProjectView");
+            //return View("~/Views/Project/ProjectView.cshtml", new ProjectManagementBL().getAllProjectBL());
+
+
 
         }
         [HttpGet]
@@ -104,7 +122,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                         });
                     }
                 }
-                StatusModel status = new IndicatorBL().indicatorFeildCreateBL(fieldIndicatorLst);
+                StatusModel status = new InsightIndicatorBL().indicatorFeildCreateBL(fieldIndicatorLst);
                 if (status.status)
                 {
                     //TempData["Message"] = status.statusDetail;
@@ -145,7 +163,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     goto gotoWithModel;
                 }
-                StatusModel status = new IndicatorBL().linkIndicatorCreateBL(linkIndicatorVM);
+                StatusModel status = new InsightIndicatorBL().linkIndicatorCreateBL(linkIndicatorVM);
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
@@ -164,7 +182,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             return RedirectToAction("LinkIndicator");
 
             gotoWithModel:
-            getAllIndicator();
+            getAllInsightIndicator();
             return View(linkIndicatorVM);
 
         }
@@ -189,7 +207,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
                     return RedirectToAction("IndicatorFieldValue");
                 }
-                StatusModel status = new IndicatorBL().indicatorFieldValueCreateBL(valueVM);
+                StatusModel status = new InsightIndicatorBL().indicatorFieldValueCreateBL(valueVM);
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
@@ -211,9 +229,9 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
 
         //Custom Function
-        private void getAllIndicator()
+        private void getAllInsightIndicator()
         {
-            ViewBag.LstAllIndicators = new IndicatorBL().getAllIndicatorBL();
+            ViewBag.LstAllInsightIndicators = new InsightIndicatorBL().getAllInsightIndicatorBL();
         }
         public void ComboForLink(CreateLinkIndicatorVM linkIndicatorVM)
         {
@@ -255,7 +273,7 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         private void getAllLinkIndicator()
         {
-            ViewBag.LstAllLinkIndicator = new IndicatorBL().getALLLinkIndicatorBL();
+            ViewBag.LstAllLinkIndicator = new InsightIndicatorBL().getALLLinkIndicatorBL();
         }
         #endregion
         #region Json

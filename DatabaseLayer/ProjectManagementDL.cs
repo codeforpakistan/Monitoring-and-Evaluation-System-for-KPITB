@@ -334,7 +334,7 @@ namespace DatabaseLayer
             {
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
-                ComboLst = conn.Query<ComboInsightIndicatorDataType>("sp_GetIndicatorDataType", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                ComboLst = conn.Query<ComboInsightIndicatorDataType>("sp_GetInsightIndicatorDataType", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return ComboLst;

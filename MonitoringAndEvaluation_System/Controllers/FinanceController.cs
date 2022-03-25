@@ -84,50 +84,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
-                #region methodNo_1
-                //    List<CreateViewExpenditureBudgetVM> expenditureLst = new List<CreateViewExpenditureBudgetVM>();
-
-                //    //model.Project_ID = Convert.ToInt32(Request.Form["_ProjectID"].Split(','));
-                //    string[] _ExpenditureLst = Request.Form["_ExpenditureRows"].Split(',');
-                //    for (int i = 0; i < _ExpenditureLst.Length; i++)
-                //    {
-                //        if (_ExpenditureLst[0].Trim() != "")
-                //        {
-                //            string[] ItemArray = _ExpenditureLst[i].Split('|');
-                //            expenditureLst.Add(new CreateViewExpenditureBudgetVM()
-                //            {
-                //                //Project_ID = Convert.ToInt32(ItemArray[1]),
-                //                //SubProject_ID = Convert.ToInt32(ItemArray[2]),
-                //                //Batch_ID = Convert.ToInt32(ItemArray[3]),
-                //                ExpenditureDate = DateTime.Now,
-                //                BudgetHead = Convert.ToString(ItemArray[1]),
-                //                ApprovedCost = Convert.ToInt32(ItemArray[2]),
-                //                ExpenditureBudget = Convert.ToInt32(ItemArray[3])
-                //            });;
-                //        }
-                //    }
-                //    StatusModel status = new FinanceManagementBL().expenditureCreateViewBL(expenditureLst);
-                //    if (status.status)
-                //    {
-                //        //TempData["Message"] = status.statusDetail;
-                //        //TempData.Keep("Message");
-                //        ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
-                //    }
-                //    else
-                //    {
-                //        ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);
-                //        return Json("false");
-                //    }
-
-                //}
-                //catch (Exception ex1)
-                //{
-                //    ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
-                //    return Json("false");
-                //}
-                //return Json("true");
-                #endregion
-                #region MethodNo_2
+                #region ExpenditureBudget
                 expenditureVM.Project_ID = Convert.ToInt32(Request.Form["txtProject_ID"]);
                 //expenditureVM.SubProject_ID = Convert.ToInt32(Request.Form["txtSubProject_ID"]);
                 expenditureVM.Batch_ID = Convert.ToInt32(Request.Form["txtBatch_ID"]);

@@ -8,75 +8,6 @@ $(document).ready(function () {
     $("#Batch_ID").prop("disabled", true);
 });
 
-$("#Project_ID").on('change', function () {
-    debugger;
-    var Url_Value = $('#ProjectComboLink').attr('url-Val');
-
-    var _Project_ID = $("#Project_ID").find("option:selected").val();
-    $.ajax({
-        type: 'POST',
-        url: Url_Value,
-        dataType: 'json',
-        data: { ProjectID: _Project_ID },
-        success: function (response) {
-            $("#Batch_ID").empty();
-            $("#SubProject_ID").empty();
-
-            //ComboSubProject
-            if (response.comboSubProjects.length <= 1) {
-                $("#SubProject_ID").prop("disabled", true);
-                $("#SubProject_ID").append('<option value="' + 0 + '">' +
-                    "Please Select SubProject" + '</option>');
-            } else {
-                $("#SubProject_ID").prop("disabled", false);
-                $.each(response.comboSubProjects, function (i, item) {
-                    $("#SubProject_ID").append('<option value="' + item.SubProjectID + '">' +
-                        item.SubProjectName + '</option>');
-                });
-            }
-
-            //ComboBatch
-            if (response.comboBatches.length <= 1) {
-                $("#Batch_ID").prop("disabled", true);
-                $("#Batch_ID").append('<option value="' + 0 + '">' +
-                    "Please Select Batch" + '</option>');
-            }else {
-                $("#Batch_ID").prop("disabled", false);
-                $.each(response.comboBatches, function (i, item) {
-                    $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
-                        item.BatchName + '</option>');
-                });
-            }
-
-            //RemainingVaues
-            $("#RecruitedHR").val('');
-            $("#PlannedProcrumentNo").val('');
-            $("#ReleasedBudget").val('');
-            $("#ApprovedBudget").val('');
-            $("#ReleasedBudget").val('');
-
-            $("#lblRemaningHR").text(response.remainingValues.RemainingPlannedHR);
-            $("#hdnRemaningHR").val(response.remainingValues.RemainingPlannedHR);//Hidden
-
-            $("#lblRemainingProcurement").text(response.remainingValues.RemainingProcurement);
-            $("#hdnRemainingProcurement").val(response.remainingValues.RemainingProcurement); //Hidden
-
-            $("#lblRemaningBudget").text(response.remainingValues.RemainingBudget);
-            $("#hdnRemaningBudget").val(response.remainingValues.RemainingBudget); //Hidden
-
-            $("#lblExpenditureBudget").text(response.remainingValues.ApprovedBudget);
-            $("#hdnExpenditureBudget").val(response.remainingValues.ApprovedBudget); //Hidden
-
-            $("#lblTotalReleasedBudget").text(response.remainingValues.ReleasedBudget);
-            $("#hdnTotalReleasedBudget").val(response.remainingValues.ReleasedBudget); //Hidden
-            /* }*/
-        },
-        error: function (ex) {
-            debugger;
-            console.log('Failed to Retrieve Data:  ' + ex.responseText);
-        }
-    });//Ajax_End
-});
 
 
 //HR
@@ -121,7 +52,6 @@ function CheckHRRemaningValue() {
         return false;
     }
 }
-
 //Procurement
 $("#PlannedProcrumentNo").on('change', function () {
     CheckProcurementRemaningValue();
@@ -161,7 +91,6 @@ function ProcurementDateCompare() {
         }
     }
 }
-
 //ReleasedBudget
 $("#ReleasedDate").on('change', function () {
     debugger
@@ -274,45 +203,143 @@ function IssueDateCompare() {
     }
 }
 
-// $("#SubProject_ID").on('change', function () {
-//    var obj = {};
-//    obj.Project_ID = $("#Project_ID").find("option:selected").val();
-//    obj.SubProject_ID = $("#SubProject_ID").find("option:selected").val();
 
-//    //var Stock = { Project_ID: $("#Project_ID").find("option:selected").val(), Batch_ID: $("#Batch_ID").find("option:selected").val() };
-//    $.ajax({
-//        type: 'POST',
-//        url: '@Url.Action("ClickBatchComboBox", "Common")',
-//        data: JSON.stringify(obj),
-//        contentType: 'application/json; charset=utf-8',
-//        dataType: 'json',
 
-//        success: function (ProcurementHeadLst) {
-//            debugger;
-//            $("#PlannedProcurement_ID").empty();
-//            if (ProcurementHeadLst.length <= 1 || ProcurementHeadLst == null) {
-//                $("#PlannedProcurement_ID").prop("disabled", true);
-//                $("#PlannedProcurement_ID").append('<option value="' + 0 + '">' +
-//                    "Please Select Procurement Head" + '</option>');
-//            } else {
-//                $("#PlannedProcurement_ID").prop("disabled", false);
-//                $.each(ProcurementHeadLst, function (i, Aqib) {
-//                    $("#PlannedProcurement_ID").append('<option value="' + Aqib.PlannedProcurementID + '">' +
-//                        Aqib.ProcrumetHeader + '</option>');
-//                });
-//            }
-//            debugger;
-//            //RemainingVaues
+$("#Project_ID").on('change', function () {
+    debugger;
+    var Url_Value = $('#ProjectComboLink').attr('url-Val');
 
-//            $("#PlannedProcrumentNo").val('');
-//            $("#lblRemainingProcurement").text(response.remainingValues.RemainingProcurement);
-//            $("#hdnRemainingProcurement").val(response.remainingValues.RemainingProcurement); //Hidden
-//        },
-//        error: function (ex) {
-//            console.log('Failed to Retrieve Indicator Data:  ' + ex.responseText);
-//        }
-//    });//Ajax_End
-//});
+    var _Project_ID = $("#Project_ID").find("option:selected").val();
+    $.ajax({
+        type: 'POST',
+        url: Url_Value,
+        dataType: 'json',
+        data: { ProjectID: _Project_ID },
+        success: function (response) {
+            debugger;
+            $("#Batch_ID").empty();
+            $("#SubProject_ID").empty();
+            debugger;
+            //ComboSubProject
+            if (response.comboSubProjects.length <= 1) {
+                $("#SubProject_ID").prop("disabled", true);
+                $("#SubProject_ID").append('<option value="' + 0 + '">' +
+                    "Please Select SubProject" + '</option>');
+            } else {
+                $("#SubProject_ID").prop("disabled", false);
+                $.each(response.comboSubProjects, function (i, item) {
+                    $("#SubProject_ID").append('<option value="' + item.SubProjectID + '">' +
+                        item.SubProjectName + '</option>');
+                });
+            }
+
+            //ComboBatch
+            if (response.comboBatches.length <= 1) {
+                $("#Batch_ID").prop("disabled", true);
+                $("#Batch_ID").append('<option value="' + 0 + '">' +
+                    "Please Select Batch" + '</option>');
+            } else {
+                $("#Batch_ID").prop("disabled", false);
+                $.each(response.comboBatches, function (i, item) {
+                    $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
+                        item.BatchName + '</option>');
+                });
+            }
+
+            //RemainingVaues
+            $("#RecruitedHR").val('');
+            $("#PlannedProcrumentNo").val('');
+            $("#ReleasedBudget").val('');
+            $("#ApprovedBudget").val('');
+            $("#ReleasedBudget").val('');
+
+            $("#lblRemaningHR").text(response.remainingValues.RemainingPlannedHR);
+            $("#hdnRemaningHR").val(response.remainingValues.RemainingPlannedHR);//Hidden
+
+            $("#lblRemainingProcurement").text(response.remainingValues.RemainingProcurement);
+            $("#hdnRemainingProcurement").val(response.remainingValues.RemainingProcurement); //Hidden
+
+            $("#lblRemaningBudget").text(response.remainingValues.RemainingBudget);
+            $("#hdnRemaningBudget").val(response.remainingValues.RemainingBudget); //Hidden
+
+            $("#lblExpenditureBudget").text(response.remainingValues.ApprovedBudget);
+            $("#hdnExpenditureBudget").val(response.remainingValues.ApprovedBudget); //Hidden
+
+            $("#lblTotalReleasedBudget").text(response.remainingValues.ReleasedBudget);
+            $("#hdnTotalReleasedBudget").val(response.remainingValues.ReleasedBudget); //Hidden
+            /* }*/
+        },
+        error: function (ex) {
+            debugger;
+            console.log('Failed to Retrieve Data:  ' + ex.responseText);
+        }
+    });//Ajax_End
+});
+
+
+
+
+
+
+
+
+
+
+
+ $("#SubProject_ID").on('change', function () {
+     var Url_SubProject = $('#SubProjectComboLink').attr('url-Val');
+
+     var obj = {};
+    obj.SubProject_ID = $("#SubProject_ID").find("option:selected").val();
+
+    //var Stock = { Project_ID: $("#Project_ID").find("option:selected").val(), Batch_ID: $("#Batch_ID").find("option:selected").val() };
+    $.ajax({
+        type: 'POST',
+        url: Url_SubProject,
+        data: JSON.stringify(obj),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+
+        success: function (response) {
+            $("#Batch_ID").empty();
+
+            //ComboBatch
+            if (response.comboBatches.length <= 1) {
+                $("#Batch_ID").prop("disabled", true);
+                $("#Batch_ID").append('<option value="' + 0 + '">' +
+                    "Please Select Batch" + '</option>');
+            } else {
+                $("#Batch_ID").prop("disabled", false);
+                $.each(response.comboBatches, function (i, item) {
+                    $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
+                        item.BatchName + '</option>');
+                });
+            }
+    
+            //RemainingVaues
+            $("#RecruitedHR").val('');
+            $("#PlannedProcrumentNo").val('');
+            $("#ReleasedBudget").val('');
+            $("#ApprovedBudget").val('');
+            $("#ReleasedBudget").val('');
+
+            $("#lblRemaningHR").text(response.remainingValues.RemainingPlannedHR);
+            $("#hdnRemaningHR").val(response.remainingValues.RemainingPlannedHR);//Hidden
+
+            $("#lblRemainingProcurement").text(response.remainingValues.RemainingProcurement);
+            $("#hdnRemainingProcurement").val(response.remainingValues.RemainingProcurement); //Hidden
+
+            $("#lblRemaningBudget").text(response.remainingValues.RemainingBudget);
+            $("#hdnRemaningBudget").val(response.remainingValues.RemainingBudget); //Hidden
+
+            $("#lblExpenditureBudget").text(response.remainingValues.ApprovedBudget);
+            $("#hdnExpenditureBudget").val(response.remainingValues.ApprovedBudget); //Hidden
+
+            $("#lblTotalReleasedBudget").text(response.remainingValues.ReleasedBudget);
+            $("#hdnTotalReleasedBudget").val(response.remainingValues.ReleasedBudget); //Hidden
+        }
+    });//Ajax_End
+});
 
 
 

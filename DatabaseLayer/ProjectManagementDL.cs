@@ -41,7 +41,7 @@ namespace DatabaseLayer
                 return 0;
             }
         }
-        public static List<GetAllProjectVM> SearchProjectByAttributesDL(string ProjectName, string ProjectType, string Location,int UserID,int RoleID)
+        public static List<GetAllProjectVM> SearchProjectByAttributesDL(string ProjectName, string ProjectType, string Location, int UserID, int RoleID)
         {
             List<GetAllProjectVM> getAllProjectLst = new List<GetAllProjectVM>();
             IDbConnection Con = null;
@@ -142,6 +142,7 @@ namespace DatabaseLayer
             }
             catch (Exception ex)
             {
+                throw;
             }
             finally
             {
@@ -290,7 +291,7 @@ namespace DatabaseLayer
                 return ComboLst;
             }
         }
-        public static List<ComboProcurementHead> getComboProcurementHeadDL(int Project_ID,int SubProject_ID)
+        public static List<ComboProcurementHead> getComboProcurementHeadDL(int Project_ID, int SubProject_ID)
         {
             List<ComboProcurementHead> ComboLst = new List<ComboProcurementHead>();
 
@@ -307,7 +308,7 @@ namespace DatabaseLayer
             }
         }
 
-        public static List<ComboBatch> getComboBoxBatchDL(int Project_ID, int Role_ID)
+        public static List<ComboBatch> getComboBoxBatchDL(int Project_ID, int Role_ID, int? SubProjectID)
         {
             List<ComboBatch> ComboLst = new List<ComboBatch>();
 
@@ -317,6 +318,7 @@ namespace DatabaseLayer
                 DynamicParameters ObjParm = new DynamicParameters();
                 ObjParm.Add("@Project_ID", Project_ID);
                 ObjParm.Add("@Role_ID", Role_ID);
+                ObjParm.Add("@SubProject_ID", SubProjectID);
                 ComboLst = conn.Query<ComboBatch>("sp_GetBatchBaseOnProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
@@ -518,51 +520,21 @@ namespace DatabaseLayer
                 using (TransactionScope transactionScope = new TransactionScope())
                 {
                     Con = new SqlConnection(Common.ConnectionString);
-                    Con.Open();
+
                     DynamicParameters ObjParm = new DynamicParameters();
                     //LoginUser
                     ObjParm.Add("@CreatedByUser_ID", m.User_ID);   //LoginUser
                     ObjParm.Add("@Category_ID", m.Category_ID);
-                    ObjParm.Add("@ProjectType_ID", m.ProjectType_ID);
-                    ObjParm.Add("@DigitalPolicy_ID", m.DigitalPolicy_ID);
-                    ObjParm.Add("@City_ID", m.City_ID);
+                    ObjParm.Add("@ProjectGoal", m.ProjectGoal);
                     ObjParm.Add("@ProjectName", m.ProjectName);
                     ObjParm.Add("@PlannedBudget", m.PlannedBudget);
                     ObjParm.Add("@ApprovedBudget", m.ApprovedBudget);
-                    ObjParm.Add("@Funding_Source", m.Funding_Source);
-                    //ObjParm.Add("@PlannedProcurement", m.PlannedProcurement);
                     ObjParm.Add("@PlannedHR", m.PlannedHR);
-                    //ObjParm.Add("@CostPerBeneficiary", m.CostPerBeneficiary);
-                    //ObjParm.Add("@MaleBeneficiary", m.MaleBeneficiary);
-                    //ObjParm.Add("@FemaleBeneficiary", m.FemaleBeneficiary);
-                    //ObjParm.Add("@TotalBeneficiary", m.TotalBeneficiary);
-                    ObjParm.Add("@Objective", m.Objective);
-
-                    //Risk
-                    //ObjParm.Add("@RiskStatus_ID", m.RiskStatus_ID);
-                    //ObjParm.Add("@RiskName", m.RiskName);
 
                     //Schedule
                     ObjParm.Add("@PlannedDate", m.PlannedDate);
                     ObjParm.Add("@StartDate", m.StartDate);
                     ObjParm.Add("@EndDate", m.EndDate);
-
-                    //Procurement
-                    //ObjParm.Add("@AchievedProcurement", m.AchievedProcurement);
-                    //ObjParm.Add("@ProcurementPercent", m.ProcurementPercent);
-                    //ObjParm.Add("@ProcurementDate", DateTime.Now);
-                    //ObjParm.Add("@ProcurmentHeader", m.Headers);
-
-                    //StackHolder
-                    //ObjParm.Add("@StackholderName", m.StackholderName);
-                    //ObjParm.Add("@StackholderDepartment", m.StackholderDepartment);
-                    //ObjParm.Add("@StackholderContact", m.StackholderContact);
-                    //ObjParm.Add("@StackholderEmail", m.StackholderEmail);
-
-                    //StackHolder
-                   // ObjParm.Add("@RecruitedHR", m.RecruitedHR);
-                   // ObjParm.Add("@RecruitedHRPercent", m.RecruitedHRPercent);
-                    ObjParm.Add("@RecruitedHRDate", DateTime.Now);
 
                     //ReleasedBudget
                     ObjParm.Add("@ReleasedBudget", m.ReleasedBudget);
@@ -571,145 +543,105 @@ namespace DatabaseLayer
                     ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                     ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
                     ObjParm.Add("@Project_ID", dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-
+                    Con = new SqlConnection(Common.ConnectionString);
+                    Con.Open();
                     Con.Execute("sp_ProjectCeate", ObjParm, commandType: CommandType.StoredProcedure);
-
+                    Con.Close();
                     status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
                     status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
                     Project_ID = Convert.ToInt32(ObjParm.Get<Int32>("@Project_ID"));
-                    Con.Close();
 
-                    #region NO
-                    //RiskMultiEntry
-                    //DynamicParameters ObjParmTask = new DynamicParameters();
-                    //var _AssignRiskList = m.AssignRiskList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.RiskName, p.RiskStatus_ID, p.CreatedByUser_ID }).ToList();
-                    //DataTable dt = new DataTable();
-                    //dt = Utility.Conversion.ConvertListToDataTable(_AssignRiskList);
-                    //ObjParmTask.AddTable("@RiskTable", "udt_Risk", _AssignRiskList);
-                    //ObjParmTask.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                    //ObjParmTask.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                    //var resultRisk = Con.Query("sp_RiskCreateMulti", dt, commandType: CommandType.StoredProcedure);
-                    //status.status = Convert.ToBoolean(ObjParmTask.Get<bool>("@Status"));
-                    //status.statusDetail = Convert.ToString(ObjParmTask.Get<string>("@StatusDetails"));
-
-                    //RiskMultiEntry
-                    //DynamicParameters ObjParmStackholder = new DynamicParameters();
-                    //var _AssignStackholderList = m.AssignStackholderList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.StackholderName, p.StackholderDepartment, p.StackholderContact, p.StackholderEmail, p.CreatedByUser_ID }).ToList();
-                    //ObjParmStackholder.AddTable("@StackholderTable", "udt_StackHolder", _AssignStackholderList);
-                    //ObjParmStackholder.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                    //ObjParmStackholder.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                    //var resultStackholder = Con.Query("sp_StackholderCreateMulti", ObjParmTask, commandType: CommandType.StoredProcedure);
-                    //status.status = Convert.ToBoolean(ObjParmTask.Get<bool>("@Status"));
-                    //status.statusDetail = Convert.ToString(ObjParmTask.Get<string>("@StatusDetails")); 
-                    #endregion
-
-
-                    conn = new SqlConnection(Common.ConnectionString);
-                    cmd = new SqlCommand("sp_RiskCreateMulti", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    var _AssignRiskList = m.AssignRiskList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.RiskName, p.RiskStatus_ID, p.CreatedByUser_ID }).ToList();
+                    var _AssignRiskList = m.AssignRiskList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.RiskMitigation_ID, p.RiskName, p.RiskStatus_ID, p.CreatedByUser_ID }).ToList();
                     if (_AssignRiskList.Count > 0)
                     {
                         DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignRiskList);
-                        cmd.Parameters.AddWithValue("@RiskTable", dt).SqlDbType = SqlDbType.Structured;
 
-                        SqlParameter _StatusParm = new SqlParameter("@Status", SqlDbType.Bit);
-                        _StatusParm.Direction = ParameterDirection.Output;
-                        cmd.Parameters.Add(_StatusParm);
-                        SqlParameter _StatusDetailsParm = new SqlParameter("@StatusDetails", SqlDbType.VarChar, 100);
-                        _StatusDetailsParm.Direction = ParameterDirection.Output;
-                        cmd.Parameters.Add(_StatusDetailsParm);
-
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
-
-                        _Status = (bool)_StatusParm.Value;
-                        _StatusDetails = (string)_StatusDetailsParm.Value;
+                        DynamicParameters ObjParm22 = new DynamicParameters();
+                        ObjParm22.Add("@RiskTable", dt.AsTableValuedParameter("udt_Risk"));
+                        ObjParm22.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                        ObjParm22.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                        Con = new SqlConnection(Common.ConnectionString);
+                        Con.Open();
+                        Con.Execute("sp_RiskCreateMulti", ObjParm22, commandType: CommandType.StoredProcedure);
+                        Con.Close();
+                        status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                        status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
                     }
 
-                    #region 2
-                    conn = new SqlConnection(Common.ConnectionString);
-                    cmd = new SqlCommand("sp_StackholderCreateMulti", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    #region Region2
 
                     var _AssignStackholderList = m.AssignStackholderList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.StackholderName, p.StackholderDepartment, p.StackholderContact, p.StackholderEmail, p.CreatedByUser_ID }).ToList();
+                    DataTable ddt = new DataTable();
                     if (_AssignStackholderList.Count > 0)
                     {
-                        DataTable dt2 = Utility.Conversion.ConvertListToDataTable(_AssignStackholderList);
-                        cmd.Parameters.AddWithValue("@StackholderTable", dt2).SqlDbType = SqlDbType.Structured;
-
-                        SqlParameter _StatusParm2 = new SqlParameter("@Status", SqlDbType.Bit);
-                        _StatusParm2.Direction = ParameterDirection.Output;
-                        cmd.Parameters.Add(_StatusParm2);
-                        SqlParameter _StatusDetailsParm2 = new SqlParameter("@StatusDetails", SqlDbType.VarChar, 100);
-                        _StatusDetailsParm2.Direction = ParameterDirection.Output;
-                        cmd.Parameters.Add(_StatusDetailsParm2);
-
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
-
-                        status.status = (bool)_StatusParm2.Value;
-                        status.statusDetail = (string)_StatusDetailsParm2.Value;
+                        ddt = Utility.Conversion.ConvertListToDataTable(_AssignStackholderList);
                     }
-                    #endregion
-
-                    #region Region3
-
+                    DynamicParameters ObjParm222 = new DynamicParameters();
+                    ObjParm222.Add("@StackholderTable", ddt.AsTableValuedParameter("udt_StackHolder"));
+                    ObjParm222.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    ObjParm222.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
                     Con = new SqlConnection(Common.ConnectionString);
                     Con.Open();
-
-                    DynamicParameters ObjParm3 = new DynamicParameters();
-                   
-
-                    var _dtObjective = m.AssignObjectiveList.Select(p => new { Project_ID,p.SubProject_ID, p.ObjectiveName}).ToList();
-                    DataTable dtObjective = Utility.Conversion.ConvertListToDataTable(_dtObjective);  
-
-                    var _dtProjectWithCity = m.comboCities.Select(p => new { Project_ID, p.CityID }).ToList();
-                    DataTable dtProjectWithCity = Utility.Conversion.ConvertListToDataTable(_dtProjectWithCity);
-                    dtProjectWithCity.Columns["CityID"].ColumnName = "City_ID";
-
-                    var _dtFundingSource = m.comboFundingSource.Select(p => new { Project_ID, p.FundingSourceID }).ToList();
-                    DataTable dtFundingSource = Utility.Conversion.ConvertListToDataTable(_dtFundingSource);
-                    dtProjectWithCity.Columns["FundingSourceID"].ColumnName = "FundingSource_ID";
-
-                    var _dtProjectWithPolicy = m.comboDigitalPolicies.Select(p => new { Project_ID, p.DigitalPolicyID}).ToList();
-                    DataTable dtProjectWithPolicy = Utility.Conversion.ConvertListToDataTable(_dtProjectWithPolicy);
-                    dtProjectWithCity.Columns["DigitalPolicyID"].ColumnName = "DigitalPolicy_ID";
-
-                    var _dtProjectWithProjectType = m.comboProjectTypes.Select(p => new { Project_ID, p.ProjectTypeID }).ToList();
-                    DataTable dtProjectWithProjectType = Utility.Conversion.ConvertListToDataTable(_dtProjectWithProjectType);
-                    dtProjectWithCity.Columns["ProjectTypeID"].ColumnName = "ProjectType_ID";
-
-                    var _dtProjectWithSDGS = m.comboSDGS.Select(p => new { Project_ID, p.SDGSID }).ToList();
-                    DataTable dtProjectWithSDGS = Utility.Conversion.ConvertListToDataTable(_dtProjectWithSDGS);
-                    dtProjectWithCity.Columns["SDGSID"].ColumnName = "SDGS_ID";
-
-                    ObjParm3.Add("@ProjectWithCityTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithCity "));
-                    ObjParm3.Add("@ProjectWIthFundingSourceTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWIthFundingSource"));
-                    ObjParm3.Add("@ProjectWithPolicyTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithPolicy"));
-                    ObjParm3.Add("@ProjectWithProjectTypeTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithProjectType"));
-                    ObjParm3.Add("@ProjectWithSDGSTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithSDG"));
-
-                    ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                    ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                    Con.Execute("sp_ProjectBulkEntry", ObjParm, commandType: CommandType.StoredProcedure);
-
+                    Con.Execute("sp_StackholderCreateMulti", ObjParm222, commandType: CommandType.StoredProcedure);
+                    Con.Close();
                     status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
                     status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                    #endregion
+                    #region Region3
+                    DynamicParameters ObjParm3 = new DynamicParameters();
+
+                    var _dtObjective = m.AssignObjectiveList.Select(p => new { Project_ID, p.SubProject_ID, p.ObjectiveName }).ToList();
+                    DataTable dtObjective = Utility.Conversion.ConvertListToDataTable(_dtObjective);
+
+                    DataTable dtCity = new DataTable();
+                    dtCity.Columns.Add("Project_ID", typeof(int));
+                    dtCity.Columns.Add("City_ID", typeof(int));
+                    for (int i = 0; i < m.CityArray.Count; i++)
+                    { dtCity.Rows.Add(Project_ID, m.CityArray[i]); }
+
+                    DataTable dtFundingSource = new DataTable();
+                    dtFundingSource.Columns.Add("Project_ID", typeof(int));
+                    dtFundingSource.Columns.Add("FundingSource_ID", typeof(int));
+                    for (int i = 0; i < m.Funding_SourceArray.Count; i++)
+                    { dtFundingSource.Rows.Add(Project_ID, m.Funding_SourceArray[i]); }
+
+                    DataTable dtProjectWithPolicy = new DataTable();
+                    dtProjectWithPolicy.Columns.Add("Project_ID", typeof(int));
+                    dtProjectWithPolicy.Columns.Add("DigitalPolicy_ID", typeof(int));
+                    for (int i = 0; i < m.DigitalPolicyArray.Count; i++)
+                    { dtProjectWithPolicy.Rows.Add(Project_ID, m.DigitalPolicyArray[i]); }
+
+                    DataTable dtProjectWithProjectType = new DataTable();
+                    dtProjectWithProjectType.Columns.Add("Project_ID", typeof(int));
+                    dtProjectWithProjectType.Columns.Add("ProjectType_ID", typeof(int));
+                    for (int i = 0; i < m.ProjectTypeArray.Count; i++)
+                    { dtProjectWithProjectType.Rows.Add(Project_ID, m.ProjectTypeArray[i]); }
+
+                    DataTable dtProjectWithSDGS = new DataTable();
+                    dtProjectWithSDGS.Columns.Add("Project_ID", typeof(int));
+                    dtProjectWithSDGS.Columns.Add("SDGS_ID", typeof(int));
+                    for (int i = 0; i < m.SDGSArray.Count; i++)
+                    { dtProjectWithSDGS.Rows.Add(Project_ID, m.SDGSArray[i]); }
+
+                    ObjParm3.Add("@ProjectWithCityTable", dtCity.AsTableValuedParameter("udt_ProjectWithCity "));
+                    ObjParm3.Add("@ProjectWIthFundingSourceTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWIthFundingSource"));
+                    ObjParm3.Add("@ProjectWithPolicyTable", dtProjectWithPolicy.AsTableValuedParameter("udt_ProjectWithPolicy"));
+                    ObjParm3.Add("@ProjectWithProjectTypeTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithProjectType"));
+                    ObjParm3.Add("@ProjectWithSDGSTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithSDGS"));
+
+                    ObjParm3.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    ObjParm3.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                    Con = new SqlConnection(Common.ConnectionString);
+                    Con.Open();
+                    Con.Execute("sp_ProjectBulkEntry", ObjParm3, commandType: CommandType.StoredProcedure);
+                    Con.Close();
+                    status.status = Convert.ToBoolean(ObjParm3.Get<bool>("@Status"));
+                    status.statusDetail = Convert.ToString(ObjParm3.Get<string>("@StatusDetails"));
 
                     #endregion
 
-                    conn.Dispose();
-                    cmd.Dispose();
-
-                    transactionScope.Complete();
-                    transactionScope.Dispose();
-                    }
                 }
+            }
             catch (Exception ex)
             {
                 status.status = false;

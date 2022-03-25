@@ -63,11 +63,11 @@ namespace MonitoringAndEvaluation_System.CommonUse
             return Json(cb, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult ClickProjectComboBox(int ProjectID, string ProcurementHead)
+        public JsonResult ClickProjectComboBox(int ProjectID, int? SubProjectID)
         {
             ComboIndicatorBatchIndicatorVM batchIndicatorVM = new ComboIndicatorBatchIndicatorVM();
             batchIndicatorVM.comboSubProjects = new ProjectManagementBL().getComboSubProjectBL(ProjectID, LoginRoleID);
-            batchIndicatorVM.comboBatches = new ProjectManagementBL().getComboBoxBatchBL(ProjectID, LoginRoleID);
+            batchIndicatorVM.comboBatches = new ProjectManagementBL().getComboBoxBatchBL(ProjectID, LoginRoleID, SubProjectID);
             //batchIndicatorVM.comboIndicators = new ProjectManagementBL().getComboIndicatorBL(Convert.ToInt32(ProjectID), 0);
             batchIndicatorVM.comboProcurementHeads = new ProjectManagementBL().getComboProcurementHeadBL(Convert.ToInt32(ProjectID),0);
             batchIndicatorVM.comboSubProjects.Insert(0, new ComboSubProject { SubProjectID = 0, SubProjectName = "Please Select Sub Project" });
@@ -79,14 +79,24 @@ namespace MonitoringAndEvaluation_System.CommonUse
             batchIndicatorVM.remainingValues = new ProjectManagementBL().RemainingValuesBL(ProjectID);
             return Json(batchIndicatorVM, JsonRequestBehavior.AllowGet);
         }
+        //[HttpPost]
+        //public JsonResult ClickSubProjectComboBox(int ProjectID, int SubProjectID)
+        //{
+        //    ComboIndicatorBatchIndicatorVM vm = new ComboIndicatorBatchIndicatorVM();
+        //    vm.comboBatches = new ProjectManagementBL().getComboBoxBatchBL(ProjectID, LoginRoleID);
+        //    vm.comboBatches.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
+
+        //    vm.comboProcurementHeads = new ProjectManagementBL().getComboProcurementHeadBL(Convert.ToInt32(ProjectID), 0);
+        //    vm.comboProcurementHeads.Insert(0, new ComboProcurementHead { PlannedProcurementID = 0, ProcrumetHeader = "Please Select Procurement Head" });
+
+        //    vm.remainingValues = new ProjectManagementBL().RemainingValuesBL(ProjectID);
+        //    return Json(vm, JsonRequestBehavior.AllowGet);
+        //}
         [HttpPost]
         public JsonResult ClickBatchComboBox(string Project_ID, string Batch_ID)
         {
             List<ComboIndicator> cb = new ProjectManagementBL().getComboIndicatorBL(Convert.ToInt32(Project_ID), Convert.ToInt32(Batch_ID));// Batch, LoginRoleID);
-            //if (cb.Count > 0)
-            //{
-            //    return Json(cb, JsonRequestBehavior.AllowGet);
-            //}
+            
             cb.Insert(0, new ComboIndicator { IndicatorID = 0, IndicatorName = "Please Select Indicator" });
             return Json(cb, JsonRequestBehavior.AllowGet);
         }

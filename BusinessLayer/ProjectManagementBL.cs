@@ -30,9 +30,9 @@ namespace BusinessLayer
             return ProjectManagementDL.IsProjectNameExistsDL(_ProjectName.Trim());
         }
         //JSON
-        public RemainingValues RemainingValuesBL(int _ProjectID)
+        public RemainingValues RemainingValuesBL(int _ProjectID, int? SubProjectID)
         {
-            return ProjectManagementDL.RemainingValuesDL(_ProjectID);
+            return ProjectManagementDL.RemainingValuesDL(_ProjectID, SubProjectID);
         }
         public StatusModel ComparePlanned_PrucrementBL(int _ProjectID, out int PlannedProcurement, out int AchievedProcurement)
         {

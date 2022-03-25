@@ -1,5 +1,6 @@
 ﻿using BusinessLayer;
 using ModelLayer;
+using MonitoringAndEvaluation_System.CommonUse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         // GET: Project
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
         FinanceManagementBL ObjFinanceMngBL = new FinanceManagementBL();
- 
+        CommonCombo allCombo = new CommonCombo();
 
         [HttpGet]
         public ActionResult ProjectCreate()
@@ -45,8 +46,8 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.ReleasedBudget = Convert.ToInt32(Request.Form["txtReleasedBudget"]);
                 ProjectVM.ReleasedDate = DateTime.Now;
                 ProjectVM.User_ID = LoginUserID;
-             
-               
+
+
                 ProjectVM.Funding_SourceArray = Request.Form["FundingSourceArray"].Split(',').ToList().Select(int.Parse).ToList();
                 ProjectVM.ProjectTypeArray = Request.Form["ProjectTypeArray"].Split(',').ToList().Select(int.Parse).ToList();
                 ProjectVM.CityArray = Request.Form["CityArray"].Split(',').ToList().Select(int.Parse).ToList();
@@ -122,6 +123,8 @@ namespace MonitoringAndEvaluation_System.Controllers
                         string[] ItemArray = _StackholderRows[i].Split('|');
                         mm.StackholderDepartment = Convert.ToString(ItemArray[1]);
                         mm.TypeOfStakeholder_ID = Convert.ToInt32(ItemArray[2]);
+                        mm.TypeOfStakeholder_ID = Convert.ToInt32(ItemArray[2]);
+                        mm.StackholderDepartment = Convert.ToString(ItemArray[1]);
                         mm.StackholderContact = Convert.ToString(ItemArray[3]);
                         mm.StackholderEmail = Convert.ToString(ItemArray[4]);
                         _lstStackholder.Add(mm);
@@ -341,9 +344,16 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpGet]
         public ActionResult RecruitedHRCreate()
         {
+            CommonCode ss = new CommonCode();
             CreateRecruitedHRVM recruitedHRVM = new CreateRecruitedHRVM();
-            ComboProject(recruitedHRVM);
-            
+      
+            #region DropDown
+            new CommonController().allDropDown(ref allCombo, LoginRoleID, LoginUserID);
+            recruitedHRVM.comboProjects = allCombo.comboProject;
+            recruitedHRVM.comboSubProjects = allCombo.comboSubProjects;
+            recruitedHRVM.comboBatch = allCombo.comboBatch; 
+            #endregion
+
             getAllRecruitedHR();
             return View(recruitedHRVM);
 
@@ -354,7 +364,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             try
             {
                 List<ComboBatch> cb = ObjProjectMngBL.getComboBatchBL(recruitedHRVM.Project_ID, LoginRoleID);
-                
+
 
                 if (ModelState.IsValid == false)
                 {
@@ -362,15 +372,15 @@ namespace MonitoringAndEvaluation_System.Controllers
                     goto gotoWithModel;
                 }
 
-               //string hdnRemaningHR = form["hdnRemaningHR"];
+                //string hdnRemaningHR = form["hdnRemaningHR"];
 
-               // if (recruitedHRVM.RecruitedHR > Convert.ToInt32(hdnRemaningHR))
-               // {
-               //     ShowMessage(MessageBox.Warning, OperationType.Warning, "Recruited-HR should not be greater than Planned-HR:  " + Convert.ToInt32(hdnRemaningHR));
-               //     goto gotoWithModel;
-               // }
+                // if (recruitedHRVM.RecruitedHR > Convert.ToInt32(hdnRemaningHR))
+                // {
+                //     ShowMessage(MessageBox.Warning, OperationType.Warning, "Recruited-HR should not be greater than Planned-HR:  " + Convert.ToInt32(hdnRemaningHR));
+                //     goto gotoWithModel;
+                // }
 
-                recruitedHRVM.CreatedByUser_ID=LoginUserID;
+                recruitedHRVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new ProjectManagementBL().recruitedCreateBL(recruitedHRVM);
                 if (status.status)
                 {
@@ -388,8 +398,14 @@ namespace MonitoringAndEvaluation_System.Controllers
             return RedirectToAction("RecruitedHRCreate");
 
             gotoWithModel:
+           
+            #region DropDown
+            new CommonController().allDropDown(ref allCombo, LoginRoleID, LoginUserID);
+            recruitedHRVM.comboProjects = allCombo.comboProject;
+            recruitedHRVM.comboSubProjects = allCombo.comboSubProjects;
+            recruitedHRVM.comboBatch = allCombo.comboBatch;
+            #endregion
             getAllRecruitedHR();
-            ComboProject(recruitedHRVM);
             return View(recruitedHRVM);
         }
 
@@ -442,7 +458,13 @@ namespace MonitoringAndEvaluation_System.Controllers
         public ActionResult ProcurementCreateView()
         {
             CreateProcurementVM procurementVM = new CreateProcurementVM();
-            ComboForProcurement(procurementVM);
+            #region DropDown
+            new CommonController().allDropDown(ref allCombo, LoginRoleID, LoginUserID);
+            procurementVM.comboProjects = allCombo.comboProject;
+            procurementVM.comboSubProjects = allCombo.comboSubProjects;
+            procurementVM.comboBatch = allCombo.comboBatch;
+            #endregion
+
             getAllProcurement();
             return View(procurementVM);
         }
@@ -454,14 +476,10 @@ namespace MonitoringAndEvaluation_System.Controllers
                 if (ModelState.IsValid == false)
                 {
                     ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.Fill_Fields);
-                    
-                    goto gotoWithModel; 
+
+                    goto gotoWithModel;
                 }
-                //if (procurementVM.NoOfProcurement > Convert.ToInt32(form["hdnRemainingProcurement"]))
-                //{
-                //    ShowMessage(MessageBox.Warning, OperationType.Warning, "Procurement should not be greater than Planned Procurement: " + form["hdnRemainingProcurement"]);
-                //    goto gotoWithModel;
-                //}
+             
                 procurementVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new ProjectManagementBL().procurementCreateBL(procurementVM);
                 if (status.status)
@@ -482,7 +500,13 @@ namespace MonitoringAndEvaluation_System.Controllers
             return RedirectToAction("ProcurementCreateView");
 
             gotoWithModel:
-            ComboForProcurement(procurementVM);
+            #region DropDown
+      
+            new CommonController().allDropDown(ref allCombo, LoginRoleID, LoginUserID);
+            procurementVM.comboProjects = allCombo.comboProject;
+            procurementVM.comboSubProjects = allCombo.comboSubProjects;
+            procurementVM.comboBatch = allCombo.comboBatch;
+            #endregion
             getAllProcurement();
             return View(procurementVM);
         }
@@ -537,7 +561,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             return View();
         }
 
-       
+
 
         public void Combo(CreateProjectVM projectVM)
         {
@@ -567,15 +591,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             
             projectVM.comboProject = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
         }
-        public void ComboProject(CreateRecruitedHRVM recruitedHRVM)
-        {
-            //Get ProjectType list
-            recruitedHRVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
-            recruitedHRVM.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
-            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            recruitedHRVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
-        }
+   
 
         #region ComboForCreateAndEdit
         public void ComboForRecruitedHR(CreateRecruitedHRVM recruitedHRVM)
@@ -589,7 +605,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         public void ComboProjectProc(CreateProcurementVM procurementVM)
         {
             procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ComboSubProject mb = new ComboSubProject() { SubProjectID = 0, SubProjectName ="Please Select Sub Project" };
+            ComboSubProject mb = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select Sub Project" };
             procurementVM.comboSubProjects.Add(mb);
 
         }
@@ -604,9 +620,11 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             //Get ProjectType list
             procurementVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-            ComboSubProject mb = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select Batch" };
-            procurementVM.comboSubProjects.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
-           
+            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select Batch" };
+            procurementVM.comboSubProjects.Add(msp); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            procurementVM.comboBatch.Add(mb);
+
 
         }
         //public void ComboProjectEdit(EditRecruitedHRVM recruitedHRVM)

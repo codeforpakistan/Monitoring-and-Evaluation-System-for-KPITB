@@ -701,11 +701,13 @@ namespace ModelLayer
             {
                 comboProjects = new List<ComboProject>();
                 comboSubProjects = new List<ComboSubProject>();
+               comboBatch =new  List<ComboBatch>();
                 comboProcurementHead = new List<ComboProcurementHead>();
             }
             public int Project_ID { get; set; }
             [Range(0, int.MaxValue, ErrorMessage = "Enter Procurement-Value")]
             public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
             public int PlannedProcurement_ID { get; set; }
             [Required(ErrorMessage = "Enter From Date")]

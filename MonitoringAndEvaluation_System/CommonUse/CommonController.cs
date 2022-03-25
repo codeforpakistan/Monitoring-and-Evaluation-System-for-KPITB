@@ -76,7 +76,7 @@ namespace MonitoringAndEvaluation_System.CommonUse
             batchIndicatorVM.comboProcurementHeads.Insert(0, new ComboProcurementHead { PlannedProcurementID = 0, ProcrumetHeader = "Please Select Procurement Head" });
 
 
-            batchIndicatorVM.remainingValues = new ProjectManagementBL().RemainingValuesBL(ProjectID);
+            batchIndicatorVM.remainingValues = new ProjectManagementBL().RemainingValuesBL(ProjectID, SubProjectID);
             return Json(batchIndicatorVM, JsonRequestBehavior.AllowGet);
         }
         //[HttpPost]
@@ -193,5 +193,18 @@ namespace MonitoringAndEvaluation_System.CommonUse
                 return Json("false", JsonRequestBehavior.AllowGet);
             }
         }
+
+
+        #region CUSTOM_FUNCTION
+        
+         public void allDropDown(ref CommonCombo combo, int LoginRoleID, int LoginUserID)//out List<ComboProject> comboProject, out List<ComboSubProject> comboSubProject, out List<ComboBatch> comboBatch)
+        {
+            combo.comboProject = new ProjectManagementBL().getComboProjectBL(LoginRoleID, LoginUserID);
+            ComboSubProject msp = new ComboSubProject() { SubProjectID = 0, SubProjectName = "Please Select SubProject" };
+            combo.comboSubProjects.Add(msp); //= ObjProjectMngBL.getComboSubProjectBL(recruitedHRVM.Project_ID,LoginRoleID);
+            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            combo.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+        }
+        #endregion
     }
 }

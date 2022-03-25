@@ -203,6 +203,61 @@ function IssueDateCompare() {
     }
 }
 
+$("#SubProject_ID").on('change', function () {
+    debugger;
+    var Url_SubProject = $('#ProjectComboLink').attr('url-Val');
+    var obj = {};
+    obj.ProjectID = $("#Project_ID").find("option:selected").val();
+    obj.SubProjectID = $("#SubProject_ID").find("option:selected").val();
+
+    //var Stock = { Project_ID: $("#Project_ID").find("option:selected").val(), Batch_ID: $("#Batch_ID").find("option:selected").val() };
+    $.ajax({
+        type: 'POST',
+        url: Url_SubProject,
+        data: JSON.stringify(obj),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+
+        success: function (response) {
+            $("#Batch_ID").empty();
+
+            //ComboBatch
+            if (response.comboBatches.length <= 1) {
+                $("#Batch_ID").prop("disabled", true);
+                $("#Batch_ID").append('<option value="' + 0 + '">' +
+                    "Please Select Batch" + '</option>');
+            } else {
+                $("#Batch_ID").prop("disabled", false);
+                $.each(response.comboBatches, function (i, item) {
+                    $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
+                        item.BatchName + '</option>');
+                });
+            }
+
+            //RemainingVaues
+            $("#RecruitedHR").val('');
+            $("#PlannedProcrumentNo").val('');
+            $("#ReleasedBudget").val('');
+            $("#ApprovedBudget").val('');
+            $("#ReleasedBudget").val('');
+
+            $("#lblRemaningHR").text(response.remainingValues.RemainingPlannedHR);
+            $("#hdnRemaningHR").val(response.remainingValues.RemainingPlannedHR);//Hidden
+
+            $("#lblRemainingProcurement").text(response.remainingValues.RemainingProcurement);
+            $("#hdnRemainingProcurement").val(response.remainingValues.RemainingProcurement); //Hidden
+
+            $("#lblRemaningBudget").text(response.remainingValues.RemainingBudget);
+            $("#hdnRemaningBudget").val(response.remainingValues.RemainingBudget); //Hidden
+
+            $("#lblExpenditureBudget").text(response.remainingValues.ApprovedBudget);
+            $("#hdnExpenditureBudget").val(response.remainingValues.ApprovedBudget); //Hidden
+
+            $("#lblTotalReleasedBudget").text(response.remainingValues.ReleasedBudget);
+            $("#hdnTotalReleasedBudget").val(response.remainingValues.ReleasedBudget); //Hidden
+        }
+    });//Ajax_End
+});
 
 
 $("#Project_ID").on('change', function () {
@@ -272,71 +327,6 @@ $("#Project_ID").on('change', function () {
         error: function (ex) {
             debugger;
             console.log('Failed to Retrieve Data:  ' + ex.responseText);
-        }
-    });//Ajax_End
-});
-
-
-
-
-
-
-
-
-
-
-
- $("#SubProject_ID").on('change', function () {
-     var Url_SubProject = $('#SubProjectComboLink').attr('url-Val');
-
-     var obj = {};
-    obj.SubProject_ID = $("#SubProject_ID").find("option:selected").val();
-
-    //var Stock = { Project_ID: $("#Project_ID").find("option:selected").val(), Batch_ID: $("#Batch_ID").find("option:selected").val() };
-    $.ajax({
-        type: 'POST',
-        url: Url_SubProject,
-        data: JSON.stringify(obj),
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-
-        success: function (response) {
-            $("#Batch_ID").empty();
-
-            //ComboBatch
-            if (response.comboBatches.length <= 1) {
-                $("#Batch_ID").prop("disabled", true);
-                $("#Batch_ID").append('<option value="' + 0 + '">' +
-                    "Please Select Batch" + '</option>');
-            } else {
-                $("#Batch_ID").prop("disabled", false);
-                $.each(response.comboBatches, function (i, item) {
-                    $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
-                        item.BatchName + '</option>');
-                });
-            }
-    
-            //RemainingVaues
-            $("#RecruitedHR").val('');
-            $("#PlannedProcrumentNo").val('');
-            $("#ReleasedBudget").val('');
-            $("#ApprovedBudget").val('');
-            $("#ReleasedBudget").val('');
-
-            $("#lblRemaningHR").text(response.remainingValues.RemainingPlannedHR);
-            $("#hdnRemaningHR").val(response.remainingValues.RemainingPlannedHR);//Hidden
-
-            $("#lblRemainingProcurement").text(response.remainingValues.RemainingProcurement);
-            $("#hdnRemainingProcurement").val(response.remainingValues.RemainingProcurement); //Hidden
-
-            $("#lblRemaningBudget").text(response.remainingValues.RemainingBudget);
-            $("#hdnRemaningBudget").val(response.remainingValues.RemainingBudget); //Hidden
-
-            $("#lblExpenditureBudget").text(response.remainingValues.ApprovedBudget);
-            $("#hdnExpenditureBudget").val(response.remainingValues.ApprovedBudget); //Hidden
-
-            $("#lblTotalReleasedBudget").text(response.remainingValues.ReleasedBudget);
-            $("#hdnTotalReleasedBudget").val(response.remainingValues.ReleasedBudget); //Hidden
         }
     });//Ajax_End
 });

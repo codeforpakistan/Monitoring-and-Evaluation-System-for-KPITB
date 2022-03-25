@@ -120,8 +120,8 @@ namespace MonitoringAndEvaluation_System.Controllers
                     {
                         Stackholder mm = new Stackholder();
                         string[] ItemArray = _StackholderRows[i].Split('|');
-                        mm.TypeOfStakeholder_ID = Convert.ToInt32(ItemArray[1]);
-                        mm.StackholderDepartment = Convert.ToString(ItemArray[2]);
+                        mm.TypeOfStakeholder_ID = Convert.ToInt32(ItemArray[2]);
+                        mm.StackholderDepartment = Convert.ToString(ItemArray[1]);
                         mm.StackholderContact = Convert.ToString(ItemArray[3]);
                         mm.StackholderEmail = Convert.ToString(ItemArray[4]);
                         _lstStackholder.Add(mm);

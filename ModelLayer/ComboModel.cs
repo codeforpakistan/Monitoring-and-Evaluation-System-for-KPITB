@@ -9,6 +9,15 @@ namespace ModelLayer
 {
     public class ComboModel
     {
+        #region CommonCombo
+        public class CommonCombo
+        {
+            public List<ComboProject> comboProject = new List<ComboProject>();
+            public List<ComboSubProject> comboSubProjects = new List<ComboSubProject>();
+            public List<ComboBatch> comboBatch = new List<ComboBatch>();
+        }
+        #endregion
+
         #region ComboRole
         public partial class ComboRole
         {
@@ -46,7 +55,7 @@ namespace ModelLayer
             public string CityName { get; set; }
         }
         #endregion
-        
+
         #region SDGS
         public partial class ComboSDGS
         {
@@ -89,11 +98,11 @@ namespace ModelLayer
             public int TypeOfStakeholderID { get; set; }
             public string TypeOfStakeholderName { get; set; }
         }
-        
+
         #endregion
         #region Project
         public partial class ComboProject
-        { 
+        {
             public int ProjectID { get; set; }
             public string ProjectName { get; set; }
         }
@@ -109,11 +118,11 @@ namespace ModelLayer
         }
         public partial class ComboPlannedKPIs
         {
-           public int ProjectPlannedKPIsID { get; set; }
-           public string IndicatorDescription { get; set; }
-           public int Target { get; set; }
-           public System.DateTime TimeLine { get; set; }
-            
+            public int ProjectPlannedKPIsID { get; set; }
+            public string IndicatorDescription { get; set; }
+            public int Target { get; set; }
+            public System.DateTime TimeLine { get; set; }
+
         }
         public partial class ComboIndicator
         {
@@ -125,7 +134,7 @@ namespace ModelLayer
             public int PlannedProcurementID { get; set; }
             public string ProcrumetHeader { get; set; }
             public int PlannedPerCostItem { get; set; }
-            
+
         }
 
         public partial class RemainingValues

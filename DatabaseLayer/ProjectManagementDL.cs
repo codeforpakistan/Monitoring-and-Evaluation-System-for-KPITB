@@ -128,7 +128,7 @@ namespace DatabaseLayer
             }
             return isTrue;
         }
-        public static RemainingValues RemainingValuesDL(int _ProjectID)
+        public static RemainingValues RemainingValuesDL(int _ProjectID,int? SubProjectID)
         {
             RemainingValues remainingValues = new RemainingValues();
             IDbConnection Con = null;
@@ -138,6 +138,7 @@ namespace DatabaseLayer
                 Con.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
                 ObjParm.Add("@ProjectID", _ProjectID);
+                ObjParm.Add("@SubProjectID", SubProjectID);
                 remainingValues = Con.Query<RemainingValues>("sp_RemainingValues", ObjParm, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
             catch (Exception ex)

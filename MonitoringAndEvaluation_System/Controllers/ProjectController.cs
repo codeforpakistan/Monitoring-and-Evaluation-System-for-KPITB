@@ -17,7 +17,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         // GET: Project
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
         FinanceManagementBL ObjFinanceMngBL = new FinanceManagementBL();
-        #region Project
+ 
 
         [HttpGet]
         public ActionResult ProjectCreate()
@@ -35,34 +35,24 @@ namespace MonitoringAndEvaluation_System.Controllers
                 #region SingleValues
 
                 ProjectVM.Category_ID = Convert.ToInt32(Request.Form["txtCategory_ID"]);
-                ProjectVM.ProjectType_ID = Convert.ToInt32(Request.Form["txtProjectType_ID"]);
-                ProjectVM.DigitalPolicy_ID = Convert.ToInt32(Request.Form["txtDigitalPolicy_ID"]);
-                ProjectVM.City_ID = Convert.ToInt32(Request.Form["txtCity_ID"]);
                 ProjectVM.ProjectName = Convert.ToString(Request.Form["txtProjectName"]);
-              
                 ProjectVM.PlannedDate = Convert.ToDateTime(Request.Form["txtPlannedDate"]);
                 ProjectVM.StartDate = Convert.ToDateTime(Request.Form["txtStartDate"]);
                 ProjectVM.EndDate = Convert.ToDateTime(Request.Form["txtEndDate"]);
                 ProjectVM.PlannedHR = Convert.ToInt32(Request.Form["txtPlannedHR"]);
-                //ProjectVM.RecruitedHR = Convert.ToInt32(Request.Form["txtRecruitedHR"]);
-                //ProjectVM.RecruitedHRPercent = Convert.ToDouble(Request.Form["txtRecruitedHRPercent"]);
                 ProjectVM.PlannedBudget = Convert.ToInt32(Request.Form["txtPlannedBudget"]);
                 ProjectVM.ApprovedBudget = Convert.ToInt32(Request.Form["txtApprovedBudget"]);
                 ProjectVM.ReleasedBudget = Convert.ToInt32(Request.Form["txtReleasedBudget"]);
+                ProjectVM.ReleasedDate = DateTime.Now;
+                ProjectVM.User_ID = LoginUserID;
+             
                
-                ProjectVM.User_ID = LoginUserID;//Convert.ToInt32(Session["LoginUserID"]);
-                #endregion
-                #region FundingArray
-                //string aaa = Convert.ToString(Request.Form["FundingSourceArray"]);
-                //ProjectVM.Funding_Source = string.Join(",", aaa);
-                #endregion
                 ProjectVM.Funding_SourceArray = Request.Form["FundingSourceArray"].Split(',').ToList().Select(int.Parse).ToList();
                 ProjectVM.ProjectTypeArray = Request.Form["ProjectTypeArray"].Split(',').ToList().Select(int.Parse).ToList();
                 ProjectVM.CityArray = Request.Form["CityArray"].Split(',').ToList().Select(int.Parse).ToList();
                 ProjectVM.DigitalPolicyArray = Request.Form["DigitalPolicyArray"].Split(',').ToList().Select(int.Parse).ToList();
                 ProjectVM.SDGSArray = Request.Form["SDGSArray"].Split(',').ToList().Select(int.Parse).ToList();
-
-                ProjectVM.Objective = Convert.ToString(Request.Form["txtObjective"]);
+                ProjectVM.ProjectGoal = Convert.ToString(Request.Form["txtProjectGoal"]);
 
                 #region Objective
                 //From Procrument
@@ -112,10 +102,9 @@ namespace MonitoringAndEvaluation_System.Controllers
                     {
                         Risk m = new Risk();
                         string[] ItemArray = _RiskRows[i].Split('|');
-                        m.RiskName = Convert.ToString(ItemArray[1]);
-                        m.RiskMitigation_ID = Convert.ToInt32(ItemArray[2]);
-                        m.RiskStatus_ID = Convert.ToInt32(ItemArray[3]);
-                        m.CreatedByUser_ID = LoginUserID;
+                        m.RiskName = Convert.ToString(ItemArray[0]);
+                        m.RiskMitigation_ID = Convert.ToInt32(ItemArray[1]);
+                        m.RiskStatus_ID = Convert.ToInt32(ItemArray[2]);
                         _lstRisk.Add(m);
                     }
                 }
@@ -135,7 +124,6 @@ namespace MonitoringAndEvaluation_System.Controllers
                         mm.StackholderDepartment = Convert.ToString(ItemArray[2]);
                         mm.StackholderContact = Convert.ToString(ItemArray[3]);
                         mm.StackholderEmail = Convert.ToString(ItemArray[4]);
-                        mm.CreatedByUser_ID = LoginUserID;
                         _lstStackholder.Add(mm);
                     }
                 }
@@ -629,12 +617,9 @@ namespace MonitoringAndEvaluation_System.Controllers
         //    }
         //}
 
-
         #endregion
-        #region CUSTOMFUNCATION
 
-       
-        #endregion
+ 
 
     }
 }

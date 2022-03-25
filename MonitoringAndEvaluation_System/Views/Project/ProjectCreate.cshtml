@@ -62,7 +62,7 @@
 
                                         <div class="col-lg-4 ">
                                             <label for="sel1" class="col-form-label">Funding Source</label>
-                                            @Html.DropDownListFor(model => model.Funding_SourceArray, new MultiSelectList(Model.comboFundingSource, "FundingSourceID", "FundingSourceName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-3" })
+                                            @Html.ListBoxFor(model => model.Funding_SourceArray, new MultiSelectList(Model.comboFundingSource, "FundingSourceID", "FundingSourceName"), new { @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-3" })
                                             @Html.ValidationMessageFor(model => model.Funding_SourceArray, "", new { @class = "text-danger", @id = "spanFunding_SourceArray" })
                                         </div>
 
@@ -1106,21 +1106,18 @@
             formAllData.append('txtRecruitedHRPercent', $("#RecruitedHRPercent").val());
             formAllData.append('txtPlannedBudget', $("#PlannedBudget").val());
             formAllData.append('txtApprovedBudget', $("#ApprovedBudget").val());
-            formAllData.append('txtReleasedBudget', $("#ReleasedBudget").val());
+                formAllData.append('txtReleasedBudget', $("#ReleasedBudget").val());
+                formAllData.append('txtProjectGoal', $("#ProjectGoal").val());
+                
             //    formAllData.append('txtPlannedProcurement', $("#PlannedProcurement").val());
             //    formAllData.append('txtAchievedProcurement', $("#AchievedProcurement").val());
             //    formAllData.append('txtProcurementPercent', $("#ProcurementPercent").val());
             //formAllData.append('txtHeaders', $("#Headers").val());
-        
-            formAllData.append('FundingSourceArray', $("#Funding_SourceArray").val());
-            formAllData.append('ProjectTypeArray', $("#ProjectTypeArray").val());
-            formAllData.append('CityArray', $("#CityArray").val());
-            formAllData.append('DigitalPolicyArray', $("#DigitalPolicyArray").val());
-            formAllData.append('SDGSArray', $("#SDGSArray").val());
-
-
-                
-           
+                formAllData.append('FundingSourceArray', $('#select2-3 option:selected').toArray().map(item => item.value));
+                formAllData.append('ProjectTypeArray', $('#select2-4 option:selected').toArray().map(item => item.value));
+                formAllData.append('CityArray', $('#select2-1 option:selected').toArray().map(item => item.value));
+                formAllData.append('DigitalPolicyArray', $('#select2-2 option:selected').toArray().map(item => item.value));
+                formAllData.append('SDGSArray', $('#select2-5 option:selected').toArray().map(item => item.value));
 
                 //Objective
                 var ObjectiveRows = new Array();   //ArrayList
@@ -1175,9 +1172,9 @@
                 {
                     //Risk
                     debugger;
-                    $RiskRow = $(this).find('td:eq(0)').text() +
-                                "|" + $(this).find('td:eq(1)').text() +
-                                "|" + $(this).find('td:eq(2)').attr('id');
+                    $RiskRow = $(this).find('td:eq(1)').text() +
+                                "|" + $(this).find('td:eq(2)').attr('id') +
+                                "|" + $(this).find('td:eq(3)').attr('id');
                     RiskRows.push($RiskRow);
                 }
             });

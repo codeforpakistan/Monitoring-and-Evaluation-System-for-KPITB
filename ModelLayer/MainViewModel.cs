@@ -236,11 +236,15 @@ namespace ModelLayer
                 comboRiskStatus = new List<ComboRiskStatus>();
                 comboRiskMitigation = new List<ComboRiskMitigation>();
                 comboTypeOfStakeholder = new List<ComboTypeOfStakeholder>();
+                //only for sub project
+                comboProject = new List<ComboProject>();
 
             }
 
             public int ProjectID { get; set; }
-
+            //for sub Project
+            public int Project_ID { get; set; }
+            public string SubProjectName { get; set; }
             [Display(Name = "Category")]
             [Range(1, int.MaxValue, ErrorMessage = "Please Select")]
             public int Category_ID { get; set; }
@@ -325,20 +329,6 @@ namespace ModelLayer
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
             public DateTime ReleasedDate { get; set; }
 
-            ////Recruted-HR
-            //public int RecruitedHR_ID { get; set; }
-
-            //////[Required(ErrorMessage = "Please Enter Recruited HR")]
-            //[Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
-            //public int RecruitedHR { get; set; }
-
-            //public double RecruitedHRPercent { get; set; }
-
-            //[Required(ErrorMessage = "Select Date")]
-            //[DataType(DataType.Date, ErrorMessage = "Invalid Date")]
-            //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            //public System.DateTime RecruitedHRDate { get; set; }
-
             //Schedule
             public int Schedule_ID { get; set; }
             ////[Required(ErrorMessage = "Please Select Planned Date")]
@@ -383,7 +373,7 @@ namespace ModelLayer
             public List<ComboRiskStatus> comboRiskStatus { get; set; }
             public List<ComboRiskMitigation> comboRiskMitigation { get; set; }
             public List<ComboTypeOfStakeholder> comboTypeOfStakeholder { get; set; }
-
+            public List<ComboProject> comboProject { get; set; }
             public List<ProjectObjective> AssignObjectiveList { get; set; }
             public List<ProjectPlannedKPIs> AssignProjectPlannedKPIsList { get; set; }
             public List<PlannedProcurement> AssignPlannedProcurementList { get; set; }

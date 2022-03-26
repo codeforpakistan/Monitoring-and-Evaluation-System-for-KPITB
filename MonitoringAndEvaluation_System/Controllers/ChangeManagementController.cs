@@ -6,16 +6,13 @@ using System.Web.Mvc;
 
 namespace MonitoringAndEvaluation_System.Controllers
 {
-    public class ChangeManagementController : Controller
+    public class ChangeManagementController : BaseController
     {
         // GET: ChangeManagement
-
         [HttpGet]
-        public ActionResult ChangeMng()
+        public ActionResult ChangeMngCreate()
         {
-
             return View();
         }
-        
     }
 }

@@ -15,7 +15,7 @@
 <!-- START row-->
 <div class="row">
     <div class="col-xl-12">
-        @using (Html.BeginForm("ProjectCreate", "Project", FormMethod.Post, new { @id = "SubmitFromBtnCreate", @class = "form-horizontal" }))
+        @using (Html.BeginForm("ChangeMngCreate", "ChangeManagement", FormMethod.Post, new { @id = "SubmitFromBtnCreate", @class = "form-horizontal" }))
         {
             <!-- START card-->
 
@@ -50,8 +50,8 @@
                                         <div class="col-lg-4 ">
                                             <label for="sel1">Select Category</label>
                                             @*@Html.DropDownListFor(m => m.ProjectType_ID, new SelectList(Model.comboProjectTypes, "ProjectTypeID", "ProjectTypeName"), "Please Select Project Type", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
-                                @Html.DropDownListFor(model => model.ProjectTypeArray, new MultiSelectList(Model.comboProjectTypes, "ProjectTypeID", "ProjectTypeName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown chosen-select", @id = "select2-4" })
-                                @Html.ValidationMessageFor(m => m.ProjectTypeArray, "", new { @class = "parsley-required", @id = "spanProjectType_ID" })*@
+                                                @Html.DropDownListFor(model => model.ProjectTypeArray, new MultiSelectList(Model.comboProjectTypes, "ProjectTypeID", "ProjectTypeName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown chosen-select", @id = "select2-4" })
+                                                @Html.ValidationMessageFor(m => m.ProjectTypeArray, "", new { @class = "parsley-required", @id = "spanProjectType_ID" })*@
                                         </div>
                                         <!---->
 
@@ -72,13 +72,13 @@
                             <table class="table table-striped" name="tblIndicator">
                                 <thead class="table-info">
                                     <tr>
-                                        <th data-column-id="id" data-type="numeric">ID</th>
+                                        @*<th data-column-id="id" data-type="numeric">ID</th>*@
                                         <th data-column-id="Department">Item Name</th>
                                         <th data-column-id="ContactNo">Current Vaule</th>
                                         <th data-column-id="ContactNo">Change Vaule</th>
                                         <th data-column-id="ContactNo">Decision</th>
                                         <th data-column-id="ContactNo">Action Taken</th>
-                                        <th data-column-id="action"></th>
+                                        <th data-column-id="action">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tblContainer">
@@ -174,9 +174,8 @@
         //Add the Remove Buttton to Table Row.
         cell = row.insertCell(-1);
         $(cell).append(btnRemove);
-       
+
     };
 </script>
-
 
 

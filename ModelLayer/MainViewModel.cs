@@ -242,6 +242,7 @@ namespace ModelLayer
             }
 
             public int ProjectID { get; set; }
+
             //for sub Project
             public int Project_ID { get; set; }
             public string SubProjectName { get; set; }
@@ -263,7 +264,7 @@ namespace ModelLayer
             public List<int> CityArray { get; set; }
             public int SDGS_ID { get; set; }
             public List<int> SDGSArray { get; set; }
-            
+
             public int ProjectStatus_ID { get; set; }
             public int User_ID { get; set; }
             [Required(ErrorMessage = "Please Enter Project Name")]
@@ -302,7 +303,7 @@ namespace ModelLayer
             public int Target { get; set; }
             [Display(Name = "TimeLine")]
             public System.DateTime TimeLine { get; set; }
-           
+
 
             //Procurement
             public string ProcrumetHeader { get; set; }
@@ -318,8 +319,8 @@ namespace ModelLayer
             [Display(Name = "Achieved Cost")]
             public int AchievedCost { get; set; }
 
-            
-           
+
+
 
             //ReleasedBudget
             public long ReleasedBudget { get; set; }
@@ -328,6 +329,20 @@ namespace ModelLayer
             [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
             public DateTime ReleasedDate { get; set; }
+
+            ////Recruted-HR
+            //public int RecruitedHR_ID { get; set; }
+
+            //////[Required(ErrorMessage = "Please Enter Recruited HR")]
+            //[Range(1, int.MaxValue, ErrorMessage = "0 Value is not Valid")]
+            //public int RecruitedHR { get; set; }
+
+            //public double RecruitedHRPercent { get; set; }
+
+            //[Required(ErrorMessage = "Select Date")]
+            //[DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            //public System.DateTime RecruitedHRDate { get; set; }
 
             //Schedule
             public int Schedule_ID { get; set; }
@@ -373,6 +388,7 @@ namespace ModelLayer
             public List<ComboRiskStatus> comboRiskStatus { get; set; }
             public List<ComboRiskMitigation> comboRiskMitigation { get; set; }
             public List<ComboTypeOfStakeholder> comboTypeOfStakeholder { get; set; }
+
             public List<ComboProject> comboProject { get; set; }
             public List<ProjectObjective> AssignObjectiveList { get; set; }
             public List<ProjectPlannedKPIs> AssignProjectPlannedKPIsList { get; set; }

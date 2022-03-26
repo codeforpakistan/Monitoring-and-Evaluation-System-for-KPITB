@@ -103,7 +103,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                     {
                         Risk m = new Risk();
                         string[] ItemArray = _RiskRows[i].Split('|');
-                        m.RiskName = Convert.ToString(ItemArray[0].ToString());
+                        m.RiskName = Convert.ToString(ItemArray[0]);
                         m.RiskMitigation_ID = Convert.ToInt32(ItemArray[1]);
                         m.RiskStatus_ID = Convert.ToInt32(ItemArray[2]);
                         _lstRisk.Add(m);
@@ -121,10 +121,9 @@ namespace MonitoringAndEvaluation_System.Controllers
                     {
                         Stackholder mm = new Stackholder();
                         string[] ItemArray = _StackholderRows[i].Split('|');
+                       
                         mm.StackholderDepartment = Convert.ToString(ItemArray[1]);
                         mm.TypeOfStakeholder_ID = Convert.ToInt32(ItemArray[2]);
-                        mm.TypeOfStakeholder_ID = Convert.ToInt32(ItemArray[2]);
-                        mm.StackholderDepartment = Convert.ToString(ItemArray[1]);
                         mm.StackholderContact = Convert.ToString(ItemArray[3]);
                         mm.StackholderEmail = Convert.ToString(ItemArray[4]);
                         _lstStackholder.Add(mm);
@@ -176,6 +175,13 @@ namespace MonitoringAndEvaluation_System.Controllers
             return View(lst);
         }
 
+        [HttpGet]
+        public ActionResult ProjectDetails(string ProjectID)
+        {
+            GetProjectDetailsVM data = new ProjectManagementBL().getProjectDetailsBL(Convert.ToInt32(Utility.Encryption.DecryptURL(ProjectID)));
+
+            return View(data);
+        }
 
         [HttpGet]
         public ActionResult SubProjectCreate()
@@ -186,12 +192,15 @@ namespace MonitoringAndEvaluation_System.Controllers
             return View(projectVM);
         }
 
+
+
+
         [HttpPost]
         public ActionResult SubProjectCreate(CreateProjectVM ProjectVM, HttpPostedFileBase fileInput)
         {
             try
             {
-                #region SingleValues
+                
 
                 ProjectVM.Category_ID = Convert.ToInt32(Request.Form["txtCategory_ID"]);
                 ProjectVM.ProjectName = Convert.ToString(Request.Form["txtProjectName"]);
@@ -332,19 +341,13 @@ namespace MonitoringAndEvaluation_System.Controllers
             return View(lst);
         }
 
-        [HttpGet]
-        public ActionResult ProjectDetails(string ProjectID)
-        {
-            GetProjectDetailsVM data = new ProjectManagementBL().getProjectDetailsBL(Convert.ToInt32(Utility.Encryption.DecryptURL(ProjectID)));
-
-            return View(data);
-        }
         #endregion
         #region RecruitedHR
         [HttpGet]
         public ActionResult RecruitedHRCreate()
         {
-            CommonCode ss = new CommonCode();
+            //CommonCode ss = new CommonCode();
+            CommonCombo ss = new CommonCombo();
             CreateRecruitedHRVM recruitedHRVM = new CreateRecruitedHRVM();
       
             #region DropDown
@@ -453,7 +456,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             return RedirectToAction("RecruitedHRCreate");
         }
         #endregion
-
+        #region Procurement
         [HttpGet]
         public ActionResult ProcurementCreateView()
         {
@@ -479,7 +482,7 @@ namespace MonitoringAndEvaluation_System.Controllers
 
                     goto gotoWithModel;
                 }
-             
+
                 procurementVM.CreatedByUser_ID = LoginUserID;
                 StatusModel status = new ProjectManagementBL().procurementCreateBL(procurementVM);
                 if (status.status)
@@ -501,7 +504,7 @@ namespace MonitoringAndEvaluation_System.Controllers
 
             gotoWithModel:
             #region DropDown
-      
+
             new CommonController().allDropDown(ref allCombo, LoginRoleID, LoginUserID);
             procurementVM.comboProjects = allCombo.comboProject;
             procurementVM.comboSubProjects = allCombo.comboSubProjects;
@@ -556,42 +559,12 @@ namespace MonitoringAndEvaluation_System.Controllers
             getProject();
             return RedirectToAction("ProcurementCreateView");
         }
+        #endregion
+
         public ActionResult NO()
         {
             return View();
         }
-
-
-
-        public void Combo(CreateProjectVM projectVM)
-        {
-            //Get Category list
-            projectVM.comboCategories = ObjProjectMngBL.getCategoryBL();
-            //Get ProjectType list
-            projectVM.comboProjectTypes = ObjProjectMngBL.getProjectTypeBL();
-            //Get DigitalPolicy list
-            projectVM.comboDigitalPolicies = ObjProjectMngBL.getDigitalPolicyBL();
-            //Get Location/ City list
-            projectVM.comboCities = ObjProjectMngBL.getCityBL();
-            //Get Location/ City list
-            projectVM.comboRiskStatus = ObjProjectMngBL.getRiskStatusBL();
-            //Get FundingSource list
-            projectVM.comboFundingSource = ObjProjectMngBL.getFudingSourceBL();
-            //Get SDGS list
-            projectVM.comboSDGS = ObjProjectMngBL.getSDGSBL();
-            //Get Project Status list
-            projectVM.comboProjectStatus = ObjProjectMngBL.getProjectStatusBL();
-            //Get RiskStatus list
-            projectVM.comboRiskStatus = ObjProjectMngBL.getRiskStatusBL();
-            //Get RiskMitigation list
-            projectVM.comboRiskMitigation = ObjProjectMngBL.getRiskMitigationBL();
-            //Get Type of Stakeholder list
-            projectVM.comboTypeOfStakeholder = ObjProjectMngBL.getTypeOfStakeholderBL();
-            //Get Project
-            
-            projectVM.comboProject = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-        }
-   
 
         #region ComboForCreateAndEdit
         public void ComboForRecruitedHR(CreateRecruitedHRVM recruitedHRVM)
@@ -676,12 +649,38 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
         #endregion
         #region CoboBoxes
+        public void Combo(CreateProjectVM projectVM)
+        {
+            //Get Category list
+            projectVM.comboCategories = ObjProjectMngBL.getCategoryBL();
+            //Get ProjectType list
+            projectVM.comboProjectTypes = ObjProjectMngBL.getProjectTypeBL();
+            //Get DigitalPolicy list
+            projectVM.comboDigitalPolicies = ObjProjectMngBL.getDigitalPolicyBL();
+            //Get Location/ City list
+            projectVM.comboCities = ObjProjectMngBL.getCityBL();
+            //Get Location/ City list
+            projectVM.comboRiskStatus = ObjProjectMngBL.getRiskStatusBL();
+            //Get FundingSource list
+            projectVM.comboFundingSource = ObjProjectMngBL.getFudingSourceBL();
+            //Get SDGS list
+            projectVM.comboSDGS = ObjProjectMngBL.getSDGSBL();
+            //Get Project Status list
+            projectVM.comboProjectStatus = ObjProjectMngBL.getProjectStatusBL();
+            //Get RiskStatus list
+            projectVM.comboRiskStatus = ObjProjectMngBL.getRiskStatusBL();
+            //Get RiskMitigation list
+            projectVM.comboRiskMitigation = ObjProjectMngBL.getRiskMitigationBL();
+            //Get Type of Stakeholder list
+            projectVM.comboTypeOfStakeholder = ObjProjectMngBL.getTypeOfStakeholderBL();
 
-
+            projectVM.comboProject = ObjProjectMngBL.getComboProjectBL(LoginRoleID,LoginUserID);
+        }
 
 
         #endregion
         #region JSON
+
         [HttpGet]
         public JsonResult IsProjectNamelExists(string _ProjectName)
         {
@@ -695,13 +694,13 @@ namespace MonitoringAndEvaluation_System.Controllers
                 else
                 {
                     return Json("false", JsonRequestBehavior.AllowGet);
-                }
+                } 
             }
             catch (Exception ex1)
             {
                 ShowMessage(MessageBox.Error, OperationType.Error, ex1.Message);
                 return Json("false", JsonRequestBehavior.AllowGet);
-            }
+            } 
         }
         //Search Project
         [HttpPost]
@@ -709,7 +708,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             try
             {
-                List<GetAllProjectVM> resultList = ObjProjectMngBL.SearchProjectByAttributesBL(ProjectName, ProjectType, Location, LoginUserID, LoginRoleID);
+                List<GetAllProjectVM> resultList = ObjProjectMngBL.SearchProjectByAttributesBL(ProjectName, ProjectType, Location,LoginUserID,LoginRoleID);
                 return Json(resultList, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex1)
@@ -748,11 +747,11 @@ namespace MonitoringAndEvaluation_System.Controllers
             {
                 int[] value = new int[5];
                 int val = ObjProjectMngBL.checkUmberlaBL(ProjectID);
-                value[0] = val;
+                value[0] = val; 
                 //StatusModel status = ObjProjectMngBL.ComparePlannedHR_RecruitedHRBL(ProjectID, out value[1], out value[2]);
                 StatusModel status2 = ObjProjectMngBL.ComparePlanned_PrucrementBL(ProjectID, out value[3], out value[4]);
                 return Json(value, JsonRequestBehavior.AllowGet);
-
+                
             }
             catch (Exception ex1)
             {
@@ -767,8 +766,6 @@ namespace MonitoringAndEvaluation_System.Controllers
             int val = ObjProjectMngBL.checkBatchIsZeroBL(SubProjectID);
             return Json(val, JsonRequestBehavior.AllowGet);
         }
-        #endregion
-
 
         //public JsonResult ComparePlannedHR_RecruitedHR(int _ProjectID)
         //{
@@ -797,7 +794,7 @@ namespace MonitoringAndEvaluation_System.Controllers
 
         #endregion
 
-
+ 
 
     }
 }

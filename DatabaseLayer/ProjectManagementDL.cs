@@ -552,7 +552,7 @@ namespace DatabaseLayer
                     status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
                     Project_ID = Convert.ToInt32(ObjParm.Get<Int32>("@Project_ID"));
 
-                    var _AssignRiskList = m.AssignRiskList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.RiskName, p.RiskMitigation_ID, p.RiskStatus_ID , p.CreatedByUser_ID }).ToList();
+                    var _AssignRiskList = m.AssignRiskList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.RiskName, p.RiskMitigation_ID, p.RiskStatus_ID, p.CreatedByUser_ID }).ToList();
                     if (_AssignRiskList.Count > 0)
                     {
                         DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignRiskList);
@@ -571,7 +571,7 @@ namespace DatabaseLayer
 
                     #region Region2
 
-                    var _AssignStackholderList = m.AssignStackholderList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID, p.StackholderName, p.StackholderDepartment, p.StackholderContact, p.StackholderEmail, p.CreatedByUser_ID }).ToList();
+                    var _AssignStackholderList = m.AssignStackholderList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID,p.StackholderDepartment, p.TypeOfStakeholder_ID, p.StackholderContact, p.StackholderEmail, p.CreatedByUser_ID }).ToList();
                     DataTable ddt = new DataTable();
                     if (_AssignStackholderList.Count > 0)
                     {

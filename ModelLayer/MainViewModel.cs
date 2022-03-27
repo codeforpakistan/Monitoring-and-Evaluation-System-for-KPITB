@@ -245,7 +245,7 @@ namespace ModelLayer
 
             //for sub Project
             public int Project_ID { get; set; }
-            public string SubProjectName { get; set; }
+            public  string SubProjectName { get; set; }
             [Display(Name = "Category")]
             [Range(1, int.MaxValue, ErrorMessage = "Please Select")]
             public int Category_ID { get; set; }
@@ -401,6 +401,7 @@ namespace ModelLayer
         {
             
             public int ProjectID { get; set; }
+            public int SubProjectID { get; set; }
             public int ID { get; set; }
             public int Category_ID { get; set; }
             public int ProjectType_ID { get; set; }
@@ -408,6 +409,7 @@ namespace ModelLayer
             public int City_ID { get; set; }
             public int User_ID { get; set; }
             public string ProjectName { get; set; }
+            public string SubProjectName { get; set; }
             public string categoryName { get; set; }
             public string ProjectTypeName { get; set; }
             public string CityName { get; set; }

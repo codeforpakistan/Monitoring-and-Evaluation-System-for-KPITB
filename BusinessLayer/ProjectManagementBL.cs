@@ -141,6 +141,11 @@ namespace BusinessLayer
         {
             return ProjectManagementDL.projectCreateDL(m);
         }
+        public StatusModel subProjectCreateBL(CreateProjectVM m)
+        {
+            return ProjectManagementDL.subProjectCreateDL(m);
+        }
+
 
 
         #endregion
@@ -150,8 +155,13 @@ namespace BusinessLayer
         {
             return ProjectManagementDL.getProjectDL(LoginRoleID,LoginUserID);
         }
+        //GetAllProject
+        public List<GetAllProjectVM> getAllSubProjectBL(int LoginRoleID, int LoginUserID)
+        {
+            return ProjectManagementDL.getSubProjectDL(LoginRoleID, LoginUserID);
+        }
 
-        
+
         public GetProjectDetailsVM getProjectDetailsBL(int ProjectID)
         {
             var getData = ProjectManagementDL.getProjectDetailDL(ProjectID);

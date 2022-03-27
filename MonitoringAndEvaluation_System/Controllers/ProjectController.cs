@@ -192,18 +192,15 @@ namespace MonitoringAndEvaluation_System.Controllers
             return View(projectVM);
         }
 
-
-
-
         [HttpPost]
         public ActionResult SubProjectCreate(CreateProjectVM ProjectVM, HttpPostedFileBase fileInput)
         {
             try
             {
-                
+                #region SingleValues
 
-                ProjectVM.Category_ID = Convert.ToInt32(Request.Form["txtCategory_ID"]);
-                ProjectVM.ProjectName = Convert.ToString(Request.Form["txtProjectName"]);
+                ProjectVM.Project_ID = Convert.ToInt32(Request.Form["txtProject_ID"]);
+                ProjectVM.SubProjectName = Convert.ToString(Request.Form["txtSubProjectName"]);
                 ProjectVM.PlannedDate = Convert.ToDateTime(Request.Form["txtPlannedDate"]);
                 ProjectVM.StartDate = Convert.ToDateTime(Request.Form["txtStartDate"]);
                 ProjectVM.EndDate = Convert.ToDateTime(Request.Form["txtEndDate"]);
@@ -270,7 +267,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                     {
                         Risk m = new Risk();
                         string[] ItemArray = _RiskRows[i].Split('|');
-                        m.RiskName = Convert.ToString(ItemArray[0].ToString());
+                        m.RiskName = Convert.ToString(ItemArray[0]);
                         m.RiskMitigation_ID = Convert.ToInt32(ItemArray[1]);
                         m.RiskStatus_ID = Convert.ToInt32(ItemArray[2]);
                         _lstRisk.Add(m);
@@ -288,6 +285,7 @@ namespace MonitoringAndEvaluation_System.Controllers
                     {
                         Stackholder mm = new Stackholder();
                         string[] ItemArray = _StackholderRows[i].Split('|');
+
                         mm.StackholderDepartment = Convert.ToString(ItemArray[1]);
                         mm.TypeOfStakeholder_ID = Convert.ToInt32(ItemArray[2]);
                         mm.StackholderContact = Convert.ToString(ItemArray[3]);
@@ -298,20 +296,15 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.AssignStackholderList = _lstStackholder;
                 #endregion
 
-                bool isExists = ObjProjectMngBL.IsProjectNameExistsBL(ProjectVM.ProjectName);  //ProjectName Check
-                if (isExists)
-                {
-                    ShowMessage(MessageBox.Warning, OperationType.Warning, "Project Name Already Exists !");
-                    return View("~/Views/Project/ProjectCreate.cshtml", ProjectVM);
-                }
-
-                // ModelState.Remove("RiskStatus_ID");
-                //if (ModelState.IsValid == false)
+                //bool isExists = ObjProjectMngBL.IsProjectNameExistsBL(ProjectVM.ProjectName);  //ProjectName Check
+                //if (isExists)
                 //{
-                //    Combo(ProjectVM);
-                //   return View(ProjectVM);
+                //    ShowMessage(MessageBox.Warning, OperationType.Warning, "Project Name Already Exists !");
+                //    return View("~/Views/Project/ProjectCreate.cshtml", ProjectVM);
                 //}
-                StatusModel status = ObjProjectMngBL.projectCreateBL(ProjectVM);
+
+               
+                StatusModel status = ObjProjectMngBL.subProjectCreateBL(ProjectVM);
                 if (status.status)
                 {
                     ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully);
@@ -336,8 +329,8 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpGet]
         public ActionResult SubProjectView()
         {
-            @ViewBag.MainTitle = "Project List";
-            List<GetAllProjectVM> lst = new ProjectManagementBL().getAllProjectBL(LoginRoleID, LoginUserID);
+            @ViewBag.MainTitle = "SubProject List";
+            List<GetAllProjectVM> lst = new ProjectManagementBL().getAllSubProjectBL(LoginRoleID, LoginUserID);
             return View(lst);
         }
 
@@ -679,8 +672,7 @@ namespace MonitoringAndEvaluation_System.Controllers
 
 
         #endregion
-        #region JSON
-
+    
         [HttpGet]
         public JsonResult IsProjectNamelExists(string _ProjectName)
         {

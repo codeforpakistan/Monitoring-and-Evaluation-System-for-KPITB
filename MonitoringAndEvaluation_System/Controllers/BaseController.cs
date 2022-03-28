@@ -49,7 +49,6 @@ namespace MonitoringAndEvaluation_System.Controllers
                 LoginFullName = Convert.ToString(u.FullName);
             }
             #endregion
-
             #region CheckPermissions
             #endregion
 

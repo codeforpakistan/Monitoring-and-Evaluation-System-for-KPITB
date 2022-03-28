@@ -1,0 +1,1282 @@
+﻿@model ModelLayer.MainViewModel.CreateProjectVM
+@{
+    ViewBag.Title = "CreateSubProject";
+
+}
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+}
+
+<!-- START row-->
+<div class="row">
+    <div class="col-xl-12">
+        @using (Html.BeginForm("SubProjectCreate", "Project", FormMethod.Post, new { @id = "SubmitFromBtnCreate", @class = "form-horizontal" }))
+        {
+            <!-- START card-->
+
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">
+                        <br />
+                        <h3> Add New SubProject </h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        @*Basic Project Info*@
+                        <div class="card card-default" id="cardDemo1">
+                            <div class="card-header">
+                                <h4>Basic SubProject Info</h4>
+
+                            </div>
+                            <div class="card-wrapper collapse show">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-lg-4 ">
+                                            <label class="col-form-label">Sub Project Name *</label>
+                                            @Html.TextBoxFor(model => model.SubProjectName, new { @class = "form-control", @placeholder = "Enter SubProject Name" })
+                                            @Html.ValidationMessageFor(m => m.SubProjectName, "", new { @class = "parsley-required", @id = "spanProjectName" })
+                                        </div>
+                                        <div class="col-lg-4 ">
+                                            <label for="sel1">Select Parent Project</label>
+                                            @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProject, "ProjectID", "ProjectName"), "Please Select Category", new { @class = "select2 form-control ", @placeholder = "Select Category" })
+                                            @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required", @id = "spanProject_ID" })
+                                        </div>
+                                        <div class="col-lg-4 ">
+                                            <label for="sel1">Select Project Type</label>
+                                            @*@Html.DropDownListFor(m => m.ProjectType_ID, new SelectList(Model.comboProjectTypes, "ProjectTypeID", "ProjectTypeName"), "Please Select Project Type", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })*@
+                                            @Html.DropDownListFor(model => model.ProjectTypeArray, new MultiSelectList(Model.comboProjectTypes, "ProjectTypeID", "ProjectTypeName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-4" })
+                                            @Html.ValidationMessageFor(m => m.ProjectTypeArray, "", new { @class = "parsley-required", @id = "spanProjectType_ID" })
+                                        </div>
+                                        <!---->
+
+                                    </div>
+                                    <br />
+                                    <div class="row">
+
+                                        <div class="col-lg-4 ">
+                                            <label for="sel1" class="col-form-label">Funding Source</label>
+                                            @Html.ListBoxFor(model => model.Funding_SourceArray, new MultiSelectList(Model.comboFundingSource, "FundingSourceID", "FundingSourceName"), new { @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-3" })
+                                            @Html.ValidationMessageFor(model => model.Funding_SourceArray, "", new { @class = "text-danger", @id = "spanFunding_SourceArray" })
+                                        </div>
+
+                                        <div class="col-lg-4 ">
+                                            <label for="sel1" class="col-form-label">Select Location</label>
+                                            @Html.DropDownListFor(model => model.CityArray, new MultiSelectList(Model.comboCities, "CityID", "CityName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-1" })
+                                            @Html.ValidationMessageFor(m => m.CityArray, "", new { @class = "parsley-required", @id = "spanCity_ID" })
+
+                                        </div>
+                                        <div class="col-lg-4 ">
+                                            <label for="sel1">Select Policy Pillars</label>
+                                            @Html.DropDownListFor(model => model.DigitalPolicyArray, new MultiSelectList(Model.comboDigitalPolicies, "DigitalPolicyID", "DigitalPolicyName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-2" })
+                                            @Html.ValidationMessageFor(m => m.DigitalPolicy_ID, "", new { @class = "parsley-required", @id = "spanDigitalPolicy_ID" })
+                                        </div>
+
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-4 ">
+                                            <label for="sel1">Select SDGS</label>
+                                            @Html.DropDownListFor(model => model.SDGSArray, new MultiSelectList(Model.comboSDGS, "SDGSID", "SDGSName"), "", new { multiple = "multiple", @class = "form-control @*AutoDropDown*@ chosen-select", @id = "select2-5" })
+                                            @Html.ValidationMessageFor(m => m.SDGS_ID, "", new { @class = "parsley-required", @id = "spanSDGS_ID" })
+                                        </div>
+                                        @*<div class="col-lg-4 ">
+                                                <label for="sel1">Select Project Status</label>
+                                                @Html.DropDownListFor(m => m.ProjectStatus_ID, new SelectList(Model.comboProjectStatus, "ProjectStatus_ID", "ProjectStatusName"), "Please Select Project Status", new { @class = "select2 form-control ", @placeholder = "Select Digital Policy" })
+                                                @Html.ValidationMessageFor(m => m.ProjectStatus_ID, "", new { @class = "parsley-required", @id = "spanProjectStatus_ID" })
+                                            </div>*@
+                                    </div>
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-lg-12 ">
+                                            <label class="col-form-label">Project Goal </label>
+                                            @Html.TextAreaFor(model => model.ProjectGoal, new { @class = "form-control", @placeholder = "Text here" })
+                                            @Html.ValidationMessageFor(m => m.ProjectGoal, "", new { @class = "parsley-required", @id = "spanObjective" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*Project KPIs*@
+                    <div class="card card-default" id="cardDemo1">
+                        <div class="card-header">
+                            <br />
+                            <h4>
+                                Project Objectives
+                            </h4>
+
+                        </div>
+                        <div class="card-wrapper collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <label class="col-form-label">Project Objective</label>
+                                        <input class="form-control" id="idObjective" type="text" name="Objective" value="@Model.Objective" placeholder="Enter Project Objective">
+                                        <span name="spanidObjective" id="spanidObjective" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label class="col-form-label text-white">Add Objective</label>
+                                        <input type="button" id="AddObjective" value="Add Objective" class="btn btn-primary form-control" />
+                                    </div>
+                                </div>
+                                <br />
+
+                                <br />
+                                <br />
+                                <table class="table table-striped" id="tblObjective">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric">ID</th>
+                                            <th data-column-id="Indicator">Project Objective</th>
+                                            <th data-column-id="action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    @*Project KPIs*@
+                    <div class="card card-default" id="cardDemo1">
+                        <div class="card-header">
+                            <br />
+                            <h4>
+                                RBM Based KPIs
+                            </h4>
+
+                        </div>
+                        <div class="card-wrapper collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="col-form-label">Indicator Description *</label>
+                                        <input class="form-control" id="idInducatorDesc" type="text" name="InducatorDesc" value="@Model.IndicatorDescription" placeholder="Enter Indicator Description">
+                                        <span name="spanidInducatorDesc" id="spanidInducatorDesc" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="col-form-label">Indicator Target *</label>
+                                        <input class="form-control" id="idTarget" type="number" name="Target" value="@Model.Target" placeholder="Enter Target No">
+                                        <span name="spanidTarget" id="spanidTarget" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="sel1" class="col-form-label">Indicator TimeLine</label>
+                                        <input class="form-control" id="idTimeline" type="date" name="Timeline" value="@Model.TimeLine">
+                                        <span name="spanidTimeline" id="spanidTimeline" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="float-right"><input type="button" id="AddKPIs" value="Add KPIs" class="btn btn-primary" /></div>
+                                <br />
+                                <br />
+                                <table class="table table-striped" id="tblKPIs">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric">ID</th>
+                                            <th data-column-id="Indicator">Indicator Description</th>
+                                            <th data-column-id="Target">Target No.</th>
+                                            <th data-column-id="Date">TimeLine</th>
+                                            <th data-column-id="action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    @*Project Schedule*@
+                    <div class="card card-default" id="cardDemo1">
+                        <div class="card-header">
+                            <br />
+                            <h4>  Project Schedule</h4>
+
+                        </div>
+                        <div class="card-wrapper collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4 ">
+                                        <label class="col-form-label">Planned Start Date *</label>
+                                        <input class="form-control Select-date" id="PlannedDate" type="date" name="PlannedDate">
+
+                                    </div>
+                                    <div class="col-lg-4 ">
+                                        <label class="col-form-label">Actual Start Date *</label>
+                                        <input class="form-control Select-date" id="StartDate" type="date" name="StartDate">
+                                    </div>
+                                    <div class="col-lg-4 ">
+                                        <label class="col-form-label">End Date *</label>
+                                        <input class="form-control Select-date" id="EndDate" type="date" name="EndDate">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card card-default" id="cardDemo1">
+                        <div class="card-header">
+                            <br />
+                            <h4>HR-recruitment</h4>
+
+                        </div>
+                        <div class="card-wrapper collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4 ">
+                                        <label class="col-form-label">Planned-HR *</label>
+                                        @Html.TextBoxFor(model => model.PlannedHR, new { @class = "form-control", @type = "number", @placeholder = "Enter Planned-HR No" })
+                                        @Html.ValidationMessageFor(m => m.PlannedHR, "", new { @class = "parsley-required", @id = "spanPlannedHR" })
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @*budget*@
+                    <div class="card card-default" id="cardDemo1">
+                        <div class="card-header">
+                            <br />
+                            <h4>Project Budget</h4>
+
+                        </div>
+                        <div class="card-wrapper collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4 ">
+                                        <label class="col-form-label">Planned Budget *</label>
+                                        @Html.TextBoxFor(model => model.PlannedBudget, new { @class = "form-control", @type = "number", @placeholder = "Enter Planned Budget" })
+                                        @Html.ValidationMessageFor(m => m.PlannedBudget, "", new { @class = "parsley-required", @id = "spanPlannedBudget" })
+                                    </div>
+                                    <div class="col-lg-4 ">
+                                        <label class="col-form-label">Approved Budget *</label>
+                                        @Html.TextBoxFor(model => model.ApprovedBudget, new { @class = "form-control", @type = "number", @placeholder = "Enter Approved Budget" })
+                                        @Html.ValidationMessageFor(m => m.ApprovedBudget, "", new { @class = "parsley-required", @id = "spanApprovedBudget" })
+                                    </div>
+                                    <div class="col-lg-4 ">
+                                        <label class="col-form-label">Released Budget *</label>
+                                        @Html.TextBoxFor(model => model.ReleasedBudget, new { @class = "form-control", @type = "number", @placeholder = "Enter Released Budget" })
+                                        @Html.ValidationMessageFor(m => m.ReleasedBudget, "", new { @class = "parsley-required", @id = "spanReleasedBudget" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    @*Procrutment*@
+                    <div class="card card-default" id="cardDemo1">
+                        <div class="card-header">
+                            <br />
+                            <h4>
+                                Procurement
+                            </h4>
+
+                        </div>
+                        <div class="card-wrapper collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">Header *</label>
+                                        <input class="form-control" id="idHeader" type="text" name="Header" value="@Model.ProcrumetHeader" placeholder="Enter Procurement Header">
+                                        <span name="spanidHeader" id="spanidHeader" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">Planned Per Cost Item *</label>
+                                        <input class="form-control" id="idPlannedPCP" type="number" name="PlannedPCP" value="@Model.PlannedPerCostItem" placeholder="Enter Planned Per Cost Procrument">
+                                        <span name="spanidPlannedPCP" id="spanidPlannedPCP" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">Achived Cost *</label>
+                                        <input class="form-control" id="idAchivedCost" type="number" name="AchivedCost" value="" placeholder="Enter AchivedCost">
+                                        <span name="spanidAchivedCost" id="spanidAchivedCost" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="col-form-label">No of Planned Procurement *</label>
+                                        <input class="form-control" id="idNoPlannedProcrument" type="number" name="NoPlannedProcrument" value="@Model.PlannedProcrumentNo" placeholder="Enter No of Planned Procrument">
+                                        <span name="spanidNoPlannedProcrument" id="spanidNoPlannedProcrument" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="float-right"><input type="button" id="AddProcrument" value="Add Procrument" class="btn btn-primary" /></div>
+                                <br />
+                                <br />
+                                <table class="table table-striped" id="tblProcrument">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric">ID</th>
+                                            <th data-column-id="Header">Header</th>
+                                            <th data-column-id="PlannedPerCost">Planned Per Cost</th>
+                                            <th data-column-id="AchivedCost">Achived Cost</th>
+                                            <th data-column-id="PlannedProcrument">Planned Procrument</th>
+                                            <th data-column-id="action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    @*Risk*@
+                    <div class="card card-default" id="cardDemo1">
+                        <div class="card-header">
+                            <br />
+                            <h4>
+                                Risk Details
+                            </h4>
+
+                        </div>
+                        <div class="card-wrapper collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="col-form-label">Risk Name *</label>
+                                        <input class="form-control" id="idRiskName" type="text" name="RiskName" value="@Model.RiskName" placeholder="Enter Risk Name">
+                                        <span name="spanidRiskName" id="spanidRiskName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="sel1" class="col-form-label">Risk Mitigation</label>
+                                        @Html.DropDownListFor(m => m.RiskMitigation_ID, new SelectList(Model.comboRiskMitigation, "RiskMitigationID", "RiskMitigationName"), "Please Select Risk Mitigation", new { @class = " form-control ", @placeholder = "Select RiskStatus", @id = "idRiskMitigation", @name = "RiskMitigation" })
+                                        @Html.ValidationMessageFor(m => m.RiskMitigation_ID, "", new { @class = "parsley-required" })
+                                        <span name="spanidRiskMitigation" id="spanidRiskMitigation" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="sel1" class="col-form-label">Risk Status</label>
+                                        @Html.DropDownListFor(m => m.RiskStatus_ID, new SelectList(Model.comboRiskStatus, "RiskStatusID", "RiskStatusName"), "Please Select Risk Status", new { @class = " form-control ", @placeholder = "Select RiskStatus", @id = "idRiskStatus", @name = "RiskStatus" })
+                                        @Html.ValidationMessageFor(m => m.RiskStatus_ID, "", new { @class = "parsley-required" })
+                                        <span name="spanidRiskStatus" id="spanidRiskStatus" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="float-right"><input type="button" id="AddRisk" value="Add Risk" class="btn btn-primary" /></div>
+                                <br />
+                                <br />
+                                <table class="table table-striped" id="tblRisk">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric">ID</th>
+                                            <th data-column-id="RiskName">Risk Name</th>
+                                            <th data-column-id="Risk">Risk Mitigation</th>
+                                            <th data-column-id="Risk">Risk Status</th>
+                                            <th data-column-id="action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    @*Stackholder*@
+                    <div class="card card-default" id="cardDemo1">
+                        <div class="card-header">
+                            <br />
+                            <h4>
+                                Stakeholder
+                            </h4>
+
+                        </div>
+                        <div class="card-wrapper collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6 ">
+                                        <label class="col-form-label">Department/Orginization *</label>
+                                        <input class="form-control" id="idStackholderName" type="text" name="StackholderName" placeholder="Enter Stackholder Name">
+                                        <span name="spanTermsAndConditions" id="spanidStackholderName" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <label class="col-form-label">Type of Stakeholder *</label>
+                                        @Html.DropDownListFor(m => m.TypeOfStakeholder_ID, new SelectList(Model.comboTypeOfStakeholder, "TypeOfStakeholderID", "TypeOfStakeholderName"), "Please Select Type Of Stakeholder", new { @class = " form-control ", @placeholder = "Select RiskStatus", @id = "idDepartmentName", @name = "DepartmentName" })
+                                        @Html.ValidationMessageFor(m => m.TypeOfStakeholder_ID, "", new { @class = "parsley-required" })
+                                        <span name="spanTermsAndConditions" id="spanidDepartmentName" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 ">
+                                        <label class="col-form-label">ContactNo *</label>
+                                        <input class="form-control" id="idContactNo" type="text" name="ContactNo" placeholder="Enter Contact No">
+                                        <span name="spanTermsAndConditions" id="spanidContactNo" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 ">
+                                        <label class="col-form-label">Email *</label>
+                                        <input class="form-control" id="idEmail" type="text" name="Email" placeholder="Enter Email Address">
+                                        <span name="spanTermsAndConditions" id="spanidEmail" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="float-right"><input type="button" id="AddStackHolder" value="Add Stakeholder" class="btn btn-primary" /></div>
+                                <br />
+
+                                <br />
+                                <table class="table table-striped" id="tblStackHolder">
+                                    <thead class="table-info">
+                                        <tr>
+                                            <th data-column-id="id" data-type="numeric">ID</th>
+                                            <th data-column-id="StackholderName">Department/Orginization</th>
+                                            <th data-column-id="Department">Type of Stakeholder</th>
+                                            <th data-column-id="ContactNo">Contact No</th>
+                                            <th data-column-id="Email">Email Address</th>
+                                            <th data-column-id="action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="required">* Required fields</div>
+                <br />
+                <div class="card-footer">
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <div class="checkbox c-checkbox">
+                                <label>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="float-right">
+                            <button class="btn-lg btn-success" type="submit" id="btnCreate"> Create</button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- END card-->
+            </div>
+        }
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="~/Content/Template/vendor/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            //$('.AutoDropDown').select2();
+
+
+            //$('.Select-date').daterangepicker({
+            //    locale: {
+            //        //  format: 'MM/DD/YYYY'
+            //        format: 'DD/MM/YYYY'
+            //    },
+            //    singleDatePicker: true
+            //});
+
+
+
+
+            $("#MaleBeneficiary,#FemaleBeneficiary").on('change', function () {
+                debugger;
+
+                var _MaleBeneficiary = $('#MaleBeneficiary').val();
+                var _FemaleBeneficiary = $('#FemaleBeneficiary').val();
+                var _TotalBeneficiary = 0;
+                _TotalBeneficiary = parseInt(_MaleBeneficiary) + parseInt(_FemaleBeneficiary);
+                $('#TotalBeneficiary').val(_TotalBeneficiary);
+            });
+
+
+
+            //$(function () {
+            //    $('#PlannedDate, #StartDate, #EndDate ').datepicker({
+            //        format: "dd/mm/yyyy"
+            //    });
+            //});
+
+            $("#RecruitedHR,#PlannedHR").on('change', function () {
+                debugger;
+                Uvalid();
+                Uchange();
+            });
+
+            $("#PlannedProcurement,#AchievedProcurement").on('change', function () {
+
+                debugger;
+                Uvalid();
+            Uchange();
+
+
+            });
+
+
+
+
+
+        });//Ready
+//Project Exist
+ $("#SubProjectName").change(function () {
+     if ($("#SubProjectName").val() != '') {
+                       var urllink = '@Url.Action("IsProjectNamelExists", "Common")'
+                       $.ajax({
+                           url: urllink,
+                           type: "GET",
+                           data: { _SubProjectName: $('#SubProjectName').val() },
+                           success: function (result) {
+                               if (result == "true") {
+                                   $('#spanSubProjectName').text('SubProject Name Already Exists !');
+                                   $('#SubProjectName').focus();
+                               }
+                             else {
+                                   $('#spanSubProjectName').text('');
+                               }
+                           },
+                           error: function (err) {
+                               alert('err');
+                               alert(err.statusText);
+                           }
+                       });
+                   }
+               });//Change
+
+        //Project Objective
+        $("#AddObjective").click(function () {
+            debugger;
+            if ($('#idObjective').val() == "") {
+                $('#spanidObjective').text('Objective should not be blank');
+                $('#spanidObjective').show();
+                $('#idObjective').focus();
+                return true;
+            }
+            var trcount = $("#tblObjective tr").length;
+            $("#tblObjective").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idObjective").val() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#idObjective").val('');
+
+        });
+
+        function RemoveDemerits(row) {
+            $(row).parent().parent().remove();
+        }
+
+        $("#idObjective").on('change', function () {
+            debugger;
+            if ($('#idObjective').val() != "") {
+                $('#spanidObjective').hide();
+                return true;
+            }
+        });
+
+
+
+        //Project KPIs
+        $("#AddKPIs").click(function () {
+            debugger;
+            if ($('#idInducatorDesc').val() == "") {
+                $('#spanidInducatorDesc').text('Inducator Description should not be blank');
+                $('#spanidInducatorDesc').show();
+                $('#idInducatorDesc').focus();
+                return true;
+            }
+            if ($('#idTarget').val() == 0) {
+                $('#spanidTarget').text('Target should not be blank');
+                $('#spanidTarget').show();
+                $('#ididTarget').focus();
+                return true;
+            }
+            if ($('#idTimeline').val() == 0) {
+                $('#spanidTimeline').text('Timeline should not be blank');
+                $('#spanidTimeline').show();
+                $('#ididTimeline').focus();
+                return true;
+            }
+            var trcount = $("#tblKPIs tr").length;
+            $("#tblKPIs").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idInducatorDesc").val() + "</td>  <td>" + $("#idTarget").val() + "</td>   <td id='" + $("#idTimeline").val() + "' >" + $("#idTimeline").find("option:selected").text() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#idInducatorDesc").val('');
+            $("#idTarget").val('');
+            $("#idTimeline").val('');
+        });
+
+        function RemoveDemerits(row) {
+            $(row).parent().parent().remove();
+        }
+
+        $("#idInducatorDesc").on('change', function () {
+            debugger;
+            if ($('#idInducatorDesc').val() != "") {
+                $('#spanidInducatorDesc').hide();
+                return true;
+            }
+        });
+        $("#idTarget").on('change', function () {
+            debugger;
+            if ($('#idTarget').val() != "") {
+                $('#spanidTarget').hide();
+                return true;
+            }
+        });
+        $("#idTimeline").on('change', function () {
+            debugger;
+            if ($('#idTimeline').val() != "") {
+                $('#spanidTimeline').hide();
+                return true;
+            }
+        });
+
+
+        //Procrument
+
+        $("#AddProcrument").click(function () {
+            debugger;
+            if ($('#idHeader').val() == "") {
+                $('#spanidHeader').text('Procrument Header should not be blank');
+                $('#spanidHeader').show();
+                $('#idHeader').focus();
+                return true;
+            }
+            if ($('#idPlannedPCP').val() == 0) {
+                $('#spanidPlannedPCP').text('Planned Per Cost Procrument should not be blank');
+                $('#spanidPlannedPCP').show();
+                $('#ididPlannedPCP').focus();
+                return true;
+            }
+            if ($('#idAchivedCost').val() == 0) {
+                $('#spanidAchivedCost').text(' Achived Cost should not be blank');
+                $('#spanidAchivedCost').show();
+                $('#ididAchivedCost').focus();
+                return true;
+            }
+            if ($('#idNoPlannedProcrument').val() == 0) {
+                $('#spanidNoPlannedProcrument').text('No Planned Procrument should not be blank');
+                $('#spanidNoPlannedProcrument').show();
+                $('#ididNoPlannedProcrument').focus();
+                return true;
+            }
+            var trcount = $("#tblProcrument tr").length;
+            $("#tblProcrument").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idHeader").val() + "</td> <td>" + $("#idPlannedPCP").val() + "</td> <td>" + $("#idAchivedCost").val() + "</td> <td>" + $("#idNoPlannedProcrument").val() + "</td>    <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#idHeader").val('');
+            $("#idPlannedPCP").val('');
+            $("#idAchivedCost").val('');
+            $("#idNoPlannedProcrument").val('');
+        });
+
+        function RemoveDemerits(row) {
+            $(row).parent().parent().remove();
+        }
+
+        $("#idHeader").on('change', function () {
+            debugger;
+            if ($('#idHeader').val() != "") {
+                $('#spanidHeader').hide();
+                return true;
+            }
+        });
+        $("#idPlannedPCP").on('change', function () {
+            debugger;
+            if ($('#idPlannedPCP').val() != "") {
+                $('#spanidPlannedPCP').hide();
+                return true;
+            }
+        });
+        $("#idAchivedCost").on('change', function () {
+            debugger;
+            if ($('#idAchivedCost').val() != "") {
+                $('#spanidAchivedCost').hide();
+                return true;
+            }
+        });
+        $("#idNoPlannedProcrument").on('change', function () {
+            debugger;
+            if ($('#idNoPlannedProcrument').val() != "") {
+                $('#spanidNoPlannedProcrument').hide();
+                return true;
+            }
+        });
+
+
+
+        //Risk
+
+        $("#AddRisk").click(function () {
+            debugger;
+            if ($('#idRiskName').val() == "") {
+                $('#spanidRiskName').text('Risk Name should not be blank');
+                $('#spanidRiskName').show();
+                $('#idRiskName').focus();
+                return true;
+            }
+            if ($('#idRiskMitigation').val() == 0) {
+                $('#spanidRiskMitigation').text('Risk Status should not be blank');
+                $('#spanidRiskMitigation').show();
+                $('#ididRiskMitigation').focus();
+                return true;
+            }
+            if ($('#idRiskStatus').val() == 0) {
+                $('#spanidRiskStatus').text('Risk Status should not be blank');
+                $('#spanidRiskStatus').show();
+                $('#ididRiskStatus').focus();
+                return true;
+            }
+            var trcount = $("#tblRisk tr").length;
+            $("#tblRisk").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idRiskName").val() + "</td>  <td id='" + $("#idRiskMitigation").val() + "' >" + $("#idRiskMitigation").find("option:selected").text() + "</td>  <td id='" + $("#idRiskStatus").val() + "' >" + $("#idRiskStatus").find("option:selected").text() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#idRiskName").val('');
+            $("#idRiskMitigation").val('');
+            $("#idRiskStatus").val('');
+        });
+
+        function RemoveDemerits(row) {
+            $(row).parent().parent().remove();
+        }
+
+        $("#idRiskName").on('change', function () {
+            debugger;
+            if ($('#idRiskName').val() != "") {
+                $('#spanidRiskName').hide();
+                return true;
+            }
+        });
+        $("#idRiskMitigation").on('change', function () {
+            debugger;
+            if ($('#idRiskMitigation').val() != "") {
+                $('#spanidRiskMitigation').hide();
+                return true;
+            }
+        });
+        $("#idRiskStatus").on('change', function () {
+            debugger;
+            if ($('#idRiskStatus').val() != "") {
+                $('#spanidRiskStatus').hide();
+                return true;
+            }
+        });
+
+        $("#AddStackHolder").click(function () {
+            debugger;
+            if ($('#idStackholderName').val() == "") {
+                $('#spanidStackholderName').text('Stackholder Name should not be blank');
+                $('#spanidStackholderName').show();
+                $('#idStackholderName').focus();
+                return true;
+            }
+            if ($('#idDepartmentName').val() == "") {
+                $('#spanidDepartmentName').text('Department Name should not be blank');
+                $('#spanidDepartmentName').show();
+                $('#idDepartmentName').focus();
+                return true;
+            } if ($('#idContactNo').val() == "") {
+                $('#spanidContactNo').text('Contact No should not be blank');
+                $('#spanidContactNo').show();
+                $('#idContactNo').focus();
+                return true;
+            } if ($('#idEmail').val() == "") {
+                $('#spanidEmail').text('Email should not be blank');
+                $('#spanidEmail').show();
+                $('#idEmail').focus();
+                return true;
+            }
+
+
+            var trcount = $("#tblStackHolder tr").length;
+
+            $("#tblStackHolder").append("<tr>  <td>" + trcount + "</td>            <td>" + $("#idStackholderName").val() + "</td>      <td>" + $("#idDepartmentName").val() + "</td>         <td>" + $("#idContactNo").val() + "</td>    <td>" + $("#idEmail").val() + "</td>      <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#idStackholderName").val('');
+            $("#idDepartmentName").val('');
+            $("#idContactNo").val('');
+            $("#idEmail").val('');
+        });
+
+        function RemoveDemerits(row) {
+            $(row).parent().parent().remove();
+        }
+
+        $("#idStackholderName").on('change', function () {
+            debugger;
+            if ($('#idStackholderName').val() != "") {
+                $('#spanidStackholderName').hide();
+                return true;
+            }
+        });
+        $("#idDepartmentName").on('change', function () {
+            debugger;
+            if ($('#idDepartmentName').val() != "") {
+                $('#spanidDepartmentName').hide();
+                return true;
+            }
+        });
+        $("#idContactNo").on('change', function () {
+            debugger;
+            if ($('#idContactNo').val() != "") {
+                $('#spanidContactNo').hide();
+                return true;
+            }
+        });
+        $("#idEmail").on('change', function () {
+            debugger;
+            if ($('#idEmail').val() != "") {
+                $('#spanidEmail').hide();
+                return true;
+            }
+        });
+
+
+        $("#ApprovedBudget").on('change', function () {
+            debugger;
+            Uvalid();
+
+            //Project Cost
+            var _PlannedBudget = $('#PlannedBudget').val();
+            var _ApprovedBudget = $('#ApprovedBudget').val();
+
+            debugger;
+            if (_ApprovedBudget > _PlannedBudget) {
+                $('#spanApprovedBudget').text(' Approved Budget Should not be greater then Planned Budget');
+                $('#spanApprovedBudget').show();
+                $('#spanApprovedBudget').focus();
+                return true;
+            } else {
+                $('#spanApprovedBudget').text('');
+                $('#spanApprovedBudget').hide();
+                return true;
+            }
+        });
+
+        $("#ReleasedBudget").on('change', function ()
+        {
+                var _ApprovedBudget = $('#ApprovedBudget').val();
+                var _ReleasedBudget = $('#ReleasedBudget').val();
+                if (_ReleasedBudget > _ApprovedBudget) {
+                    $('#spanReleasedBudget').text(' Released Budget Should not be greater then Approved Budget');
+                    $('#spanReleasedBudget').show();
+                    $('#spanReleasedBudget').focus();
+                    return true;
+                } else {
+                    $('#spanReleasedBudget').text('');
+                    $('#spanReleasedBudget').hide();
+                    return true;
+                }
+        });
+
+            $("#btnCreate").click(function (e) {
+                e.preventDefault();
+
+            debugger;
+
+            if ($('#ProjectName').val() == '') {
+                $('#spanProjectName').text('Please Fill This Field');
+                $('#ProjectName').focus();
+                return true;
+            }
+            if ($('#Category_ID').val() == '') {
+                $('#spanCategory_ID').text('Please Fill This Field');
+                $('#Category_ID').focus();
+                return true;
+            }
+            if ($('#ProjectType_ID').val() == '') {
+                $('#spanProjectType_ID').text('Please Fill This Field');
+                $('#ProjectType_ID').focus();
+                return true;
+            }
+            if ($('#Funding_SourceArray').val() == '') {
+                $('#spanFunding_SourceArray').text('Please Fill This Field');
+                $('#Funding_SourceArray').focus();
+                return true;
+                }
+                if ($('#ProjectTypeArray').val() == '') {
+                    $('#ProjectTypeArray').text('Please Fill This Field');
+                    $('#ProjectTypeArray').focus();
+                    return true;
+                }
+                if ($('#CityArray').val() == '') {
+                    $('#spanCity_ID').text('Please Fill This Field');
+                    $('#CityArray').focus();
+                    return true;
+                }
+                if ($('#DigitalPolicyArray').val() == '') {
+                    $('#spanDigitalPolicy_ID').text('Please Fill This Field');
+                    $('#DigitalPolicyArray').focus();
+                    return true;
+                }
+            if ($('#City_ID').val() == '') {
+                $('#spanCity_ID').text('Please Fill This Field');
+                $('#City_ID').focus();
+                return true;
+                }
+                if ($('#City_ID').val() == '') {
+                    $('#spanCity_ID').text('Please Fill This Field');
+                    $('#City_ID').focus();
+                    return true;
+                }
+                if ($('#SDGSArray').val() == '') {
+                    $('#spanSDGS_ID').text('Please Fill This Field');
+                    $('#SDGSArray').focus();
+                return true;
+            }
+            //if ($('#MaleBeneficiary').val() == '' || $('#MaleBeneficiary').val() == 0) {
+            //    if ($('#MaleBeneficiary').val() == 0) {
+            //        $('#spanMaleBeneficiary').text('0 Value is not allowed');
+            //        $('#MaleBeneficiary').focus();
+            //        return true;
+            //    }
+            //    $('#spanMaleBeneficiary').text('Please Fill This Field');
+            //    $('#MaleBeneficiary').focus();
+            //    return true;
+            //}
+            //if ($('#FemaleBeneficiary').val() == '' || $('#FemaleBeneficiary').val() == 0) {
+            //    if ($('#FemaleBeneficiary').val() == 0) {
+            //        $('#spanFemaleBeneficiary').text('0 Value is not allowed');
+            //        $('#FemaleBeneficiary').focus();
+            //        return true;
+            //    }
+            //    $('#spanFemaleBeneficiary').text('Please Fill This Field');
+            //    $('#FemaleBeneficiary').focus();
+            //    return true;
+            //}
+            //if ($('#TotalBeneficiary').val() == '' || $('#TotalBeneficiary').val() == 0) {
+            //    if ($('#TotalBeneficiary').val() == 0) {
+            //        $('#spanTotalBeneficiary').text('0 Value is not allowed');
+            //        $('#TotalBeneficiary').focus();
+            //        return true;
+            //    }
+            //    $('#spanTotalBeneficiary').text('Please Fill This Field');
+            //    $('#TotalBeneficiary').focus();
+            //    return true;
+            //}
+            //if ($('#TotalBeneficiary').val() == '' || $('#TotalBeneficiary').val() == 0) {
+            //    if ($('#TotalBeneficiary').val() == 0) {
+            //        $('#spanTotalBeneficiary').text('0 Value is not allowed');
+            //        $('#TotalBeneficiary').focus();
+            //        return true;
+            //    }
+            //    $('#spanTotalBeneficiary').text('Please Fill This Field');
+            //    $('#TotalBeneficiary').focus();
+            //    return true;
+            //}
+
+            //if ($('#CostPerBeneficiary').val() == '' || $('#CostPerBeneficiary').val() == 0) {
+            //    if ($('#CostPerBeneficiary').val() == 0) {
+            //        $('#spanCostPerBeneficiary').text('0 Value is not allowed');
+            //        $('#CostPerBeneficiary').focus();
+            //        return true;
+            //    }
+            //    $('#spanCostPerBeneficiary').text('Please Fill This Field');
+            //    $('#CostPerBeneficiary').focus();
+            //    return true;
+            //}
+            if ($('#Objective').val() == '') {
+                $('#spanObjective').text('Please Fill This Field');
+                $('#Objective').focus();
+                return true;
+            }
+            if ($('#PlannedDate').val() == '') {
+                $('#spanPlannedDate').text('Please Fill This Field');
+                $('#PlannedDate').focus();
+                return true;
+            }
+            if ($('#StartDate').val() == '') {
+                $('#spanStartDate').text('Please Fill This Field');
+                $('#StartDate').focus();
+                return true;
+            }
+            if ($('#EndDate').val() == '') {
+                $('#spanEndDate').text('Please Fill This Field');
+                $('#EndDate').focus();
+                return true;
+            }
+            if ($('#PlannedHR').val() == '' || $('#PlannedHR').val() == 0) {
+                $('#spanPlannedHR').text('Please Fill This Field');
+                $('#PlannedHR').focus();
+                return true;
+            }
+            if ($('#RecruitedHRPercent').val() == '' || $('#RecruitedHRPercent').val() == 0) {
+                $('#spanRecruitedHRPercent').text('Please Fill This Field');
+                $('#RecruitedHRPercent').focus();
+                return true;
+            }
+            if ($('#PlannedBudget').val() == '' || $('#PlannedBudget').val() == 0) {
+                $('#spanPlannedBudget').text('Please Fill This Field');
+                $('#PlannedBudget').focus();
+                return true;
+            }
+            if ($('#ApprovedBudget').val() == '' || $('#ApprovedBudget').val() == 0) {
+                $('#spanApprovedBudget').text('Please Fill This Field');
+                $('#ApprovedBudget').focus();
+                return true;
+            }
+            if ($('#ReleasedBudget').val() == '' || $('#ReleasedBudget').val() == 0) {
+                $('#spanReleasedBudget').text('Please Fill This Field');
+                $('#ReleasedBudget').focus();
+                return true;
+            }
+            if ($('#PlannedProcurement').val() == '' || $('#PlannedProcurement').val() == 0) {
+                $('#spanPlannedProcurement').text('Please Fill This Field');
+                $('#PlannedProcurement').focus();
+                return true;
+            }
+            if ($('#AchievedProcurement').val() == '' || $('#AchievedProcurement').val() == 0) {
+                $('#spanAchievedProcurement').text('Please Fill This Field');
+                $('#AchievedProcurement').focus();
+                return true;
+            }
+            if ($('#ProcurementPercent').val() == '' || $('#ProcurementPercent').val() == 0) {
+                $('#spanProcurementPercent').text('Please Fill This Field');
+                $('#ProcurementPercent').focus();
+                return true;
+            }
+            if ($('#ProcurementPercent').val() == '') {
+                $('#spanProcurementPercent').text('Please Fill This Field');
+                $('#ProcurementPercent').focus();
+                return true;
+            }
+
+            //Risk
+            //if ($('#idRiskName').val() == "") {
+            //    $('#spanidRiskName').text('Risk Name should not be blank');
+            //    $('#spanidRiskName').show();
+            //    $('#idRiskName').focus();
+            //    return true;
+            //}
+            //if ($('#idRiskStatus').val() == 0) {
+            //    $('#spanidRiskStatus').text('Risk Status should not be blank');
+            //    $('#spanidRiskStatus').show();
+            //    $('#ididRiskStatus').focus();
+            //    return true;
+            //}
+
+            ////StackHolder
+            //if ($('#idStackholderName').val() == "") {
+            //    $('#spanidStackholderName').text('Stackholder Name should not be blank');
+            //    $('#spanidStackholderName').show();
+            //    $('#idStackholderName').focus();
+            //    return true;
+            //}
+            //if ($('#idDepartmentName').val() == "") {
+            //    $('#spanidDepartmentName').text('Department Name should not be blank');
+            //    $('#spanidDepartmentName').show();
+            //    $('#idDepartmentName').focus();
+            //    return true;
+            //} if ($('#idContactNo').val() == "") {
+            //    $('#spanidContactNo').text('Contact No should not be blank');
+            //    $('#spanidContactNo').show();
+            //    $('#idContactNo').focus();
+            //    return true;
+            //} if ($('#idEmail').val() == "") {
+            //    $('#spanidEmail').text('Email should not be blank');
+            //    $('#spanidEmail').show();
+            //    $('#idEmail').focus();
+            //    return true;
+            //}
+
+          /*  var a = validationBeforeSubmit();*/
+
+            var formAllData = new FormData();
+
+            formAllData.append('txtProject_ID', $("#Project_ID").val());
+           /* formAllData.append('txtProjectType_ID', $("#ProjectType_ID").val());*/
+            formAllData.append('txtDigitalPolicy_ID', $("#DigitalPolicy_ID").val());
+            formAllData.append('txtCity_ID', $("#City_ID").val());
+            formAllData.append('txtSubProjectName', $("#SubProjectName").val());
+            formAllData.append('txtMaleBeneficiary', $("#MaleBeneficiary").val());
+            formAllData.append('txtFemaleBeneficiary', $("#FemaleBeneficiary").val());
+            formAllData.append('txtTotalBeneficiary', $("#TotalBeneficiary").val());
+            formAllData.append('txtCostPerBeneficiary', $("#CostPerBeneficiary").val());
+            formAllData.append('txtObjective', $("#Objective").val());
+            formAllData.append('txtPlannedDate', $("#PlannedDate").val());
+            formAllData.append('txtStartDate', $("#StartDate").val());
+            formAllData.append('txtEndDate', $("#EndDate").val());
+            formAllData.append('txtPlannedHR', $("#PlannedHR").val());
+            formAllData.append('txtRecruitedHR', $("#RecruitedHR").val());
+            formAllData.append('txtRecruitedHRPercent', $("#RecruitedHRPercent").val());
+            formAllData.append('txtPlannedBudget', $("#PlannedBudget").val());
+            formAllData.append('txtApprovedBudget', $("#ApprovedBudget").val());
+                formAllData.append('txtReleasedBudget', $("#ReleasedBudget").val());
+                formAllData.append('txtProjectGoal', $("#ProjectGoal").val());
+
+            //    formAllData.append('txtPlannedProcurement', $("#PlannedProcurement").val());
+            //    formAllData.append('txtAchievedProcurement', $("#AchievedProcurement").val());
+            //    formAllData.append('txtProcurementPercent', $("#ProcurementPercent").val());
+            //formAllData.append('txtHeaders', $("#Headers").val());
+                formAllData.append('FundingSourceArray', $('#select2-3 option:selected').toArray().map(item => item.value));
+                formAllData.append('ProjectTypeArray', $('#select2-4 option:selected').toArray().map(item => item.value));
+                formAllData.append('CityArray', $('#select2-1 option:selected').toArray().map(item => item.value));
+                formAllData.append('DigitalPolicyArray', $('#select2-2 option:selected').toArray().map(item => item.value));
+                formAllData.append('SDGSArray', $('#select2-5 option:selected').toArray().map(item => item.value));
+
+                //Objective
+                var ObjectiveRows = new Array();   //ArrayList
+                $('#tblObjective tr').each(function () {
+                    if ($(this).find('td:eq(0)').text() != '') {
+                        debugger;
+                        $ObjectiveRow = $(this).find('td:eq(1)').text();
+                        ObjectiveRows.push($ObjectiveRow);
+                    }
+                });
+                formAllData.append("_ObjectiveRows", ObjectiveRows);
+
+
+
+
+
+             //KPIs
+             var KPIsRows = new Array();   //ArrayList
+                $('#tblKPIs tr').each(function () {
+                 if ($(this).find('td:eq(0)').text() != '') {
+                     //KPIs
+                     debugger;
+                     $KPIsRow = $(this).find('td:eq(0)').text() +
+                         "|" + $(this).find('td:eq(1)').text() +
+                         "|" + $(this).find('td:eq(2)').text() +
+                         "|" + $(this).find('td:eq(3)').attr('id');
+                     KPIsRows.push($KPIsRow);
+                 }
+             });
+                formAllData.append("_KPIsRows", KPIsRows);
+
+                //Procurement
+                var ProcrumentRows = new Array();   //ArrayList
+                $('#tblProcrument tr').each(function () {
+                    if ($(this).find('td:eq(0)').text() != '') {
+                        debugger;
+                        $ProcrumentRow = $(this).find('td:eq(1)').text() +
+                            "|" + $(this).find('td:eq(2)').text() +
+                            "|" + $(this).find('td:eq(3)').text() +
+                            "|" + $(this).find('td:eq(4)').text();
+                        ProcrumentRows.push($ProcrumentRow);
+                    }
+                });
+                formAllData.append("_ProcrumentRows", ProcrumentRows);
+
+
+            //Risk
+            var RiskRows = new Array();   //ArrayList
+            $('#tblRisk tr').each(function ()
+            {
+                if ($(this).find('td:eq(0)').text() != '')
+                {
+                    //Risk
+                    debugger;
+                    $RiskRow = $(this).find('td:eq(1)').text() +
+                                "|" + $(this).find('td:eq(2)').attr('id') +
+                                "|" + $(this).find('td:eq(3)').attr('id');
+                    RiskRows.push($RiskRow);
+                }
+            });
+            formAllData.append("_RiskRows", RiskRows);
+
+            //StackHolder
+            var StackholderRows = new Array();   //ArrayList
+            $('#tblStackHolder tr').each(function () {
+                if ($(this).find('td:eq(0)').text() != '') {
+                    //Risk
+                    debugger;
+                    $StackholderRow = $(this).find('td:eq(0)').text() +
+                        "|" + $(this).find('td:eq(1)').text() +
+                        "|" + $(this).find('td:eq(2)').text() +
+                        "|" + $(this).find('td:eq(3)').text() +
+                        "|" + $(this).find('td:eq(4)').text();
+                    StackholderRows.push($StackholderRow);
+                }
+            });
+            formAllData.append("_StackholderRows", StackholderRows);
+           //var model = formAllData;
+           //url: '/Project/ProjectCreate?ProjectVM=' + model
+          /*  $("#SubmitFromBtnCreate").submit();*/
+            var urllink = '@Url.Action("SubProjectCreate", "Project")'
+            $.ajax({
+                url: urllink,
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: formAllData,
+                success: function (result) {
+                    debugger;
+                    if (result == 'false') {
+                       var route = '@Url.Action("SubProjectCreate", "Project")'
+                         window.location.href = route;
+                    }
+                    else if (result == 'true') {
+                         var route = '@Url.Action("SubProjectView", "Project")'
+                         window.location.href = route;
+                    }
+
+                },
+                error: function (err) {
+                    //For Failure notification
+                    alert(err.statusText);
+                }
+            });
+
+        });
+
+
+        //CustomFuncation
+        function Uvalid() {
+            debugger;
+                         //HR-recruitment
+                         var _PlannedHR = $('#PlannedHR').val();
+                         var _RecruitedHR = $('#RecruitedHR').val();
+
+                        //Procurement
+                         var _PlannedProcurement = $('#PlannedProcurement').val();
+                         var _AchievedProcurement = $('#AchievedProcurement').val();
+
+                        if (_RecruitedHR > _PlannedHR) { //HR-recruitment
+                             debugger;
+                             $('#spanRecruitedHR').text('Recruited-HR Should not be greater then Planned-HR');
+                             $('#spanRecruitedHR').show();
+                             $('#RecruitedHR').focus();
+                             return true;
+                        }
+                        else if (_AchievedProcurement > _PlannedProcurement) {//Procurement
+                            debugger;
+                            $('#spanAchievedProcurement').text('Achieved Procurement Should not be greater then Planned Procurement');
+                            $('#spanAchievedProcurement').show();
+                            $('#AchievedProcurement').focus();
+                            return true;
+                        }
+                        else { //HR-recruitment   ,Procurement
+                             $('#spanRecruitedHR').text('');
+                            $('#spanRecruitedHR').hide();
+
+                            $('#spanAchievedProcurement').text('');
+                            $('#spanAchievedProcurement').hide();
+                             return true;
+                            }
+
+        }
+        function Uchange() {
+            debugger;
+            //HR-recruitment
+            var _PlannedHR = $('#PlannedHR').val();
+            var _RecruitedHR = $('#RecruitedHR').val();
+            var _RecruitedHRPercent = 0;
+            _RecruitedHRPercent = _RecruitedHR / _PlannedHR * 100;
+            $('#RecruitedHRPercent').val(_RecruitedHRPercent);
+
+
+            //Procurement
+            var _PlannedProcurement = $('#PlannedProcurement').val();
+            var _AchievedProcurement = $('#AchievedProcurement').val();
+            var _ProcurementPercent = 0;
+            _ProcurementPercent = _AchievedProcurement / _PlannedProcurement * 100;
+            $('#ProcurementPercent').val(_ProcurementPercent);
+        }
+    </script>
+}

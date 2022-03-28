@@ -118,7 +118,7 @@ namespace ModelLayer
         }
         public partial class ComboPlannedKPIs
         {
-            public int ProjectPlannedKPIsID { get; set; }
+            public int PlannedKPIsID { get; set; }
             public string IndicatorDescription { get; set; }
             public int Target { get; set; }
             public System.DateTime TimeLine { get; set; }
@@ -126,8 +126,8 @@ namespace ModelLayer
         }
         public partial class ComboIndicator
         {
-            public int IndicatorID { get; set; }
-            public string IndicatorName { get; set; }
+            public int InsightIndicatorID { get; set; }
+            public string InsightIndicatorName { get; set; }
         }
         public partial class ComboProcurementHead
         {

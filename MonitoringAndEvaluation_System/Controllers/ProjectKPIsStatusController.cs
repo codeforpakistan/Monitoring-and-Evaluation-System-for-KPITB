@@ -13,6 +13,7 @@ namespace MonitoringAndEvaluation_System.Controllers
     {
         // GET: ProjectKPIsStatus
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
+        [HttpGet]
         public ActionResult ProjectKPIsStatusCreateView()
         {
             CreateProjectKPIsStatusVM kpisVM = new CreateProjectKPIsStatusVM();
@@ -23,9 +24,13 @@ namespace MonitoringAndEvaluation_System.Controllers
         //Custom Function
         public void ComboProject(CreateProjectKPIsStatusVM kpisVM)
         {
+            //kpisVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
+            //ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
+            //kpisVM.comboBatch.Add(mb);
             kpisVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
             ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            kpisVM.comboBatch.Add(mb);
+            kpisVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
+            kpisVM.comboPlannedKPIs = ObjProjectMngBL.getComboDataTypeBL();
         }
     }
 }

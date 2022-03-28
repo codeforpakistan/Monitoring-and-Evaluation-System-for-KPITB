@@ -30,7 +30,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             kpisVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
             ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
             kpisVM.comboBatch.Add(mb); //=ObjProjectMngBL.getComboBatchBL(recruitedHRVM.SubProject_ID, LoginRoleID);
-            kpisVM.comboPlannedKPIs = ObjProjectMngBL.getComboDataTypeBL();
+           ////////// kpisVM.comboPlannedKPIs = ObjProjectMngBL.getComboDataTypeBL();
         }
     }
 }

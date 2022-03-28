@@ -6,9 +6,8 @@ $(document).ready(function () {
     $("#ExpenditureBudget").val('');
     $("#SubProject_ID").prop("disabled", true);
     $("#Batch_ID").prop("disabled", true);
+    $("#InsightIndicator_ID").prop("disabled", true);
 });
-
-
 
 //HR
 $("#RecruitedFromHRDate").on('change', function () {
@@ -203,6 +202,86 @@ function IssueDateCompare() {
     }
 }
 
+$("#InsightIndicator_ID").on('change', function () {
+    var Url_Value = $('#InsightIndicatorComboLink').attr('url-Val');
+    var obj = {};
+    obj.InsightIndicatorID = $("#InsightIndicator_ID").find("option:selected").val();
+
+    debugger;
+    $.ajax({
+        type: 'POST',
+        url: Url_Value,
+        data: JSON.stringify(obj),  // Same Parameter with Action
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (IndicatorTypeLst) {
+            $("#tblBodyInsightIndicator").empty();
+            $("#tblBodyInsightIndicator2").empty();
+            debugger;
+
+            var counter = 1;
+            var loop = 0;
+            $.each(IndicatorTypeLst.dataTypeVMLst, function (index, v) {
+                /// do stuff
+
+                debugger;
+                var InsightIndicatorFieldID = '<td style="display:none";><input  name="dataTypeVMLst[' + loop + '].InsightIndicatorFieldID" value="' + v.InsightIndicatorFieldID + '" type="text"  /></td>';
+                var HiddenValue = '';
+                var ResultString = '';
+
+                ResultString = '<td>';
+                
+                HiddenValue = ' <td>';
+
+                if (v.InsightIndicatorDataType_ID == 1) {
+                    ResultString += '<input  class="form-control"    name="dataTypeVMLst[' + loop + '].TEXT"     type="text"  placeholder="Enter Indicator Text" required />'
+                    HiddenValue += '<input class="form-control"   name="dataTypeVMLst[' + loop + '].IndicatorDataType_ID" value="' + v.InsightIndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                } else if (v.InsightIndicatorDataType_ID == 2) {
+                    ResultString += '<input class="form-control"    name="dataTypeVMLst[' + loop + '].INTEGER" type="number"  placeholder="Enter Indicator Value" required />'
+                    HiddenValue += '<input class="form-control"   name="dataTypeVMLst[' + loop + '].IndicatorDataType_ID" value="' + v.InsightIndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                } else if (v.InsightIndicatorDataType_ID == 3) {
+                    ResultString += '<input class="form-control"  name="dataTypeVMLst[' + loop + '].FLOAT" type="number" placeholder="Enter Indicator Percentage %"  required />'
+                    HiddenValue += '<input class="form-control"  name="dataTypeVMLst[' + loop + '].IndicatorDataType_ID"  value="' + v.InsightIndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                } else if (v.InsightIndicatorDataType_ID == 4) {
+                    ResultString += '<select class="form-control" name="dataTypeVMLst[' + loop + '].BOOL" required >'
+                    ResultString += '<option value="">Select Yes/No</option>'
+                    ResultString += '<option value="true">Yes</option>'
+                    ResultString += '<option value="false">No</option>'
+                    ResultString += '</select>'
+                    HiddenValue += '<input class="form-control"  name="dataTypeVMLst[' + loop + '].IndicatorDataType_ID"  value="' + v.InsightIndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                }
+
+                ResultString += '</td> ';
+                HiddenValue += '</td>';
+
+                $('<tr id="tblIndicatorRow' + loop + '">' +
+                    '<td>' + counter + '</td>' +
+                    InsightIndicatorFieldID +
+                    '<td>' + v.InsightIndicatorFieldName + '</td>' +
+                    ResultString +
+                    HiddenValue +
+                    '</tr>').appendTo('#tblInsightIndicator');
+                counter++;
+                loop++;
+            });
+            debugger;
+            var counter2 = 1;
+            $.each(IndicatorTypeLst.dataTypeCommonVMLst, function (index, v) {
+
+                $('<tr><td>' + counter2 + '</td><td>' + v.InsightIndicatorFieldName + '</td><td>' + v.CommonValue + '</td><tr>').appendTo('#tbInsightlIndicator2');
+                counter2++;
+            });
+
+
+        },
+        error: function (ex) {
+            debugger;
+            console.log('Failed to Retrieve IndicatorDataTypeCommonValue List Data:  ' + ex.responseText);
+        }
+    });//Ajax_End
+});
+
+
 $("#SubProject_ID").on('change', function () {
     debugger;
     var Url_SubProject = $('#ProjectComboLink').attr('url-Val');
@@ -220,17 +299,30 @@ $("#SubProject_ID").on('change', function () {
 
         success: function (response) {
             $("#Batch_ID").empty();
-
+            $("#InsightIndicator_ID").empty();
             //ComboBatch
             if (response.comboBatches.length <= 1) {
                 $("#Batch_ID").prop("disabled", true);
                 $("#Batch_ID").append('<option value="' + 0 + '">' +
                     "Please Select Batch" + '</option>');
+
+                $("#InsightIndicator_ID").prop("disabled", true);
+                $("#InsightIndicator_ID").append('<option value="' + 0 + '">' +
+                    "Please Select InsightIndicator" + '</option>');
+                $("#tblBodyInsightIndicator").empty();
+
             } else {
                 $("#Batch_ID").prop("disabled", false);
                 $.each(response.comboBatches, function (i, item) {
                     $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
                         item.BatchName + '</option>');
+                });
+
+                //Indicators
+                $.each(response.comboIndicators, function (i, Aqib2) {
+                    $("#InsightIndicator_ID").prop("disabled", false);
+                    $("#InsightIndicator_ID").append('<option value="' + Aqib2.InsightIndicatorID + '">' +
+                        Aqib2.InsightIndicatorName + '</option>');
                 });
             }
 
@@ -274,6 +366,8 @@ $("#Project_ID").on('change', function () {
             debugger;
             $("#Batch_ID").empty();
             $("#SubProject_ID").empty();
+            $("#InsightIndicator_ID").empty();
+
             debugger;
             //ComboSubProject
             if (response.comboSubProjects.length <= 1) {
@@ -293,13 +387,29 @@ $("#Project_ID").on('change', function () {
                 $("#Batch_ID").prop("disabled", true);
                 $("#Batch_ID").append('<option value="' + 0 + '">' +
                     "Please Select Batch" + '</option>');
+
+                $("#InsightIndicator_ID").prop("disabled", true);
+                $("#InsightIndicator_ID").append('<option value="' + 0 + '">' +
+                    "Please Select InsightIndicator" + '</option>');
+
+                $("#tblBodyInsightIndicator").empty();
+
             } else {
                 $("#Batch_ID").prop("disabled", false);
                 $.each(response.comboBatches, function (i, item) {
                     $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
                         item.BatchName + '</option>');
                 });
+        
+                //Indicators
+                $.each(response.comboIndicators, function (i, Aqib2) {
+                $("#InsightIndicator_ID").prop("disabled", false);
+                $("#InsightIndicator_ID").append('<option value="' + Aqib2.InsightIndicatorID + '">' +
+                    Aqib2.InsightIndicatorName + '</option>');
+                });
             }
+
+           
 
             //RemainingVaues
             $("#RecruitedHR").val('');
@@ -330,6 +440,10 @@ $("#Project_ID").on('change', function () {
         }
     });//Ajax_End
 });
+
+
+
+
 
 
 

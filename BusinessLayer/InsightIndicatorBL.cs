@@ -57,32 +57,100 @@ namespace BusinessLayer
         {
             return InsightIndicatorDL.getndicatorDataTypeDL(InsightIndicatorID);
         }
-        public List<InsightIndicatorDataTypeCommonValueVM> getIndicatorInsertedFieldBaseOnIndicatorBL(int Project_ID,int InsightIndicatorID)
+        public List<InsightIndicatorDataTypeCommonValueVM> getIndicatorInsertedFieldBaseOnIndicatorBL( int InsightIndicatorID)
         {
-            List <InsightIndicatorDataTypeConvertVM> lst = InsightIndicatorDL.getIndicatorInsertedFieldBaseOnIndicatorDL(Project_ID,InsightIndicatorID);
+            try
+            {
+
+          
+            List <InsightIndicatorDataTypeConvertVM> lst = InsightIndicatorDL.getIndicatorInsertedFieldBaseOnIndicatorDL(InsightIndicatorID);
             List<InsightIndicatorDataTypeCommonValueVM> mLst = new List<InsightIndicatorDataTypeCommonValueVM>();
             InsightIndicatorDataTypeCommonValueVM m = new InsightIndicatorDataTypeCommonValueVM();
-     
-            for (int i = 0; i < lst.Count; i++)
-            {
-                if (lst[i].TEXT != null)
+          
+                #region NEW
+                //INTEGER_SUM
+                var SumValue = lst.GroupBy(x => new { x.InsightIndicatorFieldName }).Select(x => {
+                                                                                                                                                                        var ret = x.First();
+                                                                                                                                                                        ret.INTEGER = x.Sum(xt => xt.INTEGER);
+                                                                                                                                                                        return ret;
+                                                                                                                                                                    }).ToList();
+
+                for (int i = 0; i < SumValue.Count; i++)
                 {
-                    mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].TEXT });
+                    if (SumValue != null)
+                    {
+                        mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = SumValue[i].InsightIndicatorFieldID, InsightIndicatorFieldName = SumValue[i].InsightIndicatorFieldName, CommonValue = SumValue[i].INTEGER });
+                    }
                 }
-                else if (lst[i].INTEGER != null)
-                { 
-                    mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].INTEGER });
-                }
-                else if (lst[i].FLOAT != null)
-                { 
-                    mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].FLOAT });
-                }
-                else if (lst[i].BOOLConvert != null)
+
+                //FLOAT_SUM
+                var FloatValue = lst.Where(w => w.FLOAT != null).GroupBy(x => new { x.InsightIndicatorFieldName }).Select(x => {
+                    var ret = x.First();
+                    ret.FLOAT = x.Sum(ft => ft.FLOAT);
+                    return ret;
+                }).ToList();
+
+                for (int i = 0; i < FloatValue.Count; i++)
                 {
-                    mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].BOOLConvert });
+                    if (FloatValue != null)
+                    {
+                        mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = FloatValue[i].InsightIndicatorFieldID, InsightIndicatorFieldName = FloatValue[i].InsightIndicatorFieldName, CommonValue = FloatValue[i].FLOAT });
+                    }
                 }
+
+                //BOOL_COUNT
+                var BoolValue = lst.Where(w => w.BOOLConvert == "YES" && w.BOOLConvert != null).ToList();
+                var numSpecialBooks = lst.Count(n => n.BOOLConvert == "YES");
+                for (int i = 0; i < BoolValue.Count; i++)
+                {
+                    mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = BoolValue[i].InsightIndicatorFieldID, InsightIndicatorFieldName = BoolValue[i].InsightIndicatorFieldName, CommonValue = BoolValue.Count });
+                }
+
+
+                //TEXT
+                var TextValue = lst.Where(w => w.TEXT != null).GroupBy(x => new { x.InsightIndicatorFieldName }).ToList();
+
+          
+                foreach (var item in TextValue)
+                {
+                    foreach (var subitem in item)
+                    {
+                        mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = subitem.InsightIndicatorFieldID, InsightIndicatorFieldName = subitem.InsightIndicatorFieldName, CommonValue = subitem.TEXT });
+                    }
+                }
+
+
+
+                #endregion
+                #region OLD
+
+                //for (int i = 0; i < lst.Count; i++)
+                //{
+                //    if (lst[i].TEXT != null)
+                //    {
+                //        mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].TEXT });
+                //    }
+                //    else if (lst[i].INTEGER != null)
+                //    {
+
+                //        mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].INTEGER });
+                //    }
+                //    else if (lst[i].FLOAT != null)
+                //    {
+                //        mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].FLOAT });
+                //    }
+                //    else if (lst[i].BOOLConvert != null)
+                //    {
+                //        mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].BOOLConvert });
+                //    }
+                //} 
+                #endregion
+                return mLst;
             }
-            return mLst;
+            catch (Exception es)
+            {
+                throw;
+            }
         }
 
         #region IndicatorFieldValueBL

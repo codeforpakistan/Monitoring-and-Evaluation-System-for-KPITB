@@ -276,7 +276,7 @@ namespace DatabaseLayer
         }
 
 
-        public static List<ComboIndicator> getComboIndicatorDL(int Project_ID, int BatchID)
+        public static List<ComboIndicator> getComboIndicatorDL(int Project_ID, int? SubProjectID, int? Batch_ID)
         {
             List<ComboIndicator> ComboLst = new List<ComboIndicator>();
 
@@ -285,7 +285,8 @@ namespace DatabaseLayer
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
                 ObjParm.Add("@Project_ID", Project_ID);
-                ObjParm.Add("@Batch_ID", BatchID);
+                ObjParm.Add("@SubProjectID", SubProjectID);
+                ObjParm.Add("@Batch_ID", Batch_ID);
                 ComboLst = conn.Query<ComboIndicator>("sp_GetIndicatorBaseOnBatch", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();

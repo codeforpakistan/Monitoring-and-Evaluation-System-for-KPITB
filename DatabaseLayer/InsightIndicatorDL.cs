@@ -289,7 +289,7 @@ namespace DatabaseLayer
                 return DataTypeLst;
             }
         }
-        public static List<InsightIndicatorDataTypeConvertVM> getIndicatorInsertedFieldBaseOnIndicatorDL(int Project_ID, int InsightIndicatorID)
+        public static List<InsightIndicatorDataTypeConvertVM> getIndicatorInsertedFieldBaseOnIndicatorDL( int InsightIndicatorID)
         {
             List<InsightIndicatorDataTypeConvertVM> DataTypeLst = new List<InsightIndicatorDataTypeConvertVM>();
 
@@ -297,7 +297,6 @@ namespace DatabaseLayer
             {
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
-                ObjParm.Add("@Project_ID", Project_ID);
                 ObjParm.Add("@InsightIndicatorID", InsightIndicatorID);
                 DataTypeLst = conn.Query<InsightIndicatorDataTypeConvertVM>("sp_GetIndicatorInsertedFieldBaseOnIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();

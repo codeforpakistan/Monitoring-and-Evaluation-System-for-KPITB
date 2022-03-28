@@ -1,5 +1,6 @@
 ﻿using BusinessLayer;
 using ModelLayer;
+using MonitoringAndEvaluation_System.CommonUse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,10 @@ namespace MonitoringAndEvaluation_System.Controllers
 {
     public class InsightIndicatorController : BaseController
     {
-        // GET: Indicator
         ProjectManagementBL ObjProjectMngBL = new ProjectManagementBL();
         InsightIndicatorBL ObjInsightIndicatorMngBL = new InsightIndicatorBL();
+        CommonCombo allCombo = new CommonCombo();
+
         //InsightIndicatorCreate
 
         #region Insight Indicator
@@ -247,15 +249,17 @@ namespace MonitoringAndEvaluation_System.Controllers
         //}
         public void ComboForValue(CreateInsightIndicatorValueVM insightIndicatorValueVM)
         {
-            //Combo Project
-            insightIndicatorValueVM.comboProjects = ObjProjectMngBL.getComboProjectBL(LoginRoleID, LoginUserID);
-           
-            ComboBatch mb = new ComboBatch() { BatchID = 0, BatchName = "Please Select Batch" };
-            insightIndicatorValueVM.comboBatch.Add(mb);
+            #region DropDown
+            new CommonController().allDropDown(ref allCombo, LoginRoleID, LoginUserID);
+            insightIndicatorValueVM.comboProjects = allCombo.comboProject;
+            insightIndicatorValueVM.comboSubProjects = allCombo.comboSubProjects;
+            insightIndicatorValueVM.comboBatch = allCombo.comboBatch;
+            #endregion
+
             //Combo Indicator
             ComboIndicator mi = new ComboIndicator() { InsightIndicatorID = 0, InsightIndicatorName = "Please Select Indicator" };
             insightIndicatorValueVM.comboIndicator.Add(mi);
-            insightIndicatorValueVM.comboIndicator = ObjProjectMngBL.getComboIndicatorBL();
+            //insightIndicatorValueVM.comboIndicator = ObjProjectMngBL.getComboIndicatorBL();
         }
         public void ComboForField(CreateIndicatorFieldVM indicatorFieldVM)
         {

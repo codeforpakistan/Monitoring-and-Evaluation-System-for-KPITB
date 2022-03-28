@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static ModelLayer.MainViewModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
 {
@@ -12,7 +13,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpGet]
         public ActionResult ChangeMngCreate()
         {
-            return View();
+            return View(new CreateProjectVM());
         }
     }
 }

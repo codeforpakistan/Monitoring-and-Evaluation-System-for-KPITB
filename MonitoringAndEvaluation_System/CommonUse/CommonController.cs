@@ -16,12 +16,12 @@ namespace MonitoringAndEvaluation_System.CommonUse
     {
           
         [HttpPost]
-        public JsonResult ClickIndicatorComboBox(string Project_ID, string IndicatorID)
+        public JsonResult ClickIndicatorComboBox(string Project_ID, string InsightIndicatorID)
         {
-            CreateIndicatorValueVM m = new CreateIndicatorValueVM();
+            CreateInsightIndicatorValueVM m = new CreateInsightIndicatorValueVM();
 
-            m.dataTypeVMLst = new InsightIndicatorBL().getndicatorDataTypeBL(Convert.ToInt32(IndicatorID));
-            m.dataTypeCommonVMLst = new InsightIndicatorBL().getIndicatorInsertedFieldBaseOnIndicatorBL(Convert.ToInt32(Project_ID), Convert.ToInt32(IndicatorID));
+            m.dataTypeVMLst = new InsightIndicatorBL().getndicatorDataTypeBL(Convert.ToInt32(InsightIndicatorID));
+            m.dataTypeCommonVMLst = new InsightIndicatorBL().getIndicatorInsertedFieldBaseOnIndicatorBL(Convert.ToInt32(Project_ID), Convert.ToInt32(InsightIndicatorID));
             return Json(m, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -68,11 +68,11 @@ namespace MonitoringAndEvaluation_System.CommonUse
             ComboIndicatorBatchIndicatorVM batchIndicatorVM = new ComboIndicatorBatchIndicatorVM();
             batchIndicatorVM.comboSubProjects = new ProjectManagementBL().getComboSubProjectBL(ProjectID, LoginRoleID);
             batchIndicatorVM.comboBatches = new ProjectManagementBL().getComboBoxBatchBL(ProjectID, LoginRoleID, SubProjectID);
-            //batchIndicatorVM.comboIndicators = new ProjectManagementBL().getComboIndicatorBL(Convert.ToInt32(ProjectID), 0);
+            batchIndicatorVM.comboIndicators = new ProjectManagementBL().getComboIndicatorBL(Convert.ToInt32(ProjectID), 0);
             batchIndicatorVM.comboProcurementHeads = new ProjectManagementBL().getComboProcurementHeadBL(Convert.ToInt32(ProjectID),0);
             batchIndicatorVM.comboSubProjects.Insert(0, new ComboSubProject { SubProjectID = 0, SubProjectName = "Please Select Sub Project" });
             batchIndicatorVM.comboBatches.Insert(0, new ComboBatch { BatchID = 0, BatchName = "Please Select Batch" });
-            //batchIndicatorVM.comboIndicators.Insert(0, new ComboIndicator { IndicatorID = 0, IndicatorName = "Please Select Indicator" });
+            batchIndicatorVM.comboIndicators.Insert(0, new ComboIndicator { InsightIndicatorID = 0, InsightIndicatorName = "Please Select Indicator" });
             batchIndicatorVM.comboProcurementHeads.Insert(0, new ComboProcurementHead { PlannedProcurementID = 0, ProcrumetHeader = "Please Select Procurement Head" });
 
 
@@ -97,7 +97,7 @@ namespace MonitoringAndEvaluation_System.CommonUse
         {
             List<ComboIndicator> cb = new ProjectManagementBL().getComboIndicatorBL(Convert.ToInt32(Project_ID), Convert.ToInt32(Batch_ID));// Batch, LoginRoleID);
             
-            cb.Insert(0, new ComboIndicator { IndicatorID = 0, IndicatorName = "Please Select Indicator" });
+            cb.Insert(0, new ComboIndicator { InsightIndicatorID = 0, InsightIndicatorName = "Please Select Indicator" });
             return Json(cb, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

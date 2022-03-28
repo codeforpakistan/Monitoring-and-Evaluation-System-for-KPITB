@@ -308,6 +308,23 @@ namespace DatabaseLayer
                 return ComboLst;
             }
         }
+        public static List<ComboPlannedKPIs> getComboPlannedKPIsDL(int Project_ID, int SubProject_ID,int Batch_ID)
+        {
+            List<ComboPlannedKPIs> ComboLst = new List<ComboPlannedKPIs>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@Project_ID", Project_ID);
+                ObjParm.Add("@SubProject_ID", SubProject_ID);
+                ObjParm.Add("@SubProject_ID", Batch_ID);
+                ComboLst = conn.Query<ComboPlannedKPIs>("sp_GetProcurementHeadBaseOnProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return ComboLst;
+            }
+        }
 
         public static List<ComboBatch> getComboBoxBatchDL(int Project_ID, int Role_ID, int? SubProjectID)
         {
@@ -350,7 +367,7 @@ namespace DatabaseLayer
             {
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
-                ComboLst = conn.Query<ComboIndicator>("sp_GetIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                ComboLst = conn.Query<ComboIndicator>("sp_GetInsightIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return ComboLst;

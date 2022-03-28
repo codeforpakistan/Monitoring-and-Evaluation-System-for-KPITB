@@ -116,7 +116,7 @@ namespace DatabaseLayer
                     cmd = new SqlCommand("sp_InsightIndicatorFieldCeateMulti", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    var _AssignInsightIndicatorFieldList = m.AssignInsightIndicatorFieldList.Select(p => new { p.InsightIndicator_ID, p.InsightIndicatorDataType_ID,p.InsightIndicatorFieldName }).ToList();
+                    var _AssignInsightIndicatorFieldList = m.AssignInsightIndicatorFieldList.Select(p => new { InsightIndicator_ID, p.InsightIndicatorDataType_ID,p.InsightIndicatorFieldName }).ToList();
 
                     if (_AssignInsightIndicatorFieldList.Count > 0)
                     {
@@ -161,20 +161,23 @@ namespace DatabaseLayer
         
     }
         //GetALLIndicator
-        public static List<GetAllInsightIndicatorVM> getAllInsightIndicatorDL()
+       
+        public static List<GetAllInsightIndicatorVM> getAllInsightIndicatorDL(int LoginRoleID, int LoginUserID)
         {
             List<GetAllInsightIndicatorVM> getAllVMLst = new List<GetAllInsightIndicatorVM>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
-                getAllVMLst = conn.Query<GetAllInsightIndicatorVM>("sp_GetAllIndicator", commandType: CommandType.StoredProcedure).ToList();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@LoginRoleID", LoginRoleID);
+                ObjParm.Add("@LoginUserID", LoginUserID);
+                getAllVMLst = conn.Query<GetAllInsightIndicatorVM>("sp_GetAllInsightIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return getAllVMLst;
             }
         }
-
         //LinkIndicatorCreate
         public static StatusModel linkIndicatorCreateDL(CreateLinkIndicatorVM m)
         {
@@ -222,7 +225,7 @@ namespace DatabaseLayer
         }
 
         #region indicatorFieldValueCreateBL
-        public static StatusModel indicatorFieldValueCreateDL(DataTable dt, CreateIndicatorValueVM m)
+        public static StatusModel InsightIndicatorFieldValueCreateDL(DataTable dt, CreateInsightIndicatorValueVM m)
         {
             StatusModel status = new StatusModel();
             IDbConnection Con = null;
@@ -271,32 +274,32 @@ namespace DatabaseLayer
         //    }
         //}
 
-        public static List<IndicatorDataTypeVM> getndicatorDataTypeDL(int IndicatorID)
+        public static List<InsightIndicatorDataTypeVM> getndicatorDataTypeDL(int InsightIndicatorID)
         {
-            List<IndicatorDataTypeVM> DataTypeLst = new List<IndicatorDataTypeVM>();
+            List<InsightIndicatorDataTypeVM> DataTypeLst = new List<InsightIndicatorDataTypeVM>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
-                ObjParm.Add("@IndicatorID", IndicatorID);
-                DataTypeLst = conn.Query<IndicatorDataTypeVM>("sp_GetIndicatorFieldBaseOnIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                ObjParm.Add("@InsightIndicatorID", InsightIndicatorID);
+                DataTypeLst = conn.Query<InsightIndicatorDataTypeVM>("sp_GetIndicatorFieldBaseOnIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return DataTypeLst;
             }
         }
-        public static List<IndicatorDataTypeConvertVM> getIndicatorInsertedFieldBaseOnIndicatorDL(int Project_ID, int IndicatorID)
+        public static List<InsightIndicatorDataTypeConvertVM> getIndicatorInsertedFieldBaseOnIndicatorDL(int Project_ID, int InsightIndicatorID)
         {
-            List<IndicatorDataTypeConvertVM> DataTypeLst = new List<IndicatorDataTypeConvertVM>();
+            List<InsightIndicatorDataTypeConvertVM> DataTypeLst = new List<InsightIndicatorDataTypeConvertVM>();
 
             using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
             {
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
                 ObjParm.Add("@Project_ID", Project_ID);
-                ObjParm.Add("@IndicatorID", IndicatorID);
-                DataTypeLst = conn.Query<IndicatorDataTypeConvertVM>("sp_GetIndicatorInsertedFieldBaseOnIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                ObjParm.Add("@InsightIndicatorID", InsightIndicatorID);
+                DataTypeLst = conn.Query<InsightIndicatorDataTypeConvertVM>("sp_GetIndicatorInsertedFieldBaseOnIndicator", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return DataTypeLst;

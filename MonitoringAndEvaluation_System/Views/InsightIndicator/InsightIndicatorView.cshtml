@@ -1,0 +1,169 @@
+﻿@model List<ModelLayer.MainViewModel.GetAllInsightIndicatorVM>
+@{
+    ViewBag.Title = "Insight Indicator List";
+}
+<div class="row">
+    <div class="col-xl-12">
+        <!-- START card-->
+        <div class="card card-default" id="cardDemo14">
+            <div class="card-header"><h4>Insight Indicator </h4></div>
+            <div class="card-body">
+                <div class="card">
+                    <div class="card-body">
+                        <div>@Html.ActionLink("Add New Insight Indicator", "InsightIndicatorCreate", null, new { @class = "btn btn-primary" })</div>
+                        <br />
+                        <!-- START card-->
+                        @*<div class="card card-default">
+                            <div class="card-body">
+                                <form class="form-horizontal">
+                                    <div class="form-row ">
+                                        <div class="col-lg-3">
+                                            <label for="sel1">Search By Project Name</label>
+                                            <input class="select2 form-control" id="txtProjectName" type="text" placeholder="Search By Project Name">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="sel1">Search By Project Type</label>
+                                            <input class="select2 form-control" id="txtProjectType" type="text" placeholder="Search By Project Type">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="sel1">Search By Location</label>
+                                            <input class="select2 form-control" id="txtLocation" type="text" placeholder="Search By Location">
+
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <label for="sel1" style="color:transparent"></label>
+                                            <button class="btn btn-primary form-control" type="button" id="btnSearch">Search</button>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <label for="sel1" style="color:transparent"></label>
+                                            <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>*@
+                        <!-- END card-->
+
+
+                        <table class="table table-striped my-4 w-100" id="datatable2">
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Insight Indicator Name
+                                    </th>
+                                    <th>
+                                        Insight Indicator Field
+                                    </th>
+                                    
+                                    <th class="text-center">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="IDtbody">
+                                @{
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            @Html.HiddenFor(m => item.InsightIndicatorID)
+                                            <td>
+                                                @item.ID
+                                            </td>
+                                            <td>
+                                                @item.InsightIndicatorName
+                                            </td>
+                                            <td>
+                                                @item.InsightIndicatorFieldName
+                                            </td>
+                                            
+                                            <td>
+                                                @Html.ActionLink("Edit", "ProjectEdit", new { InsightIndicatorID = Utility.Encryption.EncryptURL(Convert.ToString(item.InsightIndicatorID)) }, new { @class = "mb-1 btn btn-warning" })
+                                                @Html.ActionLink("Details", "ProjectDetails", new { InsightIndicatorID = Utility.Encryption.EncryptURL(Convert.ToString(item.InsightIndicatorID)) }, new { @class = "mb-1 btn btn-primary" })
+                                                @*@Html.ActionLink("Detail", "UserDetail", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-primary" })*@
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END card-->
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+
+
+        });
+
+
+        $("#btnSearch").click(function () {
+            debugger;
+            var obj1 = {};
+            obj1.ProjectName = $("#txtProjectName").val();
+            obj1.ProjectType = $("#txtProjectType").val();
+            obj1.Location = $("#txtLocation").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SearchProject", "Common")',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(obj1),  // Same Parameter with Action
+                success: function (response) {
+                    debugger;
+                    if (response == 'false') {
+                       @*var route = '@Url.Action("ProjectCreate", "Project")'
+                         window.location.href = route;*@
+                    }
+                    else
+                    {
+                        var loop = 0;
+                        $("#IDtbody").empty();
+                        $.each(response, function (index, v)
+                        {
+                            var HiddenValue = '';
+                                  HiddenValue = '<td>';
+                            HiddenValue += '<input class="form-control"   name="response[' + loop + '].ProjectID" value="' + v.ProjectID + '" type="text"   style="display:none;" />'
+                                  HiddenValue += '</td>';
+
+                            $('<tr role="row" class="odd">' +
+                                + HiddenValue +
+                                '<td class="sorting_1">' + v.ID + '</td>' +
+                                '<td>' + v.ProjectName + '</td>' +
+                                '<td>' + v.categoryName + '</td>' +
+                                '<td>' + v.ProjectTypeName + '</td>' +
+                                '<td>' + v.PlannedBudget + '</td>' +
+                                '<td>' + v.ApprovedBudget + '</td>' +
+                                '<td>' + v.CityName + '</td>' +
+                                '<td> <a class="mb-1 btn btn-warning" href="/Project/ProjectEdit?ProjectID= ' + v.ProjectID + ' ">Edit</a><a class="mb-1 btn btn-primary" href="/Project/ProjectDetails?ProjectID=' + v.ProjectID +'">Details</a> </td>' +
+                                '</tr>').appendTo('#IDtbody');
+                                loop++;
+                        });
+                    }
+                },
+                error: function (err) {
+                    //For Failure notification
+                    alert(err.statusText);
+                }
+            });
+
+
+            });
+
+
+    </script>
+}

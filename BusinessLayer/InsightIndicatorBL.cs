@@ -39,9 +39,9 @@ namespace BusinessLayer
             return InsightIndicatorDL.insightIndicatorCreateDL(m);
         }
         //GetAllIndicator
-        public List<GetAllInsightIndicatorVM> getAllInsightIndicatorBL()
+        public List<GetAllInsightIndicatorVM> getAllInsightIndicatorBL(int LoginRoleID, int LoginUserID)
         {
-            return InsightIndicatorDL.getAllInsightIndicatorDL();
+            return InsightIndicatorDL.getAllInsightIndicatorDL(LoginRoleID, LoginUserID);
         }
         //CreateLinkIndicator
         public StatusModel linkIndicatorCreateBL(CreateLinkIndicatorVM m)
@@ -53,55 +53,55 @@ namespace BusinessLayer
         {
             return InsightIndicatorDL.getALLLinkIndicatorDL();
         }
-        public List<IndicatorDataTypeVM> getndicatorDataTypeBL(int IndicatorID)
+        public List<InsightIndicatorDataTypeVM> getndicatorDataTypeBL(int InsightIndicatorID)
         {
-            return InsightIndicatorDL.getndicatorDataTypeDL(IndicatorID);
+            return InsightIndicatorDL.getndicatorDataTypeDL(InsightIndicatorID);
         }
-        public List<IndicatorDataTypeCommonValueVM> getIndicatorInsertedFieldBaseOnIndicatorBL(int Project_ID,int IndicatorID)
+        public List<InsightIndicatorDataTypeCommonValueVM> getIndicatorInsertedFieldBaseOnIndicatorBL(int Project_ID,int InsightIndicatorID)
         {
-            List <IndicatorDataTypeConvertVM> lst = InsightIndicatorDL.getIndicatorInsertedFieldBaseOnIndicatorDL(Project_ID,IndicatorID);
-            List<IndicatorDataTypeCommonValueVM> mLst = new List<IndicatorDataTypeCommonValueVM>();
-            IndicatorDataTypeCommonValueVM m = new IndicatorDataTypeCommonValueVM();
+            List <InsightIndicatorDataTypeConvertVM> lst = InsightIndicatorDL.getIndicatorInsertedFieldBaseOnIndicatorDL(Project_ID,InsightIndicatorID);
+            List<InsightIndicatorDataTypeCommonValueVM> mLst = new List<InsightIndicatorDataTypeCommonValueVM>();
+            InsightIndicatorDataTypeCommonValueVM m = new InsightIndicatorDataTypeCommonValueVM();
      
             for (int i = 0; i < lst.Count; i++)
             {
                 if (lst[i].TEXT != null)
                 {
-                    mLst.Add(new IndicatorDataTypeCommonValueVM() { IndicatorFieldID = lst[i].IndicatorFieldID, IndicatorFieldName = lst[i].IndicatorFieldName, CommonValue = lst[i].TEXT });
+                    mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].TEXT });
                 }
                 else if (lst[i].INTEGER != null)
                 { 
-                    mLst.Add(new IndicatorDataTypeCommonValueVM() { IndicatorFieldID = lst[i].IndicatorFieldID, IndicatorFieldName = lst[i].IndicatorFieldName, CommonValue = lst[i].INTEGER });
+                    mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].INTEGER });
                 }
                 else if (lst[i].FLOAT != null)
                 { 
-                    mLst.Add(new IndicatorDataTypeCommonValueVM() { IndicatorFieldID = lst[i].IndicatorFieldID, IndicatorFieldName = lst[i].IndicatorFieldName, CommonValue = lst[i].FLOAT });
+                    mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].FLOAT });
                 }
                 else if (lst[i].BOOLConvert != null)
                 {
-                    mLst.Add(new IndicatorDataTypeCommonValueVM() { IndicatorFieldID = lst[i].IndicatorFieldID, IndicatorFieldName = lst[i].IndicatorFieldName, CommonValue = lst[i].BOOLConvert });
+                    mLst.Add(new InsightIndicatorDataTypeCommonValueVM() { InsightIndicatorFieldID = lst[i].InsightIndicatorFieldID, InsightIndicatorFieldName = lst[i].InsightIndicatorFieldName, CommonValue = lst[i].BOOLConvert });
                 }
             }
             return mLst;
         }
 
         #region IndicatorFieldValueBL
-        public StatusModel indicatorFieldValueCreateBL(CreateIndicatorValueVM m)
+        public StatusModel InsightIndicatorFieldValueCreateBL(CreateInsightIndicatorValueVM m)
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("IndicatorField_ID", typeof(int));
-            dt.Columns.Add("IndicatorValueText", typeof(string));
-            dt.Columns.Add("IndicatorValueInteger", typeof(int));
-            dt.Columns.Add("IndicatorValueFloat", typeof(float));
-            dt.Columns.Add("IndicatorValueBoolean", typeof(bool));
+            dt.Columns.Add("InsightIndicatorField_ID", typeof(int));
+            dt.Columns.Add("InsightIndicatorValueText", typeof(string));
+            dt.Columns.Add("InsightIndicatorValueInteger", typeof(int));
+            dt.Columns.Add("InsightIndicatorValueFloat", typeof(float));
+            dt.Columns.Add("InsightIndicatorValueBoolean", typeof(bool));
 
     
             for (int i = 0; i < m.dataTypeVMLst.Count; i++)
             {
-                dt.Rows.Add(m.dataTypeVMLst[i].IndicatorFieldID,m.dataTypeVMLst[i].TEXT, m.dataTypeVMLst[i].INTEGER, m.dataTypeVMLst[i].FLOAT, m.dataTypeVMLst[i].BOOL);
+                dt.Rows.Add(m.dataTypeVMLst[i].InsightIndicatorFieldID, m.dataTypeVMLst[i].TEXT, m.dataTypeVMLst[i].INTEGER, m.dataTypeVMLst[i].FLOAT, m.dataTypeVMLst[i].BOOL);
             }
            
-            return InsightIndicatorDL.indicatorFieldValueCreateDL(dt, m);
+            return InsightIndicatorDL.InsightIndicatorFieldValueCreateDL(dt, m);
         }
         #endregion
 

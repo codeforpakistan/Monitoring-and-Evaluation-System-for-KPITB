@@ -861,7 +861,7 @@ namespace ModelLayer
         }
         #endregion
         #region Project KPIs Status
-        //CreateBatch
+        //CreateAchievedKPIS
         public partial class CreateProjectKPIsStatusVM
         {
             public CreateProjectKPIsStatusVM()
@@ -922,20 +922,21 @@ namespace ModelLayer
             public List<ComboSubProject> comboSubProjects { get; set; }
             public List<ComboBatch> comboBatch { get; set; }
         }
+        public partial class GetAllInsightIndicatorVM
+        {
+            public int ID { get; set; }
+            public int InsightIndicatorID { get; set; }
+            public string InsightIndicatorName { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
+        }
         #endregion
-        #region Indicator
+        #region InsightIndicatorValue
         //CreateIndicator
         public partial class CreateIndicatorVM
         {
             public string IndicatorName { get; set; }
         }
         //Get All Indicator
-        public partial class GetAllInsightIndicatorVM
-        {
-            public int ID { get; set; }
-            public int IndicatorID { get; set; }
-            public string IndicatorName { get; set; }
-        }
         public partial class CreateLinkIndicatorVM
         {
             public CreateLinkIndicatorVM()
@@ -951,8 +952,8 @@ namespace ModelLayer
             public int Batch_ID { get; set; }
             [Required(ErrorMessage = "Please Select Indicator")]
             public int Indicator_ID { get; set; }
-           
-           
+
+
             public List<ComboProject> comboProjects { get; set; }
             public List<ComboIndicator> comboIndicator { get; set; }
             public List<ComboBatch> comboBatch { get; set; }
@@ -966,13 +967,13 @@ namespace ModelLayer
             public string ProjectName { get; set; }
             public string BatchName { get; set; }
             public string IndicatorName { get; set; }
-            
+
         }
         public partial class CreateIndicatorFieldVM
         {
             public CreateIndicatorFieldVM()
             {
-                
+
                 comboIndicator = new List<ComboIndicator>();
                 comboInsightIndicatorDataTypes = new List<ComboInsightIndicatorDataType>();
             }
@@ -987,35 +988,39 @@ namespace ModelLayer
             public List<ComboInsightIndicatorDataType> comboInsightIndicatorDataTypes { get; set; }
 
         }
-        public partial class CreateIndicatorValueVM
+        public partial class CreateInsightIndicatorValueVM
         {
-            public CreateIndicatorValueVM()
+            public CreateInsightIndicatorValueVM()
             {
                 comboProjects = new List<ComboProject>();
+                comboSubProjects = new List<ComboSubProject>();
+                comboSubProjects = new List<ComboSubProject>();
                 comboIndicator = new List<ComboIndicator>();
                 comboBatch = new List<ComboBatch>();
-                dataTypeVMLst = new List<IndicatorDataTypeVM>();
-                dataTypeCommonVMLst = new List<IndicatorDataTypeCommonValueVM>();
-                dataTypeConveVMLst = new List<IndicatorDataTypeConvertVM>();
+                dataTypeVMLst = new List<InsightIndicatorDataTypeVM>();
+                dataTypeCommonVMLst = new List<InsightIndicatorDataTypeCommonValueVM>();
+                dataTypeConveVMLst = new List<InsightIndicatorDataTypeConvertVM>();
             }
 
             public int IndicatorValueID { get; set; }
             public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
-            public int Indicator_ID { get; set; }
-            public int IndicatorField_ID { get; set; }
+            public int InsightIndicator_ID { get; set; }
+            public int InsightIndicatorField_ID { get; set; }
             public DateTime FromDate { get; set; }
             public DateTime ToDate { get; set; }
 
             [Range(1, int.MaxValue, ErrorMessage = "Please Select Indicator")]
-            public string IndicatorFieldName { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
 
             public List<ComboProject> comboProjects { get; set; }
+            public List<ComboSubProject> comboSubProjects { get; set; }
             public List<ComboIndicator> comboIndicator { get; set; }
             public List<ComboBatch> comboBatch { get; set; }
-            public List<IndicatorDataTypeVM> dataTypeVMLst { get; set; }
-            public List<IndicatorDataTypeCommonValueVM> dataTypeCommonVMLst { get; set; }
-            public List<IndicatorDataTypeConvertVM> dataTypeConveVMLst { get; set; }
+            public List<InsightIndicatorDataTypeVM> dataTypeVMLst { get; set; }
+            public List<InsightIndicatorDataTypeCommonValueVM> dataTypeCommonVMLst { get; set; }
+            public List<InsightIndicatorDataTypeConvertVM> dataTypeConveVMLst { get; set; }
         }
         public partial class GetProjectReport
         {
@@ -1067,17 +1072,17 @@ namespace ModelLayer
             public string StackholderContact { get; set; }
             public string StackholderEmail { get; set; }
             //Indicator
-            public int IndicatorID { get; set; }
-            public string IndicatorName { get; set; }
+            public int InsightIndicatorID { get; set; }
+            public string InsightIndicatorName { get; set; }
             //IndicatorField
-            public int IndicatorFieldID { get; set; }
-            public string IndicatorFieldName { get; set; }
+            public int InsightIndicatorFieldID { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
             //IndicatorFieldValue
-            public int IndicatorValueID { get; set; }
-            public string IndicatorValueText { get; set; }
-            public int IndicatorValueInteger { get; set; }
-            public bool IndicatorValueBoolean { get; set; }
-            public double IndicatorValueFloat { get; set; }
+            public int InsightIndicatorValueID { get; set; }
+            public string InsightIndicatorValueText { get; set; }
+            public int InsightIndicatorValueInteger { get; set; }
+            public bool InsightIndicatorValueBoolean { get; set; }
+            public double InsightIndicatorValueFloat { get; set; }
             public DateTime FromDate { get; set; }
             public DateTime ToDate { get; set; }
 
@@ -1086,31 +1091,31 @@ namespace ModelLayer
         #endregion
         #region Indicator
        
-        public partial class IndicatorDataTypeVM
+        public partial class InsightIndicatorDataTypeVM
         {
-            public int IndicatorFieldID { get; set; }
-            public string IndicatorFieldName { get; set; }
-            public int IndicatorDataType_ID { get; set; }
+            public int InsightIndicatorFieldID { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
+            public int InsightIndicatorDataType_ID { get; set; }
  
             public string TEXT { get; set; }
             public int? INTEGER { get; set; }
             public float? FLOAT { get; set; }
             public bool? BOOL { get; set; }
         }
-        public partial class IndicatorDataTypeConvertVM
+        public partial class InsightIndicatorDataTypeConvertVM
         {
              public int Project_ID { get; set; }
-            public int IndicatorFieldID { get; set; }
-            public string IndicatorFieldName { get; set; }
+            public int InsightIndicatorFieldID { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
             public string TEXT { get; set; }
             public int? INTEGER { get; set; }
             public float? FLOAT { get; set; }
             public string BOOLConvert { get; set; }
         }
-        public partial class IndicatorDataTypeCommonValueVM
+        public partial class InsightIndicatorDataTypeCommonValueVM
         {
-            public int IndicatorFieldID { get; set; }
-            public string IndicatorFieldName { get; set; }
+            public int InsightIndicatorFieldID { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
             public dynamic CommonValue { get; set; }
       
         }

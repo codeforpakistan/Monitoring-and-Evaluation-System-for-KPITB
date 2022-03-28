@@ -80,6 +80,10 @@ namespace BusinessLayer
         {
             return ProjectManagementDL.getComboProcurementHeadDL(Project_ID, SubProject_ID);
         }
+        public List<ComboPlannedKPIs> getComboPlannedKPIsBL()
+        {
+            return ProjectManagementDL.getComboPlannedKPIsDL();
+        }
         public List<ComboInsightIndicatorDataType> getComboDataTypeBL()
         {
             return ProjectManagementDL.getComboDataTypeDL();

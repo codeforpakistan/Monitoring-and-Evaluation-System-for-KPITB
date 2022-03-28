@@ -609,7 +609,7 @@
                 return true;
             }
             var trcount = $("#tblKPIs tr").length;
-            $("#tblKPIs").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idInducatorDesc").val() + "</td>  <td>" + $("#idTarget").val() + "</td>   <td id='" + $("#idTimeline").val() + "' >" + $("#idTimeline").find("option:selected").text() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#tblKPIs").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idInducatorDesc").val() + "</td>  <td>" + $("#idTarget").val() + "</td>   <td>" + $("#idTimeline").val() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
             $("#idInducatorDesc").val('');
             $("#idTarget").val('');
             $("#idTimeline").val('');

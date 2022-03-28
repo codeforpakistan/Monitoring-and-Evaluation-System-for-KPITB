@@ -880,7 +880,7 @@ namespace ModelLayer
             [Required(ErrorMessage = "Enter Batch Name")]
 
 
-            public int ProjectPlannedKPIs_ID { get; set; }
+            public int PlannedKPIs_ID { get; set; }
             public int Target { get; set; }
             public int ProjectKPIsAchived { get; set; }
             public System.DateTime TimeLine { get; set; }

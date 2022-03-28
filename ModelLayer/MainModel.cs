@@ -277,8 +277,12 @@ namespace ModelLayer
         #region KPIs
         public partial class ProjectPlannedKPIs
         {
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
             //Project KPIs\
-            public int ProjectPlannedKPIsID { get; set; }
+            public int PlannedKPIsID { get; set; }
             public string IndicatorDescription { get; set; }
             public int Target { get; set; }
             public System.DateTime TimeLine { get; set; }

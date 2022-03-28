@@ -139,7 +139,6 @@ namespace MonitoringAndEvaluation_System.Controllers
             //return View("ProjectView");
             //return View("~/Views/Project/ProjectView.cshtml", new ProjectManagementBL().getAllProjectBL());
 
-
         }
 
         #region CustomFunction

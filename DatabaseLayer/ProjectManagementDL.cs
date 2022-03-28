@@ -309,7 +309,7 @@ namespace DatabaseLayer
                 return ComboLst;
             }
         }
-        public static List<ComboPlannedKPIs> getComboPlannedKPIsDL(int Project_ID, int SubProject_ID,int Batch_ID)
+        public static List<ComboPlannedKPIs> getComboPlannedKPIsDL()
         {
             List<ComboPlannedKPIs> ComboLst = new List<ComboPlannedKPIs>();
 
@@ -317,10 +317,8 @@ namespace DatabaseLayer
             {
                 conn.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
-                ObjParm.Add("@Project_ID", Project_ID);
-                ObjParm.Add("@SubProject_ID", SubProject_ID);
-                ObjParm.Add("@SubProject_ID", Batch_ID);
-                ComboLst = conn.Query<ComboPlannedKPIs>("sp_GetProcurementHeadBaseOnProject", ObjParm, commandType: CommandType.StoredProcedure).ToList();
+                
+                ComboLst = conn.Query<ComboPlannedKPIs>("sp_GetPlannedKPIs", ObjParm, commandType: CommandType.StoredProcedure).ToList();
                 conn.Close();
                 conn.Dispose();
                 return ComboLst;
@@ -581,7 +579,24 @@ namespace DatabaseLayer
                         status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
                         status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
                     }
+                    #region Region1
+                    var _AssignKPIsList = m.AssignProjectPlannedKPIsList.Select(p => new { Project_ID, p.SubProject_ID, p.IndicatorDescription,p.Target}).ToList();
+                    if (_AssignKPIsList.Count > 0)
+                    {
+                        DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignKPIsList);
 
+                        DynamicParameters ObjParm22 = new DynamicParameters();
+                        ObjParm22.Add("@PlannedKPIsTable", dt.AsTableValuedParameter("udt_PlannedKPIs"));
+                        ObjParm22.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                        ObjParm22.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                        Con = new SqlConnection(Common.ConnectionString);
+                        Con.Open();
+                        Con.Execute("sp_PlannedKPIsCreateMulti", ObjParm22, commandType: CommandType.StoredProcedure);
+                        Con.Close();
+                        status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                        status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                    }
+                    #endregion
                     #region Region2
 
                     var _AssignStackholderList = m.AssignStackholderList.Select(p => new { Project_ID, p.SubProject_ID, p.Batch_ID,p.StackholderDepartment, p.TypeOfStakeholder_ID, p.StackholderContact, p.StackholderEmail, p.CreatedByUser_ID }).ToList();
@@ -731,7 +746,24 @@ namespace DatabaseLayer
                         status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
                         status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
                     }
+                    #region Region1
+                    var _AssignKPIsList = m.AssignProjectPlannedKPIsList.Select(p => new {p.Project_ID, SubProject_ID, p.IndicatorDescription, p.Target }).ToList();
+                    if (_AssignKPIsList.Count > 0)
+                    {
+                        DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignKPIsList);
 
+                        DynamicParameters ObjParm22 = new DynamicParameters();
+                        ObjParm22.Add("@PlannedKPIsTable", dt.AsTableValuedParameter("udt_PlannedKPIs"));
+                        ObjParm22.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                        ObjParm22.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                        Con = new SqlConnection(Common.ConnectionString);
+                        Con.Open();
+                        Con.Execute("sp_PlannedKPIsCreateMulti", ObjParm22, commandType: CommandType.StoredProcedure);
+                        Con.Close();
+                        status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                        status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+                    }
+                    #endregion
                     #region Region2
 
                     var _AssignStackholderList = m.AssignStackholderList.Select(p => new { p.Project_ID, SubProject_ID, p.Batch_ID, p.StackholderDepartment, p.TypeOfStakeholder_ID, p.StackholderContact, p.StackholderEmail, p.CreatedByUser_ID }).ToList();

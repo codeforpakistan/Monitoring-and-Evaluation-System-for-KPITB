@@ -37,8 +37,8 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label for="sel1">Select Planned KPIs</label>
-                                @Html.DropDownListFor(m => m.ProjectPlannedKPIs_ID, new SelectList(Model.comboPlannedKPIs, "ProjectPlannedKPIsID", "ProjectPlannedKPIsName"), new { @class = " form-control" })
-                                @Html.ValidationMessageFor(m => m.ProjectPlannedKPIs_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
+                                @Html.DropDownListFor(m => m.PlannedKPIs_ID, new SelectList(Model.comboPlannedKPIs, "PlannedKPIsID", "IndicatorDescription"), new { @class = " form-control" })
+                                @Html.ValidationMessageFor(m => m.PlannedKPIs_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Target</label>
@@ -64,6 +64,7 @@
                                 @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
                             </div>
                         </div>
+
                         <br />
                         <div class="required float-left">* Required fields</div>
                         <div class="float-right">

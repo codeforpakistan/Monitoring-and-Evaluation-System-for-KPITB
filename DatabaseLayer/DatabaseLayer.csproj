@@ -80,6 +80,7 @@
     <Compile Include="IgnorePropertyAttribute.cs" />
     <Compile Include="InsightIndicatorDL.cs" />
     <Compile Include="IssuesManagementDL.cs" />
+    <Compile Include="ProjectKPIsStatusManagementDL.cs" />
     <Compile Include="ProjectManagementDL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManagementDL.cs" />

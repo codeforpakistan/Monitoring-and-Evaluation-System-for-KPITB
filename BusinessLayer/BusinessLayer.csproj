@@ -51,6 +51,7 @@
     <Compile Include="FinanceManagementBL.cs" />
     <Compile Include="InsightIndicatorBL.cs" />
     <Compile Include="IssuesManagementBL.cs" />
+    <Compile Include="ProjectKPIsStatusManagementBL.cs" />
     <Compile Include="ProjectManagementBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleManagementBL.cs" />

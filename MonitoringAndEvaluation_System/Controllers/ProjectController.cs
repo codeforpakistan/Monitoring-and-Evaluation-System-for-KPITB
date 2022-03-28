@@ -55,7 +55,25 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.SDGSArray = Request.Form["SDGSArray"].Split(',').ToList().Select(int.Parse).ToList();
                 ProjectVM.ProjectGoal = Convert.ToString(Request.Form["txtProjectGoal"]);
 
-                #region Objective
+                #region  KPIs
+                //From Procrument
+                List<ProjectPlannedKPIs> _lstProjectPlannedKPIs = new List<ProjectPlannedKPIs>();
+                string[] _KPIsRows = Request.Form["_KPIsRows"].Split(',');
+                for (int i = 0; i < _KPIsRows.Length; i++)
+                {
+                    if (_KPIsRows[0].Trim() != "")
+                    {
+                        ProjectPlannedKPIs m = new ProjectPlannedKPIs();
+                        string[] ItemArray = _KPIsRows[i].Split('|');
+                        m.IndicatorDescription = Convert.ToString(ItemArray[1]);
+                        m.Target = Convert.ToInt32(ItemArray[2]);
+                        //m.TimeLine = Convert.ToDateTime(ItemArray[3]);
+                        _lstProjectPlannedKPIs.Add(m);
+                    }
+                }
+                ProjectVM.AssignProjectPlannedKPIsList = _lstProjectPlannedKPIs;
+                #endregion
+                #region  Procrument
                 //From Procrument
                 List<PlannedProcurement> _lstProProcurement = new List<PlannedProcurement>();
                 string[] _ProcrumentRows = Request.Form["_ProcrumentRows"].Split(',');
@@ -218,8 +236,25 @@ namespace MonitoringAndEvaluation_System.Controllers
                 ProjectVM.DigitalPolicyArray = Request.Form["DigitalPolicyArray"].Split(',').ToList().Select(int.Parse).ToList();
                 ProjectVM.SDGSArray = Request.Form["SDGSArray"].Split(',').ToList().Select(int.Parse).ToList();
                 ProjectVM.ProjectGoal = Convert.ToString(Request.Form["txtProjectGoal"]);
-
-                #region Objective
+                #region  KPIs
+                //From Procrument
+                List<ProjectPlannedKPIs> _lstProjectPlannedKPIs = new List<ProjectPlannedKPIs>();
+                string[] _KPIsRows = Request.Form["_KPIsRows"].Split(',');
+                for (int i = 0; i < _KPIsRows.Length; i++)
+                {
+                    if (_KPIsRows[0].Trim() != "")
+                    {
+                        ProjectPlannedKPIs m = new ProjectPlannedKPIs();
+                        string[] ItemArray = _KPIsRows[i].Split('|');
+                        m.IndicatorDescription = Convert.ToString(ItemArray[1]);
+                        m.Target = Convert.ToInt32(ItemArray[2]);
+                        //m.TimeLine = Convert.ToDateTime(ItemArray[3]);
+                        _lstProjectPlannedKPIs.Add(m);
+                    }
+                }
+                ProjectVM.AssignProjectPlannedKPIsList = _lstProjectPlannedKPIs;
+                #endregion
+                #region Procrument
                 //From Procrument
                 List<PlannedProcurement> _lstProProcurement = new List<PlannedProcurement>();
                 string[] _ProcrumentRows = Request.Form["_ProcrumentRows"].Split(',');

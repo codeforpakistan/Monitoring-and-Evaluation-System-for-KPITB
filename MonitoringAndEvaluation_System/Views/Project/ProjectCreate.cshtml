@@ -170,7 +170,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <label for="sel1" class="col-form-label">Indicator TimeLine</label>
-                                        <input class="form-control" id="idTimeline" type="date" name="Timeline" value="@Model.TimeLine">
+                                        <input class="form-control Select-date" id="idTimeline" type="date" name="Timeline" value="@Model.TimeLine.ToShortDateString()">
                                         <span name="spanidTimeline" id="spanidTimeline" class="text-danger"></span>
 
                                     </div>
@@ -608,8 +608,9 @@
                 $('#ididTimeline').focus();
                 return true;
             }
+            debugger;
             var trcount = $("#tblKPIs tr").length;
-            $("#tblKPIs").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idInducatorDesc").val() + "</td>  <td>" + $("#idTarget").val() + "</td>   <td id='" + $("#idTimeline").val() + "' >" + $("#idTimeline").find("option:selected").text() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
+            $("#tblKPIs").append("<tr>  <td>" + trcount + "</td>         <td>" + $("#idInducatorDesc").val() + "</td>  <td>" + $("#idTarget").val() + "</td>   <td>" + $("#idTimeline").val() + "</td> <td><a href='javascript:void(0);' class='remCF2'  onClick ='RemoveDemerits(this);'>Remove</a></td>    </tr>");
             $("#idInducatorDesc").val('');
             $("#idTarget").val('');
             $("#idTimeline").val('');

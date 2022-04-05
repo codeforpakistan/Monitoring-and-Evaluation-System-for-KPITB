@@ -1,15 +1,47 @@
 ﻿@{
     ViewBag.Title = "Admin";
 }
+<!-- START card-->
+<div class="card card-default">
+    <div class="card-body">
+        <form class="form-horizontal">
+            <div class="form-row ">
+                <div class="col-lg-3">
+                    <label for="sel1">Search By Project Type</label>
+                    <input class="select2 form-control" id="txtProjectName" type="text" placeholder="Search By Project Name">
+                </div>
+                <div class="col-lg-3">
+                    <label for="sel1">Search By Policy Pillar</label>
+                    <input class="select2 form-control" id="txtProjectType" type="text" placeholder="Search By Project Type">
+                </div>
+                <div class="col-lg-3">
+                    <label for="sel1">Search By Location</label>
+                    <input class="select2 form-control" id="txtLocation" type="text" placeholder="Search By Location">
+
+                </div>
+                <div class="col-lg-1">
+                    <label for="sel1" style="color:transparent">Search</label>
+                    <button class="btn btn-primary form-control" type="button" id="btnSearch">Search</button>
+                </div>
+                <div class="col-lg-1">
+                    <label for="sel1" style="color:transparent">Search</label>
+                    <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<!-- END card-->
 <div class="row">
     <div class="col-xl-3 col-md-6">
         <!-- START card-->
         <div class="card flex-row align-items-center align-items-stretch border-0">
             <div class="col-4 d-flex align-items-center bg-primary-dark justify-content-center rounded-left">
-                <em class="icon-cloud-upload fa-3x"></em>
+                <em class="icon-notebook fa-3x"></em>
             </div>
             <div class="col-8 py-3 bg-primary rounded-right">
-                <div class="h2 mt-0">1700</div>
+                <div class="h2 mt-0">240</div>
                 <div class="text-uppercase">Completed Project</div>
             </div>
         </div>
@@ -18,12 +50,12 @@
         <!-- START card-->
         <div class="card flex-row align-items-center align-items-stretch border-0">
             <div class="col-4 d-flex align-items-center bg-yellow-dark justify-content-center rounded-left">
-                <em class="icon-globe fa-3x"></em>
+                <em class="icon-target fa-3x"></em>
             </div>
             <div class="col-8 py-3 bg-yellow rounded-right">
                 <div class="h2 mt-0">
                     700
-                    <small>GB</small>
+
                 </div>
                 <div class="text-uppercase">Progress Project</div>
             </div>
@@ -33,7 +65,7 @@
         <!-- START card-->
         <div class="card flex-row align-items-center align-items-stretch border-0">
             <div class="col-4 d-flex align-items-center bg-danger-dark justify-content-center rounded-left">
-                <em class="icon-bubbles fa-3x"></em>
+                <em class="icon-close fa-3x"></em>
             </div>
             <div class="col-8 py-3 bg-danger rounded-right">
                 <div class="h2 mt-0">500</div>
@@ -42,24 +74,16 @@
         </div>
     </div>
     <div class="col-xl-3 col-lg-6 col-md-12">
-        <!-- START date widget-->
+        <!-- START card-->
         <div class="card flex-row align-items-center align-items-stretch border-0">
-            <div class="col-4 d-flex align-items-center bg-green justify-content-center rounded-left">
-                <div class="text-center">
-                    <!-- See formats: https://docs.angularjs.org/api/ng/filter/date-->
-                    <div class="text-sm" data-now="" data-format="MMMM"></div>
-                    <br>
-                    <div class="h2 mt-0" data-now="" data-format="D"></div>
-                </div>
+            <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
+                <em class="icon-chart fa-3x"></em>
             </div>
-            <div class="col-8 py-3 rounded-right">
-                <div class="text-uppercase" data-now="" data-format="dddd"></div>
-                <br>
-                <div class="h2 mt-0" data-now="" data-format="h:mm"></div>
-                <div class="text-muted text-sm" data-now="" data-format="a"></div>
+            <div class="col-8 py-3 bg-green rounded-right">
+                <div class="h2 mt-0">50M</div>
+                <div class="text-uppercase">Expenditure Budget</div>
             </div>
         </div>
-        <!-- END date widget-->
     </div>
 </div>
 <div class="row">
@@ -237,7 +261,32 @@
             </div>
         </div>
     </div>
+</div><div class="row">
+    <div class="col-lg-6">
+        <div class="card card-default" id="cardChart5">
+            <div class="card-header">
+                <div class="card-title">Project KPIs</div>
+            </div>
+            <div class="card-body">
+                <div class="chart-pie flot-chart"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card card-default" id="cardChart6">
+            <div class="card-header">
+                <div class="card-title">
+                    Insight Indicator 
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="chart-donut flot-chart"></div>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- END row-->
+
 <div class="card" id="cardChart9">
     <div class="card-header">
         <!-- START button group-->
@@ -317,3 +366,28 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Task', 'Hours per Day'],
+  ['Work', 8],
+  ['Friends', 2],
+  ['Eat', 2],
+  ['TV', 2],
+  ['Gym', 2],
+  ['Sleep', 8]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'My Average Day', 'width':550, 'height':400};
+
+  // Display the chart inside the <div> element with id="piechart"
+    var chart = new google.visualization.PieChart(document.getElementById('cardChart5'));
+  chart.draw(data, options);
+}
+</script>

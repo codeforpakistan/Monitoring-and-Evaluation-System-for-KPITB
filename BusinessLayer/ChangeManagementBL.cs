@@ -13,7 +13,7 @@ namespace BusinessLayer
 {
     public class ChangeManagementBL
     {
-        public List<ComboModel.ChangeManagement> GetChangeManagementDataBL(int _ProjectID)
+        public List<ChangeManagement> GetChangeManagementDataBL(int _ProjectID)
         {
             return ChangeManagementDL.GetChangeManagementDataDL(_ProjectID);
         }

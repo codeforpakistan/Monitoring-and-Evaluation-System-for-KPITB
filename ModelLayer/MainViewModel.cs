@@ -1223,7 +1223,7 @@ namespace ModelLayer
 
         #endregion
         #region ChangeManagement
-        public partial class ChangeManagement
+        public partial class Change_Management
         {
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }

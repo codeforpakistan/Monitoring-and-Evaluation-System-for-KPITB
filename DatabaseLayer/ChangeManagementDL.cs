@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using static ModelLayer.ComboModel;
 using static ModelLayer.MainViewModel;
-using ChangeManagement = ModelLayer.ComboModel.ChangeManagement;
+
 
 namespace DatabaseLayer
 {

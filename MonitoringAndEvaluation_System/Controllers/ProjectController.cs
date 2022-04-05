@@ -1,4 +1,5 @@
-﻿using BusinessLayer;
+﻿
+using BusinessLayer;
 using ModelLayer;
 using MonitoringAndEvaluation_System.CommonUse;
 using System;
@@ -196,8 +197,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         [HttpGet]
         public ActionResult ProjectDetails(string ProjectID)
         {
-            GetProjectDetailsVM data = new ProjectManagementBL().getProjectDetailsBL(Convert.ToInt32(Utility.Encryption.DecryptURL(ProjectID)));
-
+            GetProjectDetailsVM data = new ProjectManagementBL().getProjectDetailsBL(Convert.ToInt32(Utility.Encryption.DecryptURL(ProjectID))); 
             return View(data);
         }
 

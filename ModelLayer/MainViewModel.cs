@@ -238,6 +238,7 @@ namespace ModelLayer
                 comboTypeOfStakeholder = new List<ComboTypeOfStakeholder>();
                 //only for sub project
                 comboProject = new List<ComboProject>();
+                comboSubProjects = new List<ComboSubProject>();
 
             }
 
@@ -245,6 +246,7 @@ namespace ModelLayer
 
             //for sub Project
             public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
             public  string SubProjectName { get; set; }
             [Display(Name = "Category")]
             [Range(1, int.MaxValue, ErrorMessage = "Please Select")]
@@ -390,6 +392,7 @@ namespace ModelLayer
             public List<ComboTypeOfStakeholder> comboTypeOfStakeholder { get; set; }
 
             public List<ComboProject> comboProject { get; set; }
+            public List<ComboSubProject> comboSubProjects { get; set; }
             public List<ProjectObjective> AssignObjectiveList { get; set; }
             public List<ProjectPlannedKPIs> AssignProjectPlannedKPIsList { get; set; }
             public List<PlannedProcurement> AssignPlannedProcurementList { get; set; }
@@ -869,7 +872,7 @@ namespace ModelLayer
                 comboProjects = new List<ComboProject>();
                 comboSubProjects = new List<ComboSubProject>();
                 comboBatch = new List<ComboBatch>();
-                comboPlannedKPIs = new List<ComboPlannedKPIs>();
+                comboPlannedKPIs = new List<ComboPlannedKPIs>(); 
             }
 
             [Range(1, int.MaxValue, ErrorMessage = "Select Project")]
@@ -878,7 +881,7 @@ namespace ModelLayer
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
             [Required(ErrorMessage = "Enter Batch Name")]
-
+            public KPIsANDInsightIndicatorVM KPIandIndicatorList { get; set; }
 
             public int PlannedKPIs_ID { get; set; }
             public int Target { get; set; }
@@ -1161,18 +1164,65 @@ namespace ModelLayer
             public List<ComboBatch> comboBatches { get; set; }
             public List<ComboProcurementHead> comboProcurementHeads { get; set; }
             public List<ComboIndicator> comboIndicators { get; set; }
+            public List<ChangeManagement> ListOfChangeManagements { get; set; }
+            public KPIsANDInsightIndicatorVM ListOfInsightIndicatorAndKPIs { get; set; }
             public RemainingValues remainingValues { get; set; }
+            public string IsEvaluationForm = null;
+            public string IsChangeManagementForm = null;
             public int[] value = new int[5];
             public ComboIndicatorBatchIndicatorVM()
             {
+                ListOfChangeManagements = new List<ChangeManagement>();
                 comboSubProjects = new List<ComboSubProject>();
                 comboBatches = new List<ComboBatch>();
                 comboProcurementHeads = new List<ComboProcurementHead>();
                 comboIndicators = new List<ComboIndicator>();
-                
+                //InsightIndicatorForEvaulationList= new List<InsightIndicatorForEvaulation>();
             }
         }
         #endregion
+        #region Evaulation
+        public partial class InsightIndicatorForEvaulation
+        {
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int InsightIndicatorID { get; set; }
+            public int InsightIndicatorFieldID { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
+            public int InsightIndicatorDataType_ID { get; set; }
+            public int INTEGER { get; set; }
+            public double FLOAT { get; set; }
+            public string BOOLConvert { get; set; }
+            public string TEXT { get; set; }
+        }
+        public partial class KPIsForEvaulation
+        {
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int PlannedKPIsID { get; set; }
+            public string IndicatorDescription { get; set; }
+        
+            public string Target { get; set; }
+            public int ProjectKPIsStatusID { get; set; }
+            public int ProjectKPIsAchived { get; set; }
+            public string Remarks { get; set; }
+        }
+
+        public partial class KPIsANDInsightIndicatorVM
+        {
+            public KPIsANDInsightIndicatorVM()
+            {
+                ListInsightIndicator = new List<InsightIndicatorForEvaulation>();
+                ListKPIs = new List<KPIsForEvaulation>();
+            }
+            public List<InsightIndicatorForEvaulation> ListInsightIndicator { get; set; }
+            public List<KPIsForEvaulation> ListKPIs { get; set; }
+        }
+
+        #endregion
+
     }
 
 }

@@ -1,4 +1,4 @@
-﻿using BusinessLayer;
+﻿
 using ModelLayer;
 using System;
 using System.Collections.Generic;
@@ -15,24 +15,22 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net;
 using System.Net.NetworkInformation;
+using BusinessLayer;
 
 namespace MonitoringAndEvaluation_System.Controllers
 {
     public class UsersController : BaseController
     {
+        ComboIndicatorBatchIndicatorVM batchIndicatorVM = new ComboIndicatorBatchIndicatorVM();
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Login()
         {
-            
-
+             
             //.Where(a.LoginDateTime > DateTime.Now.AddMinutes(-30))
-
             LoginVM loginVM = new LoginVM();
             return View(loginVM);
         }
-
-       
 
         [HttpPost]
         [AllowAnonymous]

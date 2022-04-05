@@ -221,7 +221,8 @@ $("#InsightIndicator_ID").on('change', function () {
 
             var counter = 1;
             var loop = 0;
-            $.each(IndicatorTypeLst.dataTypeVMLst, function (index, v) {
+            $.each(IndicatorTypeLst.dataTypeVMLst, function (index, v)
+            {
                 /// do stuff
 
                 debugger;
@@ -230,7 +231,7 @@ $("#InsightIndicator_ID").on('change', function () {
                 var ResultString = '';
 
                 ResultString = '<td>';
-                
+
                 HiddenValue = ' <td>';
 
                 if (v.InsightIndicatorDataType_ID == 1) {
@@ -350,18 +351,38 @@ $("#SubProject_ID").on('change', function () {
         }
     });//Ajax_End
 });
-
-
+ 
 $("#Project_ID").on('change', function () {
     debugger;
+   
     var Url_Value = $('#ProjectComboLink').attr('url-Val');
 
-    var _Project_ID = $("#Project_ID").find("option:selected").val();
+    var obj = {};
+    obj.ProjectID = $("#Project_ID").find("option:selected").val();
+    obj.SubProjectID = $("#SubProject_ID").find("option:selected").val();
+    obj.Batch_ID = $("#SubProject_ID").find("option:selected").val();
+    var _IsEvaluationForm = $('#IsEvaluationForm').val();
+    var _IsChangeManagementForm = $('#IsChangeManagementForm').val();
+     
+    if (_IsEvaluationForm == undefined) {
+        obj._IsEvaluationForm = null;
+    } else {
+        obj._IsEvaluationForm = _IsEvaluationForm;
+    }
+    if (_IsChangeManagementForm == undefined) {
+        obj._IsChangeManagementForm = null;
+    } else {
+        obj._IsChangeManagementForm = _IsChangeManagementForm;
+    }
+
+   
+
     $.ajax({
         type: 'POST',
         url: Url_Value,
         dataType: 'json',
-        data: { ProjectID: _Project_ID },
+        /*data: JSON.stringify(obj),*/
+        data: obj,
         success: function (response) {
             debugger;
             $("#Batch_ID").empty();
@@ -400,16 +421,16 @@ $("#Project_ID").on('change', function () {
                     $("#Batch_ID").append('<option value="' + item.BatchID + '">' +
                         item.BatchName + '</option>');
                 });
-        
+
                 //Indicators
                 $.each(response.comboIndicators, function (i, Aqib2) {
-                $("#InsightIndicator_ID").prop("disabled", false);
-                $("#InsightIndicator_ID").append('<option value="' + Aqib2.InsightIndicatorID + '">' +
-                    Aqib2.InsightIndicatorName + '</option>');
+                    $("#InsightIndicator_ID").prop("disabled", false);
+                    $("#InsightIndicator_ID").append('<option value="' + Aqib2.InsightIndicatorID + '">' +
+                        Aqib2.InsightIndicatorName + '</option>');
                 });
             }
 
-           
+
 
             //RemainingVaues
             $("#RecruitedHR").val('');
@@ -432,7 +453,190 @@ $("#Project_ID").on('change', function () {
 
             $("#lblTotalReleasedBudget").text(response.remainingValues.ReleasedBudget);
             $("#hdnTotalReleasedBudget").val(response.remainingValues.ReleasedBudget); //Hidden
-            /* }*/
+              
+            //EvaulationList      batchIndicatorVM.InsightIndicatorForEvaulationList
+            if (response.IsEvaluationForm == "Evaluation") {
+
+                $("#tblBodyKPIs").empty();
+                $("#tblBodyInsightIndicator").empty();
+
+                var counter = 1;
+                var loop = 0;
+                //KPIS
+                $.each(response.ListOfInsightIndicatorAndKPIs.ListKPIs, function (index, v) {
+                    /// do stuff
+
+                    debugger;
+                    var PlannedKPIsID = '<td style="display:none";><input  name="ListOfInsightIndicatorAndKPIs.ListKPIs[' + loop + '].PlannedKPIsID"  value="' + v.PlannedKPIsID + '" type="text"  /></td>';  //Hidden
+                    var ProjectKPIsStatusID = '<td style="display:none";><input  name="ListOfInsightIndicatorAndKPIs.ListKPIs[' + loop + '].ProjectKPIsStatusID"  value="' + v.ProjectKPIsStatusID + '" type="text"  /></td>';  //Hidden
+
+                    var IndicatorDescription = '';
+                    IndicatorDescription = '<td>';
+                    IndicatorDescription += '<input  class="form-control "    readonly name="ListOfInsightIndicatorAndKPIs.ListKPIs[' + loop + '].IndicatorDescription"    value="' + v.IndicatorDescription + '"      type="text"  placeholder="Enter Indicator Description" required />'
+                    IndicatorDescription += '</td> ';
+
+
+                    var ProjectKPIsAchived = '';
+                    ProjectKPIsAchived = '<td>';
+                    ProjectKPIsAchived += '<input class="form-control "    readonly name="ListOfInsightIndicatorAndKPIs.ListKPIs[' + loop + '].ProjectKPIsAchived"  value="' + v.ProjectKPIsAchived + '"  type="number"  placeholder="Enter ProjectKPIsAchived Value" required />'
+                    ProjectKPIsAchived += '</td> ';
+
+                    var Feedback = '';
+                    Feedback = '<td>';
+                    Feedback += '<select class="form-control" name="ListOfInsightIndicatorAndKPIs.ListKPIs[' + loop + '].Feedback" required >'
+                    Feedback += '<option value="">Select Option</option>'
+                    Feedback += '<option value="true">Satisfied</option>'
+                    Feedback += '<option value="false">Non-Satisfied</option>'
+                    Feedback += '</select>'
+                    Feedback += '</td> ';
+
+
+
+
+                    var Remarks = '';
+                    Remarks = '<td>';
+                    Remarks += '<input class="form-control"    name="ListOfInsightIndicatorAndKPIs.ListKPIs[' + loop + '].Remarks"   type="text"  placeholder="Enter Remarks" required />'
+                    Remarks += '</td> ';
+
+                    //TABLE INSERTION
+                    $('<tr id="tblKPIsRow' + loop + '">' +
+                        '<td>' + counter + '</td>' +
+                        PlannedKPIsID +
+                        ProjectKPIsStatusID +
+                        IndicatorDescription +
+                        ProjectKPIsAchived +
+                        Feedback +
+                        Remarks +
+                        '</tr>').appendTo('#tblKPIs');
+                    counter++;
+                    loop++;
+                });
+                 
+                debugger;
+
+                //InsightIndicator
+                $.each(response.ListOfInsightIndicatorAndKPIs.ListInsightIndicator, function (index, v) { 
+                    var InsightIndicatorFieldID = '<td style="display:none";><input  name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].InsightIndicatorFieldID" value="' + v.InsightIndicatorFieldID + '" type="text"  /></td>';
+                    var HiddenValue = '';
+                    var ResultString = '';
+
+                    ResultString = '<td>'; 
+                    HiddenValue = ' <td>';
+
+                    if (v.InsightIndicatorDataType_ID == 1) {
+                        ResultString += '<input  class="form-control"   readonly  name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].TEXT"     type="text"    value="' + v.TEXT + '"  placeholder="Enter Indicator Text" required />'
+                        HiddenValue += '<input   readonly   name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].IndicatorDataType_ID" value="' + v.InsightIndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                    } else if (v.InsightIndicatorDataType_ID == 2) {
+                        ResultString += '<input class="form-control"     readonly   name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].INTEGER" type="number"  value="' + v.INTEGER + '"  placeholder="Enter Indicator Value" required />'
+                        HiddenValue += '<input class="form-control"   readonly  name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].IndicatorDataType_ID" value="' + v.InsightIndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                    } else if (v.InsightIndicatorDataType_ID == 3) {
+                        ResultString += '<input class="form-control"   readonly   name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].FLOAT" type="number"   value="' + v.FLOAT + '" placeholder="Enter Indicator Percentage %"  required />'
+                        HiddenValue += '<input   readonly  name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].IndicatorDataType_ID"  value="' + v.InsightIndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                    } else if (v.InsightIndicatorDataType_ID == 4) {
+                        ResultString += '<select class="form-control"  readonly   name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].BOOL" required >'
+                        ResultString += '<option value="">Select Yes/No</option>'
+                        ResultString += '<option value="true">Yes</option>'
+                        ResultString += '<option value="false">No</option>'
+                        ResultString += '</select>'
+                        HiddenValue += '<input  readonly    name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].IndicatorDataType_ID"  value="' + v.InsightIndicatorDataType_ID + '" type="text"   style="display:none;" />'
+                    } 
+                    ResultString += '</td> ';
+                    HiddenValue += '</td>';
+
+
+
+
+                    var IndicatorFeedback = '';
+                    IndicatorFeedback = '<td>';
+                    IndicatorFeedback += '<select class="form-control" name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].Remarks" required >'
+                    IndicatorFeedback += '<option value="">Select Option</option>'
+                    IndicatorFeedback += '<option value="true">Satisfied</option>'
+                    IndicatorFeedback += '<option value="false">Non-Satisfied</option>'
+                    IndicatorFeedback += '</select>'
+                    IndicatorFeedback += '</td> ';
+                   
+                    // IndicatorFeedback += '<input  class="form-control"    name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].Feedback"         type="text"  placeholder="Enter Feedback" required />'
+                    var IndicatorRemarks = '';
+                    IndicatorRemarks = '<td>';
+                    IndicatorRemarks += '<input  class="form-control"    name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].Remarks"        type="text"  placeholder="Enter Remarks" required />'
+                    IndicatorRemarks += '</td> ';
+
+
+                    $('<tr id="tblInsightIndicatorRow' + loop + '">' +
+                         
+                        '<td>' +  counter + '</td>' +
+                        InsightIndicatorFieldID +
+                        '<td>' + v.InsightIndicatorFieldName + '</td>' +
+                        ResultString +
+                        IndicatorFeedback +
+                        IndicatorRemarks +
+                        HiddenValue +
+                        '</tr>').appendTo('#tblInsightIndicator');
+                    counter++;
+                    loop++;
+                });
+                //END
+
+            }//END Evaluation
+
+            debugger;
+            if (response.IsChangeManagementForm == "ChangeManagementForm") {
+                $("#tblBodyChangeManagement").empty();
+
+                var counter = 1;
+                var loop = 0;
+                //KPIS
+                $.each(response.ListOfChangeManagements, function (index, v) {
+                    /// do stuff
+
+                    debugger;
+                    var ProjectID = '<td style="display:none";><input  name="ListOfChangeManagements[' + loop + '].ProjectID"  value="' + v.ProjectID + '" type="text"  /></td>';  //Hidden
+                    var SubProjectID = '<td style="display:none";><input  name="ListOfChangeManagements[' + loop + '].SubProjectID"  value="' + v.SubProjectID + '" type="text"  /></td>';  //Hidden
+
+                    var ItemName = '';
+                    ItemName = '<td>';
+                    ItemName += '<input  class="form-control "    readonly name="ListOfChangeManagements[' + loop + '].ItemName"    value="' + v.ItemName + '"      type="text"  placeholder="Enter Indicator Description" required />'
+                    ItemName += '</td> ';
+
+                    var CurrentValue = '';
+                    CurrentValue = '<td>';
+                    CurrentValue += '<input class="form-control "    readonly name="ListOfChangeManagements[' + loop + '].CurrentValue"  value="' + v.CurrentValue + '"  type="number"  placeholder="Enter CurrentValue" required />'
+                    CurrentValue += '</td> ';
+
+                    var ChangeValue = '';
+                    ChangeValue = '<td>';
+                    ChangeValue += '<input class="form-control"    name="ListOfChangeManagements[' + loop + '].ChangeValue"  value="' + v.ChangeValue + '"  type="text"  placeholder="Enter ChangeValue" required />'
+                    ChangeValue += '</td> ';
+
+                    var Decision = '';
+                    Decision = '<td>';
+                    Decision += '<input class="form-control"    name="ListOfChangeManagements[' + loop + '].Decision"   type="text"  placeholder="Enter Decision" required />'
+                    Decision += '</td> ';
+
+                    var ActionTaken = '';
+                    ActionTaken = '<td>';
+                    ActionTaken += '<input class="form-control"    name="ListOfChangeManagements[' + loop + '].ActionTaken"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTaken += '</td> ';
+
+                    //TABLE INSERTION
+                    $('<tr id="tblChangeManagementRow' + loop + '">' +
+                        '<td>' + counter + '</td>' +
+                        ProjectID +
+                        SubProjectID +
+                        ItemName +
+                        CurrentValue +
+                        ChangeValue +
+                        Decision +
+                        ActionTaken +
+                        '</tr>').appendTo('#tblChangeManagement');
+                    counter++;
+                    loop++;
+                });
+
+
+            }
+
+
         },
         error: function (ex) {
             debugger;

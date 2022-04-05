@@ -667,10 +667,9 @@ namespace DatabaseLayer
                     status.status = Convert.ToBoolean(ObjParm3.Get<bool>("@Status"));
                     status.statusDetail = Convert.ToString(ObjParm3.Get<string>("@StatusDetails"));
 
+                    #endregion
                     transactionScope.Complete();
                     transactionScope.Dispose();
-                    #endregion
-
                 }
             }
             catch (Exception ex)
@@ -906,8 +905,6 @@ namespace DatabaseLayer
                     getProjectDetailsVM.getProjectDetailsQ5 = multi.Read<GetProjectDetailsQ5>().FirstOrDefault();
                     getProjectDetailsVM.getProjectDetailsQ6Lst = multi.Read<GetProjectDetailsQ6>().ToList();
                     // getProjectDetailsVM.getProjectDetailsQ7 = multi.Read<GetProjectDetailsQ7>().FirstOrDefault();
-
-
                 }
             }
             return getProjectDetailsVM;

@@ -153,7 +153,9 @@
     <Compile Include="CommonUse\CommonController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
+    <Compile Include="Controllers\ChangeManagementController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EvaluationController.cs" />
     <Compile Include="Controllers\FinanceController.cs" />
     <Compile Include="Controllers\InsightIndicatorController.cs" />
     <Compile Include="Controllers\IssuesController.cs" />
@@ -421,6 +423,9 @@
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\ProjectKPIsStatus\ProjectKPIsStatusCreateView.cshtml" />
     <Content Include="Views\InsightIndicator\InsightIndicatorCreate.cshtml" />
+    <Content Include="Views\ChangeManagement\ChangeMngCreate.cshtml" />
+    <Content Include="Views\Evaluation\EvaluationCreate.cshtml" />
+    <Content Include="Views\InsightIndicator\InsightIndicatorFieldValue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -439,7 +444,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
-      <Project>{e28c3b9f-076f-41a6-8104-409a1ae23ac8}</Project>
+      <Project>{E28C3B9F-076F-41A6-8104-409A1AE23AC8}</Project>
       <Name>BusinessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModelLayer\ModelLayer.csproj">

@@ -129,6 +129,25 @@ namespace ModelLayer
             public int InsightIndicatorID { get; set; }
             public string InsightIndicatorName { get; set; }
         }
+
+        public partial class ChangeManagement
+        {
+            public int ProjectID { get; set; }
+            public string ItemName { get; set; }
+
+            public string CurrentValue { get; set; }
+            public string ChangeValue { get; set; }
+            public string Decision { get; set; }
+            public string ActionTaken { get; set; }
+
+            public string PlannedBudget { get; set; }
+            public int PlannedBudgetValue { get; set; }
+            public string ApprovedBudget { get; set; }
+            public int ApprovedBudgetValue { get; set; }
+            public string PlannedHR { get; set; }
+            public int PlannedHRValue { get; set; }
+        }
+
         public partial class ComboProcurementHead
         {
             public int PlannedProcurementID { get; set; }

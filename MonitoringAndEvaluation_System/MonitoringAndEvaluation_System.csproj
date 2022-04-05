@@ -35,8 +35,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -149,7 +147,6 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="CommonUse\CommonCode.cs" />
     <Compile Include="CommonUse\CommonController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
@@ -417,12 +414,17 @@
     <Content Include="Views\Project\ProjectDetails.cshtml" />
     <Content Include="Views\InsightIndicator\IndicatorFieldCreate.cshtml" />
     <Content Include="Views\InsightIndicator\LinkIndicator.cshtml" />
-    <Content Include="Views\InsightIndicator\IndicatorFieldValue.cshtml" />
+    <Content Include="Views\InsightIndicator\InsightIndicatorFieldValue.cshtml" />
     <Content Include="Views\Batch\BatchCreateView.cshtml" />
     <Content Include="Views\Role\CreateRole.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\ProjectKPIsStatus\ProjectKPIsStatusCreateView.cshtml" />
     <Content Include="Views\InsightIndicator\InsightIndicatorCreate.cshtml" />
+    <Content Include="Views\Project\SubProjectCreate.cshtml" />
+    <Content Include="Views\ChangeManagement\ChangeMngCreate.cshtml" />
+    <Content Include="Views\Project\SubProjectView.cshtml" />
+    <Content Include="Views\InsightIndicator\InsightIndicatorView.cshtml" />
+    <Content Include="Views\Evaluation\EvaluationCreate.cshtml" />
     <Content Include="Views\ChangeManagement\ChangeMngCreate.cshtml" />
     <Content Include="Views\Evaluation\EvaluationCreate.cshtml" />
     <Content Include="Views\InsightIndicator\InsightIndicatorFieldValue.cshtml" />

@@ -1222,6 +1222,167 @@ namespace ModelLayer
         }
 
         #endregion
+        #region ChangeManagement
+        public partial class Change_Management
+        {
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int ProjectHistory_ID { get; set; }
+            public int SubProjectHistory_ID { get; set; }
+            public string MeetingNo { get; set; }
+
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime MeetingDate { get; set; }
+        }
+        public partial class ProjectHistory
+        {
+            //for sub Project
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public string SubProjectName { get; set; }
+            public string ProjectName { get; set; }
+            public long PlannedBudget { get; set; }
+            public long ApprovedBudget { get; set; }
+            public int PlannedHR { get; set; }
+            public string ProjectGoal { get; set; }
+        }
+
+        public partial class ObjectiveHistory
+        {
+            public int Objective_ID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public string ObjectiveName { get; set; }
+        }
+        public partial class PlannedKPIsHistory
+        {
+            public int PlannedKPIs_ID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public string IndicatorDescription { get; set; }
+            public  long Target { get; set; }
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime TimeLine { get; set; }
+        }
+        public partial class PlannedProcurementHistory
+        {
+            public int PlannedProcurement_ID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public string ProcrumetHeader { get; set; }
+            public long PlannedProcrumentNo { get; set; }
+            public long PlannedPerCostItem { get; set; }
+            public long AchivedCost { get; set; }
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime EntryDate { get; set; }
+        }
+        public partial class ScheduleHistory
+        {
+            public int Schedule_ID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime PlannedDate { get; set; }
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime StartDate { get; set; }
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime EndDate { get; set; }
+
+        }
+
+
+        public partial class ChangeManagementVM
+        {
+            public ChangeManagementVM()
+            {
+                comboProjects = new List<ComboProject>();
+                comboSubProjects = new List<ComboSubProject>();
+            }
+
+            //Common 
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+
+            //ChangeManagement
+            public int ProjectHistory_ID { get; set; }
+            public int SubProjectHistory_ID { get; set; }
+            public string MeetingNo { get; set; }
+
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime MeetingDate { get; set; }
+
+            //Project and Sub pRoject history
+            public string SubProjectName { get; set; }
+            public string ProjectName { get; set; }
+            public long PlannedBudget { get; set; }
+            public long ApprovedBudget { get; set; }
+            public int PlannedHR { get; set; }
+            public string ProjectGoal { get; set; }
+
+            //Project Objective History
+            public int Objective_ID { get; set; }
+            public string ObjectiveName { get; set; }
+
+            //PlannedKPIs History
+            public int PlannedKPIs_ID { get; set; }
+            public string IndicatorDescription { get; set; }
+            public long Target { get; set; }
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime TimeLine { get; set; }
+
+            //PlannedProcurement History
+            public int PlannedProcurement_ID { get; set; }
+            public string ProcrumetHeader { get; set; }
+            public long PlannedProcrumentNo { get; set; }
+            public long PlannedPerCostItem { get; set; }
+            public long AchivedCost { get; set; }
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime EntryDate { get; set; }
+
+
+            //Schedule History
+            public int Schedule_ID { get; set; }
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime PlannedDate { get; set; }
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime StartDate { get; set; }
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public System.DateTime EndDate { get; set; }
+
+            public List<ComboProject> comboProjects { get; set; }
+            public List<ComboSubProject> comboSubProjects { get; set; }
+
+        }
+        #endregion
 
     }
 

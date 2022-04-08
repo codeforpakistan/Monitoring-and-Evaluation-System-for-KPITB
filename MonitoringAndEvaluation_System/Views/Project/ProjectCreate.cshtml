@@ -368,7 +368,6 @@
                                 <br />
                                 <div class="float-right"><input type="button" id="AddRisk" value="Add Risk" class="btn btn-primary" /></div>
                                 <br />
-                                <br />
                                 <table class="table table-striped" id="tblRisk">
                                     <thead class="table-info">
                                         <tr>
@@ -382,7 +381,6 @@
                                     <tbody>
                                     </tbody>
                                 </table>
-
                             </div>
 
                         </div>
@@ -409,7 +407,6 @@
                                         @Html.DropDownListFor(m => m.TypeOfStakeholder_ID, new SelectList(Model.comboTypeOfStakeholder, "TypeOfStakeholderID", "TypeOfStakeholderName"), "Please Select Type Of Stakeholder", new { @class = " form-control ", @placeholder = "Select RiskStatus", @id = "idDepartmentName", @name = "DepartmentName" })
                                         @Html.ValidationMessageFor(m => m.TypeOfStakeholder_ID, "", new { @class = "parsley-required" })
                                         <span name="spanTermsAndConditions" id="spanidDepartmentName" class="text-danger"></span>
-
                                     </div>
                                 </div>
                                 <div class="row">

@@ -15,5 +15,10 @@ namespace BusinessLayer
         {
             return ProjectKPIsStatusManagementDL.projectKPIsStatusCreateViewDL(m);
         }
+        //GetAllIssues
+        public List<GetAllProjectKPIsStatusVM> getAllProjectKPIsStatusBL()
+        {
+            return ProjectKPIsStatusManagementDL.getAllProjectKPIsStatusDL();
+        }
     }
 }

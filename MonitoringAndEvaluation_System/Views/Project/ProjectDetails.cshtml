@@ -234,8 +234,8 @@
 <div class="card-body">
     <h4>Description</h4>
     <p>
-        @{ Model.getProjectDetailsQ5.Objective = Model.getProjectDetailsQ5 != null ? Model.getProjectDetailsQ5.Objective : "";}
-        @Model.getProjectDetailsQ5.Objective
+        @{ Model.getProjectDetailsQ5.ObjectiveName = Model.getProjectDetailsQ5 != null ? Model.getProjectDetailsQ5.ObjectiveName : "";}
+        @Model.getProjectDetailsQ5.ObjectiveName
     </p>
 </div>
 </div>
@@ -254,12 +254,12 @@
                     foreach (var itemParent in Model.getIndicatorLst)
                     {
                         <div class="col-lg-6">
-                            <p class="lead bb">@itemParent.IndicatorName</p>
+                            <p class="lead bb">@itemParent.InsightIndicatorName</p>
                             <form class="form-horizontal">
-                                @foreach (var item in Model.getProjectDetailsQ7Lst.Where(x => x.IndicatorName == itemParent.IndicatorName))
+                                @foreach (var item in Model.getProjectDetailsQ7Lst.Where(x => x.InsightIndicatorName == itemParent.InsightIndicatorName))
                                 {
                                     <div class="form-group row">
-                                        <div class="col-md-4">@item.IndicatorFieldName</div>
+                                        <div class="col-md-4">@item.InsightIndicatorFieldName</div>
                                         <div class="col-md-8">
                                             <strong>@item.CommonFiled</strong>
                                         </div>

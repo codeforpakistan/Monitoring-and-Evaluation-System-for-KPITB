@@ -21,6 +21,7 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             CreateProjectKPIsStatusVM kpisVM = new CreateProjectKPIsStatusVM();
             ComboProject(kpisVM);
+            getAllProjectKPIsStatus();
             return View(kpisVM);
         }
         [HttpPost]
@@ -83,6 +84,12 @@ namespace MonitoringAndEvaluation_System.Controllers
             ComboPlannedKPIs mi = new ComboPlannedKPIs() { PlannedKPIsID = 0, IndicatorDescription = "Please Select Indicator" };
             kpisVM.comboPlannedKPIs.Add(mi);
             kpisVM.comboPlannedKPIs = ObjProjectMngBL.getComboPlannedKPIsBL();
+        }
+
+        //Get all KPIs Status
+        private void getAllProjectKPIsStatus()
+        {
+            ViewBag.LstAllProjectKPIsStatus = new ProjectKPIsStatusManagementBL().getAllProjectKPIsStatusBL();
         }
     }
 }

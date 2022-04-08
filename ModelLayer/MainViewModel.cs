@@ -435,7 +435,7 @@ namespace ModelLayer
             {
                 getProjectDetailsQ6Lst = new List<GetProjectDetailsQ6>();
                 getProjectDetailsQ7Lst = new List<GetProjectDetailsQ7>();
-                getIndicatorLst = new List<IndicatorNames>();
+                getIndicatorLst = new List<InsightIndicatorNames>();
             }
             public GetProjectDetailsQ1 getProjectDetailsQ1 { get; set; }
             public GetProjectDetailsQ2 getProjectDetailsQ2 { get; set; }
@@ -444,7 +444,7 @@ namespace ModelLayer
             public GetProjectDetailsQ5 getProjectDetailsQ5 { get; set; }
             public List<GetProjectDetailsQ6> getProjectDetailsQ6Lst { get; set; }
             public List<GetProjectDetailsQ7> getProjectDetailsQ7Lst { get; set; }
-            public List<IndicatorNames> getIndicatorLst { get; set; }
+            public List<InsightIndicatorNames> getIndicatorLst { get; set; }
         }
         public partial class GetProjectDetailsQ1
         {
@@ -476,28 +476,28 @@ namespace ModelLayer
         }
         public partial class GetProjectDetailsQ5
         {
-            public string Objective { get; set; }
+            public string ObjectiveName { get; set; }
         }
         public partial class GetProjectDetailsQ6
         {
             public string ProjectName { get; set; }
-            public string IndicatorName { get; set; }
-            public string IndicatorFieldName { get; set; }
-            public string IndicatorValueText { get; set; }
-            public int IntegerValue { get; set; }
+            public string InsightIndicatorName { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
+            public string InsightIndicatorValueText { get; set; }
+            public int InsightIntegerValue { get; set; }
             public int BoolValue { get; set; }
             public float FloatValue { get; set; }
            
         }
         public partial class GetProjectDetailsQ7
         {
-            public string IndicatorName { get; set; }
-            public string IndicatorFieldName { get; set; }
+            public string InsightIndicatorName { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
             public dynamic CommonFiled { get; set; }
         }
-        public partial class IndicatorNames
+        public partial class InsightIndicatorNames
         {
-            public string IndicatorName { get; set; }
+            public string InsightIndicatorName { get; set; }
         }
         
 
@@ -661,7 +661,7 @@ namespace ModelLayer
             public string SubProjectName { get; set; }
             public string BatchName { get; set; }
             public int ReleasedBudgetID { get; set; }
-            public System.DateTime ReleasedFromDate { get; set; }
+            public DateTime ReleasedFromDate { get; set; }
             public long ReleasedBudget { get; set; }
             public string Remarks { get; set; }
 
@@ -708,10 +708,12 @@ namespace ModelLayer
             public string SubProjectName { get; set; }
             public string BatchName { get; set; }
             public int ExpenditureBudgetID { get; set; }
-            public DateTime ExpenditureFromDate { get; set; }
-            public DateTime ExpenditureToDate { get; set; }
+            public string BudgetHead { get; set; }
+            public long ApprovedCost { get; set; }
             public long ExpenditureBudget { get; set; }
-            public string Remarks { get; set; }
+            public DateTime ExpenditureDate { get; set; }
+          
+           
 
         }
         #endregion
@@ -875,23 +877,56 @@ namespace ModelLayer
                 comboPlannedKPIs = new List<ComboPlannedKPIs>(); 
             }
 
-            [Range(1, int.MaxValue, ErrorMessage = "Select Project")]
+            
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
-            [Required(ErrorMessage = "Enter Batch Name")]
-            public KPIsANDInsightIndicatorVM KPIandIndicatorList { get; set; }
+            public KPIsANDInsightIndicatorVM KPIandIndicatorList = new KPIsANDInsightIndicatorVM();
 
             public int PlannedKPIs_ID { get; set; }
-            public int Target { get; set; }
+
+            //Evaluation
+            public string EvaluationType { get; set; }
+            public string VisistStatus { get; set; }
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public string VisitDate { get; set; }
+            public string Agenda { get; set; }
+            public string EvaluationRemarks { get; set; }
+            //public int Target { get; set; }
+
             public int ProjectKPIsAchived { get; set; }
+            [Required(ErrorMessage = "Select Date")]
+            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
             public System.DateTime TimeLine { get; set; }
             public string Remarks { get; set; }
+
             public List<ComboProject> comboProjects { get; set; }
             public List<ComboSubProject> comboSubProjects { get; set; }
             public List<ComboBatch> comboBatch { get; set; }
             public List<ComboPlannedKPIs> comboPlannedKPIs { get; set; }
+        }
+        public partial class GetAllProjectKPIsStatusVM
+        {
+
+            public int ID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int Batch_ID { get; set; }
+            public int CreatedByUser_ID { get; set; }
+            public int ProjectKPIsStatusID { get; set; }
+            public int PlannedKPIs_ID { get; set; }
+            public string ProjectName { get; set; }
+            public string SubProjectName { get; set; }
+            public string IndicatorDescription { get; set; }
+            public int Target { get; set; }
+            public int ProjectKPIsAchived { get; set; }
+            public DateTime TimeLine { get; set; }
+            public string Remarks { get; set; }
+            
         }
         #endregion
         #region InsightIndicator

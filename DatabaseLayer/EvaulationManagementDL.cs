@@ -74,9 +74,21 @@ namespace DatabaseLayer
                     { dtIndicator.Rows.Add(modelVM.KPIandIndicatorList.ListInsightIndicator[i]); }
 
                     DynamicParameters ObjParm = new DynamicParameters();
+
                     ObjParm.Add("@KPI", dtKPI.AsTableValuedParameter("udt_Evaluation"));
                     ObjParm.Add("@Indicator", dtIndicator.AsTableValuedParameter("udt_Evaluation"));
-                    statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_EvaluationCeate", ObjParm);
+                    
+                    DynamicParameters ObjParm2 = new DynamicParameters();
+                    //LoginUser
+                    ObjParm2.Add("@Project_ID", modelVM.Project_ID);   //LoginUser
+                    ObjParm2.Add("@SubProject_ID", modelVM.SubProject_ID);
+                    ObjParm2.Add("@Batch_ID", modelVM.Batch_ID);
+                    ObjParm2.Add("@EvaluationType", modelVM.EvaluationType);
+                    ObjParm2.Add("@VisistStatus", modelVM.VisistStatus);
+                    ObjParm2.Add("@VisitDate", modelVM.VisitDate);
+                    ObjParm2.Add("@Agenda", modelVM.Agenda);
+                    ObjParm2.Add("@EvaluationRemarks", modelVM.EvaluationRemarks);
+                    statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_EvaluationCeate", ObjParm2);
 
                     transactionScope.Complete();
                     transactionScope.Dispose();

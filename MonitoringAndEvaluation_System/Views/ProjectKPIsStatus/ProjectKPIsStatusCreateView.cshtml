@@ -1,7 +1,7 @@
 ﻿@model ModelLayer.MainViewModel.CreateProjectKPIsStatusVM
 @{
     ViewBag.Title = "Project KPIs Status";
-    //List<ModelLayer.MainViewModel.GetAllIssue> _LstAllIssues = (List<ModelLayer.MainViewModel.GetAllIssue>)ViewBag.LstAllIssues;
+    List<ModelLayer.MainViewModel.GetAllProjectKPIsStatusVM> _LstAllProjectKPIsStatus = (List<ModelLayer.MainViewModel.GetAllProjectKPIsStatusVM>)ViewBag.LstAllProjectKPIsStatus;
 }
 
 <!-- START row-->
@@ -41,9 +41,11 @@
                                 @Html.ValidationMessageFor(m => m.PlannedKPIs_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
                             </div>
                             <div class="col-lg-4">
-                                <label class="col-form-label">Target</label>
-                                @Html.TextBoxFor(model => model.Target, new { @class = "form-control", @type = "text" ,@readonly="readonly"})
-                                @Html.ValidationMessageFor(m => m.Target, "", new { @class = "parsley-required", @id = "spanIssueDate" })
+                                <label for="sel1">Target</label>
+                                <input hidden id="hdnRemainingProcurement" name="hdnRemainingProcurement">
+                                <div>
+                                    <label id="lblRemainingProcurement" name="lblRemainingProcurement" for="lblRemainingProcurement" class="form-control" readonly="readonly">0</label>
+                                </div>
                             </div>
                             <div class="col-lg-4">
                                 <label class="col-form-label">Achived No. *</label>
@@ -75,22 +77,22 @@
 
                     <!--Table-->
                     <!-- START card-->
-                    <div class="card card-default">
+                    <!--<div class="card card-default">
                         <div class="card-body">
                             <form class="form-horizontal">
                                 <div class="form-row ">
                                     <div class="col-lg-3">
                                         <label for="sel1">Search By Project</label>
                                         @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
-                                        @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required", @id = "spanProjectID" })
+                                        @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required", @id = "spanProjectID" })-->
                                         @*<input class="select2 form-control" type="text" placeholder="Select Project Name">*@
-                                    </div>
+                                    <!--</div>
                                     <div class="col-lg-3">
                                         <label for="sel1">Search By Sub Project</label>
                                         @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = " form-control" })
-                                        @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required", @id = "spanSubProjectID" })
+                                        @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required", @id = "spanSubProjectID" })-->
                                         @*<input class="select2 form-control" type="text" placeholder="Select Batch Name">*@
-                                    </div>
+                                    <!--</div>
                                     <div class="col-lg-3">
                                         <label for="sel1">Search By Date</label>
                                         @Html.TextBoxFor(model => model.TimeLine, new { @class = "select2 form-control", @type = "date", @id = "ProcurementFromDate", @placeholder = "Enter No of Recruited -HR" })
@@ -109,7 +111,7 @@
 
                             </form>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="card card-default">
                         <div class="row">
                             <div class="col-lg-12 ">
@@ -123,10 +125,13 @@
                                                         ID
                                                     </th>
                                                     <th>
-                                                        KPIs Description
+                                                        Project
                                                     </th>
                                                     <th>
-                                                        Target No.
+                                                        Sub Project
+                                                    </th>
+                                                    <th>
+                                                        KPIs Description
                                                     </th>
 
                                                     <th>
@@ -138,42 +143,49 @@
                                                     <th>
                                                         Remarks
                                                     </th>
-                                                    <th>
+                                                    @*<th>
                                                         Action
-                                                    </th>
+                                                    </th>*@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @*@{
-                                                    foreach (var item in _LstAllIssues)
+                                                @{
+                                                    foreach (var item in _LstAllProjectKPIsStatus)
                                                     {
                                                         <tr>
-                                                            @Html.HiddenFor(m => item.IssuesID)
+                                                            @Html.HiddenFor(m => item.ProjectKPIsStatusID)
                                                             <td>
                                                                 @item.ID
                                                             </td>
                                                             <td>
-                                                                @item.IssueDescription
+                                                                @item.ProjectName
                                                             </td>
                                                             <td>
-                                                                @item.IssueDate.ToShortDateString()
+                                                                @item.SubProjectName
                                                             </td>
                                                             <td>
-                                                                @item.ActionTaken
+                                                                @item.IndicatorDescription
                                                             </td>
+                                                            <td>
+                                                                @item.ProjectKPIsAchived
+                                                            </td>
+                                                            <td>
+                                                                @item.TimeLine.ToShortDateString()
+                                                            </td>
+                                                            
                                                             <td>
                                                                 @item.Remarks
                                                             </td>
 
-                                                            <td>
+                                                            @*<td>
 
-                                                                @Html.ActionLink("Edit", "IssueEdit", new { IssuesID = Utility.Encryption.EncryptURL(Convert.ToString(item.IssuesID)) }, new { @class = "mb-1 btn btn-warning" })
+                                                                @Html.ActionLink("Edit", "IssueEdit", new { ProjectKPIsStatusID = Utility.Encryption.EncryptURL(Convert.ToString(item.ProjectKPIsStatusID)) }, new { @class = "mb-1 btn btn-warning" })
 
-                                                            </td>
+                                                            </td>*@
 
                                                         </tr>
                                                     }
-                                                }*@
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

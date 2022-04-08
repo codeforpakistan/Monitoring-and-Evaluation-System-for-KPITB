@@ -48,5 +48,24 @@ namespace DatabaseLayer
             }
             return status;
         }
+
+
+        //GetAllProjectKPIsStatusDL
+        public static List<GetAllProjectKPIsStatusVM> getAllProjectKPIsStatusDL()
+        {
+            List<GetAllProjectKPIsStatusVM> getProjectKPIsStatusLst = new List<GetAllProjectKPIsStatusVM>();
+
+            using (IDbConnection conn = new SqlConnection(Common.ConnectionString))
+            {
+                conn.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                //ObjParm.Add("@LoginRoleID", LoginRoleID);
+                //ObjParm.Add("@LoginUserID", LoginUserID);
+                getProjectKPIsStatusLst = conn.Query<GetAllProjectKPIsStatusVM>("sp_GetAllProjectKPIsStatus", commandType: CommandType.StoredProcedure).ToList();
+                conn.Close();
+                conn.Dispose();
+                return getProjectKPIsStatusLst;
+            }
+        }
     }
 }

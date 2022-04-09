@@ -251,7 +251,6 @@ $("#InsightIndicator_ID").on('change', function () {
                     ResultString += '</select>'
                     HiddenValue += '<input class="form-control"  name="dataTypeVMLst[' + loop + '].IndicatorDataType_ID"  value="' + v.InsightIndicatorDataType_ID + '" type="text"   style="display:none;" />'
                 }
-
                 ResultString += '</td> ';
                 HiddenValue += '</td>';
 
@@ -268,12 +267,9 @@ $("#InsightIndicator_ID").on('change', function () {
             debugger;
             var counter2 = 1;
             $.each(IndicatorTypeLst.dataTypeCommonVMLst, function (index, v) {
-
-                $('<tr><td>' + counter2 + '</td><td>' + v.InsightIndicatorFieldName + '</td><td>' + v.CommonValue + '</td><tr>').appendTo('#tbInsightlIndicator2');
+                $('<tr><td>' + counter2 + '</td><td>' + v.InsightIndicatorFieldName + '</td><td>' + v.CommonValue + '</td></tr>').appendTo('#tbInsightlIndicator2');
                 counter2++;
             });
-
-
         },
         error: function (ex) {
             debugger;
@@ -353,7 +349,7 @@ $("#SubProject_ID").on('change', function () {
 });
  
 $("#Project_ID").on('change', function () {
-    debugger;
+ 
    
     var Url_Value = $('#ProjectComboLink').attr('url-Val');
 
@@ -384,12 +380,12 @@ $("#Project_ID").on('change', function () {
         /*data: JSON.stringify(obj),*/
         data: obj,
         success: function (response) {
-            debugger;
+       
             $("#Batch_ID").empty();
             $("#SubProject_ID").empty();
             $("#InsightIndicator_ID").empty();
-
-            debugger;
+            
+     
             //ComboSubProject
             if (response.comboSubProjects.length <= 1) {
                 $("#SubProject_ID").prop("disabled", true);
@@ -453,12 +449,28 @@ $("#Project_ID").on('change', function () {
 
             $("#lblTotalReleasedBudget").text(response.remainingValues.ReleasedBudget);
             $("#hdnTotalReleasedBudget").val(response.remainingValues.ReleasedBudget); //Hidden
-              
+
+            //ComboSubProject
+            if (response.comboProcurementHeads.length <= 1) {
+                $("#PlannedProcurement_ID").prop("disabled", true);
+                $("#PlannedProcurement_ID").append('<option value="' + 0 + '">' +
+                    "Please Select Header" + '</option>');
+            } else {
+                $("#PlannedProcurement_ID").prop("disabled", false);
+                $.each(response.comboProcurementHeads, function (i, item) {
+                    $("#PlannedProcurement_ID").append('<option value="' + item.PlannedProcurementID + '">' +
+                        item.ProcrumetHeader + '</option>');
+                });
+            }
+            //END
+
             //EvaulationList      batchIndicatorVM.InsightIndicatorForEvaulationList
             if (response.IsEvaluationForm == "Evaluation") {
 
                 $("#tblBodyKPIs").empty();
                 $("#tblBodyInsightIndicator").empty();
+                $("#tblBodyChangeManagementPlannedKPIs").empty();
+                $("#tblBodyChangeManagementPlannedProcurement").empty();
 
                 var counter = 1;
                 var loop = 0;
@@ -466,7 +478,7 @@ $("#Project_ID").on('change', function () {
                 $.each(response.ListOfInsightIndicatorAndKPIs.ListKPIs, function (index, v) {
                     /// do stuff
 
-                    debugger;
+   
                     var PlannedKPIsID = '<td style="display:none";><input  name="ListOfInsightIndicatorAndKPIs.ListKPIs[' + loop + '].PlannedKPIsID"  value="' + v.PlannedKPIsID + '" type="text"  /></td>';  //Hidden
                     var ProjectKPIsStatusID = '<td style="display:none";><input  name="ListOfInsightIndicatorAndKPIs.ListKPIs[' + loop + '].ProjectKPIsStatusID"  value="' + v.ProjectKPIsStatusID + '" type="text"  /></td>';  //Hidden
 
@@ -474,7 +486,6 @@ $("#Project_ID").on('change', function () {
                     IndicatorDescription = '<td>';
                     IndicatorDescription += '<input  class="form-control "    readonly name="ListOfInsightIndicatorAndKPIs.ListKPIs[' + loop + '].IndicatorDescription"    value="' + v.IndicatorDescription + '"      type="text"  placeholder="Enter Indicator Description" required />'
                     IndicatorDescription += '</td> ';
-
 
                     var ProjectKPIsAchived = '';
                     ProjectKPIsAchived = '<td>';
@@ -489,9 +500,6 @@ $("#Project_ID").on('change', function () {
                     Feedback += '<option value="false">Non-Satisfied</option>'
                     Feedback += '</select>'
                     Feedback += '</td> ';
-
-
-
 
                     var Remarks = '';
                     Remarks = '<td>';
@@ -511,8 +519,6 @@ $("#Project_ID").on('change', function () {
                     counter++;
                     loop++;
                 });
-                 
-                debugger;
 
                 //InsightIndicator
                 $.each(response.ListOfInsightIndicatorAndKPIs.ListInsightIndicator, function (index, v) { 
@@ -543,9 +549,6 @@ $("#Project_ID").on('change', function () {
                     ResultString += '</td> ';
                     HiddenValue += '</td>';
 
-
-
-
                     var IndicatorFeedback = '';
                     IndicatorFeedback = '<td>';
                     IndicatorFeedback += '<select class="form-control" name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].Remarks" required >'
@@ -561,9 +564,7 @@ $("#Project_ID").on('change', function () {
                     IndicatorRemarks += '<input  class="form-control"    name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].Remarks"        type="text"  placeholder="Enter Remarks" required />'
                     IndicatorRemarks += '</td> ';
 
-
                     $('<tr id="tblInsightIndicatorRow' + loop + '">' +
-                         
                         '<td>' +  counter + '</td>' +
                         InsightIndicatorFieldID +
                         '<td>' + v.InsightIndicatorFieldName + '</td>' +
@@ -576,67 +577,492 @@ $("#Project_ID").on('change', function () {
                     loop++;
                 });
                 //END
-
             }//END Evaluation
-
-            debugger;
+        
             if (response.IsChangeManagementForm == "ChangeManagementForm") {
-                $("#tblBodyChangeManagement").empty();
+                $("#tblBodyChangeManagementProject").empty();
+                $("#tblBodyChangeManagementSchedule").empty();
+                $("#tblChangeManagemenPlannedKPIs").empty();
+                $("#tblBodyChangeManagementPlannedProcurement").empty();
 
                 var counter = 1;
                 var loop = 0;
-                //KPIS
-                $.each(response.ListOfChangeManagements, function (index, v) {
+                //ProjectList
+                $.each(response.ListOfChangeManagementVM.Change_ManagementProjectList, function (index, v) {
                     /// do stuff
+                  
+                    var ProjectID = '<td style="display:none";><input  name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].ProjectID"  value="' + v.ProjectID + '" type="text"  /></td>';  //Hidden
+                    var SubProjectID = '<td style="display:none";><input  name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].SubProjectID"  value="' + v.SubProjectID + '" type="text"  /></td>';  //Hidden
+
+                    //Row1
+                    var PlannedBudget = '';
+                    PlannedBudget = '<td>';
+                    PlannedBudget += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].PlannedBudget"    value="' + v.PlannedBudget + '"      type="text"   required />'
+                    PlannedBudget += '</td> ';
+                    var C_PlannedBudgetValue = '';
+                    C_PlannedBudgetValue = '<td>';
+                    C_PlannedBudgetValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].PlannedBudgetValue"  value="' + v.PlannedBudgetValue + '"  type="number"  required />'
+                    C_PlannedBudgetValue += '</td> ';
+                    var ChangeValuePlannedBudget = '';
+                    ChangeValuePlannedBudget = '<td>';
+                    ChangeValuePlannedBudget += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].ChangeValuePlannedBudget"    type="number"  placeholder="Enter Change Value" required />'
+                    ChangeValuePlannedBudget += '</td> ';
+                    var DecisionPlannedBudget = '';
+                    DecisionPlannedBudget = '<td>';
+                    DecisionPlannedBudget += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].DecisionPlannedBudget"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionPlannedBudget += '</td> ';
+                    var ActionTakenPlannedBudget = '';
+                    ActionTakenPlannedBudget = '<td>';
+                    ActionTakenPlannedBudget += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].ActionTakenPlannedBudget"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenPlannedBudget += '</td> ';
+
+                    //Row2
+                    var ApprovedBudget = '';
+                    ApprovedBudget = '<td>';
+                    ApprovedBudget += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].ApprovedBudget"    value="' + v.ApprovedBudget + '"      type="text"   required />'
+                    ApprovedBudget += '</td> ';
+                    var ApprovedBudgetValue = '';
+                    ApprovedBudgetValue = '<td>';
+                    ApprovedBudgetValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].ApprovedBudgetValue"  value="' + v.ApprovedBudgetValue + '"  type="number"  required />'
+                    ApprovedBudgetValue += '</td> ';
+                    var ChangeValueApprovedBudget = '';
+                    ChangeValueApprovedBudget = '<td>';
+                    ChangeValueApprovedBudget += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].ChangeValueApprovedBudget"   type="number"  placeholder="Enter Change Value" required />'
+                    ChangeValueApprovedBudget += '</td> ';
+                    var DecisionApprovedBudget = '';
+                    DecisionApprovedBudget = '<td>';
+                    DecisionApprovedBudget += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].DecisionApprovedBudget"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionApprovedBudget += '</td> ';
+                    var ActionTakenApprovedBudget = '';
+                    ActionTakenApprovedBudget = '<td>';
+                    ActionTakenApprovedBudget += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].ActionTakenApprovedBudget"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenApprovedBudget += '</td> ';
+
+                    //Row3
+                    var PlannedHR = '';
+                    PlannedHR = '<td>';
+                    PlannedHR += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].PlannedHR"    value="' + v.PlannedHR + '"      type="text"   required />'
+                    PlannedHR += '</td> ';
+                    var PlannedHRValue = '';
+                    PlannedHRValue = '<td>';
+                    PlannedHRValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].PlannedHRValue"  value="' + v.PlannedHRValue + '"  type="number"  required />'
+                    PlannedHRValue += '</td> ';
+                    var ChangeValuePlannedHR = '';
+                    ChangeValuePlannedHR = '<td>';
+                    ChangeValuePlannedHR += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].ChangeValuePlannedHR"  value="' + v.ChangeValuePlannedHR + '"  type="number"  placeholder="Enter Change Value" required />'
+                    ChangeValuePlannedHR += '</td> ';
+                    var DecisionPlannedHR = '';
+                    DecisionPlannedHR = '<td>';
+                    DecisionPlannedHR += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].DecisionPlannedHR"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionPlannedHR += '</td> ';
+                    var ActionTakenPlannedHR = '';
+                    ActionTakenPlannedHR = '<td>';
+                    ActionTakenPlannedHR += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementProjectList[' + loop + '].ActionTakenPlannedHR"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenPlannedHR += '</td> ';
 
                     debugger;
-                    var ProjectID = '<td style="display:none";><input  name="ListOfChangeManagements[' + loop + '].ProjectID"  value="' + v.ProjectID + '" type="text"  /></td>';  //Hidden
-                    var SubProjectID = '<td style="display:none";><input  name="ListOfChangeManagements[' + loop + '].SubProjectID"  value="' + v.SubProjectID + '" type="text"  /></td>';  //Hidden
+                    //TABLE INSERTION  >PROJECT
 
-                    var ItemName = '';
-                    ItemName = '<td>';
-                    ItemName += '<input  class="form-control "    readonly name="ListOfChangeManagements[' + loop + '].ItemName"    value="' + v.ItemName + '"      type="text"  placeholder="Enter Indicator Description" required />'
-                    ItemName += '</td> ';
-
-                    var CurrentValue = '';
-                    CurrentValue = '<td>';
-                    CurrentValue += '<input class="form-control "    readonly name="ListOfChangeManagements[' + loop + '].CurrentValue"  value="' + v.CurrentValue + '"  type="number"  placeholder="Enter CurrentValue" required />'
-                    CurrentValue += '</td> ';
-
-                    var ChangeValue = '';
-                    ChangeValue = '<td>';
-                    ChangeValue += '<input class="form-control"    name="ListOfChangeManagements[' + loop + '].ChangeValue"  value="' + v.ChangeValue + '"  type="text"  placeholder="Enter ChangeValue" required />'
-                    ChangeValue += '</td> ';
-
-                    var Decision = '';
-                    Decision = '<td>';
-                    Decision += '<input class="form-control"    name="ListOfChangeManagements[' + loop + '].Decision"   type="text"  placeholder="Enter Decision" required />'
-                    Decision += '</td> ';
-
-                    var ActionTaken = '';
-                    ActionTaken = '<td>';
-                    ActionTaken += '<input class="form-control"    name="ListOfChangeManagements[' + loop + '].ActionTaken"   type="text"  placeholder="Enter ActionTaken" required />'
-                    ActionTaken += '</td> ';
-
-                    //TABLE INSERTION
-                    $('<tr id="tblChangeManagementRow' + loop + '">' +
-                        '<td>' + counter + '</td>' +
+                    $('<tr id="tblChangeManagementProjectRow' + loop + '">' +
                         ProjectID +
                         SubProjectID +
-                        ItemName +
-                        CurrentValue +
-                        ChangeValue +
-                        Decision +
-                        ActionTaken +
-                        '</tr>').appendTo('#tblChangeManagement');
+                        PlannedBudget +
+                        C_PlannedBudgetValue +
+                        ChangeValuePlannedBudget +
+                        DecisionPlannedBudget +
+                        ActionTakenPlannedBudget +
+                        '</tr>' +
+                        '<tr>' +
+                        ProjectID +
+                        SubProjectID +
+                        ApprovedBudget +
+                        ApprovedBudgetValue +
+                        ChangeValueApprovedBudget +
+                        DecisionApprovedBudget +
+                        ActionTakenApprovedBudget +
+                        '</tr>' +
+                        '<tr>' +
+                        ProjectID +
+                        SubProjectID +
+                        PlannedHR +
+                        PlannedHRValue +
+                        ChangeValuePlannedHR +
+                        DecisionPlannedHR +
+                        ActionTakenPlannedHR +
+                        '</tr>').appendTo('#tblChangeManagementProject');
                     counter++;
-                    loop++;
+                    loop++; 
                 });
 
+                debugger;
+                var counter2 = 1;
+                var loop2 = 0;
+                //ScheduleList
+                $.each(response.ListOfChangeManagementVM.Change_ManagementScheduleList, function (index, v) {
+                    /// do stuff
+                    var ProjectID = '<td style="display:none";><input  name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].Project_ID"  value="' + v.Project_ID + '" type="text"  /></td>';  //Hidden
+                    var SubProjectID = '<td style="display:none";><input  name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].SubProject_ID"  value="' + v.SubProject_ID + '" type="text"  /></td>';  //Hidden
+                    var ScheduleID = '<td style="display:none";><input  name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].ScheduleID"  value="' + v.ScheduleID + '" type="text"  /></td>';  //Hidden
+                    //TABLE
+                    //Row2
+                   
+                    var PlannedDate = '';
+                    PlannedDate = '<td>';
+                    PlannedDate += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].PlannedDate"    value="' + v.PlannedDate  + '"      type="text"   required />'
+                    PlannedDate += '</td> ';
+                    var PlannedDateValue = '';
+                    PlannedDateValue = '<td>';
+                    PlannedDateValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].PlannedDateValue"  value="' + v.PlannedDateValue + '"  type="text"  required />'
+                    PlannedDateValue += '</td> ';
+                    var ChangeValuePlannedDate = '';
+                    ChangeValuePlannedDate = '<td>';
+                    ChangeValuePlannedDate += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].ChangeValuePlannedDate"  value="' + v.ChangeValuePlannedDate + '"  type="date"  placeholder="Enter Change Value" required />'
+                    ChangeValuePlannedDate += '</td> ';
+                    var DecisionPlannedDate = '';
+                    DecisionPlannedDate = '<td>';
+                    DecisionPlannedDate += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].DecisionPlannedDate"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionPlannedDate += '</td> ';
+                    var ActionTakenPlannedDate = '';
+                    ActionTakenPlannedDate = '<td>';
+                    ActionTakenPlannedDate += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].ActionTakenPlannedDate"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenPlannedDate += '</td> ';
+
+                    //Row2
+                    var StartDate = '';
+                    StartDate = '<td>';
+                    StartDate += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].StartDate"    value="' + v.StartDate + '"      type="text"   required />'
+                    StartDate += '</td> ';
+                    var StartDateValue = '';
+                    StartDateValue = '<td>';
+                    StartDateValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].StartDateValue"  value="' + v.StartDateValue + '"  type="text"  required />'
+                    StartDateValue += '</td> ';
+                    var ChangeValueStartDate = '';
+                    ChangeValueStartDate = '<td>';
+                    ChangeValueStartDate += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].ChangeValueStartDate"  value="' + v.ChangeValueStartDate + '"  type="date"  placeholder="Enter Change Value" required />'
+                    ChangeValueStartDate += '</td> ';
+                    var DecisionStartDate = '';
+                    DecisionStartDate = '<td>';
+                    DecisionStartDate += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].DecisionStartDate"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionStartDate += '</td> ';
+                    var ActionTakenStartDate = '';
+                    ActionTakenStartDate = '<td>';
+                    ActionTakenStartDate += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].ActionTakenStartDate"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenStartDate += '</td> ';
+
+                    //Row3
+                    var EndDate = '';
+                    EndDate = '<td>';
+                    EndDate += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].EndDate"    value="' + v.EndDate + '"      type="text"   required />'
+                    EndDate += '</td> ';
+                    var EndDateValue = '';
+                    EndDateValue = '<td>';
+                    EndDateValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].EndDateValue"  value="' + v.EndDateValue + '"  type="text"  required />'
+                    EndDateValue += '</td> ';
+                    var ChangeValueEndDate = '';
+                    ChangeValueEndDate = '<td>';
+                    ChangeValueEndDate += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].ChangeValueEndDate"  value="' + v.ChangeValueEndDate + '"  type="date"  placeholder="Enter Change Value" required />'
+                    ChangeValueEndDate += '</td> ';
+                    var DecisionEndDate = '';
+                    DecisionEndDate = '<td>';
+                    DecisionEndDate += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].DecisionEndDate"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionEndDate += '</td> ';
+                    var ActionTakenEndDate = '';
+                    ActionTakenEndDate = '<td>';
+                    ActionTakenEndDate += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementScheduleList[' + loop2 + '].ActionTakenEndDate"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenEndDate += '</td> ';
+
+                    //TABLE INSERTION  >PROJECT
+                    $('<tr id="tblChangeManagementScheduleRow' + loop2 + '">' +
+                        ProjectID +
+                        SubProjectID +
+                        ScheduleID +
+                        PlannedDate +
+                        PlannedDateValue +
+                        ChangeValuePlannedDate +
+                        DecisionPlannedDate +
+                        ActionTakenPlannedDate +
+                        '</tr>' +
+                        '<tr>' +
+                        ProjectID +
+                        SubProjectID +
+                        ScheduleID +
+                        StartDate +
+                        StartDateValue +
+                        ChangeValueStartDate +
+                        DecisionStartDate +
+                        ActionTakenStartDate +
+                        '</tr>' +
+                        '<tr>' +
+                        ProjectID +
+                        SubProjectID +
+                        ScheduleID +
+                        EndDate +
+                        EndDateValue +
+                        ChangeValueEndDate +
+                        DecisionEndDate +
+                        ActionTakenEndDate +
+                        '</tr>').appendTo('#tblChangeManagementSchedule');
+                    counter2++;
+                    loop2++;
+                });
+
+                var counter3 = 1;
+                var loop3 = 0;
+                //PlannedKPIList
+                $.each(response.ListOfChangeManagementVM.Change_ManagementPlannedKPIList, function (index, v) {
+                    /// do stuff
+                    var ProjectID = '<td style="display:none";><input  name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].Project_ID"  value="' + v.Project_ID + '" type="text"  /></td>';  //Hidden
+                    var SubProjectID = '<td style="display:none";><input  name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].SubProject_ID"  value="' + v.SubProject_ID + '" type="text"  /></td>';  //Hidden
+                    var PlannedKPIsID = '<td style="display:none";><input  name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].PlannedKPIsID"  value="' + v.PlannedKPIsID + '" type="text"  /></td>';  //Hidden
+                    
+                    //TABLE
+                    //Row1
+                    var IndicatorDescription = '';
+                    IndicatorDescription = '<td>';
+                    IndicatorDescription += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].IndicatorDescription"    value="' + v.IndicatorDescription + '"      type="text"   required />'
+                    IndicatorDescription += '</td> ';
+                    var IndicatorDescriptionValue = '';
+                    IndicatorDescriptionValue = '<td>';
+                    IndicatorDescriptionValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].IndicatorDescriptionValue"  value="' + v.IndicatorDescriptionValue + '"  type="text"  required />'
+                    IndicatorDescriptionValue += '</td> ';
+                    var ChangeValueIndicatorDescription = '';
+                    ChangeValueIndicatorDescription = '<td>';
+                    ChangeValueIndicatorDescription += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].ChangeValueIndicatorDescription"   type="text"  placeholder="Enter Change Value" required />'
+                    ChangeValueIndicatorDescription += '</td> ';
+                    var DecisionIndicatorDescription = '';
+                    DecisionIndicatorDescription = '<td>';
+                    DecisionIndicatorDescription += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].DecisionIndicatorDescription"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionIndicatorDescription += '</td> ';
+                    var ActionTakenIndicatorDescription = '';
+                    ActionTakenIndicatorDescription = '<td>';
+                    ActionTakenIndicatorDescription += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].ActionTakenIndicatorDescription"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenIndicatorDescription += '</td> ';
+
+                    //Row2
+                    var Target = '';
+                    Target = '<td>';
+                    Target += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].Target"    value="' + v.Target + '"      type="text"   required />'
+                    Target += '</td> ';
+                    var TargetValue = '';
+                    TargetValue = '<td>';
+                    TargetValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].TargetValue"  value="' + v.TargetValue + '"  type="number"  required />'
+                    TargetValue += '</td> ';
+                    var ChangeValueTarget = '';
+                    ChangeValueTarget = '<td>';
+                    ChangeValueTarget += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].ChangeValueTarget"  type="number"  placeholder="Enter Change Value" required />'
+                    ChangeValueTarget += '</td> ';
+                    var DecisionTarget = '';
+                    DecisionTarget = '<td>';
+                    DecisionTarget += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].DecisionTarget"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionTarget += '</td> ';
+                    var ActionTakenTarget = '';
+                    ActionTakenTarget = '<td>';
+                    ActionTakenTarget += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].ActionTakenTarget"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenTarget += '</td> ';
+
+                    //Row3
+                    var TimeLine = '';
+                    TimeLine = '<td>';
+                    TimeLine += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].TimeLine"    value="' + v.TimeLine + '"      type="text"   required />'
+                    TimeLine += '</td> ';
+                    var TimeLineValue = '';
+                    TimeLineValue = '<td>';
+                    TimeLineValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].TimeLineValue"  value="' + v.TimeLineValue + '"  type="text"  required />'
+                    TimeLineValue += '</td> ';
+                    var ChangeValueTimeLine = '';
+                    ChangeValueTimeLine = '<td>';
+                    ChangeValueTimeLine += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].ChangeValueTimeLine"  value="' + v.ChangeValueTimeLine + '"  type="date"  placeholder="Enter Change Value" required />'
+                    ChangeValueTimeLine += '</td> ';
+                    var DecisionTimeLine = '';
+                    DecisionTimeLine = '<td>';
+                    DecisionTimeLine += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].DecisionTimeLine"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionTimeLine += '</td> ';
+                    var ActionTakenTimeLine = '';
+                    ActionTakenTimeLine = '<td>';
+                    ActionTakenTimeLine += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedKPIList[' + loop3 + '].ActionTakenTimeLine"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenTimeLine += '</td> ';
+
+                    //TABLE INSERTION  >PlannedKPI
+                    
+                    $('<tr id="tblChangeManagementPlannedKPIRow' + loop3 + '">' +
+                        ProjectID +
+                        SubProjectID +
+                        PlannedKPIsID +
+                        IndicatorDescription +
+                        IndicatorDescriptionValue +
+                        ChangeValueIndicatorDescription +
+                        DecisionIndicatorDescription +
+                        ActionTakenIndicatorDescription +
+                        '</tr>' +
+                        '<tr>' +
+                        ProjectID +
+                        SubProjectID +
+                        PlannedKPIsID +
+                        Target +
+                        TargetValue +
+                        ChangeValueTarget +
+                        DecisionTarget +
+                        ActionTakenTarget +
+                        '</tr>' +
+                        '<tr>' +
+                        ProjectID +
+                        SubProjectID +
+                        PlannedKPIsID +
+                        TimeLine +
+                        TimeLineValue +
+                        ChangeValueTimeLine +
+                        DecisionTimeLine +
+                        ActionTakenTimeLine +
+                        '</tr>').appendTo('#tblChangeManagemenPlannedKPIs');
+                    counter3++;
+                    loop3++;
+                });
+
+                var counter4 = 1;
+                var loop4 = 0;
+                //PlannedKPIList
+                $.each(response.ListOfChangeManagementVM.Change_ManagementPlannedProcurementList, function (index, v) {
+                    /// do stuff
+                    var ProjectID = '<td style="display:none";><input  name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].Project_ID"  value="' + v.Project_ID + '" type="text"  /></td>';  //Hidden
+                    var SubProjectID = '<td style="display:none";><input  name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].SubProject_ID"  value="' + v.SubProject_ID + '" type="text"  /></td>';  //Hidden
+                    var PlannedProcurementID = '<td style="display:none";><input  name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].PlannedProcurementID"  value="' + v.PlannedProcurementID + '" type="text"  /></td>';  //Hidden
+
+                    //TABLE
+                    //Row1
+                    var ProcrumetHeader = '';
+                    ProcrumetHeader = '<td>';
+                    ProcrumetHeader += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].ProcrumetHeader"    value="' + v.ProcrumetHeader + '"      type="text"   required />'
+                    ProcrumetHeader += '</td> ';
+                    var ProcrumetHeaderValue = '';
+                    ProcrumetHeaderValue = '<td>';
+                    ProcrumetHeaderValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].ProcrumetHeaderValue"  value="' + v.ProcrumetHeaderValue + '"  type="text"  required />'
+                    ProcrumetHeaderValue += '</td> ';
+                    var ChangeValueProcrumetHeader = '';
+                    ChangeValueProcrumetHeader = '<td>';
+                    ChangeValueProcrumetHeader += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].ChangeValueProcrumetHeader"   type="number"  placeholder="Enter Change Value" required />'
+                    ChangeValueProcrumetHeader += '</td> ';
+                    var DecisionProcrumetHeader = '';
+                    DecisionProcrumetHeader = '<td>';
+                    DecisionProcrumetHeader += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].DecisionProcrumetHeader"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionProcrumetHeader += '</td> ';
+                    var ActionTakenProcrumetHeader = '';
+                    ActionTakenProcrumetHeader = '<td>';
+                    ActionTakenProcrumetHeader += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].ActionTakenProcrumetHeader"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenProcrumetHeader += '</td> ';
+
+                    //Row2
+                    var PlannedProcrumentNo = '';
+                    PlannedProcrumentNo = '<td>';
+                    PlannedProcrumentNo += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].PlannedProcrumentNo"    value="' + v.PlannedProcrumentNo + '"      type="text"   required />'
+                    PlannedProcrumentNo += '</td> ';
+                    var PlannedProcrumentNoValue = '';
+                    PlannedProcrumentNoValue = '<td>';
+                    PlannedProcrumentNoValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].PlannedProcrumentNoValue"  value="' + v.PlannedProcrumentNoValue + '"  type="number"  required />'
+                    PlannedProcrumentNoValue += '</td> ';
+                    var ChangeValuePlannedProcrumentNo = '';
+                    ChangeValuePlannedProcrumentNo = '<td>';
+                    ChangeValuePlannedProcrumentNo += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].ChangeValuePlannedProcrumentNo"  type="number"  placeholder="Enter Change Value" required />'
+                    ChangeValuePlannedProcrumentNo += '</td> ';
+                    var DecisionPlannedProcrumentNo = '';
+                    DecisionPlannedProcrumentNo = '<td>';
+                    DecisionPlannedProcrumentNo += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].DecisionPlannedProcrumentNo"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionPlannedProcrumentNo += '</td> ';
+                    var ActionTakenPlannedProcrumentNo = '';
+                    ActionTakenPlannedProcrumentNo = '<td>';
+                    ActionTakenPlannedProcrumentNo += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].ActionTakenPlannedProcrumentNo"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenPlannedProcrumentNo += '</td> ';
+
+                    //Row3
+                    var PlannedPerCostItem = '';
+                    PlannedPerCostItem = '<td>';
+                    PlannedPerCostItem += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].PlannedPerCostItem"    value="' + v.PlannedPerCostItem + '"      type="text"   required />'
+                    PlannedPerCostItem += '</td> ';
+                    var PlannedPerCostItemValue = '';
+                    PlannedPerCostItemValue = '<td>';
+                    PlannedPerCostItemValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].PlannedPerCostItemValue"  value="' + v.PlannedPerCostItemValue + '"  type="number"  required />'
+                    PlannedPerCostItemValue += '</td> ';
+                    var ChangeValuePlannedPerCostItem = '';
+                    ChangeValuePlannedPerCostItem = '<td>';
+                    ChangeValuePlannedPerCostItem += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].ChangeValuePlannedPerCostItem"  value="' + v.ChangeValuePlannedPerCostItem + '"  type="number"  placeholder="Enter Change Value" required />'
+                    ChangeValuePlannedPerCostItem += '</td> ';
+                    var DecisionPlannedPerCostItem = '';
+                    DecisionPlannedPerCostItem = '<td>';
+                    DecisionPlannedPerCostItem += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].DecisionPlannedPerCostItem"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionPlannedPerCostItem += '</td> ';
+                    var ActionTakenPlannedPerCostItem = '';
+                    ActionTakenPlannedPerCostItem = '<td>';
+                    ActionTakenPlannedPerCostItem += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].ActionTakenPlannedPerCostItem"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenPlannedPerCostItem += '</td> ';
+
+                    //Row4
+                    var AchivedCost = '';
+                    AchivedCost = '<td>';
+                    AchivedCost += '<input  class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].AchivedCost"    value="' + v.AchivedCost + '"      type="text"   required />'
+                    AchivedCost += '</td> ';
+                    var AchivedCostValue = '';
+                    AchivedCostValue = '<td>';
+                    AchivedCostValue += '<input class="form-control "    readonly name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].AchivedCostValue"  value="' + v.AchivedCostValue + '"  type="number"  required />'
+                    AchivedCostValue += '</td> ';
+                    var ChangeValueAchivedCost = '';
+                    ChangeValueAchivedCost = '<td>';
+                    ChangeValueAchivedCost += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].ChangeValueAchivedCost"  value="' + v.ChangeValueAchivedCost + '"  type="number"  placeholder="Enter Change Value" required />'
+                    ChangeValueAchivedCost += '</td> ';
+                    var DecisionAchivedCost = '';
+                    DecisionAchivedCost = '<td>';
+                    DecisionAchivedCost += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].DecisionAchivedCost"   type="text"  placeholder="Enter Decision" required />'
+                    DecisionAchivedCost += '</td> ';
+                    var ActionTakenAchivedCost = '';
+                    ActionTakenAchivedCost = '<td>';
+                    ActionTakenAchivedCost += '<input class="form-control"    name="ListOfChangeManagementVM.Change_ManagementPlannedProcurementList[' + loop4 + '].ActionTakenAchivedCost"   type="text"  placeholder="Enter ActionTaken" required />'
+                    ActionTakenAchivedCost += '</td> ';
+
+                    //TABLE INSERTION  >PlannedProcurement
+
+                    $('<tr id="tblChangeManagemenPlannedProcurementRow' + loop4 + '">' +
+                        ProjectID +
+                        SubProjectID +
+                        PlannedProcurementID +
+                        ProcrumetHeader +
+                        ProcrumetHeaderValue +
+                        ChangeValueProcrumetHeader +
+                        DecisionProcrumetHeader +
+                        ActionTakenProcrumetHeader +
+                        '</tr>' +
+                        '<tr>' +
+                        ProjectID +
+                        SubProjectID +
+                        PlannedProcurementID +
+                        PlannedProcrumentNo +
+                        PlannedProcrumentNoValue +
+                        ChangeValuePlannedProcrumentNo +
+                        DecisionPlannedProcrumentNo +
+                        ActionTakenPlannedProcrumentNo +
+                        '</tr>' +
+                        '<tr>' +
+                        ProjectID +
+                        SubProjectID +
+                        PlannedProcurementID +
+                        PlannedPerCostItem +
+                        PlannedPerCostItemValue +
+                        ChangeValuePlannedPerCostItem +
+                        DecisionPlannedPerCostItem +
+                        ActionTakenPlannedPerCostItem +
+                        '</tr>' +
+                        '<tr>' +
+                        ProjectID +
+                        SubProjectID +
+                        PlannedProcurementID +
+                        AchivedCost +
+                        AchivedCostValue +
+                        ChangeValueAchivedCost +
+                        DecisionAchivedCost +
+                        ActionTakenAchivedCost +
+                        '</tr>').appendTo('#tblChangeManagemenPlannedProcurement');
+                    counter4++;
+                    loop4++;
+                });
 
             }
-
-
         },
         error: function (ex) {
             debugger;

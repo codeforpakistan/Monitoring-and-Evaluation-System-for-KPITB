@@ -378,6 +378,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\ChangeManagement\ChangeMngCreate.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -421,11 +422,9 @@
     <Content Include="Views\ProjectKPIsStatus\ProjectKPIsStatusCreateView.cshtml" />
     <Content Include="Views\InsightIndicator\InsightIndicatorCreate.cshtml" />
     <Content Include="Views\Project\SubProjectCreate.cshtml" />
-    <Content Include="Views\ChangeManagement\ChangeMngCreate.cshtml" />
     <Content Include="Views\Project\SubProjectView.cshtml" />
     <Content Include="Views\InsightIndicator\InsightIndicatorView.cshtml" />
     <Content Include="Views\Evaluation\EvaluationCreate.cshtml" />
-    <Content Include="Views\ChangeManagement\ChangeMngCreate.cshtml" />
     <Content Include="Views\Evaluation\EvaluationCreate.cshtml" />
     <Content Include="Views\InsightIndicator\InsightIndicatorFieldValue.cshtml" />
   </ItemGroup>

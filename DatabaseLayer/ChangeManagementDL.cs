@@ -17,169 +17,199 @@ namespace DatabaseLayer
 {
     public class ChangeManagementDL
     {
-        public static List<ChangeManagement> GetChangeManagementDataDL(int _ProjectID)
+        public static ChangeManagementVM GetChangeManagementDataDL(int _ProjectID)
         {
-            List<ChangeManagement> returnList = new List<ChangeManagement>();
+            ChangeManagementVM returnList = new ChangeManagementVM();
+            IDbConnection Con = null;
             try
             {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
                 ObjParm.Add("@ProjectID", _ProjectID);
-                returnList = Repose.GetList<ChangeManagement>("sp_GetChangeManagementData", ObjParm); 
+                using (var gridReader = Con.QueryMultiple("sp_GetChangeManagementData", ObjParm, commandType: CommandType.StoredProcedure))
+                {
+                    returnList.Change_ManagementProjectList = gridReader.Read<Change_ManagementProject>().ToList();
+                    returnList.Change_ManagementScheduleList = gridReader.Read<Change_ManagementSchedule>().ToList();
+                    returnList.Change_ManagementPlannedKPIList = gridReader.Read<Change_ManagementPlannedKPI>().ToList();
+                    returnList.Change_ManagementPlannedProcurementList = gridReader.Read<Change_ManagementPlannedProcurement>().ToList();
+                }
             }
             catch (Exception ex)
             {
                 throw;
             }
+            finally
+            {
+                Con.Close();
+                Con.Dispose();
+            }
             return returnList;
         }
 
-        public static StatusModel changeManagementCreateDL(ChangeManagementVM m)
+        public static StatusModel changeManagementCreateDL(ChangeManagementVM m, int LoginUerID)
         {
             StatusModel status = new StatusModel();
-            IDbConnection Con = null;
+  
 
-          
+            int ChangeManagementID = 0; int ProjectHstoryID = 0; int ScheduleHistoryID = 0; int PlannedKPIsHistoryID = 0; int PlannedProcurementHistoryID = 0;
             try
             {
+                string concatDecision = null;
+                string concatActionTaken = null;
+                StatusModel statusModel = new StatusModel();
                 using (TransactionScope transactionScope = new TransactionScope())
                 {
-                    Con = new SqlConnection(Common.ConnectionString);
-
+                    
+                    //changeManagementProject
                     DynamicParameters ObjParm = new DynamicParameters();
-                    //LoginUser
-                    ObjParm.Add("@CreatedByUser_ID", m.CreatedByUser_ID);   //LoginUser
-                    ObjParm.Add("@Project_ID", m.Project_ID);
-                    ObjParm.Add("@ProjectName", m.ProjectName);
-                    ObjParm.Add("@ProjectGoal", m.ProjectGoal);
-                    ObjParm.Add("@PlannedBudget", m.PlannedBudget);
-                    ObjParm.Add("@ApprovedBudget", m.ApprovedBudget);
-                    ObjParm.Add("@PlannedHR", m.PlannedHR);
-                    //Schedule
-                    ObjParm.Add("@PlannedDate", m.PlannedDate);
-                    ObjParm.Add("@StartDate", m.StartDate);
-                    ObjParm.Add("@EndDate", m.EndDate);
+                    ObjParm.Add("@MeetingNo", m.MeetingNo);
+                    ObjParm.Add("@MeetingDate", m.MeetingDate);
+                    ObjParm.Add("@CreatedByUser_ID", LoginUerID);
+                 
+                    statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_changeManagement", ObjParm, "@ChangeManagementID", ref ChangeManagementID);
+                     
+                    //Project - ProjectHistory
+                    for (int i = 0; i < m.Change_ManagementProjectList.Count; i++)
+                    {
+                        DynamicParameters ObjParm2 = new DynamicParameters();
+                        ObjParm2.Add("@Project_ID", m.Change_ManagementProjectList[i].ProjectID);
+                        ObjParm2.Add("@PlannedBudget", m.Change_ManagementProjectList[i].ChangeValuePlannedBudget); 
+                        ObjParm2.Add("@ApprovedBudget", m.Change_ManagementProjectList[i].ChangeValueApprovedBudget);
+                        ObjParm2.Add("@PlannedHR", m.Change_ManagementProjectList[i].ChangeValuePlannedHR);
+                        ObjParm2.Add("@CreatedByUser_ID", LoginUerID);
+                      
+                        statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_changeManagementProject", ObjParm2, "@ProjectHistoryID", ref ProjectHstoryID);
+                       
+                        concatDecision = null;
+                        concatDecision = "ApprovedBudget:" + m.Change_ManagementProjectList[i].DecisionApprovedBudget;
+                        concatDecision += ",PlannedBudget:" + m.Change_ManagementProjectList[i].DecisionPlannedBudget;
+                        concatDecision += ",PlannedHR:" + m.Change_ManagementProjectList[i].DecisionPlannedHR;
+                        concatActionTaken = null;
+                        concatActionTaken = "ApprovedBudget:" + m.Change_ManagementProjectList[i].ActionTakenApprovedBudget;
+                        concatActionTaken += ",PlannedBudget:" + m.Change_ManagementProjectList[i].ActionTakenPlannedBudget;
+                        concatActionTaken += ",PlannedHR:" + m.Change_ManagementProjectList[i].ActionTakenPlannedHR;
 
-                    //ReleasedBudget
-                  
+                        DynamicParameters Objcommon = new DynamicParameters();
+                        Objcommon.Add("@Decision", concatDecision);
+                        Objcommon.Add("@ActionTaken", concatActionTaken);
+                        Objcommon.Add("@ChangeManagement_ID", ChangeManagementID);
+                        Objcommon.Add("@Project_ID", m.Change_ManagementProjectList[i].ProjectID);
+                        Objcommon.Add("@ProjectHistory_ID", ProjectHstoryID);
+                        Objcommon.Add("@CreatedByUser_ID", LoginUerID);
+                        statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_changeManagementDetails", Objcommon);
 
-                    ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                    ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                    ObjParm.Add("@SubProject_ID", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                    Con = new SqlConnection(Common.ConnectionString);
-                    Con.Open();
-                    Con.Execute("sp_SubProjectCeate", ObjParm, commandType: CommandType.StoredProcedure);
-                    Con.Close();
+                    }
 
-                    //status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
-                    //status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
-                    //SubProject_ID = Convert.ToInt32(ObjParm.Get<Int32>("@SubProject_ID"));
+                    //Schedule - ScheduleHistory
+                    for (int i = 0; i < m.Change_ManagementScheduleList.Count; i++)
+                    {
+                        DynamicParameters ObjParm2 = new DynamicParameters();
+                        ObjParm2.Add("@Schedule_ID", m.Change_ManagementScheduleList[i].ScheduleID);
+                        ObjParm2.Add("@Project_ID", m.Change_ManagementScheduleList[i].Project_ID);
+                        ObjParm2.Add("@SubProject_ID", m.Change_ManagementScheduleList[i].SubProject_ID);
+                        ObjParm2.Add("@PlannedDate", Convert.ToDateTime(m.Change_ManagementScheduleList[i].PlannedDateValue));
+                        ObjParm2.Add("@StartDate", Convert.ToDateTime(m.Change_ManagementScheduleList[i].StartDateValue));
+                        ObjParm2.Add("@EndDate", Convert.ToDateTime(m.Change_ManagementScheduleList[i].EndDateValue));
+                        ObjParm2.Add("@CreatedByUser_ID", LoginUerID); 
+                        statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_changeManagementSchedule", ObjParm2, "@ScheduleHistoryID", ref ScheduleHistoryID);
+                        
+                        concatDecision = null;
+                        concatDecision = "PlannedDate:" + m.Change_ManagementScheduleList[i].DecisionPlannedDate;
+                        concatDecision += ",StartDate:" + m.Change_ManagementScheduleList[i].DecisionStartDate;
+                        concatDecision += ",EndDate:" + m.Change_ManagementScheduleList[i].DecisionEndDate;
+                        concatActionTaken = null;
+                        concatActionTaken = "PlannedDate:" + m.Change_ManagementScheduleList[i].DecisionPlannedDate;
+                        concatActionTaken += ",StartDate:" + m.Change_ManagementScheduleList[i].DecisionStartDate;
+                        concatActionTaken += ",EndDate:" + m.Change_ManagementScheduleList[i].DecisionEndDate;
 
-                    //var _AssignRiskList = m.AssignRiskList.Select(p => new { p.Project_ID, SubProject_ID, p.Batch_ID, p.RiskName, p.RiskMitigation_ID, p.RiskStatus_ID, p.CreatedByUser_ID }).ToList();
-                    //if (_AssignRiskList.Count > 0)
-                    //{
-                    //    DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignRiskList);
+                        DynamicParameters Objcommon = new DynamicParameters();
+                        Objcommon.Add("@Decision", concatDecision);
+                        Objcommon.Add("@ActionTaken", concatActionTaken);
+                        Objcommon.Add("@ChangeManagement_ID", ChangeManagementID);
+                        Objcommon.Add("@Project_ID", m.Change_ManagementScheduleList[i].Project_ID);
+                        Objcommon.Add("@Schedule_ID", m.Change_ManagementScheduleList[i].ScheduleID);
+                        Objcommon.Add("@ScheduleHistory_ID", ScheduleHistoryID);
+                        Objcommon.Add("@CreatedByUser_ID", LoginUerID);
+                        statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_changeManagementDetails", Objcommon);
+                    }
 
-                    //    DynamicParameters ObjParm22 = new DynamicParameters();
-                    //    ObjParm22.Add("@RiskTable", dt.AsTableValuedParameter("udt_Risk"));
-                    //    ObjParm22.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                    //    ObjParm22.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                    //    Con = new SqlConnection(Common.ConnectionString);
-                    //    Con.Open();
-                    //    Con.Execute("sp_RiskCreateMulti", ObjParm22, commandType: CommandType.StoredProcedure);
-                    //    Con.Close();
-                    //    status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
-                    //    status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
-                    //}
-                    //#region Region1
-                    //var _AssignKPIsList = m.AssignProjectPlannedKPIsList.Select(p => new { p.Project_ID, SubProject_ID, p.IndicatorDescription, p.Target }).ToList();
-                    //if (_AssignKPIsList.Count > 0)
-                    //{
-                    //    DataTable dt = Utility.Conversion.ConvertListToDataTable(_AssignKPIsList);
+                    //KPI - KPIHistory
+                    for (int i = 0; i < m.Change_ManagementPlannedKPIList.Count; i++)
+                    {
+                        DynamicParameters ObjParm3 = new DynamicParameters();
+                        ObjParm3.Add("@PlannedKPIsID", m.Change_ManagementPlannedKPIList[i].PlannedKPIsID);
+                        ObjParm3.Add("@Project_ID", m.Change_ManagementPlannedKPIList[i].Project_ID);
+                        ObjParm3.Add("@SubProject_ID", m.Change_ManagementPlannedKPIList[i].SubProject_ID);
+                        ObjParm3.Add("@IndicatorDescription", m.Change_ManagementPlannedKPIList[i].IndicatorDescriptionValue);
+                        ObjParm3.Add("@Target", m.Change_ManagementPlannedKPIList[i].TargetValue);
+                        ObjParm3.Add("@TimeLine", Convert.ToDateTime(m.Change_ManagementPlannedKPIList[i].TimeLineValue));
+                        ObjParm3.Add("@CreatedByUser_ID", LoginUerID);
+                    
+                        statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_changeManagementKPIs", ObjParm3, "@PlannedKPIsHistoryID", ref PlannedKPIsHistoryID);
+                        
+                        concatDecision = null;
+                        concatDecision = "IndicatorDescription:" + m.Change_ManagementPlannedKPIList[i].DecisionIndicatorDescription;
+                        concatDecision += ",Target:" + m.Change_ManagementPlannedKPIList[i].DecisionTarget;
+                        concatDecision += ",TimeLine:" + m.Change_ManagementPlannedKPIList[i].DecisionTimeLine;
+                        concatActionTaken = null;
+                        concatActionTaken = "IndicatorDescription:" + m.Change_ManagementPlannedKPIList[i].DecisionIndicatorDescription;
+                        concatActionTaken += ",Target:" + m.Change_ManagementPlannedKPIList[i].DecisionTarget;
+                        concatActionTaken += ",TimeLine:" + m.Change_ManagementPlannedKPIList[i].DecisionTimeLine;
+                        
+                        DynamicParameters Objcommon = new DynamicParameters();
+                        Objcommon.Add("@CreatedByUser_ID", LoginUerID);
+                        Objcommon.Add("@Decision", concatDecision);
+                        Objcommon.Add("@ActionTaken", concatActionTaken);
+                        Objcommon.Add("@ChangeManagement_ID", ChangeManagementID);
+                        Objcommon.Add("@Project_ID", m.Change_ManagementPlannedKPIList[i].Project_ID);
+                        Objcommon.Add("@ProjectPlannedKPIs_ID", m.Change_ManagementPlannedKPIList[i].PlannedKPIsID);
+                        Objcommon.Add("@ProjectPlannedKPIsHistory_ID", PlannedKPIsHistoryID);
+                        statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_changeManagementDetails", Objcommon);
 
-                    //    DynamicParameters ObjParm22 = new DynamicParameters();
-                    //    ObjParm22.Add("@PlannedKPIsTable", dt.AsTableValuedParameter("udt_PlannedKPIs"));
-                    //    ObjParm22.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                    //    ObjParm22.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                    //    Con = new SqlConnection(Common.ConnectionString);
-                    //    Con.Open();
-                    //    Con.Execute("sp_PlannedKPIsCreateMulti", ObjParm22, commandType: CommandType.StoredProcedure);
-                    //    Con.Close();
-                    //    status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
-                    //    status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
-                    //}
-                    //#endregion
-                    //#region Region2
+                    }
 
-                    //var _AssignStackholderList = m.AssignStackholderList.Select(p => new { p.Project_ID, SubProject_ID, p.Batch_ID, p.StackholderDepartment, p.TypeOfStakeholder_ID, p.StackholderContact, p.StackholderEmail, p.CreatedByUser_ID }).ToList();
-                    //DataTable ddt = new DataTable();
-                    //if (_AssignStackholderList.Count > 0)
-                    //{
-                    //    ddt = Utility.Conversion.ConvertListToDataTable(_AssignStackholderList);
-                    //}
-                    //DynamicParameters ObjParm222 = new DynamicParameters();
-                    //ObjParm222.Add("@StackholderTable", ddt.AsTableValuedParameter("udt_StackHolder"));
-                    //ObjParm222.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                    //ObjParm222.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                    //Con = new SqlConnection(Common.ConnectionString);
-                    //Con.Open();
-                    //Con.Execute("sp_StackholderCreateMulti", ObjParm222, commandType: CommandType.StoredProcedure);
-                    //Con.Close();
-                    //status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
-                    //status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
-                    //#endregion
-                    //#region Region3
-                    //DynamicParameters ObjParm3 = new DynamicParameters();
+                    //Procurement - ProcurementHistory
+                    for (int i = 0; i < m.Change_ManagementPlannedProcurementList.Count; i++)
+                    {
+                        DynamicParameters ObjParm4 = new DynamicParameters();
+                        ObjParm4.Add("@PlannedProcurementID", m.Change_ManagementPlannedProcurementList[i].PlannedProcurementID);
+                        ObjParm4.Add("@Project_ID", m.Change_ManagementPlannedProcurementList[i].Project_ID);
+                        ObjParm4.Add("@SubProject_ID", m.Change_ManagementPlannedProcurementList[i].SubProject_ID);
+                        ObjParm4.Add("@ProcrumetHeader", m.Change_ManagementPlannedProcurementList[i].ProcrumetHeaderValue);
+                        ObjParm4.Add("@PlannedProcrumentNo", m.Change_ManagementPlannedProcurementList[i].PlannedProcrumentNoValue);
+                        ObjParm4.Add("@PlannedPerCostItem", m.Change_ManagementPlannedProcurementList[i].PlannedPerCostItemValue);
+                        ObjParm4.Add("@AchivedCost", m.Change_ManagementPlannedProcurementList[i].AchivedCostValue);
+                        ObjParm4.Add("@EntryDate",DateTime.Now);
+                        ObjParm4.Add("@CreatedByUser_ID", LoginUerID);
+                       
+                        statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_changeManagementProcurement", ObjParm4, "@PlannedProcurementHistoryID", ref PlannedProcurementHistoryID);
+                        concatDecision = null;
+                        concatDecision = "AchivedCost:" + m.Change_ManagementPlannedProcurementList[i].AchivedCostDescription;
+                        concatDecision += ",PlannedPerCostItem:" + m.Change_ManagementPlannedProcurementList[i].PlannedPerCostItemDescription;
+                        concatDecision += ",PlannedProcrumentNo:" + m.Change_ManagementPlannedProcurementList[i].PlannedProcrumentNoDescription;
+                        concatDecision += ",ProcrumetHeader:" + m.Change_ManagementPlannedProcurementList[i].ProcrumetHeaderDescription;
+                        concatActionTaken = null;
+                        concatActionTaken = "AchivedCost:" + m.Change_ManagementPlannedProcurementList[i].ActionTakenAchivedCost;
+                        concatActionTaken += ",PlannedPerCostItem:" + m.Change_ManagementPlannedProcurementList[i].ActionTakenPlannedPerCostItem;
+                        concatActionTaken += ",PlannedProcrumentNo:" + m.Change_ManagementPlannedProcurementList[i].ActionTakenPlannedProcrumentNo;
+                        concatActionTaken += ",ProcrumetHeader:" + m.Change_ManagementPlannedProcurementList[i].ActionTakenProcrumetHeader;
 
-                    //var _dtObjective = m.AssignObjectiveList.Select(p => new { p.Project_ID, SubProject_ID, p.ObjectiveName }).ToList();
-                    //DataTable dtObjective = Utility.Conversion.ConvertListToDataTable(_dtObjective);
+                        DynamicParameters Objcommon = new DynamicParameters();
+                        Objcommon.Add("@CreatedByUser_ID", LoginUerID);
+                        Objcommon.Add("@Decision", concatDecision);
+                        Objcommon.Add("@ActionTaken", concatActionTaken);
+                        Objcommon.Add("@ChangeManagement_ID", ChangeManagementID);
+                        Objcommon.Add("@Project_ID", m.Change_ManagementPlannedProcurementList[i].Project_ID);
+                        Objcommon.Add("@PlannedProcurement_ID", m.Change_ManagementPlannedProcurementList[i].PlannedProcurementID);
+                        Objcommon.Add("@PlannedProcurementHistory_ID", PlannedProcurementHistoryID);
+                        statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_changeManagementDetails", Objcommon);
+                    }
 
-                    //DataTable dtCity = new DataTable();
-                    //dtCity.Columns.Add("Project_ID", typeof(int));
-                    //dtCity.Columns.Add("City_ID", typeof(int));
-                    //for (int i = 0; i < m.CityArray.Count; i++)
-                    //{ dtCity.Rows.Add(SubProject_ID, m.CityArray[i]); }
-
-                    //DataTable dtFundingSource = new DataTable();
-                    //dtFundingSource.Columns.Add("Project_ID", typeof(int));
-                    //dtFundingSource.Columns.Add("FundingSource_ID", typeof(int));
-                    //for (int i = 0; i < m.Funding_SourceArray.Count; i++)
-                    //{ dtFundingSource.Rows.Add(SubProject_ID, m.Funding_SourceArray[i]); }
-
-                    //DataTable dtProjectWithPolicy = new DataTable();
-                    //dtProjectWithPolicy.Columns.Add("Project_ID", typeof(int));
-                    //dtProjectWithPolicy.Columns.Add("DigitalPolicy_ID", typeof(int));
-                    //for (int i = 0; i < m.DigitalPolicyArray.Count; i++)
-                    //{ dtProjectWithPolicy.Rows.Add(SubProject_ID, m.DigitalPolicyArray[i]); }
-
-                    //DataTable dtProjectWithProjectType = new DataTable();
-                    //dtProjectWithProjectType.Columns.Add("Project_ID", typeof(int));
-                    //dtProjectWithProjectType.Columns.Add("ProjectType_ID", typeof(int));
-                    //for (int i = 0; i < m.ProjectTypeArray.Count; i++)
-                    //{ dtProjectWithProjectType.Rows.Add(SubProject_ID, m.ProjectTypeArray[i]); }
-
-                    //DataTable dtProjectWithSDGS = new DataTable();
-                    //dtProjectWithSDGS.Columns.Add("Project_ID", typeof(int));
-                    //dtProjectWithSDGS.Columns.Add("SDGS_ID", typeof(int));
-                    //for (int i = 0; i < m.SDGSArray.Count; i++)
-                    //{ dtProjectWithSDGS.Rows.Add(SubProject_ID, m.SDGSArray[i]); }
-
-                    //ObjParm3.Add("@ProjectWithCityTable", dtCity.AsTableValuedParameter("udt_ProjectWithCity "));
-                    //ObjParm3.Add("@ProjectWIthFundingSourceTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWIthFundingSource"));
-                    //ObjParm3.Add("@ProjectWithPolicyTable", dtProjectWithPolicy.AsTableValuedParameter("udt_ProjectWithPolicy"));
-                    //ObjParm3.Add("@ProjectWithProjectTypeTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithProjectType"));
-                    //ObjParm3.Add("@ProjectWithSDGSTable", dtFundingSource.AsTableValuedParameter("udt_ProjectWithSDGS"));
-
-                    //ObjParm3.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
-                    //ObjParm3.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
-                    //Con = new SqlConnection(Common.ConnectionString);
-                    //Con.Open();
-                    //Con.Execute("sp_ProjectBulkEntry", ObjParm3, commandType: CommandType.StoredProcedure);
-                    //Con.Close();
-                    //status.status = Convert.ToBoolean(ObjParm3.Get<bool>("@Status"));
-                    //status.statusDetail = Convert.ToString(ObjParm3.Get<string>("@StatusDetails"));
-
-                    //transactionScope.Complete();
-                    //transactionScope.Dispose();
+                    status.status = true;
+                    status.statusDetail = "All Record Saved Succefully.";
+                    transactionScope.Complete();
+                    transactionScope.Dispose();
                     //#endregion
 
                 }

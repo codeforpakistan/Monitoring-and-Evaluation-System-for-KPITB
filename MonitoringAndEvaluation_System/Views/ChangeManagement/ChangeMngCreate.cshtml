@@ -1,4 +1,4 @@
-﻿@model ModelLayer.MainViewModel.CreateProjectVM
+﻿@model ModelLayer.MainViewModel.ChangeManagementVM
 
 @{
     ViewBag.Title = "ChangeManagement";
@@ -12,7 +12,7 @@
 <!-- START row-->
 <div class="row">
     <div class="col-xl-12">
-        @using (Html.BeginForm("ChangeMngCreate", "ChangeManagement", FormMethod.Post, new { @id = "SubmitFromBtnCreate", @class = "form-horizontal" }))
+        @using (Html.BeginForm("ChangeMngCreate", "ChangeManagement", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             <!-- START card-->
 
@@ -29,63 +29,116 @@
                         <div class="card card-default" id="cardDemo1">
                             <div class="card-header">
                                 <h4>Meeting Agenda</h4>
-
                             </div>
                             <div class="card-wrapper collapse show">
                                 <div class="card-body">
-
                                     <div class="row">
                                         <div class="col-lg-6 ">
                                             <label class="col-form-label">Meeting No. *</label>
-                                            @Html.TextBoxFor(model => model.ProjectName, new { @class = "form-control", @placeholder = "Enter Project Name" })
-                                            @Html.ValidationMessageFor(m => m.ProjectName, "", new { @class = "parsley-required", @id = "spanProjectName" })
+                                            @Html.TextBoxFor(m => m.MeetingNo, new { @class = "form-control", @placeholder = "Enter Meeting No" })
+                                            @Html.ValidationMessageFor(m => m.MeetingNo, "", new { @class = "parsley-required" })
                                         </div>
                                         <div class="col-lg-6 ">
                                             <label class="col-form-label">Meeting Date *</label>
-                                            <input class="form-control Select-date" id="PlannedDate" type="date" name="PlannedDate">
+                                            @Html.TextBoxFor(m => m.MeetingDate, new { @class = "form-control Select-date", @type = "date" })
+                                            @Html.ValidationMessageFor(m => m.MeetingDate, "", new { @class = "parsley-required" })
                                         </div>
                                         <div class="col-lg-6">
                                             <label for="sel1">Select Project </label>
-                                            @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProject, "ProjectID", "ProjectName"), new { @class = "select2 form-control " })
+                                            @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new {  @class = "select2-3 form-control " })
                                             @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                                         </div>
                                         <div class="col-lg-6">
                                             <label>Select Sub Project</label>
-                                            @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2 form-control " })
+                                            @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new {  @class = "select2-4 form-control " })
                                             @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
                                         </div>
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <input type="button" id="btnAdd" onclick="AddDropDownList()" value="Add Agenda Item" class="btn btn-primary" />
-                    </div>
+
                     <br />
                     <div class="row">
 
-                        <!--Insert-->
+                        <!--Project-->
                         <div class="col-lg-12">
-                            <table class="table table-striped" name="tblChangeManagement">
+                            <br />
+                            <h4>Project</h4>
+                            <table class="table table-striped" id="tblChangeManagementProject">
                                 <thead class="table-info">
                                     <tr>
-                                        <th data-column-id="id" data-type="numeric">ID</th>
                                         <th data-column-id="ItemName">Item Name</th>
                                         <th data-column-id="CurrentVaule">Current Vaule</th>
                                         <th data-column-id="ChangeVaule">Change Vaule</th>
                                         <th data-column-id="Decision">Decision</th>
                                         <th data-column-id="ActionTaken">Action Taken</th>
-                                        <th data-column-id="Action">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tblBodyChangeManagement">
+                                <tbody id="tblBodyChangeManagementProject">
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+
+                        <!--Schedule-->
+                        <div class="col-lg-12">
+                            <br />
+                            <h4>Schedule</h4>
+                            <table class="table table-striped" id="tblChangeManagementSchedule">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th data-column-id="ItemName">Item Name</th>
+                                        <th data-column-id="CurrentVaule">Current Vaule</th>
+                                        <th data-column-id="ChangeVaule">Change Vaule</th>
+                                        <th data-column-id="Decision">Decision</th>
+                                        <th data-column-id="ActionTaken">Action Taken</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblBodyChangeManagementSchedule">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!--PlannedKPIs-->
+                        <div class="col-lg-12">
+                            <br />
+                            <h4>Planned KPIs</h4>
+                            <table class="table table-striped" id="tblChangeManagemenPlannedKPIs">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th data-column-id="ItemName">Item Name</th>
+                                        <th data-column-id="CurrentVaule">Current Vaule</th>
+                                        <th data-column-id="ChangeVaule">Change Vaule</th>
+                                        <th data-column-id="Decision">Decision</th>
+                                        <th data-column-id="ActionTaken">Action Taken</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblBodyChangeManagementPlannedKPIs">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!--PlannedProcurement-->
+                        <div class="col-lg-12">
+                            <br />
+                            <h4>Planned Procurement</h4>
+                            <table class="table table-striped" id="tblChangeManagemenPlannedProcurement">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th data-column-id="ItemName">Item Name</th>
+                                        <th data-column-id="CurrentVaule">Current Vaule</th>
+                                        <th data-column-id="ChangeVaule">Change Vaule</th>
+                                        <th data-column-id="Decision">Decision</th>
+                                        <th data-column-id="ActionTaken">Action Taken</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblBodyChangeManagementPlannedProcurement">
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>     <!--ROW-->
                 </div>
                 <div class="required">* Required fields</div>
                 <br />
@@ -98,9 +151,8 @@
                             </div>
                         </div>
                         <div class="float-right">
-                            <button class="btn-lg btn-success" type="submit" id="btnCreate"> Create</button>
+                            <button class="btn-lg btn-success" type="submit" > Create</button>
                         </div>
-
                     </div>
                 </div>
                 <!-- END card-->
@@ -115,76 +167,9 @@
      url-Val="@Url.Action("ClickProjectComboBox", "Common")">
 </div>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript">
-    function AddDropDownList() {
-        //Build an array containing Customer records.
-        var customers = [
-            { CustomerId: 1, Name: "John Hammond", Country: "United States" },
-            { CustomerId: 2, Name: "Mudassar Khan", Country: "India" },
-            { CustomerId: 3, Name: "Suzanne Mathews", Country: "France" },
-            { CustomerId: 4, Name: "Robert Schidner", Country: "Russia" }
-        ];
-        //Create a DropDownList element.
-        var ddlCustomers = $("<select />");
-
-        //Add the Options to the DropDownList.
-        $(customers).each(function () {
-            var option = $("<option />");
-
-            //Set Customer Name in Text part.
-            option.html(this.Name);
-
-            //Set Customer CustomerId in Value part.
-            option.val(this.CustomerId);
-
-            //Add the Option element to DropDownList.
-            ddlCustomers.append(option);
-        });
-
-        //Reference the container Table.
-        var tblContainer = $("#tblContainer");
-
-        //Add the Table row.
-        var row = tblContainer[0].insertRow(-1);
-
-        //Add the DropDownList to Table Row.
-        var cell = row.insertCell(-1);
-        $(cell).append(ddlCustomers);
-
-
-        var txtCurrentValue = $("<input type = 'Text' value = '' class='form-control' placeholder='Enter Indicator Value' readonly='readonly' />");
-        cell = row.insertCell(-1);
-        $(cell).append(txtCurrentValue)
-
-        var txtChangeValue = $("<input type = 'Text' value = '' class='form-control' placeholder='Enter Change Value' />");
-        cell = row.insertCell(-1);
-        $(cell).append(txtChangeValue)
-
-        var txtDecision = $("<input type = 'Text' value = '' class='form-control' placeholder='Enter Decision ' />");
-        cell = row.insertCell(-1);
-        $(cell).append(txtDecision)
-        var txtActionTakenSatus = $("<input type = 'Text' value = '' class='form-control' placeholder='Enter Action Taken Satus	 Details ' />");
-        cell = row.insertCell(-1);
-        $(cell).append(txtActionTakenSatus)
-        //Create a Remove Button.
-        var btnRemove = $("<input type = 'button' value = 'Remove'/>");
-        btnRemove.click(function () {
-            //Determine the reference of the Row using the Button.
-            var row = btnRemove.closest("TR");
-
-            //Delete the Table row.
-            row.remove();
-        });
-
-        //Add the Remove Buttton to Table Row.
-        cell = row.insertCell(-1);
-        $(cell).append(btnRemove);
-
-    };
-</script>
-
-
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--AQIB-->
 @section Scripts{
     <script src="~/Content/Template/js/CustomCode.js"></script>
 }

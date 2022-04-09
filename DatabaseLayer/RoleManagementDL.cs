@@ -42,6 +42,7 @@ namespace DatabaseLayer
             finally
             {
                 Con.Close();
+                Con.Dispose();
             }
             return mdl;
         }

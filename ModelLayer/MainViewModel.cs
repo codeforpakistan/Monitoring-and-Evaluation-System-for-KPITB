@@ -1179,6 +1179,8 @@ namespace ModelLayer
                 comboIndicators = new List<ComboIndicator>();
                 //InsightIndicatorForEvaulationList= new List<InsightIndicatorForEvaulation>();
             }
+            public ChangeManagementVM ListOfChangeManagementVM = new ChangeManagementVM();
+            
         }
         #endregion
         #region Evaulation
@@ -1223,19 +1225,6 @@ namespace ModelLayer
 
         #endregion
         #region ChangeManagement
-        public partial class Change_Management
-        {
-            public int Project_ID { get; set; }
-            public int SubProject_ID { get; set; }
-            public int ProjectHistory_ID { get; set; }
-            public int SubProjectHistory_ID { get; set; }
-            public string MeetingNo { get; set; }
-
-            [Required(ErrorMessage = "Select Date")]
-            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public System.DateTime MeetingDate { get; set; }
-        }
         public partial class ProjectHistory
         {
             //for sub Project
@@ -1307,20 +1296,133 @@ namespace ModelLayer
         }
 
 
+
+        
+        public partial class Change_ManagementProject
+        {
+            public int ProjectID { get; set; }
+            public string PlannedBudget { get; set; }
+            public long PlannedBudgetValue { get; set; }
+            public long ChangeValuePlannedBudget { get; set; }
+            public string DecisionPlannedBudget { get; set; }
+            public string ActionTakenPlannedBudget { get; set; }
+            
+
+            public string ApprovedBudget { get; set; }
+            public long ApprovedBudgetValue { get; set; }
+            public long ChangeValueApprovedBudget { get; set; }
+            public string DecisionApprovedBudget { get; set; }
+            public string ActionTakenApprovedBudget { get; set; }
+
+            public string PlannedHR { get; set; }
+            public long PlannedHRValue { get; set; }
+            public long ChangeValuePlannedHR { get; set; }
+            public string DecisionPlannedHR { get; set; }
+            public string ActionTakenPlannedHR { get; set; }
+        }
+
+        public partial class Change_ManagementSchedule
+        {
+             public int ScheduleID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public string PlannedDate { get; set; }
+            public string PlannedDateValue { get; set; }
+            [Required(ErrorMessage = "Enter From Date")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+            public DateTime ChangeValuePlannedDate { get; set; }
+            public string DecisionPlannedDate { get; set; }
+            public string ActionTakenPlannedDate { get; set; }
+
+            public string StartDate { get; set; }
+            public string StartDateValue { get; set; }
+            public DateTime ChangeValueStartDate { get; set; }
+            public string DecisionStartDate { get; set; }
+            public string ActionTakenStartDate { get; set; }
+
+            public string EndDate { get; set; }
+            public string EndDateValue { get; set; }
+            public DateTime ChangeValueEndDate { get; set; }
+            public string DecisionEndDate { get; set; }
+            public string ActionTakenEndDate { get; set; }
+        }
+        public partial class Change_ManagementPlannedKPI
+        {
+
+            public int PlannedKPIsID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public string IndicatorDescription { get; set; }
+            public string IndicatorDescriptionValue { get; set; }
+            public string ChangeValueIndicatorDescription { get; set; }
+            public string DecisionIndicatorDescription { get; set; }
+            public string ActionTakenIndicatorDescription { get; set; }
+
+            public string Target { get; set; }
+            public int TargetValue { get; set; }
+            public int ChangeValueTarget { get; set; }
+            public string DecisionTarget { get; set; }
+            public string ActionTakenTarget { get; set; }
+
+            public string TimeLine { get; set; }
+            public string TimeLineValue { get; set; }
+            public DateTime ChangeValueTimeLine { get; set; }
+            public string DecisionTimeLine { get; set; }
+            public string ActionTakenTimeLine { get; set; }
+        }
+
+        public partial class Change_ManagementPlannedProcurement
+        {
+            public int PlannedProcurementID { get; set; }
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public string ProcrumetHeader { get; set; }
+            public string ProcrumetHeaderValue { get; set; }
+            public string ChangeValueProcrumetHeader { get; set; }
+            public string ProcrumetHeaderDescription { get; set; }
+            public string ActionTakenProcrumetHeader { get; set; }
+
+            public string PlannedProcrumentNo { get; set; }
+            public int PlannedProcrumentNoValue { get; set; }
+            public int ChangeValuePlannedProcrumentNo { get; set; }
+            public string PlannedProcrumentNoDescription { get; set; }
+            public string ActionTakenPlannedProcrumentNo { get; set; }
+
+
+            public string PlannedPerCostItem { get; set; }
+            public int PlannedPerCostItemValue { get; set; }
+            public int ChangeValuePlannedPerCostItem { get; set; }
+            public string PlannedPerCostItemDescription { get; set; }
+            public string ActionTakenPlannedPerCostItem { get; set; }
+
+
+            public string AchivedCost { get; set; }
+            public int AchivedCostValue { get; set; }
+            public int ChangeValueAchivedCost { get; set; }
+            public string AchivedCostDescription { get; set; }
+            public string ActionTakenAchivedCost { get; set; }
+
+        }
+
         public partial class ChangeManagementVM
         {
             public ChangeManagementVM()
             {
                 comboProjects = new List<ComboProject>();
-                comboSubProjects = new List<ComboSubProject>();
+                comboSubProjects = new List<ComboSubProject>(); 
+                Change_ManagementProjectList = new List<Change_ManagementProject>();
+                Change_ManagementScheduleList = new List<Change_ManagementSchedule>();
+                Change_ManagementPlannedKPIList = new List<Change_ManagementPlannedKPI>();
+                Change_ManagementPlannedProcurementList = new List<Change_ManagementPlannedProcurement>();
             }
-
-            //Common 
+             
+            public List<Change_ManagementProject> Change_ManagementProjectList { get; set; }
+            public List<Change_ManagementSchedule> Change_ManagementScheduleList { get; set; }
+            public List<Change_ManagementPlannedKPI> Change_ManagementPlannedKPIList { get; set; }
+            public List<Change_ManagementPlannedProcurement> Change_ManagementPlannedProcurementList { get; set; }
+            public int CreatedByUser_ID { get; set; }
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
-            public int CreatedByUser_ID { get; set; }
-
-            //ChangeManagement
             public int ProjectHistory_ID { get; set; }
             public int SubProjectHistory_ID { get; set; }
             public string MeetingNo { get; set; }
@@ -1329,58 +1431,10 @@ namespace ModelLayer
             [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
             public System.DateTime MeetingDate { get; set; }
-
-            //Project and Sub pRoject history
-            public string SubProjectName { get; set; }
-            public string ProjectName { get; set; }
-            public long PlannedBudget { get; set; }
-            public long ApprovedBudget { get; set; }
-            public int PlannedHR { get; set; }
-            public string ProjectGoal { get; set; }
-
-            //Project Objective History
-            public int Objective_ID { get; set; }
-            public string ObjectiveName { get; set; }
-
-            //PlannedKPIs History
-            public int PlannedKPIs_ID { get; set; }
-            public string IndicatorDescription { get; set; }
-            public long Target { get; set; }
-            [Required(ErrorMessage = "Select Date")]
-            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public System.DateTime TimeLine { get; set; }
-
-            //PlannedProcurement History
-            public int PlannedProcurement_ID { get; set; }
-            public string ProcrumetHeader { get; set; }
-            public long PlannedProcrumentNo { get; set; }
-            public long PlannedPerCostItem { get; set; }
-            public long AchivedCost { get; set; }
-            [Required(ErrorMessage = "Select Date")]
-            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public System.DateTime EntryDate { get; set; }
-
-
-            //Schedule History
-            public int Schedule_ID { get; set; }
-            [Required(ErrorMessage = "Select Date")]
-            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public System.DateTime PlannedDate { get; set; }
-            [Required(ErrorMessage = "Select Date")]
-            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public System.DateTime StartDate { get; set; }
-            [Required(ErrorMessage = "Select Date")]
-            [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
-            public System.DateTime EndDate { get; set; }
-
+        
             public List<ComboProject> comboProjects { get; set; }
             public List<ComboSubProject> comboSubProjects { get; set; }
-
+      
         }
         #endregion
 

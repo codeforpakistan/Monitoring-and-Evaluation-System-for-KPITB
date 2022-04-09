@@ -97,7 +97,7 @@ namespace MonitoringAndEvaluation_System.CommonUse
             modelVM.comboIndicators = new ProjectManagementBL().getComboIndicatorBL(ProjectID, SubProjectID, Batch_ID);
             modelVM.comboIndicators.Insert(0, new ComboIndicator { InsightIndicatorID = 0, InsightIndicatorName = "Please Select Indicator" });
 
-            modelVM.comboProcurementHeads = new ProjectManagementBL().getComboProcurementHeadBL(Convert.ToInt32(ProjectID), 0);
+            modelVM.comboProcurementHeads = new ProjectManagementBL().getComboProcurementHeadBL(ProjectID, SubProjectID);
             modelVM.comboProcurementHeads.Insert(0, new ComboProcurementHead { PlannedProcurementID = 0, ProcrumetHeader = "Please Select Procurement Head" });
 
             modelVM.remainingValues = new ProjectManagementBL().RemainingValuesBL(ProjectID, SubProjectID);
@@ -111,7 +111,7 @@ namespace MonitoringAndEvaluation_System.CommonUse
             if (_IsChangeManagementForm == "ChangeManagementForm")
             {
                 modelVM.IsChangeManagementForm = _IsChangeManagementForm;
-                modelVM.ListOfChangeManagements = new ChangeManagementBL().GetChangeManagementDataBL(ProjectID);
+                modelVM.ListOfChangeManagementVM = new ChangeManagementBL().GetChangeManagementDataBL(ProjectID);
             }
 
             return Json(modelVM, JsonRequestBehavior.AllowGet);

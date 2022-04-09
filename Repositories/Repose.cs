@@ -14,6 +14,36 @@ namespace Repositories
 {
     public static class Repose
     {
+        public static StatusModel ExcuteNonQueryWithStatusModel(string StoreProcedure, DynamicParameters ObjParm, string ValueInside, ref int ValueOutside)
+        {
+            StatusModel status = new StatusModel();
+            IDbConnection Con = null;
+            try
+            {
+                Con = new SqlConnection(DbConnection.ConnectionString);
+                Con.Open();
+
+                ObjParm.Add("@Status", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
+                ObjParm.Add(ValueInside, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                Con.Execute(StoreProcedure, ObjParm, commandType: CommandType.StoredProcedure);
+
+                ValueOutside = Convert.ToInt32(ObjParm.Get<Int32>(ValueInside));
+                status.status = Convert.ToBoolean(ObjParm.Get<bool>("@Status"));
+                status.statusDetail = Convert.ToString(ObjParm.Get<string>("@StatusDetails"));
+            }
+            catch (Exception ex)
+            {
+                status.status = false;
+                status.statusDetail = ex.Message;
+            }
+            finally
+            {
+                Con.Close();
+            }
+            return status;
+        }
+
         public static StatusModel ExcuteNonQueryWithStatusModel(string StoreProcedure, DynamicParameters ObjParm)
         {
             StatusModel status = new StatusModel();

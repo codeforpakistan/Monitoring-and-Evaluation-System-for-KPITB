@@ -293,7 +293,7 @@ namespace DatabaseLayer
                 return ComboLst;
             }
         }
-        public static List<ComboProcurementHead> getComboProcurementHeadDL(int Project_ID, int SubProject_ID)
+        public static List<ComboProcurementHead> getComboProcurementHeadDL(int Project_ID, int? SubProject_ID)
         {
             List<ComboProcurementHead> ComboLst = new List<ComboProcurementHead>();
 

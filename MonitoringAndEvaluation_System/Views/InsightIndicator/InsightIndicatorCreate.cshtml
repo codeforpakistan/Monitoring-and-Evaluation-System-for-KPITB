@@ -33,7 +33,7 @@
                                 @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
                             </div>
                             <div class="col-lg-3">
-                                <label class="col-form-label">Insight IndicatorName</label>
+                                <label class="col-form-label">Insight Indicator Title</label>
                                 @Html.TextBoxFor(model => model.InsightIndicatorName, new { @class = "form-control", @type = "text" })
                                 @Html.ValidationMessageFor(m => m.InsightIndicatorName, "", new { @class = "parsley-required", @id = "spanInsightIndicatorName" })
                             </div>
@@ -50,7 +50,7 @@
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <label class="col-form-label">Insight Indicator Field  *</label>
-                                        <input class="form-control" id="idInsightIndicatorField" type="text" name="InsightIndicatorField" value="" placeholder="Enter Insight Indicator Field Name">
+                                        <input class="form-control" id="idInsightIndicatorField" type="text" name="InsightIndicatorField" value="" placeholder="Enter Insight Indicator Field">
                                         <span name="spanidInsightIndicatorField" id="spanidInsightIndicatorField" class="text-danger"></span>
                                     </div>
                                     <div class="col-lg-4">
@@ -74,7 +74,7 @@
                                     <thead class="table-info">
                                         <tr>
                                             <th data-column-id="id" data-type="numeric">ID</th>
-                                            <th data-column-id="InsightIndicatorField">InsightIndicator Field Name</th>
+                                            <th data-column-id="InsightIndicatorField">InsightIndicator Field</th>
                                             <th data-column-id="InsightIndicatorDataType">Insight Indicator DataType</th>
                                             <th data-column-id="action">Action</th>
                                         </tr>

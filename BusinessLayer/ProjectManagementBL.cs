@@ -174,24 +174,24 @@ namespace BusinessLayer
             for (int i = 0; i < getData.getProjectDetailsQ6Lst.Count; i++)
             {
                 m = new GetProjectDetailsQ7();
-                if (getData.getProjectDetailsQ6Lst[i].IntegerValue != 0)
+                if (getData.getProjectDetailsQ6Lst[i].InsightIntegerValue != 0)
                 {
-                    m.IndicatorName = getData.getProjectDetailsQ6Lst[i].IndicatorName;
-                    m.IndicatorFieldName = getData.getProjectDetailsQ6Lst[i].IndicatorFieldName;
-                    m.CommonFiled = getData.getProjectDetailsQ6Lst[i].IntegerValue;
+                    m.InsightIndicatorName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorName;
+                    m.InsightIndicatorFieldName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorFieldName;
+                    m.CommonFiled = getData.getProjectDetailsQ6Lst[i].InsightIntegerValue;
                     getData.getProjectDetailsQ7Lst.Add(m);
                 }
                 else if (getData.getProjectDetailsQ6Lst[i].FloatValue != 0)
                 {
-                    m.IndicatorName = getData.getProjectDetailsQ6Lst[i].IndicatorName;
-                    m.IndicatorFieldName = getData.getProjectDetailsQ6Lst[i].IndicatorFieldName;
+                    m.InsightIndicatorName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorName;
+                    m.InsightIndicatorFieldName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorFieldName;
                     m.CommonFiled = getData.getProjectDetailsQ6Lst[i].FloatValue;
                     getData.getProjectDetailsQ7Lst.Add(m);
                 }
                 else if (getData.getProjectDetailsQ6Lst[i].BoolValue != 0)
                 {
-                    m.IndicatorName = getData.getProjectDetailsQ6Lst[i].IndicatorName;
-                    m.IndicatorFieldName = getData.getProjectDetailsQ6Lst[i].IndicatorFieldName;
+                    m.InsightIndicatorName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorName;
+                    m.InsightIndicatorFieldName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorFieldName;
                     m.CommonFiled = getData.getProjectDetailsQ6Lst[i].BoolValue;
                     getData.getProjectDetailsQ7Lst.Add(m) ;
                 }
@@ -202,10 +202,10 @@ namespace BusinessLayer
             }
 
             //Distinct IndicatorName
-            var DistinctItems = getData.getProjectDetailsQ7Lst.GroupBy(x => x.IndicatorName).ToList();
+            var DistinctItems = getData.getProjectDetailsQ7Lst.GroupBy(x => x.InsightIndicatorName).ToList();
             for (int j = 0; j < DistinctItems.Count; j++)
             {
-                getData.getIndicatorLst.Add(new IndicatorNames { IndicatorName = DistinctItems[j].Key }); ;
+                getData.getIndicatorLst.Add(new InsightIndicatorNames { InsightIndicatorName = DistinctItems[j].Key }); ;
             }
 
             return getData;

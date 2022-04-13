@@ -59,8 +59,8 @@
                                             <label for="sel1">Evaluation Type </label>
                                             <select name="pets" id="pet-select" class="select2 form-control">
                                                 <option value="">Please Select Evaluation Type</option>
-                                                <option value="11">Online</option>
-                                                <option value="12">OnField</option>
+                                                <option value="Online">Online</option>
+                                                <option value="OnField">OnField</option>
                                             </select>
                                             @*@Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
                                                 @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required", @id = "spanProjectID" })*@
@@ -69,8 +69,8 @@
                                             <label for="sel1">Visit Status</label>
                                             <select name="pets" id="pet-select" class="select2 form-control">
                                                 <option value="">Please Select Visit Status</option>
-                                                <option value="11">Mid</option>
-                                                <option value="12">Final</option>
+                                                <option value="Mid">Mid</option>
+                                                <option value="Final">Final</option>
                                             </select>
                                             @*@Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = " form-control" })
                                                 @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required", @id = "spanSubProjectID" })*@
@@ -131,7 +131,7 @@
                                             <th data-column-id="action">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="tblBodyMember">
                                     </tbody>
                                 </table>
                             </div>

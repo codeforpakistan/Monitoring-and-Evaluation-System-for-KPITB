@@ -13,9 +13,9 @@ namespace BusinessLayer
 {
     public class ChangeManagementBL
     {
-        public ChangeManagementVM GetChangeManagementDataBL(int _ProjectID)
+        public ChangeManagementVM GetChangeManagementDataBL(int _ProjectID,int? _SubProjectID)
         {
-            return ChangeManagementDL.GetChangeManagementDataDL(_ProjectID);
+            return ChangeManagementDL.GetChangeManagementDataDL(_ProjectID, _SubProjectID);
         }
 
         //CreateIssues

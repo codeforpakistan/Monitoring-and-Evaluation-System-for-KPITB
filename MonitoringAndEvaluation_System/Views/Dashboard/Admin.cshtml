@@ -1,40 +1,62 @@
 ﻿@{
     ViewBag.Title = "Admin";
 }
-<!-- START card-->
-@*<div class="card card-default">
-    <div class="card-body">
-        <form class="form-horizontal">
-            <div class="form-row ">
-                <div class="col-lg-3">
-                    <label for="sel1">Search By Project Type</label>
-                    <input class="select2 form-control" id="txtProjectName" type="text" placeholder="Search By Project Name">
-                </div>
-                <div class="col-lg-3">
-                    <label for="sel1">Search By Policy Pillar</label>
-                    <input class="select2 form-control" id="txtProjectType" type="text" placeholder="Search By Project Type">
-                </div>
-                <div class="col-lg-3">
-                    <label for="sel1">Search By Location</label>
-                    <input class="select2 form-control" id="txtLocation" type="text" placeholder="Search By Location">
 
-                </div>
-                <div class="col-lg-1">
-                    <label for="sel1" style="color:transparent">Search</label>
-                    <button class="btn btn-primary form-control" type="button" id="btnSearch">Search</button>
-                </div>
-                <div class="col-lg-1">
-                    <label for="sel1" style="color:transparent">Search</label>
-                    <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
-                </div>
-            </div>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-        </form>
-    </div>
-</div>*@
-<!-- END card-->
+<style>
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 320px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+
+    input[type="number"] {
+        min-width: 50px;
+    }
+</style>
 <div class="row">
-    <div class="col-xl-3 col-md-6">
+    <div class="col-xl-4 col-md-6">
         <!-- START card-->
         <div class="card flex-row align-items-center align-items-stretch border-0">
             <div class="col-4 d-flex align-items-center bg-primary-dark justify-content-center rounded-left">
@@ -42,11 +64,11 @@
             </div>
             <div class="col-8 py-3 bg-primary rounded-right">
                 <div class="h2 mt-0">240</div>
-                <div class="text-uppercase">Completed Project</div>
+                <div class="text-uppercase">One Liner</div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
+    <div class="col-xl-4 col-md-6">
         <!-- START card-->
         <div class="card flex-row align-items-center align-items-stretch border-0">
             <div class="col-4 d-flex align-items-center bg-yellow-dark justify-content-center rounded-left">
@@ -57,23 +79,12 @@
                     700
 
                 </div>
-                <div class="text-uppercase">Progress Project</div>
+                <div class="text-uppercase">ADP Project</div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-lg-6 col-md-12">
-        <!-- START card-->
-        <div class="card flex-row align-items-center align-items-stretch border-0">
-            <div class="col-4 d-flex align-items-center bg-danger-dark justify-content-center rounded-left">
-                <em class="icon-close fa-3x"></em>
-            </div>
-            <div class="col-8 py-3 bg-danger rounded-right">
-                <div class="h2 mt-0">500</div>
-                <div class="text-uppercase">Terminate Project</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-3 col-lg-6 col-md-12">
+    
+    <div class="col-xl-4 col-lg-6 col-md-12">
         <!-- START card-->
         <div class="card flex-row align-items-center align-items-stretch border-0">
             <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
@@ -81,313 +92,783 @@
             </div>
             <div class="col-8 py-3 bg-green rounded-right">
                 <div class="h2 mt-0">50M</div>
-                <div class="text-uppercase">Expenditure Budget</div>
+                <div class="text-uppercase">Foreign Funded</div>
             </div>
         </div>
     </div>
 </div>
+
+
 <div class="row">
-    <div class="col-xl-3">
-        <div class="card card-default">
-            <div class="card-header">
-                <div class="px-2 float-right badge badge-danger">5</div>
-                <div class="px-2 mr-2 float-right badge badge-success">12</div>
-                <div class="card-title">Project List</div>
-            </div>
-            <!-- START list group-->
-            <div class="list-group" data-height="280" data-scrollable="">
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
+    <div class="col-lg-4">
+        <div class="card mb-3 border-primary">
+            <div class="card-header text-white bg-primary">One Liner Project</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="card-header">
+                        <div class="card-title">Finance </div>
                     </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Y E P</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-danger circle-lg text-left"></span>
-                                    <span>Fellowship</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Mauris eleifend, libero nec cursus lacinia...</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2d</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-            </div>
-            <!-- END list group-->
+                    <table class="table">
+                        <tbody>
 
-        </div>
-    </div>
+                            <tr>
+                                <td>
+                                    <strong>Approved Budget:</strong>
+                                </td>
+                                <td>
+                                    <strong>340404</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="card-body offset-3">
+                                        <div class="text-info">Budget Utilization %</div>
+                                        <div class="text-center py-4 ">
+                                            <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="70" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
+                                                 data-scale-Color="false" data-line-width="10" data-line-cap="round" data-size="150">
+                                                <span>70%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
 
-    <div class="col-xl-3">
-        <!-- START loader widget-->
-        <div class="card card-default">
-            <div class="card-body">
-                <a class="text-muted float-right" href="#">
-                    <em class="fa fa-arrow-right"></em>
-                </a>
-                <div class="text-info">OVER ALL PROGRESS %</div>
-                <div class="text-center py-4">
-                    <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="70" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
-                         data-scale-Color="false" data-line-width="10" data-line-cap="round" data-size="145">
-                        <span>70%</span>
-                    </div>
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
-                <div class="text-center" data-sparkline="" data-bar-color="#23b7e5" data-height="30" data-bar-width="5" data-bar-spacing="2" data-values="5,4,8,7,8,5,4,6,5,5,9,4,6,3,4,7,5,4,7"></div>
-            </div>
-            <div class="card-footer">
-                <p class="text-muted">
-                    <span class="text-dark h5 text-center">Physical Status</span>
-                </p>
+                
             </div>
         </div>
     </div>
-    <div class="col-xl-3">
-        <!-- START loader widget-->
-        <div class="card card-default">
+    <div class="col-lg-4">
+        <div class="card mb-3 border-primary">
+            <div class="card-header text-white bg-primary">ADP Project</div>
             <div class="card-body">
-                <a class="text-muted float-right" href="#">
-                    <em class="fa fa-arrow-right"></em>
-                </a>
-                <div class="text-info">OVER ALL % TIME UTILIZED</div>
-                <div class="text-center py-4">
-                    <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="70" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#ff902b" data-track-Color="rgba(200,200,200,0.4)"
-                         data-scale-Color="false" data-line-width="10" data-line-cap="round" data-size="145">
-                        <span>70%</span>
+                <div class="row">
+                    <div class="card-header">
+                        <div class="card-title">Finance </div>
                     </div>
+                    <table class="table">
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    <strong>Approved Budget:</strong>
+                                </td>
+                                <td>
+                                    <strong>340404</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="card-body offset-3">
+                                        <div class="text-info">Budget Utilization %</div>
+                                        <div class="text-center py-4 ">
+                                            <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="70" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
+                                                 data-scale-Color="false" data-line-width="10" data-line-cap="round" data-size="150">
+                                                <span>70%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
-                <div class="text-center" data-sparkline="" data-bar-color="#23b7e5" data-height="30" data-bar-width="5" data-bar-spacing="2" data-values="5,4,8,7,8,5,4,6,5,5,9,4,6,3,4,7,5,4,7"></div>
-            </div>
-            <div class="card-footer">
-                <p class="text-muted">
-                    <span class="text-dark h5 text-center">Schedule Status</span>
-                </p>
             </div>
         </div>
     </div>
-    <div class="col-xl-3">
-        <!-- START loader widget-->
-        <div class="card card-default">
+    <div class="col-lg-4">
+        <div class="card mb-3 border-primary">
+            <div class="card-header text-white bg-primary">Foreign Funded Project</div>
             <div class="card-body">
-                <a class="text-muted float-right" href="#">
-                    <em class="fa fa-arrow-right"></em>
-                </a>
-                <div class="text-info">OVER ALL % Budget UTILIZED</div>
-                <div class="text-center py-4">
-                    <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="70" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#7266ba" data-track-Color="rgba(200,200,200,0.4)"
-                         data-scale-Color="false" data-line-width="10" data-line-cap="round" data-size="145">
-                        <span>70%</span>
+                <div class="row">
+                    <div class="card-header">
+                        <div class="card-title">Finance </div>
                     </div>
+                    <table class="table">
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    <strong>Approved Budget:</strong>
+                                </td>
+                                <td>
+                                    <strong>340404</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="card-body offset-3">
+                                        <div class="text-info">Budget Utilization %</div>
+                                        <div class="text-center py-4 ">
+                                            <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="70" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
+                                                 data-scale-Color="false" data-line-width="10" data-line-cap="round" data-size="150">
+                                                <span>70%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
-                <div class="text-center" data-sparkline="" data-bar-color="#23b7e5" data-height="30" data-bar-width="5" data-bar-spacing="2" data-values="5,4,8,7,8,5,4,6,5,5,9,4,6,3,4,7,5,4,7"></div>
-            </div>
-            <div class="card-footer">
-                <p class="text-muted">
-                    <span class="text-dark h5 text-center">Financial  Status</span>
-                </p>
             </div>
         </div>
     </div>
-</div><div class="row">
-    <div class="col-lg-6">
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card mb-3 border-primary">
+            <div class="card-header text-white bg-gray">Digital Policy</div>
+            <div class="card-body">
+                <div class="row">
+                    <table class="table w-100">
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    <strong>Digital Access:</strong>
+                                </td>
+                                <td>
+                                    8
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Digital Governance:</strong>
+                                </td>
+                                <td>
+                                    45
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Digital Economy:</strong>
+                                </td>
+                                <td>
+                                    456
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Digital Skills:</strong>
+                                </td>
+                                <td>
+                                    45
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <figure class="highcharts-figure">
+                        <div id="container"></div>
+
+                    </figure>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card mb-3 border-primary">
+            <div class="card-header text-white bg-gray">ADP Project</div>
+            <div class="card-body">
+                <div class="row">
+                    <table class="table w-100">
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    <strong>Digital Access:</strong>
+                                </td>
+                                <td>
+                                    8
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Digital Governance:</strong>
+                                </td>
+                                <td>
+                                    45
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Digital Economy:</strong>
+                                </td>
+                                <td>
+                                    456
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Digital Skills:</strong>
+                                </td>
+                                <td>
+                                    45
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <figure class="highcharts-figure">
+                        <div id="container1"></div>
+
+                    </figure>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card mb-3 border-primary">
+            <div class="card-header text-white bg-gray">Foreign Funded Project</div>
+            <div class="card-body">
+                <div class="row">
+                    <table class="table w-100">
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    <strong>Digital Access:</strong>
+                                </td>
+                                <td>
+                                    8
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Digital Governance:</strong>
+                                </td>
+                                <td>
+                                    45
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Digital Economy:</strong>
+                                </td>
+                                <td>
+                                    456
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Digital Skills:</strong>
+                                </td>
+                                <td>
+                                    45
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <figure class="highcharts-figure">
+                        <div id="container2"></div>
+                    </figure>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="row">
+    <div class="col-xl-4">
         <div class="card card-default" id="cardChart5">
-            <div class="card-header">
-                <div class="card-title">Project KPIs</div>
-            </div>
-            <div class="card-body">
-                <div class="chart-pie flot-chart"></div>
-            </div>
+
+            <figure class="highcharts-figure">
+                <div id="container3"></div>
+            </figure>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="card card-default" id="cardChart6">
-            <div class="card-header">
-                <div class="card-title">
-                    Insight Indicator 
+    <div class="col-xl-4">
+        <div class="card card-default" id="cardChart5">
+
+            <figure class="highcharts-figure">
+                <div id="container4"></div>
+            </figure>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="card card-default" id="cardChart5">
+
+            <figure class="highcharts-figure">
+                <div id="container5"></div>
+            </figure>
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card card-default" id="cardChart6">
+                    <div class="card-header">
+                        <div class="card-title">
+                            Insight Indicator
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-donut flot-chart"></div>
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="chart-donut flot-chart"></div>
+        </div>
+
+    </div>
+    <div class="col-xl-6">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card card-default" id="cardChart6">
+                    <div class="card-header">
+                        <div class="card-title">
+                            Insight Indicator
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-donut flot-chart"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+</div><div class="row">
+    
+   
 </div>
 <!-- END row-->
+<script>
+    Highcharts.chart('container', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Chart'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: [{
+                name: 'Chrome',
+                y: 61.41,
+                sliced: true,
+                selected: true
+            }, {
+                name: 'Internet Explorer',
+                y: 11.84
+            }, {
+                name: 'Firefox',
+                y: 10.85
+            }, {
+                name: 'Edge',
+                y: 4.67
+            }, {
+                name: 'Safari',
+                y: 4.18
+            }, {
+                name: 'Sogou Explorer',
+                y: 1.64
+            }, {
+                name: 'Opera',
+                y: 1.6
+            }, {
+                name: 'QQ',
+                y: 1.2
+            }, {
+                name: 'Other',
+                y: 2.61
+            }]
+        }]
+    });
 
-<div class="card" id="cardChart9">
-    <div class="card-header">
-        <!-- START button group-->
-        <div class="float-right btn-group">
-            <button class="dropdown-toggle dropdown-toggle-nocaret btn btn-secondary btn-sm" type="button" data-toggle="dropdown">All time</button>
-            <div class="dropdown-menu dropdown-menu-right-forced fadeInLeft animated" role="menu">
-                <a class="dropdown-item" href="#">Daily</a><a class="dropdown-item" href="#">Monthly</a>
-                <div class="dropdown-divider"></div><a class="dropdown-item" href="#">All time</a>
-            </div>
-        </div>
-        <!-- END button group-->
-        <div class="card-title">Overall progress</div>
-    </div>
-    <div class="card-wrapper">
-        <div class="card-body">
-            <div class="chart-splinev2 flot-chart"></div>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-3 col-6 text-center">
-                    <p>Projects</p>
-                    <div class="h1">25</div>
-                </div>
-                <div class="col-md-3 col-6 text-center">
-                    <p>Teammates</p>
-                    <div class="h1">85</div>
-                </div>
-                <div class="col-md-3 col-6 text-center">
-                    <p>Hours</p>
-                    <div class="h1">380</div>
-                </div>
-                <div class="col-md-3 col-6 text-center">
-                    <p>Budget</p>
-                    <div class="h1 text-truncate">$ 10,000.00</div>
-                </div>
-            </div>
-        </div>
-    </div>
+    Highcharts.chart('container1', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Chart'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: [{
+                name: 'Chrome',
+                y: 61.41,
+                sliced: true,
+                selected: true
+            }, {
+                name: 'Internet Explorer',
+                y: 11.84
+            }, {
+                name: 'Firefox',
+                y: 10.85
+            }, {
+                name: 'Edge',
+                y: 4.67
+            }, {
+                name: 'Safari',
+                y: 4.18
+            }, {
+                name: 'Sogou Explorer',
+                y: 1.64
+            }, {
+                name: 'Opera',
+                y: 1.6
+            }, {
+                name: 'QQ',
+                y: 1.2
+            }, {
+                name: 'Other',
+                y: 2.61
+            }]
+        }]
+    });
+    Highcharts.chart('container2', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Chart'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            name: 'Brands',
+            colorByPoint: true,
+            data: [{
+                name: 'Chrome',
+                y: 61.41,
+                sliced: true,
+                selected: true
+            }, {
+                name: 'Internet Explorer',
+                y: 11.84
+            }, {
+                name: 'Firefox',
+                y: 10.85
+            }, {
+                name: 'Edge',
+                y: 4.67
+            }, {
+                name: 'Safari',
+                y: 4.18
+            }, {
+                name: 'Sogou Explorer',
+                y: 1.64
+            }, {
+                name: 'Opera',
+                y: 1.6
+            }, {
+                name: 'QQ',
+                y: 1.2
+            }, {
+                name: 'Other',
+                y: 2.61
+            }]
+        }]
+    });
+    Highcharts.chart('container3', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'SDGS Project'
+        },
+       
 
-    <!-- END chart-->
-</div>
-<div class="row mb-3">
-    <div class="col-lg-3 col-6 text-center">
-        <p>Current Project</p>
-        <div class="text-center py-4">
-            <div class="easypie-chart easypie-chart-md" data-easypiechart="" data-percent="60" data-animate="{duration: 800, enabled: true}" data-bar-color="#23b7e5" data-track-Color="#edf2f6" data-scale-Color="false" data-line-width="2" data-line-cap="round"
-                 data-size="130">
-                <span>60%</span>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-6 text-center">
-        <p>Current Progress</p>
-        <div class="text-center py-4">
-            <div class="easypie-chart easypie-chart-md" data-easypiechart="" data-percent="30" data-animate="{duration: 800, enabled: true}" data-bar-color="#f532e5" data-track-Color="#edf2f6" data-scale-Color="false" data-line-width="2" data-line-cap="round"
-                 data-size="130">
-                <span>30%</span>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-6 text-center">
-        <p>Space Usage</p>
-        <div class="text-center py-4">
-            <div class="easypie-chart easypie-chart-md" data-easypiechart="" data-percent="50" data-animate="{duration: 800, enabled: true}" data-bar-color="#7266ba" data-track-Color="#edf2f6" data-scale-Color="false" data-line-width="2" data-line-cap="round"
-                 data-size="130">
-                <span>50%</span>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-6 text-center">
-        <p>Interactions</p>
-        <div class="text-center py-4">
-            <div class="easypie-chart easypie-chart-md" data-easypiechart="" data-percent="75" data-animate="{duration: 800, enabled: true}" data-bar-color="#ff902b" data-track-Color="#edf2f6" data-scale-Color="false" data-line-width="2" data-line-cap="round"
-                 data-size="130">
-                <span>75%</span>
-            </div>
-        </div>
-    </div>
-</div>
-<script type="text/javascript">
-// Load google charts
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
+        accessibility: {
+            announceNewData: {
+                enabled: true
+            },
+            point: {
+                valueSuffix: '%'
+            }
+        },
 
-// Draw the chart and set the chart values
-function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-  ['Task', 'Hours per Day'],
-  ['Work', 8],
-  ['Friends', 2],
-  ['Eat', 2],
-  ['TV', 2],
-  ['Gym', 2],
-  ['Sleep', 8]
-]);
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}: {point.y:.1f}%'
+                }
+            }
+        },
 
-  // Optional; add a title and set the width and height of the chart
-  var options = {'title':'My Average Day', 'width':550, 'height':400};
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+        },
 
-  // Display the chart inside the <div> element with id="piechart"
-    var chart = new google.visualization.PieChart(document.getElementById('cardChart5'));
-  chart.draw(data, options);
-}
+        series: [
+            {
+                name: "Browsers",
+                colorByPoint: true,
+                data: [
+                    {
+                        name: "Chrome",
+                        y: 62.74,
+                        drilldown: "Chrome"
+                    },
+                    {
+                        name: "Firefox",
+                        y: 10.57,
+                        drilldown: "Firefox"
+                    },
+                    {
+                        name: "Internet Explorer",
+                        y: 7.23,
+                        drilldown: "Internet Explorer"
+                    },
+                    {
+                        name: "Safari",
+                        y: 5.58,
+                        drilldown: "Safari"
+                    },
+                    {
+                        name: "Edge",
+                        y: 4.02,
+                        drilldown: "Edge"
+                    },
+                    {
+                        name: "Opera",
+                        y: 1.92,
+                        drilldown: "Opera"
+                    },
+                    {
+                        name: "Other",
+                        y: 7.62,
+                        drilldown: null
+                    }
+                ]
+            }
+        ],
+       
+    });
+    Highcharts.chart('container4', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'SDGS Project'
+        },
+
+
+        accessibility: {
+            announceNewData: {
+                enabled: true
+            },
+            point: {
+                valueSuffix: '%'
+            }
+        },
+
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}: {point.y:.1f}%'
+                }
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+        },
+
+        series: [
+            {
+                name: "Browsers",
+                colorByPoint: true,
+                data: [
+                    {
+                        name: "Chrome",
+                        y: 62.74,
+                        drilldown: "Chrome"
+                    },
+                    {
+                        name: "Firefox",
+                        y: 10.57,
+                        drilldown: "Firefox"
+                    },
+                    {
+                        name: "Internet Explorer",
+                        y: 7.23,
+                        drilldown: "Internet Explorer"
+                    },
+                    {
+                        name: "Safari",
+                        y: 5.58,
+                        drilldown: "Safari"
+                    },
+                    {
+                        name: "Edge",
+                        y: 4.02,
+                        drilldown: "Edge"
+                    },
+                    {
+                        name: "Opera",
+                        y: 1.92,
+                        drilldown: "Opera"
+                    },
+                    {
+                        name: "Other",
+                        y: 7.62,
+                        drilldown: null
+                    }
+                ]
+            }
+        ],
+
+    });
+    Highcharts.chart('container5', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'SDGS Project'
+        },
+
+
+        accessibility: {
+            announceNewData: {
+                enabled: true
+            },
+            point: {
+                valueSuffix: '%'
+            }
+        },
+
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}: {point.y:.1f}%'
+                }
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+        },
+
+        series: [
+            {
+                name: "Browsers",
+                colorByPoint: true,
+                data: [
+                    {
+                        name: "Chrome",
+                        y: 62.74,
+                        drilldown: "Chrome"
+                    },
+                    {
+                        name: "Firefox",
+                        y: 10.57,
+                        drilldown: "Firefox"
+                    },
+                    {
+                        name: "Internet Explorer",
+                        y: 7.23,
+                        drilldown: "Internet Explorer"
+                    },
+                    {
+                        name: "Safari",
+                        y: 5.58,
+                        drilldown: "Safari"
+                    },
+                    {
+                        name: "Edge",
+                        y: 4.02,
+                        drilldown: "Edge"
+                    },
+                    {
+                        name: "Opera",
+                        y: 1.92,
+                        drilldown: "Opera"
+                    },
+                    {
+                        name: "Other",
+                        y: 7.62,
+                        drilldown: null
+                    }
+                ]
+            }
+        ],
+
+    });
 </script>

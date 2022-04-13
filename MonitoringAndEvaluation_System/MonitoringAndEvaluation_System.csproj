@@ -368,6 +368,8 @@
     <Content Include="Content\Template\vendor\weather-icons\font\weathericons-regular-webfont.woff" />
     <Content Include="Content\Template\vendor\weather-icons\font\weathericons-regular-webfont.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\chart\exporting.js" />
+    <Content Include="Scripts\chart\highcharts.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />

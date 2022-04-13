@@ -45,15 +45,15 @@
                                 @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required" })
                             </div>
 
+                            
+                        </div>
+                        <div class="row">
+
                             <div class="col-lg-4">
                                 <label class="col-form-label">Procurement Header</label>
                                 @Html.DropDownListFor(m => m.PlannedProcurement_ID, new SelectList(Model.comboProcurementHead, "PlannedProcurementID", "ProcrumetHeader"), new { @class = " form-control" })
                                 @Html.ValidationMessageFor(m => m.PlannedProcurement_ID, "", new { @class = "parsley-required" })
                             </div>
-                        </div>
-                        <div class="row">
-
-
                             <div class="col-lg-4">
                                 <label class="col-form-label">Aproved Per Item Cost</label>
                                 <input hidden id="hdnRemainingProcurement" name="hdnRemainingProcurement">
@@ -61,10 +61,7 @@
                                     <label id="lblRemainingProcurement" name="lblRemainingProcurement" for="lblRemainingProcurement" class="form-control">0</label>
                                 </div>
 
-
-
                             </div>
-
 
                             <div class="col-lg-4">
                                 <label class="col-form-label">No of Items *</label>

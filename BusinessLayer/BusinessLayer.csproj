@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BatchManagementBL.cs" />
     <Compile Include="ChangeManagementBL.cs" />
+    <Compile Include="DashboardManangmentBL.cs" />
     <Compile Include="EvaulationManagementBL.cs" />
     <Compile Include="FinanceManagementBL.cs" />
     <Compile Include="InsightIndicatorBL.cs" />

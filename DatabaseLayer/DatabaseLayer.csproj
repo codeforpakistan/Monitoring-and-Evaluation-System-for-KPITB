@@ -77,6 +77,7 @@
     <Compile Include="BatchManagementDL.cs" />
     <Compile Include="ChangeManagementDL.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="DashboardManangmentDL.cs" />
     <Compile Include="EvaulationManagementDL.cs" />
     <Compile Include="FinanceManagementDL.cs" />
     <Compile Include="IgnorePropertyAttribute.cs" />

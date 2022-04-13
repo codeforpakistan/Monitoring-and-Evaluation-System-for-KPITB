@@ -874,15 +874,22 @@ namespace ModelLayer
                 comboProjects = new List<ComboProject>();
                 comboSubProjects = new List<ComboSubProject>();
                 comboBatch = new List<ComboBatch>();
-                comboPlannedKPIs = new List<ComboPlannedKPIs>(); 
+                comboPlannedKPIs = new List<ComboPlannedKPIs>();
+                //KPIandIndicatorList = new KPIsANDInsightIndicatorVM();
+                ListKPIs = new List<KPIsForEvaulation>();
+                ListInsightIndicator = new List<InsightIndicatorForEvaulation>();
+                ListOfInsightIndicatorAndKPIs = new KPIsANDInsightIndicatorVM();
             }
+            public KPIsANDInsightIndicatorVM ListOfInsightIndicatorAndKPIs { get; set; }
 
-            
             public int Project_ID { get; set; }
             public int SubProject_ID { get; set; }
             public int Batch_ID { get; set; }
             public int CreatedByUser_ID { get; set; }
-            public KPIsANDInsightIndicatorVM KPIandIndicatorList = new KPIsANDInsightIndicatorVM();
+            //public KPIsANDInsightIndicatorVM KPIandIndicatorList { get; set; }
+
+            public List<InsightIndicatorForEvaulation> ListInsightIndicator { get; set; }
+            public List<KPIsForEvaulation> ListKPIs { get; set; }
 
             public int PlannedKPIs_ID { get; set; }
 
@@ -1228,6 +1235,10 @@ namespace ModelLayer
             public int InsightIndicatorFieldID { get; set; }
             public string InsightIndicatorFieldName { get; set; }
             public int InsightIndicatorDataType_ID { get; set; }
+
+            public string Feedback { get; set; }
+            public string Remarks { get; set; }
+            
             public int INTEGER { get; set; }
             public double FLOAT { get; set; }
             public string BOOLConvert { get; set; }
@@ -1245,6 +1256,7 @@ namespace ModelLayer
             public int ProjectKPIsStatusID { get; set; }
             public int ProjectKPIsAchived { get; set; }
             public string Remarks { get; set; }
+            public string Feedback { get; set; }
         }
 
         public partial class KPIsANDInsightIndicatorVM

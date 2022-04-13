@@ -27,14 +27,14 @@ namespace MonitoringAndEvaluation_System.Controllers
         }
 
         [HttpPost]
-        public ActionResult EvaluationCreate(CreateProjectKPIsStatusVM modelVM)
+        public ActionResult EvaluationCreate(CreateProjectKPIsStatusVM ListOfInsightIndicatorAndKPIs)
         {
-            StatusModel  status = new EvaulationManagementBL().InsertEvaulationBL(modelVM);
+            StatusModel  status = new EvaulationManagementBL().InsertEvaulationBL(ListOfInsightIndicatorAndKPIs);
             if (status.status)
             { ShowMessage(MessageBox.Success, OperationType.Saved, CommonMsg.SaveSuccessfully); }
             else { ShowMessage(MessageBox.Warning, OperationType.Warning, CommonMsg.OperationNotperform);  }
             
-            return View(modelVM);
+            return View(ListOfInsightIndicatorAndKPIs);
         }
 
         //Custom Function

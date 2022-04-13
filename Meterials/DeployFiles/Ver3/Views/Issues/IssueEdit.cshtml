@@ -1,0 +1,102 @@
+﻿@model ModelLayer.MainViewModel.EditIssueVM
+@{
+    ViewBag.Title = "Edit Issues";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
+}
+<!-- START row-->
+<div class="row">
+    <div class="col-xl-12">
+        @using (Html.BeginForm("IssueEdit", "Issues", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <!-- START card-->
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">Project Issue Log</div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="row">
+                            @Html.HiddenFor(m => m.IssuesID)
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Project </label>
+                                @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), "Please Select Project", new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
+                                @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Sub Project</label>
+                                <select class="form-control" id="sel1">
+                                    <option>Sub project 1</option>
+                                    <option>Sub project 2</option>
+                                    <option>Sub project 2</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Cycle/Batch</label>
+                                <select class="form-control" id="sel1">
+                                    <option>Peshawar</option>
+                                    <option>Bannu</option>
+                                    <option>Mardan</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Issue Description *</label>
+                                @Html.TextBoxFor(model => model.IssueDescription, new { @class = "form-control", @placeholder = "Enter Issue Details" })
+                                @Html.ValidationMessageFor(m => m.IssueDescription, "", new { @class = "parsley-required" })
+
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Status/ActionTaken *</label>
+                                @Html.TextBoxFor(model => model.ActionTaken, new { @class = "form-control", @placeholder = "Enter Status/ActionTaken" })
+                                @Html.ValidationMessageFor(m => m.ActionTaken, "", new { @class = "parsley-required" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Issue Date *</label>
+                                <input type="date" class="form-control " name="IssueDate" id="IssueDate" value="@Model.IssueDate.ToString("yyyy-MM-dd")">
+                                @Html.ValidationMessageFor(m => m.IssueDate, "", new { @class = "parsley-required", @id = "spanIssueDate" })
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="col-form-label">Solution/Remarks *</label>
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Enter Solution/Remarks" })
+                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="required">* Required fields</div>
+                        <hr />
+                        <div class="float-right">
+                            <button class="btn btn-primary" type="submit">Update</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- END card-->
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        //$(document).ready(function () {
+        //    $('.datepicker').datepicker();
+        //    alert('Trigered1');
+        //});
+
+        //$("#IssueDate").on('change', function () {
+        //    debugger;
+        //    var dd = $("#IssueDate").val();
+        //    $('#IssueDate').append(dd);
+        //    alert(dd);
+        //});
+    </script>
+}

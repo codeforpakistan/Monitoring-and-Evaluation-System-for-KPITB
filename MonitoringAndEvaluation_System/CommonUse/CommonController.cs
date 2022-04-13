@@ -105,7 +105,7 @@ namespace MonitoringAndEvaluation_System.CommonUse
             if (_IsEvaluationForm == "Evaluation")
             {
                 modelVM.IsEvaluationForm = _IsEvaluationForm;
-                modelVM.ListOfInsightIndicatorAndKPIs = new EvaulationManagementBL().InsightIndicatorForEvaulationBL(ProjectID);
+                modelVM.ListOfInsightIndicatorAndKPIs = new EvaulationManagementBL().InsightIndicatorForEvaulationBL(ProjectID, SubProjectID, Batch_ID);
                 //////batchIndicatorVM.ListOfInsightIndicatorAndKPIs = new EvaulationManagementBL().InsightIndicatorForEvaulationBL(3021);
             }
             if (_IsChangeManagementForm == "ChangeManagementForm")

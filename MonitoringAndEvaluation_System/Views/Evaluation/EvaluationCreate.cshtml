@@ -15,7 +15,7 @@
 <!-- START row-->
 <div class="row">
     <div class="col-xl-12">
-        @using (Html.BeginForm("EvaluationCreate", "Evaluation", FormMethod.Post, new { @id = "SubmitFromBtnCreate", @class = "form-horizontal" }))
+        @using (Html.BeginForm("EvaluationCreate", "Evaluation", FormMethod.Post, new { @class = "form-horizontal" }))
         {
             <!-- START card-->
 
@@ -157,7 +157,7 @@
                                         </div>*@
                                     <div class="col-lg-12">
                                         <label class="col-form-label">Project KPIs</label>
-                                        <table class="table table-striped" name="tblKPIs" id="tblKPIs">
+                                        <table class="table table-striped" id="tblKPIs">
                                             <thead class="table-info">
                                                 <tr>
                                                     <th data-column-id="id" data-type="numeric">ID</th>
@@ -177,7 +177,7 @@
 
                                     <div class="col-lg-12">
                                         <label class="col-form-label">Insight Indicator</label>
-                                        <table class="table table-striped" name="tblInsightIndicator" id="tblInsightIndicator">
+                                        <table class="table table-striped" id="tblInsightIndicator">
                                             <thead class="table-info">
                                                 <tr>
                                                     <th data-column-id="id" data-type="numeric">ID</th>
@@ -237,7 +237,7 @@
     <script src="~/Content/Template/js/CustomCode.js"></script>
 }
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     //NajeebCode
     function AddDropDownList() {
         //Build an array containing Customer records.
@@ -321,7 +321,7 @@
     function RemoveDemerits(row) {
         $(row).parent().parent().remove();
     }
-</script>
+</script>*@
 
 
 

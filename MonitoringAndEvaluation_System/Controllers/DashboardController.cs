@@ -21,8 +21,15 @@ namespace MonitoringAndEvaluation_System.Controllers
             Dashboardv1 Dashboardv1Charts = Dashboard.dashboardv1DL();
             return View(Dashboardv1Charts);
         }
+        [HttpGet]
+        public ActionResult GetData()
+        {
+            GetDashboardVM data = new GetDashboardVM();
 
-
+             List<GetPKPIsChart> ss = new DashboardManangmentBL().getDashboardBL();
+            data.getPKPIsChartQ1 = ss;
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
 
         public ActionResult Menus()

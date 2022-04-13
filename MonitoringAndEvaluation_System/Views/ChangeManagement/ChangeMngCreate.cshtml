@@ -35,7 +35,7 @@
                                     <div class="row">
                                         <div class="col-lg-6 ">
                                             <label class="col-form-label">Meeting No. *</label>
-                                            @Html.TextBoxFor(m => m.MeetingNo, new { @class = "form-control", @placeholder = "Enter Meeting No" })
+                                            @Html.TextBoxFor(m => m.MeetingNo, new { @class = "form-control Select-date", @type = "date" })
                                             @Html.ValidationMessageFor(m => m.MeetingNo, "", new { @class = "parsley-required" })
                                         </div>
                                         <div class="col-lg-6 ">
@@ -45,12 +45,12 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <label for="sel1">Select Project </label>
-                                            @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new {  @class = "select2-3 form-control " })
+                                            @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2-3 form-control " })
                                             @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
                                         </div>
                                         <div class="col-lg-6">
                                             <label>Select Sub Project</label>
-                                            @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new {  @class = "select2-4 form-control " })
+                                            @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2-4 form-control " })
                                             @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
                                         </div>
                                     </div>
@@ -74,6 +74,7 @@
                                         <th data-column-id="ChangeVaule">Change Vaule</th>
                                         <th data-column-id="Decision">Decision</th>
                                         <th data-column-id="ActionTaken">Action Taken</th>
+                                        <th data-column-id="ActionTaken">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tblBodyChangeManagementProject">
@@ -93,6 +94,7 @@
                                         <th data-column-id="ChangeVaule">Change Vaule</th>
                                         <th data-column-id="Decision">Decision</th>
                                         <th data-column-id="ActionTaken">Action Taken</th>
+                                        <th data-column-id="ActionTaken">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tblBodyChangeManagementSchedule">
@@ -112,6 +114,7 @@
                                         <th data-column-id="ChangeVaule">Change Vaule</th>
                                         <th data-column-id="Decision">Decision</th>
                                         <th data-column-id="ActionTaken">Action Taken</th>
+                                        <th data-column-id="ActionTaken">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tblBodyChangeManagementPlannedKPIs">
@@ -131,6 +134,7 @@
                                         <th data-column-id="ChangeVaule">Change Vaule</th>
                                         <th data-column-id="Decision">Decision</th>
                                         <th data-column-id="ActionTaken">Action Taken</th>
+                                        <th data-column-id="ActionTaken">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tblBodyChangeManagementPlannedProcurement">

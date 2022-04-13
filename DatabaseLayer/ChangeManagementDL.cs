@@ -17,7 +17,7 @@ namespace DatabaseLayer
 {
     public class ChangeManagementDL
     {
-        public static ChangeManagementVM GetChangeManagementDataDL(int _ProjectID)
+        public static ChangeManagementVM GetChangeManagementDataDL(int _ProjectID,int? _SubProjectID)
         {
             ChangeManagementVM returnList = new ChangeManagementVM();
             IDbConnection Con = null;
@@ -27,6 +27,7 @@ namespace DatabaseLayer
                 Con.Open();
                 DynamicParameters ObjParm = new DynamicParameters();
                 ObjParm.Add("@ProjectID", _ProjectID);
+                ObjParm.Add("@SubProjectID", _SubProjectID);
                 using (var gridReader = Con.QueryMultiple("sp_GetChangeManagementData", ObjParm, commandType: CommandType.StoredProcedure))
                 {
                     returnList.Change_ManagementProjectList = gridReader.Read<Change_ManagementProject>().ToList();
@@ -65,6 +66,7 @@ namespace DatabaseLayer
                     DynamicParameters ObjParm = new DynamicParameters();
                     ObjParm.Add("@MeetingNo", m.MeetingNo);
                     ObjParm.Add("@MeetingDate", m.MeetingDate);
+                    ObjParm.Add("@EntryDate", DateTime.Now);
                     ObjParm.Add("@CreatedByUser_ID", LoginUerID);
                  
                     statusModel = Repose.ExcuteNonQueryWithStatusModel("sp_changeManagement", ObjParm, "@ChangeManagementID", ref ChangeManagementID);
@@ -153,9 +155,9 @@ namespace DatabaseLayer
                         concatDecision += ",Target:" + m.Change_ManagementPlannedKPIList[i].DecisionTarget;
                         concatDecision += ",TimeLine:" + m.Change_ManagementPlannedKPIList[i].DecisionTimeLine;
                         concatActionTaken = null;
-                        concatActionTaken = "IndicatorDescription:" + m.Change_ManagementPlannedKPIList[i].DecisionIndicatorDescription;
-                        concatActionTaken += ",Target:" + m.Change_ManagementPlannedKPIList[i].DecisionTarget;
-                        concatActionTaken += ",TimeLine:" + m.Change_ManagementPlannedKPIList[i].DecisionTimeLine;
+                        concatActionTaken = "IndicatorDescription:" + m.Change_ManagementPlannedKPIList[i].ActionTakenIndicatorDescription;
+                        concatActionTaken += ",Target:" + m.Change_ManagementPlannedKPIList[i].ActionTakenIndicatorDescription;
+                        concatActionTaken += ",TimeLine:" + m.Change_ManagementPlannedKPIList[i].ActionTakenIndicatorDescription;
                         
                         DynamicParameters Objcommon = new DynamicParameters();
                         Objcommon.Add("@CreatedByUser_ID", LoginUerID);

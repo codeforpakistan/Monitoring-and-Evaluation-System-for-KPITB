@@ -1469,6 +1469,7 @@ namespace ModelLayer
             public List<Change_ManagementPlannedProcurement> Change_ManagementPlannedProcurementList { get; set; }
             public int CreatedByUser_ID { get; set; }
             public int Project_ID { get; set; }
+              
             public int SubProject_ID { get; set; }
             public int ProjectHistory_ID { get; set; }
             public int SubProjectHistory_ID { get; set; }
@@ -1484,7 +1485,35 @@ namespace ModelLayer
       
         }
         #endregion
+        #region Admin
+        //Get All PlannedKPIs For Chart
 
+        public partial class  GetDashboardVM
+        {
+            public GetDashboardVM()
+            {
+                getPKPIsChartQ1 = new List<GetPKPIsChart>();
+            }
+            public List<GetPKPIsChart> getPKPIsChartQ1 { get; set; }
+            //public GetProjectDetailsQ2 getProjectDetailsQ2 { get; set; }
+            //public GetProjectDetailsQ3 getProjectDetailsQ3 { get; set; }
+            //public GetProjectDetailsQ4 getProjectDetailsQ4 { get; set; }
+            //public GetProjectDetailsQ5 getProjectDetailsQ5 { get; set; }
+            //public List<GetProjectDetailsQ6> getProjectDetailsQ6Lst { get; set; }
+            //public List<GetProjectDetailsQ7> getProjectDetailsQ7Lst { get; set; }
+            //public List<InsightIndicatorNames> getIndicatorLst { get; set; }
+        }
+        public partial class GetPKPIsChart
+        {
+            public int Project_ID { get; set; }
+            public int SubProject_ID { get; set; }
+            public int PlannedKPIsID { get; set; }
+            public string IndicatorDescription { get; set; }
+            public int Target { get; set; }
+            public int ProjectKPIsStatusID { get; set; }
+            public int ProjectKPIsAchived { get; set; }
+        }
+        #endregion
     }
 
 }

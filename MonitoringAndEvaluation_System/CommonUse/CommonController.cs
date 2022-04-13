@@ -111,7 +111,7 @@ namespace MonitoringAndEvaluation_System.CommonUse
             if (_IsChangeManagementForm == "ChangeManagementForm")
             {
                 modelVM.IsChangeManagementForm = _IsChangeManagementForm;
-                modelVM.ListOfChangeManagementVM = new ChangeManagementBL().GetChangeManagementDataBL(ProjectID);
+                modelVM.ListOfChangeManagementVM = new ChangeManagementBL().GetChangeManagementDataBL(ProjectID,SubProjectID);
             }
 
             return Json(modelVM, JsonRequestBehavior.AllowGet);

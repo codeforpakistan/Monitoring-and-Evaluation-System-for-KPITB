@@ -446,11 +446,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
-      <Project>{E28C3B9F-076F-41A6-8104-409A1AE23AC8}</Project>
+      <Project>{e28c3b9f-076f-41a6-8104-409a1ae23ac8}</Project>
       <Name>BusinessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj">
-      <Project>{19A9A74E-CDE5-490E-803C-C89E1406E43D}</Project>
+      <Project>{19a9a74e-cde5-490e-803c-c89e1406e43d}</Project>
       <Name>DatabaseLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModelLayer\ModelLayer.csproj">

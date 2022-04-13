@@ -26,8 +26,8 @@ namespace MonitoringAndEvaluation_System.Controllers
         {
             GetDashboardVM data = new GetDashboardVM();
 
-             List<GetPKPIsChart> ss = new DashboardManangmentBL().getDashboardBL();
-            data.getPKPIsChartQ1 = ss;
+            // List<GetPKPIsChart> ss = new DashboardManangmentBL().getDashboardBL();
+            //data.getPKPIsChartQ1 = ss;
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 

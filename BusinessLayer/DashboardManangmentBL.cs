@@ -10,11 +10,10 @@ namespace BusinessLayer
 {
     public class DashboardManangmentBL
     {
-        public List<GetPKPIsChart> getDashboardBL()
-        {
-            var getData = DashboardManangmentDL.getDashboardDL();
-
-            return getData;
-        }
+        //public List<GetPKPIsChart> getDashboardBL()
+        //{
+        //    //var getData = DashboardManangmentDL.getDashboardDL();
+        //    //return getData;
+        //}
     }
 }

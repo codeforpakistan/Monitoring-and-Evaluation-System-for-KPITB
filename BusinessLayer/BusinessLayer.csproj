@@ -63,7 +63,7 @@
       <Name>DatabaseLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModelLayer\ModelLayer.csproj">
-      <Project>{82D48388-F45F-4827-BE68-A1DB700300E7}</Project>
+      <Project>{82d48388-f45f-4827-be68-a1db700300e7}</Project>
       <Name>ModelLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Repositories\Repositories.csproj">

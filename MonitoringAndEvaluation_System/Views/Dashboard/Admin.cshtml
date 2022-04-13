@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ModelLayer.StoreProcModel.Dashboardv1
+@{
     ViewBag.Title = "Admin";
 }
 
@@ -116,7 +117,7 @@
                                     <strong>Approved Budget:</strong>
                                 </td>
                                 <td>
-                                    <strong>340404</strong>
+                                    <strong>@Model.oneLinearVM.oneLinearRow1.TotalApprovedBudget</strong>
                                 </td>
                             </tr>
                             <tr>
@@ -124,9 +125,9 @@
                                     <div class="card-body offset-3">
                                         <div class="text-info">Budget Utilization %</div>
                                         <div class="text-center py-4 ">
-                                            <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="70" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
+                                            <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="@Model.oneLinearVM.oneLinearRow1.PerReleasedBudget" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
                                                  data-scale-Color="false" data-line-width="10" data-line-cap="round" data-size="150">
-                                                <span>70%</span>
+                                                <span>@Model.oneLinearVM.oneLinearRow1.PerReleasedBudget%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -237,7 +238,7 @@
                                     <strong>Digital Access:</strong>
                                 </td>
                                 <td>
-                                    8
+                                    @Model.oneLinearVM.oneLinearRow2.DigitalAccess
                                 </td>
                             </tr>
                             <tr>
@@ -245,7 +246,7 @@
                                     <strong>Digital Governance:</strong>
                                 </td>
                                 <td>
-                                    45
+                                    @Model.oneLinearVM.oneLinearRow2.DigitalGovernance
                                 </td>
                             </tr>
                             <tr>
@@ -253,7 +254,7 @@
                                     <strong>Digital Economy:</strong>
                                 </td>
                                 <td>
-                                    456
+                                    @Model.oneLinearVM.oneLinearRow2.DigitalEconomy
                                 </td>
                             </tr>
                             <tr>
@@ -261,7 +262,7 @@
                                     <strong>Digital Skills:</strong>
                                 </td>
                                 <td>
-                                    45
+                                    @Model.oneLinearVM.oneLinearRow2.DigitalSkills
                                 </td>
                             </tr>
                         </tbody>
@@ -449,7 +450,7 @@
    
 </div>
 <!-- END row-->
-<script>
+      <script>
     Highcharts.chart('container', {
         chart: {
             plotBackgroundColor: null,
@@ -479,37 +480,20 @@
             }
         },
         series: [{
-            name: 'Brands',
+            name: 'Digital Policy',
             colorByPoint: true,
-            data: [{
-                name: 'Chrome',
-                y: 61.41,
-                sliced: true,
-                selected: true
+            data: [ {
+                name: 'Access',
+                y: @Model.oneLinearVM.oneLinearRow2.DigitalAccess
             }, {
-                name: 'Internet Explorer',
-                y: 11.84
+                name: 'Governance',
+                y: @Model.oneLinearVM.oneLinearRow2.DigitalGovernance
             }, {
-                name: 'Firefox',
-                y: 10.85
+                name: 'Economy',
+                y: @Model.oneLinearVM.oneLinearRow2.DigitalEconomy
             }, {
-                name: 'Edge',
-                y: 4.67
-            }, {
-                name: 'Safari',
-                y: 4.18
-            }, {
-                name: 'Sogou Explorer',
-                y: 1.64
-            }, {
-                name: 'Opera',
-                y: 1.6
-            }, {
-                name: 'QQ',
-                y: 1.2
-            }, {
-                name: 'Other',
-                y: 2.61
+                name: 'Skills',
+                y: @Model.oneLinearVM.oneLinearRow2.DigitalSkills
             }]
         }]
     });
@@ -647,7 +631,7 @@
         title: {
             text: 'SDGS Project'
         },
-       
+
 
         accessibility: {
             announceNewData: {
@@ -715,7 +699,7 @@
                 ]
             }
         ],
-       
+
     });
     Highcharts.chart('container4', {
         chart: {
@@ -871,4 +855,4 @@
         ],
 
     });
-</script>
+      </script>

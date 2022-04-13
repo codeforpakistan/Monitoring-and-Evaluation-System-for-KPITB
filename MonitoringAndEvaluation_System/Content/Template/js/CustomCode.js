@@ -522,7 +522,7 @@ $("#Project_ID").on('change', function () {
                     Feedback += '<select class="form-control" name="ListOfInsightIndicatorAndKPIs.ListKPIs[' + loop + '].Feedback" required >'
                     Feedback += '<option value="">Select Option</option>'
                     Feedback += '<option value="true">Satisfied</option>'
-                    Feedback += '<option value="false">Non-Satisfied</option>'
+                    Feedback += '<option value="NonSatisfied">Non-Satisfied</option>'
                     Feedback += '</select>'
                     Feedback += '</td> ';
 
@@ -576,10 +576,10 @@ $("#Project_ID").on('change', function () {
 
                     var IndicatorFeedback = '';
                     IndicatorFeedback = '<td>';
-                    IndicatorFeedback += '<select class="form-control" name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].Remarks" required >'
+                    IndicatorFeedback += '<select class="form-control" name="ListOfInsightIndicatorAndKPIs.ListInsightIndicator[' + loop + '].Feedback" required >'
                     IndicatorFeedback += '<option value="">Select Option</option>'
-                    IndicatorFeedback += '<option value="true">Satisfied</option>'
-                    IndicatorFeedback += '<option value="false">Non-Satisfied</option>'
+                    IndicatorFeedback += '<option value="Satisfied">Satisfied</option>'
+                    IndicatorFeedback += '<option value="NonSatisfied">Non-Satisfied</option>'
                     IndicatorFeedback += '</select>'
                     IndicatorFeedback += '</td> ';
                    

@@ -1,0 +1,278 @@
+﻿@model ModelLayer.MainViewModel.GetProjectDetailsVM
+<!-- Page content-->
+
+<div class="content-heading">
+    <div>
+        Project Details
+    </div>
+</div>
+<div class="col-xl-12">
+    <!-- Main card-->
+    <div class="card b">
+        <div class="card-header">
+            <div class="float-right mt-2">
+                Project Type:
+                <div class="badge badge-info">@Model.getProjectDetailsQ1.ProjectType</div>
+            </div>
+            <h4 class="my-2">
+                <span>
+                    @{
+                        if (Model.getProjectDetailsQ6Lst.Count > 0)
+                        {
+                            @Model.getProjectDetailsQ6Lst[0].ProjectName
+                        }
+                    }
+                </span>
+            </h4>
+        </div>
+        <div class="card-body bb bt">
+            <!-- START card-->
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="row">
+                        <div class="col-2">
+                            <h3 class="m-0">
+                                @{ Model.getProjectDetailsQ1.stackholder = Model.getProjectDetailsQ1 != null ? Model.getProjectDetailsQ1.stackholder : 0;}
+                                @Model.getProjectDetailsQ1.stackholder
+                            </h3>
+                            <p class="m-0 bg-warning">Stakeholder</p>
+                        </div>
+                        <div class="col-2">
+                            <h3 class="m-0">
+                                @{ Model.getProjectDetailsQ1.ActiveIssues = Model.getProjectDetailsQ1 != null ? Model.getProjectDetailsQ1.ActiveIssues : 0;}
+                                @Model.getProjectDetailsQ1.ActiveIssues
+                            </h3>
+                            <p class="m-0 bg-warning">Active Issues</p>
+                        </div>
+                        <div class="col-2">
+                            <h3 class="m-0">
+                                @{ Model.getProjectDetailsQ1.ActiveRisks = Model.getProjectDetailsQ1 != null ? Model.getProjectDetailsQ1.ActiveRisks : 0;}
+                                @Model.getProjectDetailsQ1.ActiveRisks
+                            </h3>
+                            <p class="m-0 bg-warning">Active Risks</p>
+                        </div>
+                        <div class="col-2">
+                            <h3 class="m-0">
+                                @{ Model.getProjectDetailsQ1.PlannedHR = Model.getProjectDetailsQ1 != null ? Model.getProjectDetailsQ1.PlannedHR : 0;}
+                                @Model.getProjectDetailsQ1.PlannedHR
+                            </h3>
+                            <p class="m-0 bg-warning">Planned HR</p>
+                        </div>
+                        <div class="col-2">
+                            <h3 class="m-0">
+                                @{ Model.getProjectDetailsQ1.RecruitedHR = Model.getProjectDetailsQ1 != null ? Model.getProjectDetailsQ1.RecruitedHR : 0;}
+                                @Model.getProjectDetailsQ1.RecruitedHR
+                            </h3>
+                            <p class="m-0 bg-warning">Recruited HR</p>
+                        </div>
+                        <div class="col-2">
+                            <h3 class="m-0">
+                                @{ Model.getProjectDetailsQ1.Funding_Source = Model.getProjectDetailsQ1 != null ? Model.getProjectDetailsQ1.Funding_Source : 0;}
+                                @Model.getProjectDetailsQ1.Funding_Source
+                            </h3>
+                            <p class="m-0 bg-warning">Founding Source</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card-->
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xl-4">
+                    <!-- START loader widget-->
+                    <div class="card card-default">
+                        <div class="card-body">
+                            <a class="text-muted float-right" href="#">
+                                <em class="fa fa-arrow-right"></em>
+                            </a>
+                            <div class="text-info">PROGRESS OVERVIEW</div>
+                            <div class="text-center py-4">
+                                <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="70" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
+                                     data-scale-Color="false" data-line-width="10" data-line-cap="round" data-size="145">
+                                    <span>70%</span>
+                                </div>
+                            </div>
+                            <div class="text-center" data-sparkline="" data-bar-color="#23b7e5" data-height="38" data-bar-width="5" data-bar-spacing="2" data-values="5,4,8,7,8,5,4,6,5,5,9,4,6,3,4,7,5,4,7"></div>
+                        </div>
+                        <div class="card-footer">
+                            <p class="text-muted">
+                                <span class="h4">Statuse</span>
+                                <span class="text-dark h4">Completed</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- END loader widget-->
+                </div>
+                <div class="col-xl-4">
+                    <div class="card b">
+                        <div class="card-header">
+                            <h4 class="m-0">Financial Details</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="w-100" data-toggle="tooltip" data-title="Health">
+                                    <div class="progress progress-xs m-0">
+                                        <div class="progress-bar bg-warning" style="width:22%;"></div>
+                                    </div>
+                                </div>
+                                <div class="wd-xxs text-right">
+                                    <div class="text-bold text-muted">22%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-8">
+                                        <strong>Planned Budget</strong>
+                                    </td>
+                                    <td>
+                                        @{ Model.getProjectDetailsQ2.FormatedResult = Model.getProjectDetailsQ2 != null ? Model.getProjectDetailsQ2.FormatedResult : "";}
+                                        @Model.getProjectDetailsQ2.FormatedResult
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-8">
+                                        <strong>Allocated Budget</strong>
+                                    </td>
+                                    <td>
+                                        @{ Model.getProjectDetailsQ3.AllocatedBudget = Model.getProjectDetailsQ3 != null ? Model.getProjectDetailsQ3.AllocatedBudget : 0;}
+                                        @Model.getProjectDetailsQ3.AllocatedBudget
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-8">
+                                        <strong>Expenditure Budget</strong>
+                                    </td>
+                                    <td>
+                                        @{ Model.getProjectDetailsQ3.ExpenditureBudget = Model.getProjectDetailsQ3 != null ? Model.getProjectDetailsQ3.ExpenditureBudget : 0;}
+                                    @Model.getProjectDetailsQ3.ExpenditureBudget
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-8">
+                                    <strong>Remaining Budget</strong>
+                                </td>
+                                <td>
+                                    @{ Model.getProjectDetailsQ3.RemainingBudget = Model.getProjectDetailsQ3 != null ? Model.getProjectDetailsQ3.RemainingBudget : 0;}
+                                @Model.getProjectDetailsQ3.RemainingBudget
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Budget Utalization %</strong>
+                            </td>
+                            <td>
+                                <div class="inline mr-2" data-sparkline="" data-values="20,80" data-type="pie" data-height="30" data-slice-colors="[&quot;#edf1f2&quot;, &quot;#23b7e5&quot;]"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card b">
+                <div class="card-header">
+                    <h4 class="m-0">Project Schedule</h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="w-100" data-toggle="tooltip" data-title="Health">
+                            <div class="progress progress-xs m-0">
+                                <div class="progress-bar bg-warning" style="width:50%;"></div>
+                            </div>
+                        </div>
+                        <div class="wd-xxs text-right">
+                            <div class="text-bold text-muted">50%</div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td class="col-md-7">
+                                <strong>Planned Start Date</strong>
+                            </td>
+                            <td>
+                                @{ Model.getProjectDetailsQ4.PlannedDate = Model.getProjectDetailsQ4 != null ? Model.getProjectDetailsQ4.PlannedDate : Model.getProjectDetailsQ4.PlannedDate;}
+                            @Model.getProjectDetailsQ4.PlannedDate
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-7">
+                            <strong>Actual Start Date</strong>
+                        </td>
+                        <td>
+                            @{ Model.getProjectDetailsQ4.ActualDate = Model.getProjectDetailsQ4 != null ? Model.getProjectDetailsQ4.ActualDate : Model.getProjectDetailsQ4.ActualDate;}
+                        @Model.getProjectDetailsQ4.ActualDate
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-7">
+                        <strong>End Date</strong>
+                    </td>
+                    <td>
+                        @{ Model.getProjectDetailsQ4.EndDate = Model.getProjectDetailsQ4 != null ? Model.getProjectDetailsQ4.EndDate : Model.getProjectDetailsQ4.EndDate;}
+                    @Model.getProjectDetailsQ4.EndDate
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Schedule Utalization %</strong>
+                </td>
+                <td>
+                    <div class="inline mr-2" data-sparkline="" data-values="20,80" data-type="pie" data-height="75" data-slice-colors="[&quot;#edf1f2&quot;, &quot;#23b7e5&quot;]"></div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+<div class="card-body">
+    <h4>Description</h4>
+    <p>
+        @{ Model.getProjectDetailsQ5.ObjectiveName = Model.getProjectDetailsQ5 != null ? Model.getProjectDetailsQ5.ObjectiveName : "";}
+        @Model.getProjectDetailsQ5.ObjectiveName
+    </p>
+</div>
+</div>
+
+<!-- End Main card-->
+<hr />
+<!-- Team messages-->
+<div class="card-default">
+    <div class="card-header h4">
+        Project KPIs
+    </div>
+    <div class="card-body">
+        <div class="row">
+            @{ if (Model.getIndicatorLst.Count > 0)
+                {
+                    foreach (var itemParent in Model.getIndicatorLst)
+                    {
+                        <div class="col-lg-6">
+                            <p class="lead bb">@itemParent.InsightIndicatorName</p>
+                            <form class="form-horizontal">
+                                @foreach (var item in Model.getProjectDetailsQ7Lst.Where(x => x.InsightIndicatorName == itemParent.InsightIndicatorName))
+                                {
+                                    <div class="form-group row">
+                                        <div class="col-md-4">@item.InsightIndicatorFieldName</div>
+                                        <div class="col-md-8">
+                                            <strong>@item.CommonFiled</strong>
+                                        </div>
+                                    </div>
+                                }
+                            </form>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <!-- End Team messages-->
+    </div>
+</div>
+</div>
+</div>

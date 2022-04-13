@@ -11,10 +11,10 @@ namespace BusinessLayer
 {
     public class EvaulationManagementBL
     {
-        public KPIsANDInsightIndicatorVM InsightIndicatorForEvaulationBL(int _ProjectID)
+        public KPIsANDInsightIndicatorVM InsightIndicatorForEvaulationBL(int _ProjectID, int? SubProject_ID, int? Batch_ID)
         {
             KPIsANDInsightIndicatorVM returnList = new KPIsANDInsightIndicatorVM();
-            returnList = EvaulationManagementDL.InsightIndicatorForEvaulationDL(_ProjectID);
+            returnList = EvaulationManagementDL.InsightIndicatorForEvaulationDL(_ProjectID, SubProject_ID, Batch_ID);
 
             //List<InsightIndicatorDataTypeCommonValueVM> mLst = new List<InsightIndicatorDataTypeCommonValueVM>();
             //InsightIndicatorDataTypeCommonValueVM m = new InsightIndicatorDataTypeCommonValueVM();

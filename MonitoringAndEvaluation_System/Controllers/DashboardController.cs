@@ -1,5 +1,6 @@
 ﻿
 using BusinessLayer;
+using DatabaseLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using static ModelLayer.MainModel;
 using static ModelLayer.MainViewModel;
+using static ModelLayer.StoreProcModel;
 
 namespace MonitoringAndEvaluation_System.Controllers
 {
@@ -16,15 +18,16 @@ namespace MonitoringAndEvaluation_System.Controllers
         // GET: Dashboard
         public ActionResult Admin()
         {
-            return View();
+            Dashboardv1 Dashboardv1Charts = Dashboard.dashboardv1DL();
+            return View(Dashboardv1Charts);
         }
         [HttpGet]
         public ActionResult GetData()
         {
             GetDashboardVM data = new GetDashboardVM();
 
-             List<GetPKPIsChart> ss = new DashboardManangmentBL().getDashboardBL();
-            data.getPKPIsChartQ1 = ss;
+            // List<GetPKPIsChart> ss = new DashboardManangmentBL().getDashboardBL();
+            //data.getPKPIsChartQ1 = ss;
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 

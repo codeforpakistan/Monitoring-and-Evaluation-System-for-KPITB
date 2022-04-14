@@ -904,6 +904,8 @@ namespace DatabaseLayer
                     getProjectDetailsVM.getProjectDetailsQ4 = multi.Read<GetProjectDetailsQ4>().FirstOrDefault();
                     getProjectDetailsVM.getProjectDetailsQ5 = multi.Read<GetProjectDetailsQ5>().FirstOrDefault();
                     getProjectDetailsVM.getProjectDetailsQ6Lst = multi.Read<GetProjectDetailsQ6>().ToList();
+                    getProjectDetailsVM.getProjectDetailsProjectKPIsLst = multi.Read<GetProjectDetails_ProjectKPIs>().ToList();
+                    getProjectDetailsVM.getProjectDetailsIssuesLst = multi.Read<GetProjectDetails_Issues>().ToList();
                     //getProjectDetailsVM.getProjectDetailsQ7 = multi.Read<GetProjectDetailsQ7>().FirstOrDefault();
                 }
             }

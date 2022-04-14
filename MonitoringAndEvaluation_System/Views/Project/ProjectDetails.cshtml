@@ -132,7 +132,6 @@
         </div>
 
         <div class="row">
-
             <div class="col-xl-6">
                 <div class="card b">
                     <div class="card-header">
@@ -165,7 +164,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                             <tr>
                                 <td>
                                     Trainee
@@ -178,7 +177,7 @@
                                     300
                                 </td>
                             </tr>
-                            
+
 
                         </tbody>
                     </table>
@@ -189,7 +188,7 @@
                 </div>
 
             </div>
-           <div class="col-xl-6">
+            <div class="col-xl-6">
                 <div class="card b">
                     <div class="card-header">
                         <h4 class="m-0">Impact Indicator</h4>
@@ -215,11 +214,11 @@
                                 <td class="col-md-8">
                                     <strong>Achieved Value</strong>
                                 </td>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                             <tr>
                                 <td>
                                     Total Start upt
@@ -228,9 +227,9 @@
                                 <td>
                                     20
                                 </td>
-                                
+
                             </tr>
-                            
+
 
                         </tbody>
                     </table>
@@ -300,7 +299,7 @@
                                         @Model.getProjectDetailsQ3.RemainingBudget
                                     </td>
                                 </tr>
-                                
+
                             </tbody>
                         </table>
                         <figure class="highcharts-figure w-100">
@@ -363,52 +362,121 @@
                             <div id="schedule"></div>
                         </figure>
                     </div>
-                   
-                </div>
-            </div>
-            <div class="card-body">
-                <h4>Description</h4>
-                <p>
-                    @{ Model.getProjectDetailsQ5.ObjectiveName = Model.getProjectDetailsQ5 != null ? Model.getProjectDetailsQ5.ObjectiveName : "";}
-                    @Model.getProjectDetailsQ5.ObjectiveName
-                </p>
-            </div>
-        </div>
 
-        <!-- End Main card-->
-        <hr />
-        <!-- Team messages-->
-        <div class="card-default">
-            <div class="card-header h4">
-                Project KPIs
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    @{ if (Model.getIndicatorLst.Count > 0)
-                        {
-                            foreach (var itemParent in Model.getIndicatorLst)
-                            {
-                                <div class="col-lg-6">
-                                    <p class="lead bb">@itemParent.InsightIndicatorName</p>
-                                    <form class="form-horizontal">
-                                        @foreach (var item in Model.getProjectDetailsQ7Lst.Where(x => x.InsightIndicatorName == itemParent.InsightIndicatorName))
-                                        {
-                                            <div class="form-group row">
-                                                <div class="col-md-4">@item.InsightIndicatorFieldName</div>
-                                                <div class="col-md-8">
-                                                    <strong>@item.CommonFiled</strong>
-                                                </div>
-                                            </div>
-                                        }
-                                    </form>
-                                </div>
-                            }
-                        }
-                    }
                 </div>
-                <!-- End Team messages-->
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- START card-->
+                <div class="card card-default card-demo" id="cardDemo3">
+                    <div class="card-header">
+                        Project Objective
+                        <a class="float-right" href="#" data-tool="card-dismiss" data-toggle="tooltip" title="Close Card">
+                            <em class="fa fa-times"></em>
+                        </a>
+                        <a class="float-right" href="#" data-tool="card-collapse" data-toggle="tooltip" title="Collapse Card">
+                            <em class="fa fa-plus"></em>
+                        </a>
+                    </div>
+                    <!-- .card-wrapper is the element to be collapsed-->
+                    <div class="card-wrapper collapse">
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            Objective
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @{ Model.getProjectDetailsQ5.ObjectiveName = Model.getProjectDetailsQ5 != null ? Model.getProjectDetailsQ5.ObjectiveName : "";}
+                                            @Model.getProjectDetailsQ5.ObjectiveName
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+                <!-- END card-->
+            </div>
+            <div class="col-lg-6">
+                <!-- START card-->
+                <div class="card card-default card-demo" id="cardDemo3">
+                    <div class="card-header">
+                        Project Issues
+                        <a class="float-right" href="#" data-tool="card-dismiss" data-toggle="tooltip" title="Close Card">
+                            <em class="fa fa-times"></em>
+                        </a>
+                        <a class="float-right" href="#" data-tool="card-collapse" data-toggle="tooltip" title="Collapse Card">
+                            <em class="fa fa-plus"></em>
+                        </a>
+                    </div>
+                    <!-- .card-wrapper is the element to be collapsed-->
+                    <div class="card-wrapper collapse">
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            Issue Description
+                                        </td>
+                                        <td>
+                                            Issue Description
+                                        </td>
+                                        <td>
+                                            Issue Date
+                                        </td>
+                                        <td>
+                                            Action Taken
+                                        </td>
+                                        <td>
+                                            Solution/Remarks
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @{ Model.getProjectDetailsQ5.ObjectiveName = Model.getProjectDetailsQ5 != null ? Model.getProjectDetailsQ5.ObjectiveName : "";}
+                                            @Model.getProjectDetailsQ5.ObjectiveName
+                                        </td>
+                                        <td>
+                                            @{ Model.getProjectDetailsQ5.ObjectiveName = Model.getProjectDetailsQ5 != null ? Model.getProjectDetailsQ5.ObjectiveName : "";}
+                                            @Model.getProjectDetailsQ5.ObjectiveName
+                                        </td>
+                                        <td>
+                                            @{ Model.getProjectDetailsQ5.ObjectiveName = Model.getProjectDetailsQ5 != null ? Model.getProjectDetailsQ5.ObjectiveName : "";}
+                                            @Model.getProjectDetailsQ5.ObjectiveName
+                                        </td>
+                                        <td>
+                                            @{ Model.getProjectDetailsQ5.ObjectiveName = Model.getProjectDetailsQ5 != null ? Model.getProjectDetailsQ5.ObjectiveName : "";}
+                                            @Model.getProjectDetailsQ5.ObjectiveName
+                                        </td>
+                                        <td>
+                                            @{ Model.getProjectDetailsQ5.ObjectiveName = Model.getProjectDetailsQ5 != null ? Model.getProjectDetailsQ5.ObjectiveName : "";}
+                                            @Model.getProjectDetailsQ5.ObjectiveName
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+                <!-- END card-->
             </div>
         </div>
+     
+
     </div>
 </div>
 

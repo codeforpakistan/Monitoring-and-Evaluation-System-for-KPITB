@@ -434,6 +434,8 @@ namespace ModelLayer
             public GetProjectDetailsVM()
             {
                 getProjectDetailsQ6Lst = new List<GetProjectDetailsQ6>();
+                getProjectDetailsProjectKPIsLst = new List<GetProjectDetails_ProjectKPIs>();
+                getProjectDetailsIssuesLst = new List<GetProjectDetails_Issues>();
                 getProjectDetailsQ7Lst = new List<GetProjectDetailsQ7>();
                 getIndicatorLst = new List<InsightIndicatorNames>();
             }
@@ -443,6 +445,8 @@ namespace ModelLayer
             public GetProjectDetailsQ4 getProjectDetailsQ4 { get; set; }
             public GetProjectDetailsQ5 getProjectDetailsQ5 { get; set; }
             public List<GetProjectDetailsQ6> getProjectDetailsQ6Lst { get; set; }
+            public List<GetProjectDetails_ProjectKPIs> getProjectDetailsProjectKPIsLst { get; set; }
+            public List<GetProjectDetails_Issues> getProjectDetailsIssuesLst { get; set; }
             public List<GetProjectDetailsQ7> getProjectDetailsQ7Lst { get; set; }
             public List<InsightIndicatorNames> getIndicatorLst { get; set; }
         }
@@ -487,7 +491,23 @@ namespace ModelLayer
             public int InsightIntegerValue { get; set; }
             public int BoolValue { get; set; }
             public float FloatValue { get; set; }
-           
+        }
+        public partial class GetProjectDetails_ProjectKPIs
+        {
+            public int Project_ID { get; set; }
+            public int PlannedKPIs_ID { get; set; }
+            public string IndicatorDescription { get; set; }
+            public int Target { get; set; }
+            public int Achived { get; set; }
+            public float Percentage { get; set; }
+        }
+        public partial class GetProjectDetails_Issues
+        {
+            public string IssueDescription { get; set; }
+            public string IssueDate { get; set; }
+            public string ActionTaken { get; set; }
+            public string Remarks { get; set; }
+         
         }
         public partial class GetProjectDetailsQ7
         {

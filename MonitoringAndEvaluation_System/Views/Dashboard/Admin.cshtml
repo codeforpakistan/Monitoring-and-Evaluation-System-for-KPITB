@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-xl-4 col-lg-6 col-md-12">
         <!-- START card-->
         <div class="card flex-row align-items-center align-items-stretch border-0">
@@ -138,7 +138,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -158,7 +158,7 @@
                                     <strong>Approved Budget:</strong>
                                 </td>
                                 <td>
-                                    <strong>340404</strong>
+                                    <strong>@Model.ADPVM.ADPRow1.TotalApprovedBudget</strong>
                                 </td>
                             </tr>
                             <tr>
@@ -166,9 +166,9 @@
                                     <div class="card-body offset-3">
                                         <div class="text-info">Budget Utilization %</div>
                                         <div class="text-center py-4 ">
-                                            <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="70" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
+                                            <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="@Model.oneLinearVM.oneLinearRow1.PerReleasedBudget" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
                                                  data-scale-Color="false" data-line-width="10" data-line-cap="round" data-size="150">
-                                                <span>70%</span>
+                                                <span>@Model.ADPVM.ADPRow1.PerReleasedBudget%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -198,7 +198,7 @@
                                     <strong>Approved Budget:</strong>
                                 </td>
                                 <td>
-                                    <strong>340404</strong>
+                                    <strong>@Model.forigenFundedVM.forigenFundedRow1.PerReleasedBudget</strong>
                                 </td>
                             </tr>
                             <tr>
@@ -206,9 +206,9 @@
                                     <div class="card-body offset-3">
                                         <div class="text-info">Budget Utilization %</div>
                                         <div class="text-center py-4 ">
-                                            <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="70" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
+                                            <div class="easypie-chart easypie-chart-lg" data-easypiechart data-percent="@Model.forigenFundedVM.forigenFundedRow1.PerReleasedBudget" data-animate="{&quot;duration&quot;: &quot;800&quot;, &quot;enabled&quot;: &quot;true&quot;}" data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)"
                                                  data-scale-Color="false" data-line-width="10" data-line-cap="round" data-size="150">
-                                                <span>70%</span>
+                                                <span>@Model.forigenFundedVM.forigenFundedRow1.PerReleasedBudget%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -288,7 +288,7 @@
                                     <strong>Digital Access:</strong>
                                 </td>
                                 <td>
-                                    8
+                                    @Model.ADPVM.ADPRow2.DigitalAccess
                                 </td>
                             </tr>
                             <tr>
@@ -296,7 +296,7 @@
                                     <strong>Digital Governance:</strong>
                                 </td>
                                 <td>
-                                    45
+                                    @Model.ADPVM.ADPRow2.DigitalGovernance
                                 </td>
                             </tr>
                             <tr>
@@ -304,7 +304,7 @@
                                     <strong>Digital Economy:</strong>
                                 </td>
                                 <td>
-                                    456
+                                    @Model.ADPVM.ADPRow2.DigitalEconomy
                                 </td>
                             </tr>
                             <tr>
@@ -312,7 +312,7 @@
                                     <strong>Digital Skills:</strong>
                                 </td>
                                 <td>
-                                    45
+                                    @Model.ADPVM.ADPRow2.DigitalSkills
                                 </td>
                             </tr>
                         </tbody>
@@ -339,7 +339,7 @@
                                     <strong>Digital Access:</strong>
                                 </td>
                                 <td>
-                                    8
+                                    @Model.forigenFundedVM.forigenFundedRow2.DigitalAccess
                                 </td>
                             </tr>
                             <tr>
@@ -347,7 +347,7 @@
                                     <strong>Digital Governance:</strong>
                                 </td>
                                 <td>
-                                    45
+                                    @Model.forigenFundedVM.forigenFundedRow2.DigitalGovernance
                                 </td>
                             </tr>
                             <tr>
@@ -355,7 +355,7 @@
                                     <strong>Digital Economy:</strong>
                                 </td>
                                 <td>
-                                    456
+                                    @Model.forigenFundedVM.forigenFundedRow2.DigitalEconomy
                                 </td>
                             </tr>
                             <tr>
@@ -363,7 +363,7 @@
                                     <strong>Digital Skills:</strong>
                                 </td>
                                 <td>
-                                    45
+                                    @Model.forigenFundedVM.forigenFundedRow2.DigitalSkills
                                 </td>
                             </tr>
                         </tbody>
@@ -405,109 +405,53 @@
             </figure>
         </div>
     </div>
-    
+
 
 </div>
 <div class="row">
     <div class="col-xl-4">
         <div class="card card-default">
             <div class="card-header">
-                <div class="px-2 float-right badge badge-danger">5</div>
-                <div class="px-2 mr-2 float-right badge badge-success">12</div>
+                @*<div class="px-2 float-right badge badge-danger">5</div>*@
+                <div class="px-2 mr-2 float-right badge badge-success">@Model.oneLinearVM.oneLinearRow4Project.Count</div>
                 <div class="card-title">Project List</div>
             </div>
             <!-- START list group-->
             <div class="list-group" data-height="280" data-scrollable="">
                 <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
+                @{
+                    if (Model.oneLinearVM.oneLinearRow4Project != null)
+                    {
+                        foreach (var item in Model.oneLinearVM.oneLinearRow4Project)
+                        {
+                            <div class="list-group-item list-group-item-action">
+                                <div class="media">
+
+                                    <div class="media-body text-truncate">
+                                        <p class="mb-1">
+                                            <strong class="text-primary">
+                                                <span class="circle bg-success circle-lg text-left"></span>
+                                                <span>@item.ProjectName</span>
+                                            </strong>
+                                        </p>
+                                        @*@if (Model.oneLinearVM.oneLinearRow4SubProject != null)
+                                        {
+                                            foreach (var itemSub in Model.oneLinearVM.oneLinearRow4SubProject.Where(x=>x.ProjectID == item.ProjectID))
+                                            {
+                                                //if (itemSub.ProjectID == item.ProjectID)
+                                                //{
+                                                    <p class="mb-1 text-sm">@itemSub.ProjectName</p>
+                                                    //}
+                                                }
+                                            }*@
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
                 <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Y E P</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-danger circle-lg text-left"></span>
-                                    <span>Fellowship</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Mauris eleifend, libero nec cursus lacinia...</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2d</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
+              
             </div>
             <!-- END list group-->
 
@@ -515,209 +459,63 @@
     </div>
     <div class="col-xl-4">
         <div class="card card-default">
-            <div class="card-header">
-                <div class="px-2 float-right badge badge-danger">5</div>
-                <div class="px-2 mr-2 float-right badge badge-success">12</div>
+            <div class="card-header"> 
+                <div class="px-2 mr-2 float-right badge badge-success">@Model.ADPVM.ADPRow4Project.Count</div>
                 <div class="card-title">Project List</div>
             </div>
-            <!-- START list group-->
-            <div class="list-group" data-height="280" data-scrollable="">
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
+            <!-- START list group item-->
+            @{
+                if (Model.oneLinearVM.oneLinearRow4Project != null)
+                {
+                    foreach (var item in Model.ADPVM.ADPRow4Project)
+                    {
+                        <div class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="media-body text-truncate">
+                                    <p class="mb-1">
+                                        <strong class="text-primary">
+                                            <span class="circle bg-success circle-lg text-left"></span>
+                                            <span>@item.ProjectName</span>
+                                        </strong>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Y E P</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-danger circle-lg text-left"></span>
-                                    <span>Fellowship</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Mauris eleifend, libero nec cursus lacinia...</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2d</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-            </div>
-            <!-- END list group-->
+                    }
+                }
+            }
+            <!-- END list group item-->
 
         </div>
     </div>
     <div class="col-xl-4">
         <div class="card card-default">
-            <div class="card-header">
-                <div class="px-2 float-right badge badge-danger">5</div>
-                <div class="px-2 mr-2 float-right badge badge-success">12</div>
+            <div class="card-header"> 
+                <div class="px-2 mr-2 float-right badge badge-success">@Model.forigenFundedVM.forigenFundedRow4Project.Count</div>
                 <div class="card-title">Project List</div>
             </div>
-            <!-- START list group-->
-            <div class="list-group" data-height="280" data-scrollable="">
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
+            <!-- START list group item-->
+            @{
+                if (Model.forigenFundedVM.forigenFundedRow4Project != null)
+                {
+                    foreach (var item in Model.forigenFundedVM.forigenFundedRow4Project)
+                    {
+                        <div class="list-group-item list-group-item-action">
+                            <div class="media">
+                                <div class="media-body text-truncate">
+                                    <p class="mb-1">
+                                        <strong class="text-primary">
+                                            <span class="circle bg-success circle-lg text-left"></span>
+                                            <span>@item.ProjectName</span>
+                                        </strong>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Y E P</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-success circle-lg text-left"></span>
-                                    <span>Durshal</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Peshawar CIL</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2h</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-                <!-- START list group item-->
-                <div class="list-group-item list-group-item-action">
-                    <div class="media">
-                        <div class="media-body text-truncate">
-                            <p class="mb-1">
-                                <strong class="text-primary">
-                                    <span class="circle bg-danger circle-lg text-left"></span>
-                                    <span>Fellowship</span>
-                                </strong>
-                            </p>
-                            <p class="mb-1 text-sm">Mauris eleifend, libero nec cursus lacinia...</p>
-                        </div>
-                        <div class="ml-auto">
-                            <small class="text-muted ml-2">2d</small>
-                        </div>
-                    </div>
-                </div>
-                <!-- END list group item-->
-            </div>
-            <!-- END list group-->
+                    }
+                }
+            }
+            <!-- END list group item-->
 
         </div>
     </div>
@@ -725,6 +523,8 @@
 </div>
 <!-- END row-->
 <script>
+
+         //1 Linear CHART
     Highcharts.chart('container', {
         chart: {
             plotBackgroundColor: null,
@@ -772,6 +572,8 @@
         }]
     });
 
+
+    //ADP CHART
     Highcharts.chart('container1', {
         chart: {
             plotBackgroundColor: null,
@@ -801,40 +603,27 @@
             }
         },
         series: [{
-            name: 'Brands',
+            name: 'Digital Policy',
             colorByPoint: true,
             data: [{
-                name: 'Chrome',
-                y: 61.41,
-                sliced: true,
-                selected: true
+                name: 'Access ',
+                y: @Model.ADPVM.ADPRow2.DigitalAccess
             }, {
-                name: 'Internet Explorer',
-                y: 11.84
+                name: 'Governance',
+                y: @Model.ADPVM.ADPRow2.DigitalGovernance
             }, {
-                name: 'Firefox',
-                y: 10.85
+                name: 'Economy',
+                y: @Model.ADPVM.ADPRow2.DigitalEconomy
             }, {
-                name: 'Edge',
-                y: 4.67
-            }, {
-                name: 'Safari',
-                y: 4.18
-            }, {
-                name: 'Sogou Explorer',
-                y: 1.64
-            }, {
-                name: 'Opera',
-                y: 1.6
-            }, {
-                name: 'QQ',
-                y: 1.2
-            }, {
-                name: 'Other',
-                y: 2.61
+                name: 'Skills',
+                y: @Model.ADPVM.ADPRow2.DigitalSkills
             }]
         }]
     });
+
+
+
+        //FF CHART
     Highcharts.chart('container2', {
         chart: {
             plotBackgroundColor: null,
@@ -863,41 +652,22 @@
                 }
             }
         },
-        series: [{
-            name: 'Brands',
-            colorByPoint: true,
-            data: [{
-                name: 'Chrome',
-                y: 61.41,
-                sliced: true,
-                selected: true
+        series: [ {
+                name: 'Access',
+                y: @Model.forigenFundedVM.forigenFundedRow2.DigitalAccess
             }, {
-                name: 'Internet Explorer',
-                y: 11.84
+                name: 'Governance',
+                y: @Model.forigenFundedVM.forigenFundedRow2.DigitalGovernance
             }, {
-                name: 'Firefox',
-                y: 10.85
+                name: 'Economy',
+                y: @Model.forigenFundedVM.forigenFundedRow2.DigitalEconomy
             }, {
-                name: 'Edge',
-                y: 4.67
-            }, {
-                name: 'Safari',
-                y: 4.18
-            }, {
-                name: 'Sogou Explorer',
-                y: 1.64
-            }, {
-                name: 'Opera',
-                y: 1.6
-            }, {
-                name: 'QQ',
-                y: 1.2
-            }, {
-                name: 'Other',
-                y: 2.61
+                name: 'Skills',
+                y: @Model.forigenFundedVM.forigenFundedRow2.DigitalSkills
             }]
-        }]
     });
+
+
     Highcharts.chart('container3', {
         chart: {
             type: 'pie'
@@ -932,40 +702,19 @@
 
         series: [
             {
-                name: "Browsers",
+                name: "1Linear SDGS",
                 colorByPoint: true,
                 data: [
                     
                     {
-                        name: 'SDGS2',
-                        y: @Model.oneLinearVM.oneLinearRow3.SDGS2;
-                            drilldown: "SDGS2"
+                        name: "NOPOVERTY",
+                        y: @Model.oneLinearVM.oneLinearRow3.NOPOVERTY
                     },
                     {
-                        name: "Internet Explorer",
-                        y: 7.23,
-                        drilldown: "Internet Explorer"
-                    },
-                    {
-                        name: "Safari",
-                        y: 5.58,
-                        drilldown: "Safari"
-                    },
-                    {
-                        name: "Edge",
-                        y: 4.02,
-                        drilldown: "Edge"
-                    },
-                    {
-                        name: "Opera",
-                        y: 1.92,
-                        drilldown: "Opera"
-                    },
-                    {
-                        name: "Other",
-                        y: 7.62,
-                        drilldown: null
+                        name: "SDGS2",
+                        y: @Model.oneLinearVM.oneLinearRow3.SDGS2
                     }
+
                 ]
             }
         ],
@@ -1005,43 +754,16 @@
 
         series: [
             {
-                name: "Browsers",
+                name: "ADP SDGS",
                 colorByPoint: true,
                 data: [
                     {
-                        name: "Chrome",
-                        y: 62.74,
-                        drilldown: "Chrome"
+                        name: "NOPOVERTY",
+                        y: @Model.ADPVM.ADPRow3.NOPOVERTY
                     },
                     {
-                        name: "Firefox",
-                        y: 10.57,
-                        drilldown: "Firefox"
-                    },
-                    {
-                        name: "Internet Explorer",
-                        y: 7.23,
-                        drilldown: "Internet Explorer"
-                    },
-                    {
-                        name: "Safari",
-                        y: 5.58,
-                        drilldown: "Safari"
-                    },
-                    {
-                        name: "Edge",
-                        y: 4.02,
-                        drilldown: "Edge"
-                    },
-                    {
-                        name: "Opera",
-                        y: 1.92,
-                        drilldown: "Opera"
-                    },
-                    {
-                        name: "Other",
-                        y: 7.62,
-                        drilldown: null
+                        name: "SDGS2",
+                        y: @Model.ADPVM.ADPRow3.SDGS2
                     }
                 ]
             }
@@ -1082,43 +804,16 @@
 
         series: [
             {
-                name: "Browsers",
+                name: "Forigen Funded",
                 colorByPoint: true,
                 data: [
-                    {
-                        name: "Chrome",
-                        y: 62.74,
-                        drilldown: "Chrome"
+                      {
+                        name: "NOPOVERTY",
+                        y: @Model.forigenFundedVM.forigenFundedRow3.NOPOVERTY
                     },
                     {
-                        name: "Firefox",
-                        y: 10.57,
-                        drilldown: "Firefox"
-                    },
-                    {
-                        name: "Internet Explorer",
-                        y: 7.23,
-                        drilldown: "Internet Explorer"
-                    },
-                    {
-                        name: "Safari",
-                        y: 5.58,
-                        drilldown: "Safari"
-                    },
-                    {
-                        name: "Edge",
-                        y: 4.02,
-                        drilldown: "Edge"
-                    },
-                    {
-                        name: "Opera",
-                        y: 1.92,
-                        drilldown: "Opera"
-                    },
-                    {
-                        name: "Other",
-                        y: 7.62,
-                        drilldown: null
+                        name: "SDGS2",
+                        y: @Model.forigenFundedVM.forigenFundedRow3.SDGS2
                     }
                 ]
             }

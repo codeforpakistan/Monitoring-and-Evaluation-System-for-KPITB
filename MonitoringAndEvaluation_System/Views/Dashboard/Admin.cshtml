@@ -269,7 +269,6 @@
                     </table>
                     <figure class="highcharts-figure">
                         <div id="container"></div>
-
                     </figure>
 
                 </div>
@@ -380,12 +379,7 @@
 </div>
 
 
-
-
-
-
-
-
+<!--SDGS-->
 <div class="row">
     <div class="col-xl-4">
         <div class="card card-default" id="cardChart5">
@@ -730,7 +724,7 @@
 
 </div>
 <!-- END row-->
-      <script>
+<script>
     Highcharts.chart('container', {
         chart: {
             plotBackgroundColor: null,
@@ -941,15 +935,11 @@
                 name: "Browsers",
                 colorByPoint: true,
                 data: [
+                    
                     {
-                        name: "Chrome",
-                        y: 62.74,
-                        drilldown: "Chrome"
-                    },
-                    {
-                        name: "Firefox",
-                        y: 10.57,
-                        drilldown: "Firefox"
+                        name: 'SDGS2',
+                        y: @Model.oneLinearVM.oneLinearRow3.SDGS2;
+                            drilldown: "SDGS2"
                     },
                     {
                         name: "Internet Explorer",
@@ -1135,4 +1125,4 @@
         ],
 
     });
-      </script>
+</script>

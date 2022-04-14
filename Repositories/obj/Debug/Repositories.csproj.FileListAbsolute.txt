@@ -1,0 +1,14 @@
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\bin\Debug\Repositories.dll
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\bin\Debug\Repositories.pdb
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\bin\Debug\Dapper.dll
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\bin\Debug\Dapper.SimpleCRUD.dll
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\bin\Debug\ModelLayer.dll
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\bin\Debug\ModelLayer.pdb
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\bin\Debug\Dapper.pdb
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\bin\Debug\Dapper.xml
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\bin\Debug\Dapper.SimpleCRUD.pdb
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\bin\Debug\Dapper.SimpleCRUD.xml
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\obj\Debug\Repositories.csproj.AssemblyReference.cache
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\obj\Debug\Repositories.csproj.CoreCompileInputs.cache
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\obj\Debug\Repositories.dll
+E:\Web Development\Monitoring-and-Evaluation-System-for-KPITB\Repositories\obj\Debug\Repositories.pdb

@@ -30,7 +30,11 @@ namespace MonitoringAndEvaluation_System.Controllers
             //data.getPKPIsChartQ1 = ss;
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-
+        public ActionResult OverAllStatus()
+        {
+           
+            return View();
+        }
 
         public ActionResult Menus()
         {

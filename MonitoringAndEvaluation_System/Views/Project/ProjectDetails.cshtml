@@ -4,6 +4,10 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<!--Date-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <style>
     .highcharts-figure,
     .highcharts-data-table table {
@@ -153,22 +157,26 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr>
-                                <td>
-                                    Trainee
-                                </td>
-
-                                <td>
-                                    400
-                                </td>
-                                <td>
-                                    300
-                                </td>
+                            
+                                @foreach (var item in Model.getProjectDetailsProjectKPIsLst)
+                                {
+                                 <tr>
+                                   <td>
+                                       @item.IndicatorDescription
+                                   </td>
+                                   
+                                   <td>
+                                       @item.Target
+                                   </td>
+                                   <td>
+                                       @item.Achived
+                                   </td>
                             </tr>
+                                }
+                                
 
 
-                        </tbody>
+                            </tbody>
                     </table>
                     <hr />
                     <figure class="highcharts-figure w-100">
@@ -196,19 +204,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach (var item in Model.getProjectDetailsQ7Lst)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.InsightIndicatorFieldName
+                                    </td>
 
-                            <tr>
-                                <td>
-                                    Total Start upt
-                                </td>
+                                    <td>
+                                        @item.CommonFiled
+                                    </td>
 
-                                <td>
-                                    20
-                                </td>
-
-                            </tr>
-
-
+                                </tr>
+                            }
                         </tbody>
                     </table>
                     <hr />
@@ -297,7 +305,7 @@
                                     </td>
                                     <td>
                                         @{ Model.getProjectDetailsQ4.ActualDate = Model.getProjectDetailsQ4 != null ? Model.getProjectDetailsQ4.ActualDate : Model.getProjectDetailsQ4.ActualDate;}
-                                        @Model.getProjectDetailsQ4.ActualDate
+                                        @Model.getProjectDetailsQ4.ActualDate.ToShortDateString()
                                     </td>
                                 </tr>
                                 <tr>
@@ -306,7 +314,7 @@
                                     </td>
                                     <td>
                                         @{ Model.getProjectDetailsQ4.EndDate = Model.getProjectDetailsQ4 != null ? Model.getProjectDetailsQ4.EndDate : Model.getProjectDetailsQ4.EndDate;}
-                                        @Model.getProjectDetailsQ4.EndDate
+                                        @Model.getProjectDetailsQ4.EndDate.ToShortDateString()
                                     </td>
                                 </tr>
 
@@ -314,9 +322,10 @@
                         </table>
                         <br />
                         <br />
-                        <figure class="highcharts-figure w-100">
-                            <div id="schedule"></div>
-                        </figure>
+                        @*<figure class="highcharts-figure w-100">
+                             <div id="schedule"></div>
+                          </figure>*@
+                       <div id="timeline" style="height: 180px;"></div>
                     </div>
 
                 </div>
@@ -427,46 +436,65 @@
 
 
 <script>
-    Highcharts.chart('container', {
+     //KPIS
+      Highcharts.chart('container', {
         chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
+            type: 'column'
         },
         title: {
-            text: 'Project KPIs'
+            text: 'Project KPIs %'
         },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        subtitle: {
+            text: ''
         },
         accessibility: {
-            point: {
-                valueSuffix: '%'
+            announceNewData: {
+                enabled: true
             }
         },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {
+            title: {
+                text: 'Percent of each KPIs'
+            }
+
+        },
+        legend: {
+            enabled: false
+        },
         plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
+            series: {
+                borderWidth: 0,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    format: '{point.y:.1f}%'
                 }
             }
         },
-        series: [{
-            name: 'Indicator Description',
-            colorByPoint: true,
-            data: [
-                @{
+        tooltip: {
+            headerFormat: '<span style="font-size:12px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+        },
+        series: [
+            {
+                name: "Finance",
+                colorByPoint: true,
+                data: [
+                    @{
                     foreach (var item in Model.getProjectDetailsProjectKPIsLst)
                     {
                        @Html.Raw($"{{ name: \"{item.IndicatorDescription}\", y: {item.Percentage} }},")
                     }
                 } ]
-        }]
+
+            }
+        ]
+
     });
+
+    //ImpactIndicator
     Highcharts.chart('ImpactIndicator', {
         chart: {
             plotBackgroundColor: null,
@@ -509,54 +537,40 @@
         }]
     });
 
-
     //Finance
     Highcharts.chart('finance', {
         chart: {
-            type: 'column'
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
         },
         title: {
-            text: 'Schedule Utalization %'
+            text: 'Budget Utalization'
         },
-        subtitle: {
-            text: ''
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         accessibility: {
-            announceNewData: {
-                enabled: true
+            point: {
+                valueSuffix: '%'
             }
-        },
-        xAxis: {
-            type: 'category'
-        },
-        yAxis: {
-            title: {
-                text: 'Total percent market share'
-            }
-
-        },
-        legend: {
-            enabled: false
         },
         plotOptions: {
-            series: {
-                borderWidth: 0,
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
                 dataLabels: {
                     enabled: true,
-                    format: '{point.y:.1f}%'
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
                 }
             }
         },
-        tooltip: {
-            headerFormat: '<span style="font-size:12px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-        },
-        series: [
-            {
-                name: "Finance",
-                colorByPoint: true,
-                data: [
-                    {
+        series: [{
+            name: 'Total',
+            colorByPoint: true,
+            data: [
+                {
                         name: "Planned Budget",
                         y: @Model.getProjectDetailsQ3.PlannedBudget
                         /*drilldown: "Chrome"*/
@@ -573,315 +587,30 @@
                         y: @Model.getProjectDetailsQ3.RemainingBudget
                         /*drilldown: "Chrome"*/
                     }
-                ]
-            }
-        ],
-        drilldown: {
-            breadcrumbs: {
-                position: {
-                    align: 'right'
-                }
-            },
-            series: [
-                {
-                    name: "Chrome",
-                    id: "Chrome",
-                    data: [
-                        [
-                            "v65.0",
-                            0.1
-                        ],
-                        [
-                            "v64.0",
-                            1.3
-                        ],
-                        [
-                            "v63.0",
-                            53.02
-                        ],
-                        [
-                            "v62.0",
-                            1.4
-                        ],
-                        [
-                            "v61.0",
-                            0.88
-                        ],
-                        [
-                            "v60.0",
-                            0.56
-                        ],
-                        [
-                            "v59.0",
-                            0.45
-                        ],
-                        [
-                            "v58.0",
-                            0.49
-                        ],
-                        [
-                            "v57.0",
-                            0.32
-                        ],
-                        [
-                            "v56.0",
-                            0.29
-                        ],
-                        [
-                            "v55.0",
-                            0.79
-                        ],
-                        [
-                            "v54.0",
-                            0.18
-                        ],
-                        [
-                            "v51.0",
-                            0.13
-                        ],
-                        [
-                            "v49.0",
-                            2.16
-                        ],
-                        [
-                            "v48.0",
-                            0.13
-                        ],
-                        [
-                            "v47.0",
-                            0.11
-                        ],
-                        [
-                            "v43.0",
-                            0.17
-                        ],
-                        [
-                            "v29.0",
-                            0.26
-                        ]
-                    ]
-                },
-                {
-                    name: "Firefox",
-                    id: "Firefox",
-                    data: [
-                        [
-                            "v58.0",
-                            1.02
-                        ],
-                        [
-                            "v57.0",
-                            7.36
-                        ],
-                        [
-                            "v56.0",
-                            0.35
-                        ],
-                        [
-                            "v55.0",
-                            0.11
-                        ],
-                        [
-                            "v54.0",
-                            0.1
-                        ],
-                        [
-                            "v52.0",
-                            0.95
-                        ],
-                        [
-                            "v51.0",
-                            0.15
-                        ],
-                        [
-                            "v50.0",
-                            0.1
-                        ],
-                        [
-                            "v48.0",
-                            0.31
-                        ],
-                        [
-                            "v47.0",
-                            0.12
-                        ]
-                    ]
-                },
-                {
-                    name: "Internet Explorer",
-                    id: "Internet Explorer",
-                    data: [
-                        [
-                            "v11.0",
-                            6.2
-                        ],
-                        [
-                            "v10.0",
-                            0.29
-                        ],
-                        [
-                            "v9.0",
-                            0.27
-                        ],
-                        [
-                            "v8.0",
-                            0.47
-                        ]
-                    ]
-                },
-                {
-                    name: "Safari",
-                    id: "Safari",
-                    data: [
-                        [
-                            "v11.0",
-                            3.39
-                        ],
-                        [
-                            "v10.1",
-                            0.96
-                        ],
-                        [
-                            "v10.0",
-                            0.36
-                        ],
-                        [
-                            "v9.1",
-                            0.54
-                        ],
-                        [
-                            "v9.0",
-                            0.13
-                        ],
-                        [
-                            "v5.1",
-                            0.2
-                        ]
-                    ]
-                },
-                {
-                    name: "Edge",
-                    id: "Edge",
-                    data: [
-                        [
-                            "v16",
-                            2.6
-                        ],
-                        [
-                            "v15",
-                            0.92
-                        ],
-                        [
-                            "v14",
-                            0.4
-                        ],
-                        [
-                            "v13",
-                            0.1
-                        ]
-                    ]
-                },
-                {
-                    name: "Opera",
-                    id: "Opera",
-                    data: [
-                        [
-                            "v50.0",
-                            0.96
-                        ],
-                        [
-                            "v49.0",
-                            0.82
-                        ],
-                        [
-                            "v12.1",
-                            0.14
-                        ]
-                    ]
-                }
-            ]
-        }
+                 ]
+        }]
     });
 
     //schedule
-        Highcharts.chart('schedule', {
-            chart: {
-                type: 'spline'
-            },
-            title: {
-                text: 'Snow depth at Vikjafjellet, Norway'
-            },
-            subtitle: {
-                text: 'Irregular time data in Highcharts JS'
-            },
-            xAxis: {
-                type: 'datetime',
-                dateTimeLabelFormats: { // don't display the dummy year
-                    month: '%e. %b',
-                    year: '%b'
-                },
-                title: {
-                    text: 'Date'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Snow depth (m)'
-                },
-                min: 0
-            },
-            tooltip: {
-                headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-            },
+    google.charts.load('current', { 'packages': ['timeline'] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var container = document.getElementById('timeline');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
 
-            plotOptions: {
-                series: {
-                    marker: {
-                        enabled: true
-                    }
-                }
-            },
+        dataTable.addColumn({ type: 'string', id: 'President' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+        dataTable.addRows([
+            ['planned Date', new Date(@Model.getProjectDetailsQ4.PlannedDate.Year,@Model.getProjectDetailsQ4.PlannedDate.Month, @Model.getProjectDetailsQ4.PlannedDate.Day), new Date(@Model.getProjectDetailsQ4.PlannedDate.Year,@Model.getProjectDetailsQ4.PlannedDate.Month, @Model.getProjectDetailsQ4.PlannedDate.Day)],
+            ['Start Date', new Date(@Model.getProjectDetailsQ4.PlannedDate.Year,@Model.getProjectDetailsQ4.PlannedDate.Month, @Model.getProjectDetailsQ4.PlannedDate.Day), new Date(@Model.getProjectDetailsQ4.ActualDate.Year,@Model.getProjectDetailsQ4.ActualDate.Month, @Model.getProjectDetailsQ4.ActualDate.Day)],
+            ['End Date', new Date(@Model.getProjectDetailsQ4.ActualDate.Year,@Model.getProjectDetailsQ4.ActualDate.Month, @Model.getProjectDetailsQ4.ActualDate.Day), new Date(@Model.getProjectDetailsQ4.EndDate.Year,@Model.getProjectDetailsQ4.EndDate.Month, @Model.getProjectDetailsQ4.EndDate.Day)]
+        ]);
 
-            colors: ['#6CF', '#39F', '#06C', '#036', '#000'],
+        chart.draw(dataTable);
+    }
 
-            // Define the data points. All series have a dummy year
-            // of 1970/71 in order to be compared on the same x axis. Note
-            // that in JavaScript, months start at 0 for January, 1 for February etc.
-            series: [{
-                name: "Planned Date",
-                data: [
-                    [Date.UTC(@Model.getProjectDetailsQ4.PlannedDate.Year, @Model.getProjectDetailsQ4.PlannedDate.Month, @Model.getProjectDetailsQ4.PlannedDate.Day), @Model.getProjectDetailsQ4.PlannedDate.Day]
-                ]
-            }, {
-                name: "Start Date",
-                data: [
-                 [Date.UTC(@Model.getProjectDetailsQ4.ActualDate.Year, @Model.getProjectDetailsQ4.ActualDate.Month, @Model.getProjectDetailsQ4.ActualDate.Day), @Model.getProjectDetailsQ4.ActualDate.Day]
-                ]
-            }, {
-                name: "End Date",
-                data: [
-                  [Date.UTC(@Model.getProjectDetailsQ4.EndDate.Year, @Model.getProjectDetailsQ4.EndDate.Month, @Model.getProjectDetailsQ4.EndDate.Day), @Model.getProjectDetailsQ4.EndDate.Day]
-                ]
-            }],
-
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        plotOptions: {
-                            series: {
-                                marker: {
-                                    radius: 2.5
-                                }
-                            }
-                        }
-                    }
-                }]
-            }
-        });
 
 
 

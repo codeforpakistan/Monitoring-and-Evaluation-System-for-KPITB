@@ -157,26 +157,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                                @foreach (var item in Model.getProjectDetailsProjectKPIsLst)
-                                {
-                                 <tr>
-                                   <td>
-                                       @item.IndicatorDescription
-                                   </td>
-                                   
-                                   <td>
-                                       @item.Target
-                                   </td>
-                                   <td>
-                                       @item.Achived
-                                   </td>
-                            </tr>
-                                }
-                                
+
+                            @foreach (var item in Model.getProjectDetailsProjectKPIsLst)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.IndicatorDescription
+                                    </td>
+
+                                    <td>
+                                        @item.Target
+                                    </td>
+                                    <td>
+                                        @item.Achived
+                                    </td>
+                                </tr>
+                            }
 
 
-                            </tbody>
+
+                        </tbody>
                     </table>
                     <hr />
                     <figure class="highcharts-figure w-100">
@@ -325,9 +325,9 @@
                         <br />
                         <br />
                         @*<figure class="highcharts-figure w-100">
-                             <div id="schedule"></div>
-                          </figure>*@
-                       <div id="timeline" style="height: 180px;"></div>
+                               <div id="schedule"></div>
+                            </figure>*@
+                        <div id="timeline" style="height: 180px;"></div>
                     </div>
 
                 </div>

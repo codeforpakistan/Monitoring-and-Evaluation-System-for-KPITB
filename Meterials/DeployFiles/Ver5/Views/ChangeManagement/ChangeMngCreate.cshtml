@@ -1,0 +1,179 @@
+﻿@model ModelLayer.MainViewModel.ChangeManagementVM
+
+@{
+    ViewBag.Title = "ChangeManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
+
+<!-- START row-->
+<div class="row">
+    <div class="col-xl-12">
+        @using (Html.BeginForm("ChangeMngCreate", "ChangeManagement", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <!-- START card-->
+
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">
+                        <br />
+                        <h3> Change Management </h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        @*Basic Project Info*@
+                        <div class="card card-default" id="cardDemo1">
+                            <div class="card-header">
+                                <h4>Meeting Agenda</h4>
+                            </div>
+                            <div class="card-wrapper collapse show">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6 ">
+                                            <label class="col-form-label">Meeting No. *</label>
+                                            @Html.TextBoxFor(m => m.MeetingNo, new { @class = "form-control Select-date", @type = "date" })
+                                            @Html.ValidationMessageFor(m => m.MeetingNo, "", new { @class = "parsley-required" })
+                                        </div>
+                                        <div class="col-lg-6 ">
+                                            <label class="col-form-label">Meeting Date *</label>
+                                            @Html.TextBoxFor(m => m.MeetingDate, new { @class = "form-control Select-date", @type = "date" })
+                                            @Html.ValidationMessageFor(m => m.MeetingDate, "", new { @class = "parsley-required" })
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label for="sel1">Select Project </label>
+                                            @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2-3 form-control " })
+                                            @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required" })
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <label>Select Sub Project</label>
+                                            @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = "select2-4 form-control " })
+                                            @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+
+                        <!--Project-->
+                        <div class="col-lg-12">
+                            <br />
+                            <h4>Project</h4>
+                            <table class="table table-striped" id="tblChangeManagementProject">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th data-column-id="ItemName">Item Name</th>
+                                        <th data-column-id="CurrentVaule">Current Vaule</th>
+                                        <th data-column-id="ChangeVaule">Change Vaule</th>
+                                        <th data-column-id="Decision">Decision</th>
+                                        <th data-column-id="ActionTaken">Action Taken</th>
+                                        <th data-column-id="ActionTaken">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblBodyChangeManagementProject">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!--Schedule-->
+                        <div class="col-lg-12">
+                            <br />
+                            <h4>Schedule</h4>
+                            <table class="table table-striped" id="tblChangeManagementSchedule">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th data-column-id="ItemName">Item Name</th>
+                                        <th data-column-id="CurrentVaule">Current Vaule</th>
+                                        <th data-column-id="ChangeVaule">Change Vaule</th>
+                                        <th data-column-id="Decision">Decision</th>
+                                        <th data-column-id="ActionTaken">Action Taken</th>
+                                        <th data-column-id="ActionTaken">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblBodyChangeManagementSchedule">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!--PlannedKPIs-->
+                        <div class="col-lg-12">
+                            <br />
+                            <h4>Planned KPIs</h4>
+                            <table class="table table-striped" id="tblChangeManagemenPlannedKPIs">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th data-column-id="ItemName">Item Name</th>
+                                        <th data-column-id="CurrentVaule">Current Vaule</th>
+                                        <th data-column-id="ChangeVaule">Change Vaule</th>
+                                        <th data-column-id="Decision">Decision</th>
+                                        <th data-column-id="ActionTaken">Action Taken</th>
+                                        <th data-column-id="ActionTaken">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblBodyChangeManagementPlannedKPIs">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!--PlannedProcurement-->
+                        <div class="col-lg-12">
+                            <br />
+                            <h4>Planned Procurement</h4>
+                            <table class="table table-striped" id="tblChangeManagemenPlannedProcurement">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th data-column-id="ItemName">Item Name</th>
+                                        <th data-column-id="CurrentVaule">Current Vaule</th>
+                                        <th data-column-id="ChangeVaule">Change Vaule</th>
+                                        <th data-column-id="Decision">Decision</th>
+                                        <th data-column-id="ActionTaken">Action Taken</th>
+                                        <th data-column-id="ActionTaken">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblBodyChangeManagementPlannedProcurement">
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>     <!--ROW-->
+                </div>
+                <div class="required">* Required fields</div>
+                <br />
+                <div class="card-footer">
+                    <div class="clearfix">
+                        <div class="float-left">
+                            <div class="checkbox c-checkbox">
+                                <label>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="float-right">
+                            <button class="btn-lg btn-success" type="submit" > Create</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- END card-->
+            </div>
+        }
+    </div>
+</div>
+
+<input hidden id="IsChangeManagementForm" type="text" value="ChangeManagementForm" />
+
+<div id="ProjectComboLink"
+     url-Val="@Url.Action("ClickProjectComboBox", "Common")">
+</div>
+
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--AQIB-->
+@section Scripts{
+    <script src="~/Content/Template/js/CustomCode.js"></script>
+}

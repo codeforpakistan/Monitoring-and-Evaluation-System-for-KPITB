@@ -168,7 +168,16 @@ namespace BusinessLayer
 
         public GetProjectDetailsVM getProjectDetailsBL(int ProjectID)
         {
-            var getData = ProjectManagementDL.getProjectDetailDL(ProjectID);
+          
+
+           var getData = ProjectManagementDL.getProjectDetailDL(ProjectID);
+            if (getData.getProjectDetailsQ5 == null)
+            {
+                GetProjectDetailsQ5 dd = new GetProjectDetailsQ5();
+                dd.ObjectiveName = "";
+                getData.getProjectDetailsQ5 = dd;
+            }
+
             getData.getProjectDetailsQ7Lst = new List<GetProjectDetailsQ7>();
             GetProjectDetailsQ7 m = null;
             for (int i = 0; i < getData.getProjectDetailsQ6Lst.Count; i++)

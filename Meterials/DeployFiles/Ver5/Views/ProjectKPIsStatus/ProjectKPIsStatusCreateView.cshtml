@@ -1,0 +1,209 @@
+﻿@model ModelLayer.MainViewModel.CreateProjectKPIsStatusVM
+@{
+    ViewBag.Title = "Project KPIs Status";
+    List<ModelLayer.MainViewModel.GetAllProjectKPIsStatusVM> _LstAllProjectKPIsStatus = (List<ModelLayer.MainViewModel.GetAllProjectKPIsStatusVM>)ViewBag.LstAllProjectKPIsStatus;
+}
+
+<!-- START row-->
+<div class="row">
+    <div class="col-xl-12">
+        @using (Html.BeginForm("ProjectKPIsStatusCreateView", "ProjectKPIsStatus", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <!-- START card-->
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title"><h4>Project KPIs Status</h4></div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Project </label>
+                                @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
+                                @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required", @id = "spanProjectID" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Sub Project</label>
+                                @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = " form-control" })
+                                @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required", @id = "spanSubProjectID" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Cycle/Batch</label>
+                                @Html.DropDownListFor(m => m.Batch_ID, new SelectList(Model.comboBatch, "BatchID", "BatchName"), new { @class = " form-control" })
+                                @Html.ValidationMessageFor(m => m.Batch_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="sel1">Select Planned KPIs</label>
+                                @Html.DropDownListFor(m => m.PlannedKPIs_ID, new SelectList(Model.comboPlannedKPIs, "PlannedKPIsID", "IndicatorDescription"), new { @class = " form-control" })
+                                @Html.ValidationMessageFor(m => m.PlannedKPIs_ID, "", new { @class = "parsley-required", @id = "spanBatchID" })
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="sel1">Target</label>
+                                <input hidden id="hdnRemainingProcurement" name="hdnRemainingProcurement">
+                                <div>
+                                    <label id="lblRemainingProcurement" name="lblRemainingProcurement" for="lblRemainingProcurement" class="form-control" readonly="readonly">0</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Achived No. *</label>
+                                @Html.TextBoxFor(model => model.ProjectKPIsAchived, new { @class = "form-control", @placeholder = "Enter Achived KPIs No." })
+                                @Html.ValidationMessageFor(m => m.ProjectKPIsAchived, "", new { @class = "parsley-required", @id = "spanProjectKPIsAchived" })
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label class="col-form-label">Timeline *</label>
+                                @Html.TextBoxFor(model => model.TimeLine, new { @class = "form-control", @type = "date" })
+                                @Html.ValidationMessageFor(m => m.TimeLine, "", new { @class = "parsley-required", @id = "spanTimeLine" })
+                            </div>
+                            <div class="col-lg-8">
+                                <label class="col-form-label">Solution/Remarks </label>
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control", @placeholder = "Enter Solution/Remarks" })
+                                @Html.ValidationMessageFor(m => m.Remarks, "", new { @class = "parsley-required" })
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="required float-left">* Required fields</div>
+                        <div class="float-right">
+                            <button class="btn btn-primary" type="submit">Save</button>
+                        </div>
+                        <br />
+                    </div>
+
+                    <!--Table-->
+                    <!-- START card-->
+                    <!--<div class="card card-default">
+                        <div class="card-body">
+                            <form class="form-horizontal">
+                                <div class="form-row ">
+                                    <div class="col-lg-3">
+                                        <label for="sel1">Search By Project</label>
+                                        @Html.DropDownListFor(m => m.Project_ID, new SelectList(Model.comboProjects, "ProjectID", "ProjectName"), new { @class = "select2 form-control ", @placeholder = "Select Project Type" })
+                                        @Html.ValidationMessageFor(m => m.Project_ID, "", new { @class = "parsley-required", @id = "spanProjectID" })-->
+                                        @*<input class="select2 form-control" type="text" placeholder="Select Project Name">*@
+                                    <!--</div>
+                                    <div class="col-lg-3">
+                                        <label for="sel1">Search By Sub Project</label>
+                                        @Html.DropDownListFor(m => m.SubProject_ID, new SelectList(Model.comboSubProjects, "SubProjectID", "SubProjectName"), new { @class = " form-control" })
+                                        @Html.ValidationMessageFor(m => m.SubProject_ID, "", new { @class = "parsley-required", @id = "spanSubProjectID" })-->
+                                        @*<input class="select2 form-control" type="text" placeholder="Select Batch Name">*@
+                                    <!--</div>
+                                    <div class="col-lg-3">
+                                        <label for="sel1">Search By Date</label>
+                                        @Html.TextBoxFor(model => model.TimeLine, new { @class = "select2 form-control", @type = "date", @id = "ProcurementFromDate", @placeholder = "Enter No of Recruited -HR" })
+                                        @Html.ValidationMessageFor(m => m.TimeLine, "", new { @class = "parsley-required", @id = "spanProcurementFromDate" })
+                                    </div>
+
+                                    <div class="col-lg-1">
+                                        <label for="sel1" style="color:transparent">]</label>
+                                        <button class="btn btn-primary form-control" type="submit" id="btnSubmit">Search</button>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="sel1" style="color:transparent">]</label>
+                                        <button class="btn btn-green form-control" type="submit" id="btnSubmit">Clear</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>-->
+                    <div class="card card-default">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table class="table table-striped my-4 w-100  table-hover" id="datatable2">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>
+                                                        ID
+                                                    </th>
+                                                    <th>
+                                                        Project
+                                                    </th>
+                                                    <th>
+                                                        Sub Project
+                                                    </th>
+                                                    <th>
+                                                        KPIs Description
+                                                    </th>
+
+                                                    <th>
+                                                        Achived No.
+                                                    </th>
+                                                    <th>
+                                                        Timeline
+                                                    </th>
+                                                    <th>
+                                                        Remarks
+                                                    </th>
+                                                    @*<th>
+                                                        Action
+                                                    </th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    foreach (var item in _LstAllProjectKPIsStatus)
+                                                    {
+                                                        <tr>
+                                                            @Html.HiddenFor(m => item.ProjectKPIsStatusID)
+                                                            <td>
+                                                                @item.ID
+                                                            </td>
+                                                            <td>
+                                                                @item.ProjectName
+                                                            </td>
+                                                            <td>
+                                                                @item.SubProjectName
+                                                            </td>
+                                                            <td>
+                                                                @item.IndicatorDescription
+                                                            </td>
+                                                            <td>
+                                                                @item.ProjectKPIsAchived
+                                                            </td>
+                                                            <td>
+                                                                @item.TimeLine.ToShortDateString()
+                                                            </td>
+                                                            
+                                                            <td>
+                                                                @item.Remarks
+                                                            </td>
+
+                                                            @*<td>
+
+                                                                @Html.ActionLink("Edit", "IssueEdit", new { ProjectKPIsStatusID = Utility.Encryption.EncryptURL(Convert.ToString(item.ProjectKPIsStatusID)) }, new { @class = "mb-1 btn btn-warning" })
+
+                                                            </td>*@
+
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END card-->
+        }
+    </div>
+</div>
+
+<div id="ProjectComboLink"
+     url-Val="@Url.Action("ClickProjectComboBox", "Common")">
+</div>
+
+@section Scripts{
+    <script src="~/Content/Template/js/CustomCode.js"></script>
+}

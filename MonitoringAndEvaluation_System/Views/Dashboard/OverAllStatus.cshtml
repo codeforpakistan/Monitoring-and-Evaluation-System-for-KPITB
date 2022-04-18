@@ -10,6 +10,12 @@
 <!--Date-->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
+    .highcharts-figure-f,
+    .highcharts-data-table table {
+        min-width: 350px;
+        max-width: 500px;
+        margin: 1em auto;
+    }
     .highcharts-figure,
     .highcharts-data-table table {
         min-width: 220px;
@@ -59,8 +65,9 @@
 
 
     .min-hight {
-        min-height: 700px;
+        min-height: 600px;
     }
+    
 </style>
 
 <div class="content-heading">
@@ -89,33 +96,39 @@
                 <div class="card">
                     <div class="card-body text-center">
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-sm-2">
                                 <h3 class="m-0">
+                                    45
                                 </h3>
                                 <p class="m-0 bg-warning">Stakeholder</p>
                             </div>
-                            <div class="col-2">
+                            <div class="col-sm-2">
                                 <h3 class="m-0">
+                                    2
                                 </h3>
                                 <p class="m-0 bg-warning">Active Issues</p>
                             </div>
-                            <div class="col-2">
+                            <div class="col-sm-2">
                                 <h3 class="m-0">
+                                    56
                                 </h3>
                                 <p class="m-0 bg-warning">Active Risks</p>
                             </div>
-                            <div class="col-2">
+                            <div class="col-sm-2">
                                 <h3 class="m-0">
+                                    0
                                 </h3>
                                 <p class="m-0 bg-warning">Planned HR</p>
                             </div>
-                            <div class="col-2">
+                            <div class="col-sm-2">
                                 <h3 class="m-0">
+                                    0
                                 </h3>
                                 <p class="m-0 bg-warning">Recruited HR</p>
                             </div>
-                            <div class="col-2">
+                            <div class="col-sm-2">
                                 <h3 class="m-0">
+                                    0
                                 </h3>
                                 <p class="m-0 bg-warning">Founding Source</p>
                             </div>
@@ -127,7 +140,7 @@
 
             <div class="row m-2">
                 <div class="col-xl-3">
-                    <div class="card b min-hight">
+                    <div class="card b bg-green-dark min-hight">
                         <div class="card-header">
                             <h4 class="m-0">Project KPIs</h4>
                         </div>
@@ -170,7 +183,7 @@
 
                 </div>
                 <div class="col-xl-3">
-                    <div class="card b min-hight">
+                    <div class="card b bg-primary-dark min-hight">
                         <div class="card-header">
                             <h4 class="m-0">Impact Indicator</h4>
                         </div>
@@ -210,8 +223,8 @@
                     </div>
 
                 </div>
-                <div class="col-xl3">
-                    <div class="card b min-hight">
+                <div class="col-xl-6">
+                    <div class="card b min-hight bg-gray-dark">
                         <div class="card-header">
                             <h4 class="m-0">Financial Details</h4>
                         </div>
@@ -219,43 +232,38 @@
                         <table class="table">
                             <tbody>
                                 <tr>
-                                    <td class="col-md-8">
-                                        <strong>Planned Budget</strong>
+                                    <td>
+                                        Planned Budget
                                     </td>
                                     <td>
+                                       Allocated Budget
                                     </td>
+                                    <td>
+                                        Expenditure Budget
+                                    </td>
+                                    <td>
+                                        Remaining Budget
+                                    </td>
+                                    
                                 </tr>
                                 <tr>
-                                    <td class="col-md-8">
-                                        <strong>Allocated Budget</strong>
-                                    </td>
-                                    <td>
-                                    </td>
+                                    <td>45066</td>
+                                    <td>45066</td>
+                                    <td>45066</td>
+                                    <td>45066</td>
                                 </tr>
-                                <tr>
-                                    <td class="col-md-8">
-                                        <strong>Expenditure Budget</strong>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-8">
-                                        <strong>Remaining Budget</strong>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
-
                             </tbody>
                         </table>
-                        <figure class="highcharts-figure w-100">
+                        <figure class="highcharts-figure-f w-100">
                             <div id="finance"></div>
                         </figure>
                     </div>
                 </div>
-                <div class="col-xl-3">
-                    <div class="card b">
+             
+            </div>
+            <div class="row m-2">
+                <div class="col-xl-6">
+                    <div class="card b bg-info">
                         <div class="card-header">
                             <h4 class="m-0">Project Schedule</h4>
                         </div>
@@ -263,37 +271,38 @@
                         <table class="table">
                             <tbody>
                                 <tr>
-                                    <td class="col-md-7">
+                                    <td>
                                         <strong>Planned Start Date</strong>
                                     </td>
                                     <td>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-7">
                                         <strong>Actual Start Date</strong>
                                     </td>
                                     <td>
+                                        <strong>End Date</strong>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="col-md-7">
-                                        <strong>End Date</strong>
+
+                                    <td>
+                                        12/04/2021
                                     </td>
                                     <td>
+                                        12/05/2021
+                                    </td>
+                                    <td>
+                                        12/04/2022
                                     </td>
                                 </tr>
+                              
 
                             </tbody>
                         </table>
 
-                        <div id="timeline" style="height: 180px;"></div>
+                        <div id="timeline" style="height: 180px;" class=""></div>
                     </div>
 
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <!-- START card-->
                     <div class="card card-default card-demo" id="cardDemo3">
                         <div class="card-header">

@@ -114,7 +114,7 @@
                                             
                                             <td>
                                                 @Html.ActionLink("Edit", "ProjectEdit", new { SubProjectID = Utility.Encryption.EncryptURL(Convert.ToString(item.SubProjectID)) }, new { @class = "mb-1 btn btn-warning" })
-                                                @Html.ActionLink("Details", "ProjectDetails", new { SubProjectID = Utility.Encryption.EncryptURL(Convert.ToString(item.SubProjectID)) }, new { @class = "mb-1 btn btn-primary" })
+                                                @Html.ActionLink("Details", "SubProjectDetails", new { SubProjectID = Utility.Encryption.EncryptURL(Convert.ToString(item.SubProjectID)) }, new { @class = "mb-1 btn btn-primary" })
                                                 @*@Html.ActionLink("Detail", "UserDetail", new { UserID = item.UserID }, new { @class = "mb-1 btn btn-primary" })*@
                                             </td>
                                         </tr>

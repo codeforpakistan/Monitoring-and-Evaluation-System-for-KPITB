@@ -428,6 +428,28 @@ namespace ModelLayer
            
         }
 
+        //GetSubProjectDetails
+        public partial class GetSubProjectDetailsVM
+        {
+            public GetSubProjectDetailsVM()
+            {
+                getProjectDetailsQ6Lst = new List<GetProjectDetailsQ6>();
+                getProjectDetailsProjectKPIsLst = new List<GetProjectDetails_ProjectKPIs>();
+                getProjectDetailsIssuesLst = new List<GetProjectDetails_Issues>();
+                getProjectDetailsQ7Lst = new List<GetProjectDetailsQ7>();
+                getIndicatorLst = new List<InsightIndicatorNames>();
+            }
+            public GetProjectDetailsQ1 getProjectDetailsQ1 { get; set; }
+            public GetProjectDetailsQ2 getProjectDetailsQ2 { get; set; }
+            public GetProjectDetailsQ3 getProjectDetailsQ3 { get; set; }
+            public GetProjectDetailsQ4 getProjectDetailsQ4 { get; set; }
+            public GetProjectDetailsQ5 getProjectDetailsQ5 { get; set; }
+            public List<GetProjectDetailsQ6> getProjectDetailsQ6Lst { get; set; }
+            public List<GetProjectDetails_ProjectKPIs> getProjectDetailsProjectKPIsLst { get; set; }
+            public List<GetProjectDetails_Issues> getProjectDetailsIssuesLst { get; set; }
+            public List<GetProjectDetailsQ7> getProjectDetailsQ7Lst { get; set; }
+            public List<InsightIndicatorNames> getIndicatorLst { get; set; }
+        }
         //GetProjectDetails
         public partial class GetProjectDetailsVM
         {
@@ -485,6 +507,7 @@ namespace ModelLayer
         public partial class GetProjectDetailsQ6
         {
             public string ProjectName { get; set; }
+            public string SubProjectName { get; set; }
             public string InsightIndicatorName { get; set; }
             public string InsightIndicatorFieldName { get; set; }
             public string InsightIndicatorValueText { get; set; }

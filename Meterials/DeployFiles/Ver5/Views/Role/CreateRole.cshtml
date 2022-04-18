@@ -1,0 +1,196 @@
+﻿@model ModelLayer.MainViewModel.ClsUserRole
+@{
+    ViewBag.Title = "CreateRole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create New Role</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                    @Html.ValidationSummary(true, "", new { @class = "redLabel" })
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RoleName, htmlAttributes: new { @class = "control-label" })
+                            @Html.Label("*", new { @class = "redLabel" })
+                            @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "redLabel" })
+                            @Html.EditorFor(model => model.RoleName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model != null)
+                {
+                    if (Model.AllWebPages.Count() > 0)
+                    {
+                        <div class="box-body">
+                            <div class="box-header">
+                                <h3 class="box-title">
+                                    Select Menus which will be visible to this Role
+                                </h3>
+                            </div>
+                            <div class="row" id="divMenus">
+                                @foreach (ModelLayer.MainViewModel.ClsWebPages Parent in Model.AllWebPages)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="box box-primary role-border">
+                                            <div class="box-header with-border">
+                                                @Html.CheckBox(Convert.ToString(Parent.WebPageID), new { @class = "chkbox", Parent.WebPageID, @id = Parent.WebPageID })
+                                                <h3 class="box-title " data-widget="collapse">
+                                                    <label class="control-label pointer" for="@Parent.WebPageID">@Parent.PageTitle</label>
+                                                </h3>
+                                            </div>
+                                            <div class="box-body body-color">
+                                                <div class="roles-head roles-row @Parent.WebPageID">
+                                                    <div class="role-header">@Parent.MainTitle</div>
+                                                    @*<div class="col-md-8">Page Description</div>*@
+                                                    <div class="clearfix"></div>
+                                                    @foreach (ModelLayer.MainViewModel.ClsWebPages ch in Parent.Childs)
+                                                    {
+                                                        <div class="roles-row @ch.WebPageID">
+                                                            <div class="col-md-12">
+                                                                @Html.CheckBox(Convert.ToString(ch.WebPageID), new { @class = "chkPage", @id = ch.WebPageID })
+                                                                <label for="@ch.WebPageID" class="control-label">@ch.PageTitle</label>
+                                                            </div>
+                                                            @*<div class="col-md-8">
+                                                                    <label for="@ch.Description" class="control-label">@ch.Description</label>
+                                                                </div>*@
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <input type="button" id="btnAddRole" value="Add" class="btn btn-success btnMarginRight pull-right" />
+                            @Html.ActionLink("Back to List", "RoleIndex", null, new { @class = "btn btn-warning btnMarginRight pull-right" })
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#2').addClass('active');
+
+            $('input[type="checkbox"]').click(function (e) {
+                var $this = $(this),
+                    $thisName = $this.attr('name');
+                switch ($thisName) {
+                    case "chkAdd":
+                    case "chkEdit":
+                    case "chkDelete":
+                    case "chkView":
+                    case "chkPrint":
+                        var $parent = $this.parent().parent();
+                        if ($parent.find('input.child:checked').length > 0) {//=== $parent.find('input.child').length) {
+                            $parent.find('input.chkPage')
+                                .prop('checked', true)
+                                .attr('checked', true);
+                        } else {
+                            $parent.find('input.chkPage')
+                                .prop('checked', false)
+                                .attr('checked', false);
+                        }
+                        break;
+                    default:
+                        // // Clicked on Parent e.g Membership, Setup.
+                        var $val = $this.is(':checked');
+                        $('div.' + $thisName).find('input[type="checkbox"]')
+                            .prop('checked', $val)
+                            .attr('checked', $val);
+                        // // Clicked on Page Title.. e.g Roles, Users, Projects
+                        if ($this.hasClass('chkPage')) {
+                            var $parent = $this.parent().parent().parent();
+                            $thisName = $parent.attr('class').split(' ')[1];
+                            //$thisName = $thisName[1];
+                            if ($parent.find('input.chkPage:checked').length > 0) {
+                                $('.' + $thisName)
+                                    .prop('checked', true)
+                                    .attr('checked', true);
+                            }
+                            else {
+                                $('.' + $thisName)
+                                .prop('checked', false)
+                                .attr('checked', false);
+                            }
+                        }
+                        break;
+                }
+            });
+
+            $('#btnAddRole').click(function (e) {
+                e.preventDefault();
+                var role = {};
+                    role.RoleName = $('#RoleName').val(),
+                    role.Application_ID = $('#Application_ID :selected').val();
+                //var roleid = $('#RoleID').val();
+                    if (role.RoleName === '') {
+                    @*var val = '@Html.Raw(HttpUtility.JavaScriptStringEncode((string)TempData["FilesUploaded"]))';
+
+                    @TempData["Message"]='Role Name Required';*@
+                    alert('Role Name Required');
+                    return;
+                }
+                var activies = [];
+                var $thisHeader, $thisBody, $this, $thisChild;
+                $('#divMenus').find('div.box')
+                    .each(function () {
+                        $this = $(this);
+                        $thisHeader = $this.find('div.box-header');
+                        $thisBody = $this.find('div.box-body');
+                        $thisBody.find('input.chkPage').each(function () {
+                            $this = $(this);
+                            if ($this.is(':checked')) {
+                                var ob = {};
+                                ob.WebPageID = $this.attr('name');
+                                $thisChild = $thisBody.find('div.' + ob.WebPageID);
+                                activies.push(ob);
+                            }
+                        });
+                        if ($thisBody.find('input:checked').length > 0) {
+                            var ob = {};
+                            ob.WebPageID = $thisHeader.find('input[type="checkbox"]').attr('name');
+                            activies.push(ob);
+                        }
+                    });
+
+                var dto = { activies: activies, role: role };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SaveRole", "Role")',
+                    data: JSON.stringify(dto),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        debugger;
+                        if (data.status) {
+                            location.href = window.location.href;
+                        } else {
+                            location.href = '/Role/CreateRole';
+                        }
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                });
+
+            });
+        });
+    </script>
+}
+

@@ -438,6 +438,7 @@ namespace ModelLayer
                 getProjectDetailsIssuesLst = new List<GetProjectDetails_Issues>();
                 getProjectDetailsQ7Lst = new List<GetProjectDetailsQ7>();
                 getIndicatorLst = new List<InsightIndicatorNames>();
+                getProjectDetailsQ5 = new GetProjectDetailsQ5();
             }
             public GetProjectDetailsQ1 getProjectDetailsQ1 { get; set; }
             public GetProjectDetailsQ2 getProjectDetailsQ2 { get; set; }
@@ -1239,9 +1240,10 @@ namespace ModelLayer
                 comboBatches = new List<ComboBatch>();
                 comboProcurementHeads = new List<ComboProcurementHead>();
                 comboIndicators = new List<ComboIndicator>();
+                ListOfChangeManagementVM = new ChangeManagementVM();
                 //InsightIndicatorForEvaulationList= new List<InsightIndicatorForEvaulation>();
             }
-            public ChangeManagementVM ListOfChangeManagementVM = new ChangeManagementVM();
+            public ChangeManagementVM ListOfChangeManagementVM { get; set; } 
             
         }
         #endregion

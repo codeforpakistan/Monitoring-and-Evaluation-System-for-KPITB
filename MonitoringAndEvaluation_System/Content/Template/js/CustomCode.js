@@ -605,9 +605,6 @@ $("#Project_ID").on('change', function () {
             }//END Evaluation
         
             if (response.IsChangeManagementForm == "ChangeManagementForm") {
-             
-
-          
                 Common(response);
             }
         },

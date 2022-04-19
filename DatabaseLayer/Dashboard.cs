@@ -75,5 +75,37 @@ namespace DatabaseLayer
             return dashboardv1;
         }
 
+        public static Dashboardv3 dashboardv3DL(int? ProjectTypeID)
+        {
+            IDbConnection Con = null;
+            Dashboardv3  dashboardv3 = new Dashboardv3();
+            try
+            {
+                Con = new SqlConnection(Common.ConnectionString);
+                Con.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@ProjectTypeID", ProjectTypeID);
+                using (var gridReader = Con.QueryMultiple("sp_GetProjectOverAllStatus", ObjParm, commandType: CommandType.StoredProcedure))
+                {
+                    dashboardv3.dv3ProjectKPIsLst = gridReader.Read<dv3ProjectKPIs>().ToList();
+                    dashboardv3.dv3ImpactIndicatorsLst = gridReader.Read<dv3ImpactIndicator>().ToList();
+                    dashboardv3.dv3FinanceDetailsLst = gridReader.Read<dv3FinanceDetails>().ToList();
+                    dashboardv3.dv3SchedulesLst = gridReader.Read<dv3Schedule>().ToList();
+                    dashboardv3.dv3IssuesLst = gridReader.Read<dv3Issues>().ToList();
+                } 
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                Con.Close();
+                Con.Dispose();
+            }
+            return dashboardv3;
+        }
+
+
     }
 }

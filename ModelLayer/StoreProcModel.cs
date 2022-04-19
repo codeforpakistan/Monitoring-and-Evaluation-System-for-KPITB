@@ -167,7 +167,77 @@ namespace ModelLayer
             public ADPVM ADPVM = new ADPVM();
             public ForigenFundedVM forigenFundedVM = new ForigenFundedVM();
         }
-        
+
+        #endregion
+
+        #region Dashboardv3
+        public class dv3ProjectKPIs
+        {
+            public int Project_ID { get; set; }
+            public int PlannedKPIs_ID { get; set; }
+            public string IndicatorDescription { get; set; }
+            public int Target { get; set; }
+            public int Achived { get; set; }
+            public float Percentage { get; set; }
+        }
+        public class dv3ImpactIndicator
+        {
+            public string ProjectName { get; set; }
+            public string InsightIndicatorName { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
+            public string InsightIndicatorValueText { get; set; }
+            public int InsightIntegerValue { get; set; }
+            public int BoolValue { get; set; }
+            public float FloatValue { get; set; }
+        }
+        public class dv3ImpactIndicatorMerge
+        {
+            public string InsightIndicatorName { get; set; }
+            public string InsightIndicatorFieldName { get; set; }
+            public dynamic CommonFiled { get; set; }
+        }
+        public class dv3FinanceDetails
+        {
+            public int PlannedBudget { get; set; }
+            public int AllocatedBudget { get; set; }
+            public int ExpenditureBudget { get; set; }
+            public int RemainingBudget { get; set; }
+            public int FinancialDetails { get; set; }
+        }
+        public class dv3Schedule
+        {
+            public DateTime PlannedDate { get; set; }
+            public DateTime ActualDate { get; set; }
+            public DateTime EndDate { get; set; }
+        }
+        public class dv3Issues
+        {
+            public string IssueDescription { get; set; }
+            public string IssueDate { get; set; }
+            public string ActionTaken { get; set; }
+            public string Remarks { get; set; }
+        }
+
+        public class Dashboardv3
+        {
+            public Dashboardv3()
+            {
+                dv3ProjectKPIsLst = new List<dv3ProjectKPIs>();
+                dv3ImpactIndicatorsLst = new List<dv3ImpactIndicator>();
+                dv3ImpactIndicatorMergesLst = new List<dv3ImpactIndicatorMerge>();
+                dv3FinanceDetailsLst = new List<dv3FinanceDetails>();
+                dv3SchedulesLst = new List<dv3Schedule>();
+                dv3IssuesLst = new List<dv3Issues>();
+
+            }
+            public List<dv3ProjectKPIs> dv3ProjectKPIsLst { get; set; }
+            public List<dv3ImpactIndicator> dv3ImpactIndicatorsLst { get; set; }
+            public List<dv3ImpactIndicatorMerge> dv3ImpactIndicatorMergesLst { get; set; }
+            public List<dv3FinanceDetails> dv3FinanceDetailsLst { get; set; }
+            public List<dv3Schedule> dv3SchedulesLst { get; set; }
+            public List<dv3Issues> dv3IssuesLst { get; set; }
+        }
+
         #endregion
     }
 }

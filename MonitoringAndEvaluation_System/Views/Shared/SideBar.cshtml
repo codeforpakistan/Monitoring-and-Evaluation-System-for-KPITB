@@ -3,16 +3,6 @@
 <!-- END user info-->
 <!-- Iterates over all sidebar items-->
 
-<li class="nav-heading ">
-    <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
-</li>
-
-<li class=" ">
-    <a href="@Url.Content("~/Dashboard/Admin")" title="Home">
-        <em class="fa fa-windows"></em>
-        <span data-localize="sidebar.nav.element.BUTTON">Dashboard</span>
-    </a>
-</li>
 <!--DYNAMIC_MENU-->
 @{
     ModelLayer.MainViewModel.ClsUserRole WebPagesMenu = Session["WebPagesMenu"] as ModelLayer.MainViewModel.ClsUserRole;

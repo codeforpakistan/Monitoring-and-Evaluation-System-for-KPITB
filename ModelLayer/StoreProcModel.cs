@@ -9,7 +9,12 @@ namespace ModelLayer
     public class StoreProcModel
     {
         #region Dashboardv1
-
+        public class TotalProject
+        {
+            public int TotalADP { get; set; }
+            public int TotalOneLiner { get; set; }
+            public int TotalForeign { get; set; }
+        }
         #region 1Linear
         public class OneLinearRow1
         {
@@ -40,6 +45,17 @@ namespace ModelLayer
             public string ProjectName { get; set; }
             public int SubProjectID { get; set; }
             public string SubProjectName { get; set; }
+        }
+
+        public class TotalProjectVM
+        {
+            public TotalProjectVM()
+            {
+                totalProject = new TotalProject();
+                
+            }
+            public TotalProject totalProject { get; set; }
+          
         }
         public class OneLinearVM
         {
@@ -95,12 +111,15 @@ namespace ModelLayer
         {
             public ADPVM()
             {
-               ADPRow1 = new ADPRow1();
+                totalProject = new TotalProject();
+                ADPRow1 = new ADPRow1();
                ADPRow2 = new ADPRow2();
                ADPRow3 = new ADPRow3();
                 ADPRow4Project = new List<ADPRow4Project>();
                 ADPRow4SubProject = new List<ADPRow4SubProject>();
             }
+         
+            public TotalProject totalProject { get; set; }
             public ADPRow1 ADPRow1 { get; set; }
             public ADPRow2 ADPRow2 { get; set; }
             public ADPRow3 ADPRow3 { get; set; }
@@ -163,6 +182,7 @@ namespace ModelLayer
         #endregion
         public class Dashboardv1
         {
+           
             public OneLinearVM oneLinearVM = new OneLinearVM();
             public ADPVM ADPVM = new ADPVM();
             public ForigenFundedVM forigenFundedVM = new ForigenFundedVM();

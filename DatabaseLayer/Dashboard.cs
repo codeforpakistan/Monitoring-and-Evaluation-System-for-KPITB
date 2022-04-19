@@ -17,6 +17,7 @@ namespace DatabaseLayer
         {
             IDbConnection Con = null;
             StatusModel status = new StatusModel();
+           
             OneLinearVM oneLinearList = new OneLinearVM();
             ADPVM ADPList = new ADPVM();
             ForigenFundedVM FFList = new ForigenFundedVM();
@@ -30,6 +31,7 @@ namespace DatabaseLayer
                 ObjParm.Add("@StatusDetails", dbType: DbType.String, direction: ParameterDirection.Output, size: 4000);
                 using (var gridReader = Con.QueryMultiple("sp_GetDashboardv1OneLinear", ObjParm, commandType: CommandType.StoredProcedure))
                 {
+                    
                     oneLinearList.oneLinearRow1 = gridReader.Read<OneLinearRow1>().FirstOrDefault();
                     oneLinearList.oneLinearRow2 = gridReader.Read<OneLinearRow2>().FirstOrDefault();
                     oneLinearList.oneLinearRow3 = gridReader.Read<OneLinearRow3>().FirstOrDefault();
@@ -40,6 +42,7 @@ namespace DatabaseLayer
                 }
                 using (var gridReader = Con.QueryMultiple("sp_GetDashboardv1ADP", ObjParm, commandType: CommandType.StoredProcedure))
                 {
+                    ADPList.totalProject = gridReader.Read<TotalProject>().FirstOrDefault();
                     ADPList.ADPRow1 = gridReader.Read<ADPRow1>().FirstOrDefault();
                     ADPList.ADPRow2 = gridReader.Read<ADPRow2>().FirstOrDefault();
                     ADPList.ADPRow3 = gridReader.Read<ADPRow3>().FirstOrDefault();

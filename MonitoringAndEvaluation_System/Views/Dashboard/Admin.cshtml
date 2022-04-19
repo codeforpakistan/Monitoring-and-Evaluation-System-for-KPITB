@@ -64,7 +64,7 @@
                 <em class="icon-notebook fa-3x"></em>
             </div>
             <div class="col-8 py-3 bg-primary rounded-right">
-                <div class="h2 mt-0">240</div>
+                <div class="h2 mt-0">@Model.ADPVM.totalProject.TotalOneLiner</div>
                 <div class="text-uppercase">One Liner</div>
             </div>
         </div>
@@ -77,7 +77,7 @@
             </div>
             <div class="col-8 py-3 bg-yellow rounded-right">
                 <div class="h2 mt-0">
-                    700
+                    @Model.ADPVM.totalProject.TotalADP
 
                 </div>
                 <div class="text-uppercase">ADP Project</div>
@@ -92,7 +92,7 @@
                 <em class="icon-chart fa-3x"></em>
             </div>
             <div class="col-8 py-3 bg-green rounded-right">
-                <div class="h2 mt-0">50M</div>
+                <div class="h2 mt-0">@Model.ADPVM.totalProject.TotalForeign</div>
                 <div class="text-uppercase">Foreign Funded</div>
             </div>
         </div>
@@ -429,23 +429,25 @@
 
                                     <div class="media-body text-truncate">
                                         <p class="mb-1">
-                                                            <strong class="text-primary">
-                                                                <span class="circle bg-success circle-lg text-left"></span>
-                                                                <a  href="/Project/ProjectDetails?ProjectID=@Utility.Encryption.EncryptURL(Convert.ToString(item.ProjectID))">@item.ProjectName</a>
+                                         <strong class="text-primary">
+                                             <span class="circle bg-success circle-lg text-left"></span>
+                                             <a  href="/Project/ProjectDetails?ProjectID=@Utility.Encryption.EncryptURL(Convert.ToString(item.ProjectID))">@item.ProjectName</a>
 
-                                                                @*@Html.ActionLink(item.ProjectName, "ProjectDetails", "Project", "", new { ProjectID = Utility.Encryption.EncryptURL(Convert.ToString(item.ProjectID)) })*@
-                                                            </strong>
+                                             @*@Html.ActionLink(item.ProjectName, "ProjectDetails", "Project", "", new { ProjectID = Utility.Encryption.EncryptURL(Convert.ToString(item.ProjectID)) })*@
+                                         </strong>
                                         </p>
-                                        @*@if (Model.oneLinearVM.oneLinearRow4SubProject != null)
+                                        @if (Model.oneLinearVM.oneLinearRow4SubProject != null)
                                         {
                                             foreach (var itemSub in Model.oneLinearVM.oneLinearRow4SubProject.Where(x=>x.ProjectID == item.ProjectID))
                                             {
-                                                //if (itemSub.ProjectID == item.ProjectID)
-                                                //{
-                                                    <p class="mb-1 text-sm">@itemSub.ProjectName</p>
-                                                    //}
+                                                if (itemSub.ProjectID == item.ProjectID)
+                                                {
+                                                    <p class="mb-1 text-sm">
+                                                        <a href="/Project/SubProjectDetails?SubProjectID=@Utility.Encryption.EncryptURL(Convert.ToString(itemSub.SubProjectID))">@itemSub.SubProjectName</a>
+                                                    </p>
                                                 }
-                                            }*@
+                                            }
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -467,20 +469,34 @@
             </div>
             <!-- START list group item-->
             @{
-                if (Model.oneLinearVM.oneLinearRow4Project != null)
+                if (Model.ADPVM.ADPRow4Project != null)
                 {
                     foreach (var item in Model.ADPVM.ADPRow4Project)
                     {
                         <div class="list-group-item list-group-item-action">
                             <div class="media">
-                                <div class="media-body text-truncate">
-                                    <p class="mb-1">
-                                        <strong class="text-primary">
-                                            <span class="circle bg-success circle-lg text-left"></span>
-                                            <span>@item.ProjectName</span>
-                                        </strong>
-                                    </p>
-                                </div>
+                                            <div class="media-body text-truncate">
+                                                <p class="mb-1">
+                                                    <strong class="text-primary">
+                                                        <span class="circle bg-success circle-lg text-left"></span>
+
+                                                        <a href="/Project/ProjectDetails?ProjectID=@Utility.Encryption.EncryptURL(Convert.ToString(item.ProjectID))">@item.ProjectName</a>
+
+                                                    </strong>
+                                                </p>
+                                                @if (Model.ADPVM.ADPRow4SubProject != null)
+                                                {
+                                                    foreach (var itemSub in Model.ADPVM.ADPRow4SubProject.Where(x => x.ProjectID == item.ProjectID))
+                                                    {
+                                                        if (itemSub.ProjectID == item.ProjectID)
+                                                        {
+                                                            <p class="mb-1 text-sm">
+                                                                <a href="/Project/SubProjectDetails?SubProjectID=@Utility.Encryption.EncryptURL(Convert.ToString(itemSub.SubProjectID))">@itemSub.SubProjectName</a>
+                                                            </p>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
                             </div>
                         </div>
                     }
@@ -508,10 +524,22 @@
                                     <p class="mb-1">
                                         <strong class="text-primary">
                                             <span class="circle bg-success circle-lg text-left"></span>
-                                            <span>@item.ProjectName</span>
+                                            <a href="/Project/ProjectDetails?ProjectID=@Utility.Encryption.EncryptURL(Convert.ToString(item.ProjectID))">@item.ProjectName</a>
                                         </strong>
                                     </p>
-                                </div>
+                                    @if (Model.forigenFundedVM.forigenFundedRow4SubProject != null)
+                                    {
+                                        foreach (var itemSub in Model.forigenFundedVM.forigenFundedRow4SubProject.Where(x => x.ProjectID == item.ProjectID))
+                                        {
+                                            if (itemSub.ProjectID == item.ProjectID)
+                                            {
+                                            <p class="mb-1 text-sm">
+                                                <a href="/Project/SubProjectDetails?SubProjectID=@Utility.Encryption.EncryptURL(Convert.ToString(itemSub.SubProjectID))">@itemSub.SubProjectName</a>
+                                            </p>
+                                            }
+                                        }
+                                     }
+                                 </div>
                             </div>
                         </div>
                     }

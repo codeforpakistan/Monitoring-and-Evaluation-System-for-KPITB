@@ -429,6 +429,7 @@
     <Content Include="Views\InsightIndicator\InsightIndicatorView.cshtml" />
     <Content Include="Views\InsightIndicator\InsightIndicatorFieldValue.cshtml" />
     <Content Include="Views\Dashboard\OverAllStatus.cshtml" />
+    <Content Include="Views\Project\SubProjectDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

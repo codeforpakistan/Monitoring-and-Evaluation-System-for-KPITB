@@ -21,6 +21,10 @@ namespace MonitoringAndEvaluation_System.Controllers
             Dashboardv1 Dashboardv1Charts = Dashboard.dashboardv1DL();
             return View(Dashboardv1Charts);
         }
+
+
+
+
         [HttpGet]
         public ActionResult GetData()
         {
@@ -30,10 +34,10 @@ namespace MonitoringAndEvaluation_System.Controllers
             //data.getPKPIsChartQ1 = ss;
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult OverAllStatus()
+        public ActionResult OverAllStatus(int? ProjectTypeID)
         {
-           
-            return View();
+            Dashboardv3 Dv3Charts = new DashboardManangmentBL().dashboardv3BL(ProjectTypeID);
+            return View(Dv3Charts);
         }
 
         public ActionResult Menus()
@@ -41,7 +45,7 @@ namespace MonitoringAndEvaluation_System.Controllers
             #region NEW
 
             ClsUserRole cls = new RoleManagementBL().getUserRolePagesByIDBL(LoginRoleID);
-            cls.AllWebPages= cls.AllWebPages.Where(x => x.IsChecked == true).ToList();
+            cls.AllWebPages = cls.AllWebPages.Where(x => x.IsChecked == true).ToList();
             Session["WebPagesMenu"] = cls;
             #endregion
             #region OLD

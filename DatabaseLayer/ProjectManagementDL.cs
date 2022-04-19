@@ -912,6 +912,32 @@ namespace DatabaseLayer
             return getProjectDetailsVM;
         }
 
+
+        //SubProjectDetail
+        public static GetSubProjectDetailsVM getSubProjectDetailDL(int SubProjectID)
+        {
+            
+            GetSubProjectDetailsVM getSubProjectDetailsVM = new GetSubProjectDetailsVM();
+            using (IDbConnection connection = new SqlConnection(Common.ConnectionString))
+            {
+                connection.Open();
+                DynamicParameters ObjParm = new DynamicParameters();
+                ObjParm.Add("@SubProject_ID", SubProjectID);
+                using (var multi = connection.QueryMultiple("sp_GetSubProjectDetails", ObjParm, commandType: CommandType.StoredProcedure))
+                {
+                    getSubProjectDetailsVM.getProjectDetailsQ1 = multi.Read<GetProjectDetailsQ1>().FirstOrDefault();
+                    getSubProjectDetailsVM.getProjectDetailsQ2 = multi.Read<GetProjectDetailsQ2>().FirstOrDefault();
+                    getSubProjectDetailsVM.getProjectDetailsQ3 = multi.Read<GetProjectDetailsQ3>().FirstOrDefault();
+                    getSubProjectDetailsVM.getProjectDetailsQ4 = multi.Read<GetProjectDetailsQ4>().FirstOrDefault();
+                    getSubProjectDetailsVM.getProjectDetailsQ5 = multi.Read<GetProjectDetailsQ5>().FirstOrDefault();
+                    getSubProjectDetailsVM.getProjectDetailsQ6Lst = multi.Read<GetProjectDetailsQ6>().ToList();
+                    getSubProjectDetailsVM.getProjectDetailsProjectKPIsLst = multi.Read<GetProjectDetails_ProjectKPIs>().ToList();
+                    getSubProjectDetailsVM.getProjectDetailsIssuesLst = multi.Read<GetProjectDetails_Issues>().ToList();
+                    //getProjectDetailsVM.getProjectDetailsQ7 = multi.Read<GetProjectDetailsQ7>().FirstOrDefault();
+                }
+            }
+            return getSubProjectDetailsVM;
+        }
         #endregion
 
         #region RecruitedHR

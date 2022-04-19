@@ -369,6 +369,13 @@ namespace MonitoringAndEvaluation_System.Controllers
             return View(lst);
         }
 
+        [HttpGet]
+        public ActionResult SubProjectDetails(string SubProjectID)
+        {
+            GetSubProjectDetailsVM data = new ProjectManagementBL().getSubProjectDetailsBL(Convert.ToInt32(Utility.Encryption.DecryptURL(SubProjectID)));
+            return View(data);
+        }
+
         #endregion
         #region RecruitedHR
         [HttpGet]
@@ -588,6 +595,9 @@ namespace MonitoringAndEvaluation_System.Controllers
             return RedirectToAction("ProcurementCreateView");
         }
         #endregion
+
+
+
 
         public ActionResult NO()
         {

@@ -219,7 +219,50 @@ namespace BusinessLayer
 
             return getData;
         }
+        public GetSubProjectDetailsVM getSubProjectDetailsBL(int SubProjectID)
+        {
+            var getData = ProjectManagementDL.getSubProjectDetailDL(SubProjectID);
+            getData.getProjectDetailsQ7Lst = new List<GetProjectDetailsQ7>();
+            GetProjectDetailsQ7 m = null;
+            for (int i = 0; i < getData.getProjectDetailsQ6Lst.Count; i++)
+            {
+                m = new GetProjectDetailsQ7();
+                if (getData.getProjectDetailsQ6Lst[i].InsightIntegerValue != 0)
+                {
+                    m.InsightIndicatorName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorName;
+                    m.InsightIndicatorFieldName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorFieldName;
+                    m.CommonFiled = getData.getProjectDetailsQ6Lst[i].InsightIntegerValue;
+                    getData.getProjectDetailsQ7Lst.Add(m);
+                }
+                else if (getData.getProjectDetailsQ6Lst[i].FloatValue != 0)
+                {
+                    m.InsightIndicatorName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorName;
+                    m.InsightIndicatorFieldName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorFieldName;
+                    m.CommonFiled = getData.getProjectDetailsQ6Lst[i].FloatValue;
+                    getData.getProjectDetailsQ7Lst.Add(m);
+                }
+                else if (getData.getProjectDetailsQ6Lst[i].BoolValue != 0)
+                {
+                    m.InsightIndicatorName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorName;
+                    m.InsightIndicatorFieldName = getData.getProjectDetailsQ6Lst[i].InsightIndicatorFieldName;
+                    m.CommonFiled = getData.getProjectDetailsQ6Lst[i].BoolValue;
+                    getData.getProjectDetailsQ7Lst.Add(m);
+                }
+                else
+                {
+                    //item.CommonFiled = item.IndicatorValueText;
+                }
+            }
 
+            //Distinct IndicatorName
+            var DistinctItems = getData.getProjectDetailsQ7Lst.GroupBy(x => x.InsightIndicatorName).ToList();
+            for (int j = 0; j < DistinctItems.Count; j++)
+            {
+                getData.getIndicatorLst.Add(new InsightIndicatorNames { InsightIndicatorName = DistinctItems[j].Key }); ;
+            }
+
+            return getData;
+        }
         public List<ComboFundingSource> getFudingSourceBL()
         {
             return ProjectManagementDL.getFudingSourceDL();
